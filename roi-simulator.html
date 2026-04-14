@@ -1,0 +1,2775 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CLEAR ROI &amp; Readiness Dashboard — Language Access Financial Impact Modeling</title>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Instrument+Serif&display=swap');
+
+    /* ── Design tokens — matched to LAI Navigation Platform ── */
+    :root {
+      --navy:   #0c1e35;
+      --navy2:  #132a46;
+      --teal:   #0e9e8c;
+      --teal2:  #0cc5ad;
+      --amber:  #d48e1a;
+      --red:    #c94040;
+      --green:  #18a76f;
+      --slate:  #4a637d;
+      --silver: #8aacbf;
+      --ice:    #e8f4fa;
+      --fog:    #f3f7fb;
+      --white:  #ffffff;
+      --bd:     rgba(12,30,53,.11);
+      --sh:     0 2px 16px rgba(12,30,53,.08);
+      --r:      12px;
+      /* Simulator aliases */
+      --text:   #0c1e35;
+      --muted:  #4a637d;
+      --accent: #0e9e8c;
+      --good:   #18a76f;
+      --warn:   #d48e1a;
+      --bad:    #c94040;
+      --border: rgba(12,30,53,.11);
+      --shadow: 0 2px 16px rgba(12,30,53,.08);
+      --radius: 12px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+      --sans: 'DM Sans', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin:0; font-family:var(--sans); background:var(--fog); color:var(--navy); font-size:13.5px; line-height:1.5; }
+
+    /* ── CLEAR top nav (navy header, matching LAI) ── */
+    .clear-topnav { background:var(--navy); border-bottom:none; padding:0 24px; height:46px; display:flex; align-items:center; gap:14px; position:sticky; top:0; z-index:400; box-shadow:0 2px 16px rgba(0,0,0,.28); }
+    .clear-topnav-brand { font-family:'Instrument Serif',serif; font-size:18px; font-weight:400; color:var(--teal2); letter-spacing:-.2px; white-space:nowrap; }
+    .clear-topnav-brand span { font-size:11px; font-weight:400; color:rgba(255,255,255,.4); font-family:'DM Sans',sans-serif; margin-left:10px; letter-spacing:.3px; }
+    .clear-topnav-back { display:inline-flex; align-items:center; gap:5px; padding:5px 12px; border-radius:7px; border:1px solid rgba(255,255,255,.15); color:rgba(255,255,255,.7); text-decoration:none; font-size:12px; font-weight:600; transition:all .15s; white-space:nowrap; }
+    .clear-topnav-back:hover { background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.35); color:white; }
+    .cmp-bar { display:flex; gap:5px; margin-left:auto; flex-wrap:wrap; }
+    .cmp { font-size:10px; padding:2px 8px; border-radius:20px; border:1px solid rgba(255,255,255,.15); color:rgba(255,255,255,.5); white-space:nowrap; }
+
+    /* ── Tab bar (white, under navy nav) ── */
+    .roi-tabbar { background:var(--white); border-bottom:1px solid var(--bd); padding:0 20px; display:flex; gap:2px; position:sticky; top:46px; z-index:300; box-shadow:var(--sh); }
+    .roi-tab { background:transparent; border:none; border-bottom:3px solid transparent; color:var(--slate); font-family:var(--sans); font-size:12.5px; font-weight:600; padding:12px 16px 10px; cursor:pointer; transition:all .15s; white-space:nowrap; display:flex; flex-direction:column; align-items:center; gap:2px; }
+    .roi-tab .tab-super { font-size:9px; font-weight:800; letter-spacing:.8px; text-transform:uppercase; color:var(--silver); display:block; }
+    .roi-tab:hover { color:var(--navy); background:var(--ice); }
+    .roi-tab.active { color:var(--teal); border-bottom-color:var(--teal); }
+    .roi-tab.active .tab-super { color:var(--teal); }
+
+    /* ── Tab panels ── */
+    .roi-panel { display:none; padding:20px 24px 48px; max-width:1380px; margin:0 auto; }
+    .roi-panel.active { display:block; }
+
+    /* ── Utility ── */
+    .grid { display:grid; gap:12px; }
+    .g2 { grid-template-columns:repeat(2,1fr); }
+    .g3 { grid-template-columns:repeat(3,1fr); }
+    .g4 { grid-template-columns:repeat(4,1fr); }
+    @media(max-width:960px) { .g2,.g3,.g4 { grid-template-columns:1fr; } }
+    .row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .hr { height:1px; background:var(--bd); margin:12px 0; }
+    .note { font-size:12px; color:var(--slate); line-height:1.4; }
+    .small { font-size:11px; color:var(--slate); }
+    .tag { font-family:var(--mono); font-size:11px; color:var(--slate); background:rgba(12,30,53,.06); padding:1px 5px; border-radius:4px; }
+    .warn { color:var(--amber); }
+    .good { color:var(--green); }
+    .bad { color:var(--red); }
+
+    /* ── Cards ── */
+    .card { background:var(--white); border:1px solid var(--bd); border-radius:var(--r); box-shadow:var(--sh); padding:16px; }
+    .card-hd { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; padding-bottom:10px; border-bottom:1px solid var(--bd); }
+    .card-hd h2 { font-size:14px; margin:0; color:var(--navy); font-weight:700; }
+    .card h3 { font-size:11px; margin:12px 0 8px; color:var(--slate); font-weight:700; text-transform:uppercase; letter-spacing:.8px; }
+
+    /* ── KPI boxes ── */
+    .kpi { background:var(--ice); border:1px solid var(--bd); border-radius:var(--r); padding:12px; display:flex; flex-direction:column; gap:4px; }
+    .kpi .label { color:var(--slate); font-size:11.5px; line-height:1.3; }
+    .kpi .value { font-size:20px; font-weight:800; letter-spacing:.2px; color:var(--navy); }
+    .kpi .sub { color:var(--slate); font-size:11px; }
+    .kpi-hero { background:rgba(14,158,140,.07); border:1px solid rgba(14,158,140,.2); }
+    .kpi-hero .value { font-size:26px; color:var(--teal); }
+
+    /* ── Inputs ── */
+    .inputs { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    @media(max-width:960px) { .inputs { grid-template-columns:1fr; } }
+    .field { border:1px solid var(--bd); border-radius:var(--r); padding:10px; background:var(--fog); }
+    .field label { display:flex; justify-content:space-between; gap:10px; color:var(--slate); font-size:12px; margin-bottom:6px; }
+    .field label span { color:var(--slate); }
+    .field-note { font-size:10.5px; color:var(--slate); line-height:1.5; margin-top:2px; font-style:italic; }
+    .field input, .field select { width:100%; padding:8px 10px; border-radius:9px; border:1px solid var(--bd); background:var(--white); color:var(--navy); font-family:var(--sans); font-size:13px; outline:none; transition:border-color .14s; }
+    .field input:focus, .field select:focus { border-color:var(--teal); }
+    .field input[type="checkbox"] { width:auto; transform:scale(1.1); accent-color:var(--teal); }
+    .field .mini { font-size:11px; color:var(--slate); margin-top:5px; line-height:1.3; }
+
+    /* ── Buttons ── */
+    .btn { border:1px solid var(--bd); background:var(--ice); color:var(--navy); padding:8px 14px; border-radius:9px; cursor:pointer; font-weight:700; font-size:12px; font-family:var(--sans); transition:all .13s; }
+    .btn:hover { background:rgba(12,30,53,.08); }
+    .btn:active { transform:translateY(1px); }
+    .btn-primary { background:var(--teal); border-color:var(--teal); color:white; }
+    .btn-primary:hover { background:var(--teal2); border-color:var(--teal2); }
+
+    /* ── Module toggle cards ── */
+    .mod-toggles { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+    @media(max-width:960px) { .mod-toggles { grid-template-columns:1fr; } }
+    .mod-card { border:1px solid var(--bd); border-radius:var(--r); padding:12px 14px; background:var(--white); cursor:pointer; transition:all .15s; display:flex; align-items:flex-start; gap:12px; }
+    .mod-card:hover { border-color:var(--teal); background:var(--ice); }
+    .mod-card.active { border-color:var(--teal); background:rgba(14,158,140,.05); }
+    .mod-card input[type=checkbox] { margin-top:2px; transform:scale(1.2); flex-shrink:0; accent-color:var(--teal); }
+    .mod-card-body { flex:1; }
+    .mod-card-badge { font-size:9.5px; font-weight:800; letter-spacing:.7px; text-transform:uppercase; margin-bottom:3px; }
+    .mod-card-name { font-size:13px; font-weight:600; color:var(--navy); line-height:1.35; }
+    .mod-card-kpi { font-size:18px; font-weight:800; margin-top:6px; }
+    .mod-card-sub { font-size:11px; color:var(--slate); }
+
+    /* ── Module detail layout ── */
+    .module-layout { display:grid; grid-template-columns:220px 1fr; gap:0; min-height:600px; }
+    @media(max-width:960px) { .module-layout { grid-template-columns:1fr; } }
+    .module-sidebar { border-right:1px solid var(--bd); background:var(--fog); padding:12px 8px; display:flex; flex-direction:column; gap:4px; position:sticky; top:102px; align-self:start; }
+    .mod-nav-btn { display:flex; flex-direction:column; align-items:flex-start; gap:2px; padding:10px 12px; border-radius:9px; cursor:pointer; border:none; background:transparent; text-align:left; transition:all .13s; width:100%; font-family:var(--sans); }
+    .mod-nav-btn:hover { background:var(--ice); }
+    .mod-nav-btn.active { background:rgba(14,158,140,.08); border-left:3px solid var(--teal); padding-left:9px; }
+    .mod-nav-btn.active .mnb-badge { color:var(--teal) !important; }
+    .mod-nav-btn .mnb-badge { font-size:9px; font-weight:800; letter-spacing:.7px; text-transform:uppercase; margin-bottom:2px; }
+    .mod-nav-btn .mnb-name { font-size:12px; font-weight:600; color:var(--navy); line-height:1.3; }
+    .mod-nav-btn .mnb-val { font-size:13px; font-weight:800; margin-top:3px; }
+    .module-main { padding:16px 20px; }
+    .mod-panel { display:none; }
+    .mod-panel.active { display:block; }
+    .mod-header { margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--bd); }
+    .mod-header-badge { font-size:10px; font-weight:800; letter-spacing:.8px; text-transform:uppercase; margin-bottom:4px; }
+    .mod-header-title { font-family:'Instrument Serif',serif; font-size:20px; font-weight:400; color:var(--navy); margin-bottom:6px; }
+    .mod-header-desc { font-size:12.5px; color:var(--slate); line-height:1.5; background:var(--ice); border-radius:8px; padding:10px 12px; border-left:3px solid var(--teal); }
+
+    /* ── Details/accordion ── */
+    details { border:1px solid var(--bd); border-radius:var(--r); background:var(--ice); padding:10px; }
+    details summary { cursor:pointer; color:var(--navy); font-weight:700; list-style:none; font-size:13px; }
+    details summary::-webkit-details-marker { display:none; }
+    details .inside { padding-top:10px; }
+
+    /* ── Tables ── */
+    table { width:100%; border-collapse:collapse; font-size:12px; }
+    th, td { border-bottom:1px solid var(--bd); padding:8px; text-align:left; vertical-align:top; }
+    th { color:var(--slate); font-size:11px; text-transform:uppercase; letter-spacing:.6px; background:var(--fog); }
+    td.num { font-family:var(--mono); text-align:right; }
+    tr:hover td { background:var(--ice); }
+
+    /* ── Charts ── */
+    .chartBox { padding:10px; border:1px solid var(--bd); border-radius:var(--r); background:var(--white); height:300px; display:flex; flex-direction:column; box-shadow:var(--sh); }
+    .chartBox canvas { flex:1 1 auto; height:auto !important; width:100% !important; }
+    .chart-title { font-size:12px; font-weight:700; color:var(--navy); margin-bottom:2px; }
+
+    /* ── Pill ── */
+    .pill { display:inline-flex; gap:8px; align-items:center; border:1px solid var(--bd); padding:6px 10px; border-radius:999px; background:var(--ice); font-size:12px; color:var(--slate); }
+
+    /* ── Simulation lab ── */
+    .sim-layout { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    @media(max-width:960px) { .sim-layout { grid-template-columns:1fr; } }
+
+    /* ── CAP ── */
+    .cap-output { background:var(--fog); border:1px solid var(--bd); border-radius:var(--r); padding:16px; font-family:var(--mono); font-size:12px; color:var(--navy); white-space:pre-wrap; line-height:1.8; }
+    .copy-btn { background:rgba(14,158,140,.1); border:1px solid rgba(14,158,140,.3); color:var(--teal); padding:7px 14px; border-radius:8px; cursor:pointer; font-size:12px; font-weight:700; font-family:var(--sans); transition:all .15s; }
+    .copy-btn:hover { background:rgba(14,158,140,.2); }
+
+    /* ── Section labels ── */
+    .section-label { font-size:10px; font-weight:800; letter-spacing:.9px; text-transform:uppercase; color:var(--slate); margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid var(--bd); }
+
+    /* ── Orientation callout (dashboard tab) ── */
+    .orient-callout { background:linear-gradient(135deg,rgba(14,158,140,.08),rgba(14,158,140,.03)); border:1px solid rgba(14,158,140,.2); border-radius:var(--r); padding:16px 18px; margin-bottom:20px; display:flex; gap:16px; align-items:flex-start; }
+
+    /* ── Callout badges on dashboard ── */
+    .callout-badge { font-size:11px; padding:3px 10px; border-radius:20px; }
+    .callout-badge.amber { background:rgba(212,142,26,.1); border:1px solid rgba(212,142,26,.25); color:var(--amber); }
+    .callout-badge.teal { background:rgba(14,158,140,.1); border:1px solid rgba(14,158,140,.25); color:var(--teal); }
+    .callout-badge.navy { background:rgba(12,30,53,.06); border:1px solid var(--bd); color:var(--navy); }
+
+  </style>
+</head>
+<body>
+
+<!-- ── CLEAR top nav ── -->
+<nav class="clear-topnav">
+  <div class="clear-topnav-brand">CLEAR <span>ROI &amp; Readiness Dashboard</span></div>
+  <a class="clear-topnav-back" href="index.html">&#8592; LAI Navigation Platform</a>
+  <div class="cmp-bar">
+    <span class="cmp">M1 &#xB7; ED &amp; Stroke</span>
+    <span class="cmp">M3 &#xB7; LOS Reduction</span>
+    <span class="cmp">M4 &#xB7; Teach-Back + Revenue</span>
+    <span class="cmp">M5 &#xB7; Malpractice</span>
+    <span class="cmp">M6 &#xB7; VBP + Governance</span>
+    <span class="cmp">M7 &#xB7; Full CAP</span>
+  </div>
+</nav>
+
+<!-- ── Tab bar ── -->
+<nav class="roi-tabbar">
+  <button class="roi-tab active" data-panel="dashboard" onclick="switchROITab('dashboard',this)">
+    <span class="tab-super">Start Here</span>Dashboard &amp; Summary
+  </button>
+  <button class="roi-tab" data-panel="modules" onclick="switchROITab('modules',this)">
+    <span class="tab-super">Step 2</span>Financial Modules
+  </button>
+  <button class="roi-tab" data-panel="simlab" onclick="switchROITab('simlab',this)">
+    <span class="tab-super">Step 3</span>Workflow Simulation Lab
+  </button>
+  <button class="roi-tab" data-panel="cap" onclick="switchROITab('cap',this)">
+    <span class="tab-super">Step 4</span>CAP Builder
+  </button>
+</nav>
+
+<!-- ════════════════════════════════════════════════════
+     TAB 1: DASHBOARD & SUMMARY
+════════════════════════════════════════════════════ -->
+<div id="panel_dashboard" class="roi-panel active">
+
+  <!-- Orientation callout -->
+  <div style="background:linear-gradient(135deg,rgba(14,158,140,.08),rgba(14,158,140,.03));border:1px solid rgba(14,158,140,.2);border-radius:12px;padding:14px 18px;margin-bottom:16px;display:flex;gap:16px;align-items:flex-start;">
+    <div style="font-size:28px;line-height:1;flex-shrink:0;">&#128200;</div>
+    <div>
+      <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:4px;">CLEAR Executive Language Access Certificate Program &#8212; Financial Impact Modeling</div>
+      <div style="font-size:12.5px;color:var(--slate);line-height:1.55;">Use this dashboard after completing each module&#8217;s Tier 3 statistical analysis. Follow the four steps above: configure your modules, explore the Workflow Simulation Lab, then export your CAP financial summary.</div>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+        <span style="font-size:11px;background:rgba(212,142,26,.1);border:1px solid rgba(212,142,26,.25);padding:3px 10px;border-radius:20px;color:#d48e1a;">Hospital perspective only &#8212; payer savings excluded</span>
+        <span style="font-size:11px;background:rgba(14,158,140,.08);border:1px solid rgba(14,158,140,.2);padding:3px 10px;border-radius:20px;color:#0e9e8c;">All outputs update live as you change inputs</span>
+        <span style="font-size:11px;background:rgba(12,30,53,.06);border:1px solid rgba(12,30,53,.12);padding:3px 10px;border-radius:20px;color:#0c1e35;">Replace defaults with your organization&#8217;s numbers</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- System size + reset row -->
+  <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px;">
+    <div class="field" style="flex:0 0 220px;">
+      <label><span>Hospitals in system</span><span class="tag">count</span></label>
+      <input id="hospitals_in_system" type="number" min="1" step="1" value="10">
+      <div class="mini">System totals = per-hospital &#xD7; this number.</div>
+    </div>
+    <button class="btn" id="resetDefaults" style="align-self:flex-end;margin-bottom:2px;">&#8635; Reset all defaults</button>
+    <div style="margin-left:auto;font-size:12px;color:var(--slate);align-self:flex-end;padding-bottom:4px;">Dollar values update instantly with every input change.</div>
+  </div>
+
+  <!-- Master KPI banner -->
+  <div class="section-label">Cumulative Savings &#8212; All Active Modules</div>
+  <div class="grid g4" style="margin-bottom:16px;">
+    <div class="kpi kpi-hero">
+      <div class="label">Monthly Hospital Savings</div>
+      <div class="value" id="kpi_hosp_month">$0</div>
+      <div class="sub">Per hospital &#xB7; $/month</div>
+    </div>
+    <div class="kpi kpi-hero">
+      <div class="label">Annual Hospital Savings</div>
+      <div class="value" id="kpi_hosp_year">$0</div>
+      <div class="sub">Per hospital &#xB7; $/year</div>
+    </div>
+    <div class="kpi" style="border-color:rgba(212,142,26,.3);">
+      <div class="label">Monthly System Savings</div>
+      <div class="value" style="color:var(--amber);" id="kpi_sys_month">$0</div>
+      <div class="sub">All hospitals &#xB7; $/month</div>
+    </div>
+    <div class="kpi" style="border-color:rgba(212,142,26,.3);">
+      <div class="label">Annual System Savings</div>
+      <div class="value" style="color:var(--amber);" id="kpi_sys_year">$0</div>
+      <div class="sub">All hospitals &#xB7; $/year</div>
+    </div>
+  </div>
+
+  <!-- Module toggles as visual cards -->
+  <div class="section-label">Active Modules &#8212; Toggle to Include / Exclude</div>
+  <div class="mod-toggles" style="margin-bottom:16px;">
+
+    <label class="mod-card active" id="mc_ed">
+      <input id="use_ed_lang_stroke" type="checkbox" checked onchange="updateModCard('mc_ed',this);updateAll();">
+      <div class="mod-card-body">
+        <div class="mod-card-badge" style="color:var(--amber);">MODULE 1 &#xB7; Pre-Assessment &amp; Triage</div>
+        <div class="mod-card-name">ED Language Access &amp; Stroke Revenue Preservation</div>
+        <div class="mod-card-kpi" id="mc_ed_val" style="color:var(--amber);">$0</div>
+        <div class="mod-card-sub">Annual per hospital</div>
+      </div>
+    </label>
+
+    <label class="mod-card active" id="mc_eng">
+      <input id="use_engagement_los" type="checkbox" checked onchange="updateModCard('mc_eng',this);updateAll();">
+      <div class="mod-card-body">
+        <div class="mod-card-badge" style="color:var(--teal);">MODULE 3 &#xB7; Inpatient Reliability</div>
+        <div class="mod-card-name">Engagement &amp; LOS Reduction</div>
+        <div class="mod-card-kpi" id="mc_eng_val" style="color:var(--teal);">$0</div>
+        <div class="mod-card-sub">Annual per hospital</div>
+      </div>
+    </label>
+
+    <label class="mod-card active" id="mc_tb">
+      <input id="use_teachback" type="checkbox" checked onchange="updateModCard('mc_tb',this);updateAll();">
+      <div class="mod-card-body">
+        <div class="mod-card-badge" style="color:var(--green);">MODULE 4 &#xB7; Discharge &amp; Patient Education</div>
+        <div class="mod-card-name">Teach-Back (Provider + Automation)</div>
+        <div class="mod-card-kpi" id="mc_tb_val" style="color:var(--green);">$0</div>
+        <div class="mod-card-sub">Annual net per hospital</div>
+      </div>
+    </label>
+
+    <label class="mod-card active" id="mc_vbp">
+      <input id="use_vbp" type="checkbox" checked onchange="updateModCard('mc_vbp',this);updateAll();">
+      <div class="mod-card-body">
+        <div class="mod-card-badge" style="color:var(--navy2);">MODULES 6&#8211;7 &#xB7; Governance &amp; CAP</div>
+        <div class="mod-card-name">Value-Based Care (VBP)</div>
+        <div class="mod-card-kpi" id="mc_vbp_val" style="color:var(--navy2);">$0</div>
+        <div class="mod-card-sub">Annual per hospital</div>
+      </div>
+    </label>
+
+    <label class="mod-card active" id="mc_state">
+      <input id="use_state_reimb" type="checkbox" checked onchange="updateModCard('mc_state',this);updateAll();">
+      <div class="mod-card-body">
+        <div class="mod-card-badge" style="color:var(--slate);">MODULES 5&#8211;6 &#xB7; Financial Stewardship</div>
+        <div class="mod-card-name">State Reimbursement (Medicaid Interpreter)</div>
+        <div class="mod-card-kpi" id="mc_state_val" style="color:var(--slate);">$0</div>
+        <div class="mod-card-sub">Annual offset per hospital</div>
+      </div>
+    </label>
+
+    <label class="mod-card active" id="mc_mal">
+      <input id="use_malpractice" type="checkbox" checked onchange="updateModCard('mc_mal',this);updateAll();">
+      <div class="mod-card-body">
+        <div class="mod-card-badge" style="color:var(--red);">MODULE 5 &#xB7; Patient Safety</div>
+        <div class="mod-card-name">Malpractice Cost-Avoidance</div>
+        <div class="mod-card-kpi" id="mc_mal_val" style="color:var(--red);">$0</div>
+        <div class="mod-card-sub">Annual expected per hospital</div>
+      </div>
+    </label>
+
+  </div>
+
+  <!-- Savings breakdown table -->
+  <div class="card">
+    <div class="card-hd"><h2>Savings Breakdown by Module</h2><span class="note">Updates as you configure modules in Step 2</span></div>
+    <table>
+      <thead><tr><th>Best Practice / Module</th><th style="text-align:right;">Monthly ($/mo)</th><th style="text-align:right;">Annual ($/yr)</th></tr></thead>
+      <tbody id="tbl_by_module"></tbody>
+    </table>
+    <div class="hr"></div>
+    <table>
+      <thead><tr><th>Level</th><th style="text-align:right;">Monthly ($/mo)</th><th style="text-align:right;">Annual ($/yr)</th></tr></thead>
+      <tbody id="tbl_snapshot"></tbody>
+    </table>
+    <div class="small" style="margin-top:8px;">Dollar outputs rounded to whole dollars. System total = per-hospital &#xD7; hospitals in system.</div>
+  </div>
+
+  <!-- CTA to next tab -->
+  <div style="display:flex;justify-content:flex-end;margin-top:16px;">
+    <button class="btn btn-primary" onclick="switchROITab('modules',document.querySelector('.roi-tab[data-panel=modules]'))">
+      Step 2: Configure Module Inputs &#8594;
+    </button>
+  </div>
+
+</div><!-- /panel_dashboard -->
+
+
+<!-- ════════════════════════════════════════════════════
+     TAB 2: FINANCIAL MODULES (left nav + right panel)
+════════════════════════════════════════════════════ -->
+<div id="panel_modules" class="roi-panel">
+
+  <div class="card" style="padding:0;overflow:hidden;">
+    <div class="module-layout">
+
+      <!-- Left sidebar nav -->
+      <div class="module-sidebar">
+        <div style="font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--slate);padding:8px 12px 4px;">Select Module</div>
+
+        <button class="mod-nav-btn active" id="mnb_ed" onclick="switchModPanel('ed',this)">
+          <span class="mnb-badge" style="color:var(--amber);">MODULE 1 &#xB7; Pre-Assessment</span>
+          <span class="mnb-name">ED Language Access &amp; Triage</span>
+          <span class="mnb-val" id="mnb_ed_val" style="color:var(--amber);">$0/yr</span>
+        </button>
+
+        <button class="mod-nav-btn" id="mnb_eng" onclick="switchModPanel('eng',this)">
+          <span class="mnb-badge" style="color:var(--teal);">MODULE 3 &#xB7; Inpatient</span>
+          <span class="mnb-name">Engagement &amp; LOS Reduction</span>
+          <span class="mnb-val" id="mnb_eng_val" style="color:var(--teal);">$0/yr</span>
+        </button>
+
+        <button class="mod-nav-btn" id="mnb_tb" onclick="switchModPanel('tb',this)">
+          <span class="mnb-badge" style="color:var(--green);">MODULE 4 &#xB7; Discharge</span>
+          <span class="mnb-name">Teach-Back + Revenue Integrity</span>
+          <span class="mnb-val" id="mnb_tb_val" style="color:var(--green);">$0/yr</span>
+        </button>
+
+        <button class="mod-nav-btn" id="mnb_vbp" onclick="switchModPanel('vbp',this)">
+          <span class="mnb-badge" style="color:var(--navy2);">MODULES 6&#8211;7 &#xB7; Governance</span>
+          <span class="mnb-name">Value-Based Care (VBP)</span>
+          <span class="mnb-val" id="mnb_vbp_val" style="color:var(--navy2);">$0/yr</span>
+        </button>
+
+        <button class="mod-nav-btn" id="mnb_state" onclick="switchModPanel('state',this)">
+          <span class="mnb-badge" style="color:var(--slate);">MODULES 5&#8211;6 &#xB7; Financial</span>
+          <span class="mnb-name">State Reimbursement</span>
+          <span class="mnb-val" id="mnb_state_val" style="color:var(--slate);">$0/yr</span>
+        </button>
+
+        <button class="mod-nav-btn" id="mnb_mal" onclick="switchModPanel('mal',this)">
+          <span class="mnb-badge" style="color:var(--red);">MODULE 5 &#xB7; Patient Safety</span>
+          <span class="mnb-name">Malpractice Cost-Avoidance</span>
+          <span class="mnb-val" id="mnb_mal_val" style="color:var(--red);">$0/yr</span>
+        </button>
+
+        <div style="border-top:1px solid var(--border);margin:8px 12px;padding-top:10px;">
+          <div class="note" style="padding:0 2px;font-size:11px;color:var(--slate);">Inputs on this tab feed directly into the Dashboard KPIs. All changes update live.</div>
+        </div>
+      </div>
+
+      <!-- Right panel: module detail -->
+      <div class="module-main">
+
+        <!-- ── ED Language Access & Triage ── -->
+        <div class="mod-panel active" id="modp_ed">
+          <div class="mod-header">
+            <div class="mod-header-badge" style="color:var(--amber);">MODULE 1 &middot; Pre-Assessment &amp; Triage Communication</div>
+            <div class="mod-header-title">ED Language Access &amp; Triage</div>
+            <div class="mod-header-desc">Timely language access at triage (&le;10 min) reduces three measurable financial exposures: (1) communication-driven over-admission, (2) same-complaint ED return visits, and (3) stroke treatment misclassification from onset-time reporting failure. Tracks 1 and 2 apply across all LEP ED encounters; the Stroke sub-model is the most precisely quantifiable single-pathway example of the same mechanism.</div>
+          </div>
+
+          <!-- TRACK 1 -->
+          <div style="font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--amber);margin:14px 0 6px;">Track 1 &mdash; Admission Avoidance (All LEP ED Encounters)</div>
+          <div style="background:#FFF8EC;border-left:3px solid var(--amber);border-radius:6px;padding:9px 13px;margin-bottom:10px;font-size:12px;color:var(--slate);line-height:1.6;">
+            <strong style="color:var(--navy);">Evidence basis:</strong> Schulson et al. (2018, <em>JGIM</em>, n=57,435 ED visits) found LEP patients were significantly more likely to be admitted (OR&nbsp;1.09) and to receive additional imaging &mdash; with cardiovascular LEP patients facing OR&nbsp;1.51 for stress testing. Mechanism: when clinicians cannot obtain a complete history, they compensate with more tests and higher admission rates to manage diagnostic uncertainty. Early language access removes that uncertainty at source. Default 9% excess admission rate maps directly to the OR&nbsp;1.09 finding. Attribution to language access is conservative at 60% &mdash; acknowledging that LEP patients also have higher acuity and SDOH complexity.
+          </div>
+          <div class="inputs">
+            <div class="field"><label><span>Total LEP ED encounters</span><span class="tag">monthly (count)</span></label><input id="ed_lep_ed_month" type="number" min="0" step="1" value="200" oninput="updateAll()"><div class="field-note">All LEP ED encounters regardless of chief complaint. Distinct from the stroke-specific volume in the sub-model below.</div></div>
+            <div class="field"><label><span>Excess admission rate (LEP vs EP)</span><span class="tag">%</span></label><input id="ed_excess_admit_pct" type="number" min="0" max="50" step="0.5" value="9" oninput="updateAll()"><div class="field-note">Schulson (2018): OR 1.09 for admission. Default 9% is the marginal excess, not total LEP admission rate.</div></div>
+            <div class="field"><label><span>Target reduction in excess admissions</span><span class="tag">%</span></label><input id="ed_admit_reduction_pct" type="number" min="0" max="100" step="1" value="40" oninput="updateAll()"><div class="field-note">Proportion of excess admissions preventable through timely language access. Conservative default: 40%. Grounded in the finding that early interpreter use at admission (vs. only at discharge) reduces LOS 0.75&ndash;1.47 days (Lindholm 2012).</div></div>
+            <div class="field"><label><span>Cost per averted inpatient admission</span><span class="tag">$/admission</span></label><input id="ed_cost_per_admission" type="number" min="0" step="500" value="11000" oninput="updateAll()"><div class="field-note">AHRQ HCUP median all-cause inpatient stay ~$11,000&ndash;$13,000. Use your organization&rsquo;s direct cost per admission for precision.</div></div>
+            <div class="field"><label><span>Attribution to language access improvement</span><span class="tag">%</span></label><input id="ed_admit_attrib_pct" type="number" min="0" max="100" step="1" value="60" oninput="updateAll()"><div class="field-note">Conservative: acknowledges that LEP patient admission rates also reflect higher acuity and SDOH complexity independent of communication barriers.</div></div>
+          </div>
+
+          <!-- TRACK 2 -->
+          <div style="font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--amber);margin:18px 0 6px;">Track 2 &mdash; Same-Complaint Return Visit Avoidance</div>
+          <div style="background:#FFF8EC;border-left:3px solid var(--amber);border-radius:6px;padding:9px 13px;margin-bottom:10px;font-size:12px;color:var(--slate);line-height:1.6;">
+            <strong style="color:var(--navy);">Evidence basis:</strong> A QI intervention study (PMC8677944) found that 79.2% of LEP 48-hour ED return visits were for the <em>same complaint</em> &mdash; the direct clinical signature of a first encounter where communication was insufficient to resolve the presenting problem. Standardizing LEP identification and interpreter use documentation reduced return visit rates measurably. Unlike language-concordance in the inpatient setting (where bilingual presence improves throughput), the ED return visit mechanism is purely about completeness: when a patient leaves without understanding their diagnosis or discharge instructions, they come back. This track captures the cost of that cycle.
+          </div>
+          <div class="inputs">
+            <div class="field"><label><span>LEP ED discharges</span><span class="tag">monthly (count)</span></label><input id="ed_lep_discharge_month" type="number" min="0" step="1" value="170" oninput="updateAll()"><div class="field-note">LEP patients discharged from ED (total minus admissions). Default 170 = 200 total &minus; ~30 admitted.</div></div>
+            <div class="field"><label><span>Excess same-complaint 48h return rate</span><span class="tag">%</span></label><input id="ed_excess_return_pct" type="number" min="0" max="30" step="0.5" value="3" oninput="updateAll()"><div class="field-note">Marginal excess return rate attributable to communication gaps. Conservative default: 3%. Literature supports LEP patients have higher return visit rates; 79.2% of those returns are for the same complaint.</div></div>
+            <div class="field"><label><span>Target reduction in excess returns</span><span class="tag">%</span></label><input id="ed_return_reduction_pct" type="number" min="0" max="100" step="1" value="45" oninput="updateAll()"><div class="field-note">Proportion of excess returns preventable through systematic interpreter identification + documentation. QI evidence supports 40&ndash;50% range with process standardization.</div></div>
+            <div class="field"><label><span>Cost per averted ED return visit</span><span class="tag">$/visit</span></label><input id="ed_cost_per_return" type="number" min="0" step="100" value="1200" oninput="updateAll()"><div class="field-note">ED facility direct cost per visit. Range $900&ndash;$1,500 depending on acuity mix. Does not include potential admission cost if return visit escalates.</div></div>
+            <div class="field"><label><span>Attribution to language access improvement</span><span class="tag">%</span></label><input id="ed_return_attrib_pct" type="number" min="0" max="100" step="1" value="55" oninput="updateAll()"><div class="field-note">Conservative: same-complaint returns also reflect SDOH factors (no PCP, medication access). 55% is defensible given the 79.2% same-complaint rate in LEP return visits.</div></div>
+          </div>
+
+          <!-- KPIs for Tracks 1 + 2 -->
+          <div class="grid g4" style="margin-top:14px;">
+            <div class="kpi" style="border:1px solid var(--amber);"><div class="label">Track 1 &mdash; Admission avoidance</div><div class="value" id="kpi_ed_track1">$0</div><div class="sub">$/year</div></div>
+            <div class="kpi" style="border:1px solid var(--amber);"><div class="label">Track 2 &mdash; Return visit avoidance</div><div class="value" id="kpi_ed_track2">$0</div><div class="sub">$/year</div></div>
+            <div class="kpi"><div class="label">Averted admissions</div><div class="value" id="kpi_ed_averted_admits">&mdash;</div><div class="sub">estimated / month</div></div>
+            <div class="kpi"><div class="label">Averted return visits</div><div class="value" id="kpi_ed_averted_returns">&mdash;</div><div class="sub">estimated / month</div></div>
+          </div>
+
+          <!-- STROKE SUB-MODEL -->
+          <details style="margin-top:18px;">
+            <summary style="font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--slate);cursor:pointer;padding:6px 0;">Stroke Sub-Model &mdash; High-Acuity Example of the Admission Avoidance Mechanism &#x25BE;</summary>
+            <div class="inside" style="margin-top:10px;">
+              <div style="background:var(--fog);border-radius:6px;padding:9px 13px;margin-bottom:12px;font-size:12px;color:var(--slate);line-height:1.6;">
+                Stroke is the most financially legible single-pathway example of how communication failure at triage produces treatment exclusion. The mechanism is precise: LEP patients misreport or cannot communicate onset time &rarr; provider cannot confirm treatment window &rarr; patient is excluded from IV thrombolysis or EVT consideration. Revenue consequence is directly calculable. This sub-model sits inside Track 1 conceptually; it is shown separately because its inputs and revenue figures are independently calibratable and auditable.
+              </div>
+              <div class="inputs">
+                <div class="field"><label><span>Suspected stroke ED arrivals</span><span class="tag">monthly (count)</span></label><input id="ed_suspected_stroke_month" type="number" min="0" step="1" value="30" oninput="updateAll()"></div>
+                <div class="field"><label><span>Share of suspected stroke that are LEP</span><span class="tag">%</span></label><input id="ed_lep_share_pct" type="number" min="0" max="100" step="1" value="20" oninput="updateAll()"></div>
+                <div class="field"><label><span>Baseline timely language access &le;10 min (LEP)</span><span class="tag">%</span></label><input id="ed_timely_baseline_pct" type="number" min="0" max="100" step="1" value="40" oninput="updateAll()"></div>
+                <div class="field"><label><span>Target timely language access &le;10 min (LEP)</span><span class="tag">%</span></label><input id="ed_timely_target_pct" type="number" min="0" max="100" step="1" value="75" oninput="updateAll()"></div>
+                <div class="field"><label><span>Target QBS share of timely-access gains</span><span class="tag">%</span></label><input id="ed_target_qbs_share_pct" type="number" min="0" max="100" step="1" value="40" oninput="updateAll()"></div>
+                <div class="field"><label><span>IV thrombolysis eligibility rate</span><span class="tag">%</span></label><input id="ed_ivtpa_elig_rate_pct" type="number" min="0" max="100" step="1" value="12" oninput="updateAll()"></div>
+                <div class="field"><label><span>EVT eligibility rate</span><span class="tag">%</span></label><input id="ed_evt_elig_rate_pct" type="number" min="0" max="100" step="1" value="6" oninput="updateAll()"></div>
+                <div class="field"><label><span>Misclassification risk (onset-time exclusion)</span><span class="tag">%</span></label><input id="ed_misclass_risk_pct" type="number" min="0" max="100" step="1" value="35" oninput="updateAll()"></div>
+                <div class="field"><label><span>IV thrombolysis revenue preserved</span><span class="tag">$ per case</span></label><input id="ed_ivtpa_revenue" type="number" min="0" step="100" value="2500" oninput="updateAll()"></div>
+                <div class="field"><label><span>EVT revenue preserved</span><span class="tag">$ per case</span></label><input id="ed_evt_revenue" type="number" min="0" step="100" value="12000" oninput="updateAll()"></div>
+                <div class="field"><label><span>High-acuity E/M uplift</span><span class="tag">$ per timely case</span></label><input id="ed_high_acuity_uplift" type="number" min="0" step="25" value="250" oninput="updateAll()"></div>
+                <div class="field"><label><span>Interpreter minutes per case</span><span class="tag">minutes</span></label><input id="ed_interp_minutes_per_case" type="number" min="0" step="1" value="10" oninput="updateAll()"></div>
+                <div class="field"><label><span>Vendor rate per interpreter minute</span><span class="tag">$/min</span></label><input id="ed_vendor_rate" type="number" min="0" step="0.05" value="0.75" oninput="updateAll()"></div>
+                <div class="field"><label><span>QBS incremental cost per case</span><span class="tag">$</span></label><input id="ed_qbs_incremental_cost_per_case" type="number" min="0" step="10" value="0" oninput="updateAll()"></div>
+                <div class="field"><label><span>Attribution to language access improvement</span><span class="tag">%</span></label><input id="ed_attrib_pct" type="number" min="0" max="100" step="1" value="70" oninput="updateAll()"></div>
+              </div>
+              <div class="grid g3" style="margin-top:12px;">
+                <div class="kpi"><div class="label">Stroke sub-model net</div><div class="value" id="kpi_ed_stroke">$0</div><div class="sub">$/year</div></div>
+                <div class="kpi"><div class="label">Incremental timely-access LEP stroke cases</div><div class="value" id="kpi_ed_inc_timely">0</div><div class="sub">monthly count</div></div>
+                <div class="kpi"><div class="label">Incremental treated cases (IV-tPA + EVT)</div><div class="value" id="kpi_ed_inc_treated">0</div><div class="sub">monthly count</div></div>
+              </div>
+            </div>
+          </details>
+
+          <!-- Combined outputs -->
+          <div class="grid g3" style="margin-top:16px;border-top:2px solid var(--amber);padding-top:14px;">
+            <div class="kpi" style="border:1.5px solid var(--amber);"><div class="label">Combined annual savings</div><div class="value" id="kpi_ed_year">$0</div><div class="sub">Tracks 1 + 2 + Stroke</div></div>
+            <div class="kpi"><div class="label">Combined monthly savings</div><div class="value" id="kpi_ed_month">$0</div><div class="sub">$/month</div></div>
+            <div class="kpi"><div class="label">Step-by-step detail</div><div class="sub" style="margin-top:4px;"><details><summary style="cursor:pointer;color:var(--teal);">View calculation</summary><div class="inside" style="overflow:auto;margin-top:8px;"><table><thead><tr><th>Step</th><th style="text-align:right;">Value</th><th>Unit</th></tr></thead><tbody id="tbl_ed_steps"></tbody></table></div></details></div></div>
+          </div>
+        </div>
+
+        <!-- ── Engagement & LOS ── -->
+        <!-- ── Engagement & LOS ── -->
+        <div class="mod-panel" id="modp_eng">
+          <div class="mod-header">
+            <div class="mod-header-badge" style="color:var(--teal);">MODULE 3 &middot; Inpatient Communication Reliability</div>
+            <div class="mod-header-title">Engagement &amp; LOS Reduction</div>
+            <div class="mod-header-desc">Systematic communication integration during inpatient rounding reduces avoidable LOS. This module has two components: a baseline saving from interpreter integration into care delivery, and an incremental QBS Enhancement saving from increasing Qualified Bilingual Speaker coverage of LEP encounters. The QBS uplift is modeled as additive and calibrated to a diabetes-specific mechanism chain (Karliner et al., 2007; Lindholm et al., 2012).</div>
+          </div>
+
+          <div style="font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--slate);margin:14px 0 8px;">Baseline &mdash; Interpreter Integration</div>
+          <div class="inputs">
+            <div class="field"><label><span>LEP inpatients</span><span class="tag">monthly (count)</span></label><input id="eng_lep_patients_month" type="number" min="0" step="1" value="40" oninput="updateAll()"></div>
+            <div class="field"><label><span>LOS reduction from best practices</span><span class="tag">days per encounter</span></label><input id="eng_los_reduction_days" type="number" min="0" step="0.1" value="1.0" oninput="updateAll()"><div class="field-note">Lindholm (2012): 1.5&ndash;3.0 day LEP premium overall. Default 1.0 day assumes systematic integration &mdash; not just interpreter availability. Ex. 3.2 null result confirms availability alone is insufficient.</div></div>
+            <div class="field"><label><span>Hospital cost per inpatient day</span><span class="tag">$/day</span></label><input id="eng_cost_per_inpatient_day" type="number" min="0" step="100" value="3000" oninput="updateAll()"></div>
+          </div>
+
+          <div style="font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--teal);margin:18px 0 8px;">QBS Enhancement &mdash; Bilingual Provider Uplift</div>
+          <div style="background:var(--teal-light,#D4EEE9);border-left:3px solid var(--teal);border-radius:6px;padding:9px 13px;margin-bottom:10px;font-size:12px;color:var(--slate);line-height:1.6;">
+            <strong style="color:var(--navy);">Evidence basis:</strong> Karliner et al. (2007) found QBS providers produce fewer clinical errors and higher comprehension scores than ad hoc staff, outperforming professional interpreters on several quality dimensions. The mechanism: faster complete HPI, real-time lab explanation, bedside injection-fear resolution, and same-visit discharge confirmation &mdash; each eliminating a deferred-communication loop that extends inpatient stays. Within Lindholm&rsquo;s 1.5&ndash;3.0 day LEP premium, a QBS-specific contribution of <strong>0.5&ndash;1.5 days</strong> is defensible for high-complexity encounters (new insulin initiation, comorbid CKD). Default: 0.5 days (conservative end).
+          </div>
+          <div class="inputs">
+            <div class="field"><label><span>Current QBS coverage of LEP encounters</span><span class="tag">%</span></label><input id="eng_qbs_current_pct" type="number" min="0" max="100" step="1" value="20" oninput="updateAll()"><div class="field-note">% of LEP inpatient encounters that currently involve a QBS provider at any care stage. Default 20% typical for organizations with some bilingual clinical staff.</div></div>
+            <div class="field"><label><span>Target QBS coverage (with investment)</span><span class="tag">%</span></label><input id="eng_qbs_target_pct" type="number" min="0" max="100" step="1" value="50" oninput="updateAll()"><div class="field-note">Realistic 12-month target. The incremental saving applies only to the coverage delta (target &minus; current).</div></div>
+            <div class="field"><label><span>QBS-attributed LOS uplift</span><span class="tag">days per QBS encounter</span></label><input id="eng_qbs_los_uplift" type="number" min="0" step="0.1" value="0.5" oninput="updateAll()"><div class="field-note">Additional LOS reduction attributable specifically to QBS presence vs. interpreter-only. Conservative default: 0.5 days. For high-complexity diabetes/CKD admissions: 1.0&ndash;1.5 days is defensible.</div></div>
+          </div>
+
+          <div class="grid g4" style="margin-top:14px;">
+            <div class="kpi"><div class="label">Baseline savings</div><div class="value" id="kpi_eng_base">$0</div><div class="sub">$/year</div></div>
+            <div class="kpi" style="border:1px solid var(--teal);"><div class="label">QBS uplift</div><div class="value" id="kpi_eng_qbs">$0</div><div class="sub">$/year</div></div>
+            <div class="kpi" style="border:1.5px solid var(--teal);"><div class="label">Combined savings</div><div class="value" id="kpi_eng_year">$0</div><div class="sub">$/year</div></div>
+            <div class="kpi"><div class="label">Combined savings</div><div class="value" id="kpi_eng_month">$0</div><div class="sub">$/month</div></div>
+          </div>
+          <div style="margin-top:10px;padding:8px 12px;background:var(--fog);border-radius:6px;font-size:11.5px;color:var(--slate);">
+            <strong>QBS coverage delta:</strong> <span id="kpi_eng_qbs_delta">&mdash;</span> &nbsp;|&nbsp;
+            <strong>QBS encounters/month:</strong> <span id="kpi_eng_qbs_encounters">&mdash;</span> &nbsp;|&nbsp;
+            <strong>Formula:</strong> <span id="kpi_eng_formula" style="font-family:monospace;font-size:11px;">&mdash;</span>
+          </div>
+        </div>
+
+        <!-- ── Teach-Back ── -->
+        <div class="mod-panel" id="modp_tb">
+          <div class="mod-header">
+            <div class="mod-header-badge" style="color:var(--green);">MODULE 4 &#xB7; Discharge Planning &amp; Patient Education</div>
+            <div class="mod-header-title">Teach-Back (Provider + Automation) &#8212; Net of Delivery Cost</div>
+            <div class="mod-header-desc">Models readmission avoidance as teach-back adoption grows via provider training and automation (S-curve). Costs include provider time and interpreter minutes. Revenue Integrity overlay maps coding risk at discharge and post-discharge stages.</div>
+          </div>
+          <div class="inputs">
+            <div class="field"><label><span>Time horizon</span><span class="tag">months</span></label><input id="tb_horizon_months" type="number" min="3" max="24" step="1" value="12"></div>
+            <div class="field"><label><span>LEP inpatients</span><span class="tag">monthly (count)</span></label><input id="tb_lep_patients_month" type="number" min="0" step="1" value="40"></div>
+            <div class="field"><label><span>LEP 30-day readmission rate</span><span class="tag">0&#8211;1</span></label><input id="tb_lep_readmit_rate" type="number" min="0" max="1" step="0.001" value="0.178"></div>
+            <div class="field"><label><span>Projected readmissions as % of expected</span><span class="tag">0&#8211;1</span></label><input id="tb_projected_pct" type="number" min="0" max="1" step="0.01" value="0.75"></div>
+            <div class="field"><label><span>Teach-back max reduction in readmissions</span><span class="tag">0&#8211;1</span></label><input id="tb_max_reduction" type="number" min="0" max="1" step="0.01" value="0.23"></div>
+            <div class="field"><label><span>Median cost per inpatient stay</span><span class="tag">$/stay</span></label><input id="tb_median_cost_per_stay" type="number" min="0" step="100" value="11086"></div>
+            <div class="field"><label><span>Provider time per teach-back</span><span class="tag">minutes</span></label><input id="tb_provider_minutes_per_tb" type="number" min="0" step="0.5" value="2.0"></div>
+            <div class="field"><label><span>Fully loaded provider cost</span><span class="tag">$/minute</span></label><input id="tb_provider_cost_per_min" type="number" min="0" step="0.5" value="3.0"></div>
+            <div class="field"><label><span>Vendor rate per interpreter minute</span><span class="tag">$/min</span></label><input id="tb_vendor_rate" type="number" min="0" step="0.05" value="0.75"></div>
+            <div class="field"><label><span>Interpreter minutes per teach-back</span><span class="tag">minutes</span></label><input id="tb_interp_minutes_per_tb" type="number" min="0" step="0.5" value="3.0"></div>
+            <div class="field"><label><span>QBS / language-concordant share</span><span class="tag">%</span></label><input id="tb_qbs_share_pct" type="number" min="0" max="100" step="1" value="30"></div>
+            <div class="field"><label><span>Providers doing teach-back now</span><span class="tag">%</span></label><input id="tb_prov_start_pct" type="number" min="0" max="100" step="1" value="5"></div>
+            <div class="field"><label><span>Providers doing teach-back at horizon end</span><span class="tag">%</span></label><input id="tb_prov_end_pct" type="number" min="0" max="100" step="1" value="10"></div>
+            <div class="field"><label><span>Automation coverage now</span><span class="tag">%</span></label><input id="tb_can_start_pct" type="number" min="0" max="100" step="1" value="0"></div>
+            <div class="field"><label><span>Automation coverage at horizon end</span><span class="tag">%</span></label><input id="tb_can_end_pct" type="number" min="0" max="100" step="1" value="25"></div>
+            <div class="field"><label><span>S-curve midpoint</span><span class="tag">month</span></label><input id="tb_midpoint" type="number" min="1" step="1" value="6"><div class="mini">Month where automation adoption accelerates.</div></div>
+            <div class="field"><label><span>S-curve steepness</span><span class="tag">0.2&#8211;2.5</span></label><input id="tb_steepness" type="number" min="0.2" max="2.5" step="0.1" value="1.0"></div>
+            <div class="field"><label><span>Cap net teach-back coverage at 100%</span><span class="tag">toggle</span></label><div class="row"><input id="tb_cap_net" type="checkbox" checked><div class="mini">If provider + automation exceeds 100%, the model scales the mix.</div></div></div>
+            <div class="field"><label><span>Annualize net savings to 12 months</span><span class="tag">toggle</span></label><div class="row"><input id="tb_annualize" type="checkbox" checked><div class="mini">If horizon &#8800; 12 months, scales to annual equivalent.</div></div></div>
+          </div>
+          <div class="grid g4" style="margin-top:14px;">
+            <div class="kpi"><div class="label">Horizon</div><div class="value" id="kpi_tb_horizon">12</div><div class="sub">months</div></div>
+            <div class="kpi"><div class="label">Net teach-back coverage (final month)</div><div class="value" id="kpi_tb_net_final">0%</div></div>
+            <div class="kpi"><div class="label">Monthly averted readmissions (final month)</div><div class="value" id="kpi_tb_avert_final">0.00</div></div>
+            <div class="kpi"><div class="label">Annual NET savings</div><div class="value" id="kpi_tb_annual_net" style="color:var(--green);">$0</div><div class="sub">$/year</div></div>
+          </div>
+          <!-- Charts -->
+          <div class="section-label" style="margin-top:18px;">Adoption &amp; Outcome Curves</div>
+          <div class="grid g2" style="margin-bottom:12px;">
+            <div class="chartBox"><div class="chart-title">Adoption curves (Provider vs Automation vs Net)</div><div class="small">X: Month &#xB7; Y: Coverage (%)</div><canvas id="ch_adoption"></canvas></div>
+            <div class="chartBox"><div class="chart-title">Clinical outcome curve</div><div class="small">X: Month &#xB7; Y: Monthly averted readmissions</div><canvas id="ch_outcome"></canvas></div>
+          </div>
+          <div class="grid g2" style="margin-bottom:14px;">
+            <div class="chartBox"><div class="chart-title">Savings vs Cost</div><div class="small">X: Month &#xB7; Y: Dollars ($)</div><canvas id="ch_savings_cost"></canvas></div>
+            <div class="chartBox"><div class="chart-title">Net savings trajectory</div><div class="small">X: Month &#xB7; Y: Net savings ($)</div><canvas id="ch_net"></canvas></div>
+          </div>
+          <!-- Revenue integrity overlay -->
+          <details style="margin-bottom:12px;">
+            <summary>Revenue Integrity &amp; Coding Risk Overlay (Discharge + Teach-Back)</summary>
+            <div class="inside">
+              <div class="note">Maps workflow stage &#8594; key task &#8594; CPT family at risk &#8594; risk type &#8594; audit evidence. No payer-specific reimbursement assumed.</div>
+              <div class="grid g3" style="margin:10px 0;">
+                <div class="kpi"><div class="label">Discharge risk posture (99238&#8211;99239)</div><div class="value" id="kpi_discharge_risk">&#8212;</div><div class="sub">Based on teach-back coverage</div></div>
+                <div class="kpi"><div class="label">TCM readiness posture (99495&#8211;99496)</div><div class="value" id="kpi_tcm_risk">&#8212;</div><div class="sub">Based on teach-back + follow-up proxy</div></div>
+                <div class="kpi"><div class="label">Primary revenue risk type</div><div class="value" id="kpi_primary_risk_type">&#8212;</div><div class="sub">Downcoding vs missed billing vs documentation</div></div>
+                <div class="kpi"><div class="label">Teaching-setting qualifier (CMS)</div><div class="value" id="kpi_teaching_qualifier">&#8212;</div><div class="sub">Attestation readiness</div></div>
+              </div>
+              <div style="overflow:auto;"><table><thead><tr><th>Workflow stage</th><th>Key task</th><th>Language access dependency</th><th>CPT family at risk</th><th>MDM / documentation element</th><th>Risk type</th><th>Risk status</th><th>Audit evidence to retain</th></tr></thead><tbody id="tbl_rev_integrity"></tbody></table></div>
+              <div class="mini" style="margin-top:8px;">CPT families are mapped to different encounters and are not intended to imply double billing. Teaching sites: billing defensibility depends on documented teaching-physician presence/participation.</div>
+            </div>
+          </details>
+          <!-- Month-by-month table -->
+          <details>
+            <summary>Month-by-month detail table</summary>
+            <div class="inside" style="overflow:auto;"><table><thead><tr><th>Month</th><th style="text-align:right;">Provider (%)</th><th style="text-align:right;">Automation (%)</th><th style="text-align:right;">Net (%)</th><th style="text-align:right;">Provider TB pts</th><th style="text-align:right;">Concordant</th><th style="text-align:right;">With interp.</th><th style="text-align:right;">Averted readm.</th><th style="text-align:right;">Readm. savings ($)</th><th style="text-align:right;">Provider cost ($)</th><th style="text-align:right;">Interp. cost ($)</th><th style="text-align:right;">Delivery cost ($)</th><th style="text-align:right;">NET savings ($)</th></tr></thead><tbody id="tbl_tb_rows"></tbody></table></div>
+          </details>
+        </div>
+
+        <!-- ── VBP ── -->
+        <div class="mod-panel" id="modp_vbp">
+          <div class="mod-header">
+            <div class="mod-header-badge" style="color:var(--navy2);">MODULES 6&#8211;7 &#xB7; Policy, Governance &amp; CAP</div>
+            <div class="mod-header-title">Value-Based Care (VBP)</div>
+            <div class="mod-header-desc">Improved communication reliability drives better HCAHPS scores and quality metrics that directly affect Medicare VBP performance. This module estimates the incremental withhold recapture from communication-related quality improvements.</div>
+          </div>
+          <div class="inputs">
+            <div class="field"><label><span>Annual Medicare inpatient revenue</span><span class="tag">$/year</span></label><input id="vbp_medicare_revenue" type="number" min="0" step="1000000" value="50000000"></div>
+            <div class="field"><label><span>VBP withhold</span><span class="tag">%</span></label><input id="vbp_withhold_pct" type="number" min="0" max="10" step="0.1" value="2.0"></div>
+            <div class="field"><label><span>Recoup / performance capture rate</span><span class="tag">%</span></label><input id="vbp_recoup_rate_pct" type="number" min="0" max="200" step="5" value="100"></div>
+            <div class="field"><label><span>Incremental improvement from best practices</span><span class="tag">%</span></label><input id="vbp_incremental_improvement_pct" type="number" min="0" max="200" step="1" value="10"></div>
+          </div>
+          <div class="grid g3" style="margin-top:14px;">
+            <div class="kpi"><div class="label">Annual savings (per hospital)</div><div class="value" id="kpi_vbp_year">$0</div><div class="sub">$/year</div></div>
+            <div class="kpi"><div class="label">Monthly savings (per hospital)</div><div class="value" id="kpi_vbp_month">$0</div><div class="sub">$/month</div></div>
+            <div class="kpi"><div class="label">Formula</div><div class="sub">Medicare revenue &#xD7; withhold &#xD7; improvement &#xD7; recoup</div><div class="sub tag" id="kpi_vbp_formula">&#8212;</div></div>
+          </div>
+        </div>
+
+        <!-- ── State Reimbursement ── -->
+        <div class="mod-panel" id="modp_state">
+          <div class="mod-header">
+            <div class="mod-header-badge" style="color:var(--slate);">MODULES 5&#8211;6 &#xB7; Financial Stewardship</div>
+            <div class="mod-header-title">State Reimbursement (Medicaid Interpreter)</div>
+            <div class="mod-header-desc">18 states + DC directly reimburse providers for documented interpreter services under Medicaid/CHIP (NHeLP 2024). Select your state to auto-populate billing model, rate, and applicable caps. All inputs remain editable for scenario planning. <strong>Applies to Fee-for-Service (FFS) billing only</strong> — MCO capitation rates are separate.</div>
+          </div>
+
+          <!-- State selector row -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+            <div class="field">
+              <label><span>State / jurisdiction</span><span class="tag">select to load profile</span></label>
+              <select id="ia_state_select" onchange="onStateSelect()">
+                <option value="">— Select your state —</option>
+                <option value="CA">California (CA) — MCO bundled</option>
+                <option value="DC">District of Columbia (DC)</option>
+                <option value="ID">Idaho (ID)</option>
+                <option value="IA">Iowa (IA)</option>
+                <option value="KS">Kansas (KS)</option>
+                <option value="ME">Maine (ME)</option>
+                <option value="MN">Minnesota (MN)</option>
+                <option value="MT">Montana (MT)</option>
+                <option value="NC">North Carolina (NC) — Deaf/HoH only</option>
+                <option value="ND">North Dakota (ND)</option>
+                <option value="NH">New Hampshire (NH)</option>
+                <option value="NY">New York (NY)</option>
+                <option value="OR">Oregon (OR) — per-visit flat</option>
+                <option value="RI">Rhode Island (RI)</option>
+                <option value="UT">Utah (UT)</option>
+                <option value="VT">Vermont (VT)</option>
+                <option value="WA">Washington (WA)</option>
+                <option value="WY">Wyoming (WY)</option>
+                <option value="CUSTOM">Custom / Not listed</option>
+              </select>
+            </div>
+            <div class="field" id="ia_billing_model_field">
+              <label><span>Billing model</span><span class="tag">auto-detected</span></label>
+              <div id="ia_billing_model_display" style="padding:8px 10px;background:var(--fog);border-radius:9px;border:1px solid var(--bd);font-size:12px;color:var(--slate);min-height:36px;display:flex;align-items:center;">Select a state above</div>
+            </div>
+          </div>
+
+          <!-- State-specific alert (shown when state is selected) -->
+          <div id="ia_state_alert" style="display:none;background:var(--ice);border-left:3px solid var(--teal);border-radius:6px;padding:10px 14px;margin-bottom:10px;font-size:11.5px;color:var(--slate);line-height:1.6;"></div>
+
+          <!-- Dynamic inputs -->
+          <div class="inputs" id="ia_inputs_standard">
+            <!-- Per-minute / per-15-min-unit states -->
+            <div id="ia_field_minutes" class="field">
+              <label><span id="ia_minutes_label">Reimbursable interpreter minutes</span><span class="tag" id="ia_minutes_tag">monthly (minutes)</span></label>
+              <input id="ia_reimbursable_minutes_month" type="number" min="0" step="50" value="3100" oninput="updateAll()">
+              <div class="field-note" id="ia_minutes_note">Total documented interpreter minutes per month eligible for Medicaid reimbursement (FFS encounters only).</div>
+            </div>
+            <!-- Per-visit flat (OR) -->
+            <div id="ia_field_visits" class="field" style="display:none;">
+              <label><span>Reimbursable interpreter visits</span><span class="tag">monthly (visits)</span></label>
+              <input id="ia_reimbursable_visits_month" type="number" min="0" step="10" value="150" oninput="updateAll()">
+              <div class="field-note">Oregon reimburses a flat $60 add-on fee per covered health care visit. Enter monthly FFS visit count where interpreting was documented.</div>
+            </div>
+            <!-- Per-session (NY) -->
+            <div id="ia_field_sessions" class="field" style="display:none;">
+              <label><span>Reimbursable interpreter sessions</span><span class="tag">monthly (sessions)</span></label>
+              <input id="ia_reimbursable_sessions_month" type="number" min="0" step="10" value="120" oninput="updateAll()">
+              <div class="field-note">NY bills by session length: $11.11 (8–22 min) or $22.00 (23+ min). Enter estimated monthly session count. Use the session-length toggle below.</div>
+            </div>
+            <div id="ia_field_session_long" class="field" style="display:none;">
+              <label><span>Sessions ≥ 23 minutes</span><span class="tag">% of sessions</span></label>
+              <input id="ia_session_long_pct" type="number" min="0" max="100" step="5" value="75" oninput="updateAll()">
+              <div class="field-note">Estimate the share of sessions lasting 23 minutes or more (billed at $22.00 vs. $11.11). Typical outpatient clinical encounter: 70–85% will qualify at $22.</div>
+            </div>
+
+            <div class="field" id="ia_field_rate">
+              <label><span id="ia_rate_label">State reimbursement rate</span><span class="tag" id="ia_rate_tag">$/minute</span></label>
+              <input id="ia_reimb_rate_per_min" type="number" min="0" step="0.01" value="0.75" oninput="updateAll()">
+              <div class="field-note" id="ia_rate_note">Auto-populated from NHeLP 2024 state profile. Edit for updated rates or contract-specific modifiers.</div>
+            </div>
+            <div class="field"><label><span>Claim approval rate</span><span class="tag">%</span></label><input id="ia_approval_rate_pct" type="number" min="0" max="100" step="1" value="80" oninput="updateAll()"><div class="field-note">Estimated share of submitted claims that are approved and paid. Typical range: 70–92% depending on documentation completeness.</div></div>
+            <div class="field"><label><span>Eligible encounters captured</span><span class="tag">%</span></label><input id="ia_capture_rate_pct" type="number" min="0" max="100" step="1" value="70" oninput="updateAll()"><div class="field-note">Share of eligible FFS encounters where interpreter use is currently documented to the level required for billing. This is the primary leverage point — most hospitals capture 50–75% initially.</div></div>
+
+            <!-- FMAP reference (shown when state is selected) -->
+            <div id="ia_field_fmap" class="field" style="display:none;">
+              <label><span>Federal matching rate (FMAP)</span><span class="tag">reference only</span></label>
+              <div id="ia_fmap_display" style="padding:8px 10px;background:var(--fog);border-radius:9px;border:1px solid var(--bd);font-size:11.5px;color:var(--slate);line-height:1.6;"></div>
+            </div>
+          </div>
+
+          <!-- Per-visit cap notice -->
+          <div id="ia_cap_notice" style="display:none;margin:8px 0;padding:8px 12px;background:#fff8e6;border-left:3px solid var(--amber);border-radius:6px;font-size:11.5px;color:var(--slate);"></div>
+
+          <div class="grid g3" style="margin-top:14px;">
+            <div class="kpi"><div class="label">Annual reimbursement offset</div><div class="value" id="kpi_state_year">$0</div><div class="sub">$/year</div></div>
+            <div class="kpi"><div class="label">Monthly reimbursement offset</div><div class="value" id="kpi_state_month">$0</div><div class="sub">$/month</div></div>
+            <div class="kpi"><div class="label">Billing basis</div><div class="sub" id="kpi_state_basis">Select a state</div><div class="sub tag" id="kpi_state_formula">&#8212;</div></div>
+          </div>
+
+          <!-- Source footnote -->
+          <div style="margin-top:10px;padding:8px 12px;background:var(--fog);border-radius:6px;font-size:11px;color:var(--silver);">
+            <strong style="color:var(--slate);">Source:</strong> NHeLP (2024). <em>Medicaid and CHIP Reimbursement Models for Language Services — 2024 Update</em> (Youdelman / Manatt). 18 states + DC profiled. Rates are FFS baseline; MCO rates are negotiated separately. FMAP rates are FY 2024. Always verify current rates with your state Medicaid agency before projecting revenue.
+          </div>
+        </div>
+
+        <!-- ── Malpractice ── -->
+        <div class="mod-panel" id="modp_mal">
+          <div class="mod-header">
+            <div class="mod-header-badge" style="color:var(--red);">MODULE 5 &middot; Patient Safety &amp; Risk Management</div>
+            <div class="mod-header-title">Malpractice Cost-Avoidance</div>
+            <div class="mod-header-desc">Language barrier claims represent ~2.5% of malpractice filings but up to 14% of high-severity claims (CRICO Strategies, 2015). This module uses a two-track model calibrated to the UC Berkeley / NHeLP claims analysis (Quan &amp; Lynch, 2010), inflation-adjusted to 2025, separating damage exposure from defense legal cost exposure &mdash; which arises even when claims are dismissed. Replace defaults with your organization&rsquo;s actual risk data for the most defensible projection.</div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 24px;margin-bottom:4px;">
+
+            <div>
+              <div style="font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--slate);margin:14px 0 8px;">Encounter Profile</div>
+              <div class="inputs">
+                <div class="field"><label><span>Annual LEP encounters</span><span class="tag">cases/year</span></label><input id="mal_lep_encounters" type="number" min="0" step="100" value="1800" oninput="updateAll()"></div>
+                <div class="field"><label><span>Encounters with documentation gaps</span><span class="tag">%</span></label><input id="mal_doc_gap_pct" type="number" min="0" max="100" step="1" value="35" oninput="updateAll()"><div class="field-note">Berkeley: documentation deficiencies present in virtually all language-barrier claims reviewed. Range: 20&ndash;65%.</div></div>
+              </div>
+
+              <div style="font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--slate);margin:14px 0 8px;">Claim Economics &mdash; Berkeley Calibrated</div>
+              <div class="inputs">
+                <div class="field"><label><span>Claim filing rate (per at-risk encounter)</span><span class="tag">%</span></label><input id="mal_claim_rate_pct" type="number" min="0" max="100" step="0.1" value="2.5" oninput="updateAll()"><div class="field-note">Berkeley: 35 language-barrier claims / 1,373 total reviewed = 2.55%. Under-filing is probable; true incidence exceeds filed rate.</div></div>
+                <div class="field"><label><span>Claims resulting in damage payment</span><span class="tag">%</span></label><input id="mal_damage_pmt_pct" type="number" min="0" max="100" step="1" value="29" oninput="updateAll()"><div class="field-note">Berkeley: 10 of 35 claims (28.6%) paid damages. Remaining 91% still incurred defense legal costs regardless of outcome.</div></div>
+              </div>
+            </div>
+
+            <div>
+              <div style="font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--slate);margin:14px 0 8px;">Cost Decomposition &mdash; Inflation-Adjusted to 2025</div>
+              <div class="inputs">
+                <div class="field"><label><span>Avg damage award (paid claims only)</span><span class="tag">$/claim</span></label><input id="mal_avg_damage" type="number" min="0" step="10000" value="385000" oninput="updateAll()"><div class="field-note">Berkeley avg $228,900 (2010) &times; CPI adj. = $336K. PIAA/Candello 2022&ndash;2024 avg: $350&ndash;500K. CA MICRA cap rising to $750K by 2033 (AB 35).</div></div>
+                <div class="field"><label><span>Avg defense legal cost (all filed claims)</span><span class="tag">$/claim</span></label><input id="mal_avg_defense" type="number" min="0" step="5000" value="118000" oninput="updateAll()"><div class="field-note">Berkeley avg $79,800 (2010) &times; CPI adj. = $117K. Applies even to dismissed claims. Observed range: $6K&ndash;$588K per case.</div></div>
+              </div>
+
+              <div style="font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--slate);margin:14px 0 8px;">Risk Reduction &mdash; Two Mechanisms</div>
+              <div class="inputs">
+                <div class="field"><label><span>Interpreter protocol compliance</span><span class="tag">% reduction</span></label><input id="mal_interp_rr_pct" type="number" min="0" max="60" step="1" value="15" oninput="updateAll()"><div class="field-note">Reduces adverse event incidence and claim filing rate. Systematic protocol studies: 10&ndash;30% range.</div></div>
+                <div class="field"><label><span>Documentation quality improvement</span><span class="tag">% additional reduction</span></label><input id="mal_doc_rr_pct" type="number" min="0" max="40" step="1" value="8" oninput="updateAll()"><div class="field-note">Reduces claim success rate and time-to-dismissal. Applied multiplicatively with interpreter reduction. Berkeley: no case had complete documentation.</div></div>
+              </div>
+            </div>
+
+          </div>
+
+          <div style="background:var(--ice);border-left:3px solid var(--red);border-radius:6px;padding:10px 14px;margin:10px 0 14px;font-size:12px;color:var(--slate);line-height:1.6;">
+            <strong style="color:var(--navy);">Berkeley / NHeLP Key Findings (Quan &amp; Lynch 2010, adjusted to 2025 USD):</strong>
+            &nbsp;35 language-barrier claims generated $3.36M in damages and $4.10M in defense legal fees &mdash; $7.46M combined, representing 2.5% of reviewed claims.
+            Only 29% resulted in damage payment; <em>91% incurred defense legal costs regardless of outcome.</em>
+            Dominant failure modes: interpreter absence (32/35 &bull; 91%), defective informed consent (12/35 &bull; 34%), documentation gaps (virtually all cases), discrimination allegation (2/35 &bull; uncapped under CA Unruh Act).
+            Post-2010: CRICO Strategies data shows language-barrier claims generate approximately 7&times; the severity concentration of general malpractice claims.
+          </div>
+
+          <div class="grid g4" style="margin-top:4px;">
+            <div class="kpi"><div class="label">Damage avoidance</div><div class="value" id="kpi_mal_damage">$0</div><div class="sub">$/year</div></div>
+            <div class="kpi"><div class="label">Defense cost avoidance</div><div class="value" id="kpi_mal_defense">$0</div><div class="sub">$/year</div></div>
+            <div class="kpi" style="border:1.5px solid var(--teal);"><div class="label">Combined savings</div><div class="value" id="kpi_mal_year">$0</div><div class="sub">$/year</div></div>
+            <div class="kpi"><div class="label">Combined savings</div><div class="value" id="kpi_mal_month">$0</div><div class="sub">$/month</div></div>
+          </div>
+          <div style="margin-top:10px;padding:8px 12px;background:var(--fog);border-radius:6px;font-size:11.5px;color:var(--slate);">
+            <strong>Combined risk reduction:</strong> <span id="kpi_mal_combined_rr">&mdash;</span> (multiplicative) &nbsp;|&nbsp;
+            <strong>At-risk encounters:</strong> <span id="kpi_mal_at_risk">&mdash;</span> &nbsp;|&nbsp;
+            <strong>Est. claims filed/yr:</strong> <span id="kpi_mal_claims">&mdash;</span> &nbsp;|&nbsp;
+            <strong>Formula:</strong> <span id="kpi_mal_formula" style="font-family:monospace;font-size:11px;">&mdash;</span>
+          </div>
+        </div>
+
+      </div><!-- /module-main -->
+    </div><!-- /module-layout -->
+  </div><!-- /card -->
+
+  <div style="display:flex;justify-content:flex-end;margin-top:14px;">
+    <button class="btn btn-primary" onclick="switchROITab('simlab',document.querySelector('.roi-tab[data-panel=simlab]'))">
+      Step 3: Workflow Simulation Lab &#8594;
+    </button>
+  </div>
+
+</div><!-- /panel_modules -->
+
+
+<!-- ════════════════════════════════════════════════════
+     TAB 3: WORKFLOW SIMULATION LAB
+════════════════════════════════════════════════════ -->
+<div id="panel_simlab" class="roi-panel">
+
+  <div style="background:rgba(14,158,140,.05);border:1px solid rgba(14,158,140,.2);border-radius:12px;padding:14px 18px;margin-bottom:16px;display:flex;gap:16px;align-items:flex-start;">
+    <div style="font-size:28px;flex-shrink:0;">&#127981;</div>
+    <div>
+      <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:3px;">Workflow Simulation Lab &#8212; Language Access &#8594; Safety + Revenue Integrity</div>
+      <div style="font-size:12.5px;color:var(--slate);line-height:1.5;">Select a workflow stage to review a patient exemplar. Check off best practices to watch the risk posture move from &#10060; high to &#9989; mitigated. Observe how documentation decisions directly affect coding defensibility and the LAI Pulse. Work through stages in order for the full learning sequence.</div>
+      <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+        <span style="font-size:11px;background:rgba(212,142,26,.1);border:1px solid rgba(212,142,26,.25);padding:3px 10px;border-radius:20px;color:#d48e1a;">Recommended order: ED &#8594; OB &#8594; Inpatient &#8594; Discharge &#8594; Post-discharge &#8594; Chronic care</span>
+        <span style="font-size:11px;background:rgba(14,158,140,.08);border:1px solid rgba(14,158,140,.2);padding:3px 10px;border-radius:20px;color:#0e9e8c;">Items marked <b>Required</b> must be checked to reach &#8220;mitigated&#8221;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage selector + risk posture banner -->
+  <div class="card" style="margin-bottom:14px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;align-items:end;">
+      <div class="field" style="grid-column:1/3;">
+        <label><span>Select workflow stage</span><span class="tag">scenario</span></label>
+        <select id="sim_stage"></select>
+      </div>
+      <div class="kpi">
+        <div class="label">Stage risk posture</div>
+        <div class="value" id="sim_risk">&#8212;</div>
+        <div class="sub">&#10060; high &#8594; &#9888;&#65039; moderate &#8594; &#9989; mitigated</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Primary risk type</div>
+        <div class="value" id="sim_risk_type" style="font-size:13px;">&#8212;</div>
+        <div class="sub">Downcoding &#xB7; missed billing &#xB7; documentation</div>
+      </div>
+    </div>
+    <div class="grid g4" style="margin-top:12px;">
+      <div class="kpi"><div class="label">Automation leverage</div><div class="value" id="sim_auto">&#8212;</div><div class="sub">Share of checked items that are automation-friendly</div></div>
+      <div class="kpi"><div class="label">Teaching-setting qualifier (CMS)</div><div class="value" id="sim_teach">&#8212;</div><div class="sub">Presence / attestation readiness</div></div>
+      <div class="kpi"><div class="label">Exercise rule</div><div class="value"><span class="tag">Required</span></div><div class="sub">These items must be checked; otherwise risk cannot reach &#8220;mitigated&#8221;</div></div>
+      <div class="kpi"><div class="label">Codes at risk</div><div class="value" style="font-size:13px;">See below &#8595;</div><div class="sub">Mapped to this stage&#8217;s encounter type</div></div>
+    </div>
+  </div>
+
+  <!-- Main simulation grid: 2-col -->
+  <div class="sim-layout">
+
+    <!-- Left: exemplar + codes -->
+    <div>
+      <div class="card" style="margin-bottom:14px;">
+        <div class="card-hd"><h2>&#128203; Patient Exemplar</h2></div>
+        <div class="note" id="sim_story" style="font-size:13px;line-height:1.65;"></div>
+      </div>
+      <div class="card">
+        <div class="card-hd"><h2>CPT Codes at Risk</h2><span class="note">By encounter type for this stage</span></div>
+        <div id="sim_codes"></div>
+        <div class="mini" style="margin-top:8px;">ED E/M (99281&#8211;99285) and inpatient E/M (99221&#8211;99239) apply to different encounters &#8212; not double billing.</div>
+      </div>
+    </div>
+
+    <!-- Right: best practices + teaching + audit -->
+    <div>
+      <div class="card" style="margin-bottom:14px;">
+        <div class="card-hd"><h2>&#9989; Match Best Practices</h2></div>
+        <div id="sim_controls"></div>
+      </div>
+      <div class="card" style="margin-bottom:14px;">
+        <div class="card-hd"><h2>&#127979; Teaching-Setting Check (CMS)</h2></div>
+        <div class="mini" style="margin-bottom:8px;">If residents participated, select the CMS teaching-physician conditions satisfied for this encounter.</div>
+        <div id="sim_teaching_controls"></div>
+      </div>
+      <div class="card">
+        <div class="card-hd"><h2>&#128196; Audit Trail Checklist</h2><span class="note">Retain these as evidence</span></div>
+        <ul id="sim_audit" class="note" style="margin:0;padding-left:18px;line-height:2;"></ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- LAI Pulse Module 4 (Discharge) -->
+  <div class="card" style="margin-top:16px;border:1px solid rgba(14,158,140,.25);background:rgba(14,158,140,.03);">
+    <div class="card-hd"><h2>LAI Pulse &#8212; Module 4 (Discharge Reliability)</h2><span class="note">Activates when <b>Discharge</b> stage is selected above</span></div>
+    <div class="note" style="margin-bottom:12px;">This module-specific LAI subset reflects discharge comprehension reliability and documentation defensibility as you check best practices. Scoped to the Discharge Planning &amp; Patient Education touchpoint. Align to the Jan 2026 LAI metric set.</div>
+    <div class="grid g4" style="margin-bottom:12px;">
+      <div class="kpi">
+        <div class="label">Module 4 LAI Pulse</div>
+        <div class="value" id="lai5_pulse">&#8212;</div>
+        <div class="sub" id="lai5_band">Select the <b>Discharge</b> stage to activate.</div>
+      </div>
+      <div class="kpi"><div class="label">Comprehension verified</div><div class="value" id="lai5_comp">&#8212;</div><div class="sub">Teach-back completion</div></div>
+      <div class="kpi"><div class="label">Transitions readiness</div><div class="value" id="lai5_trans">&#8212;</div><div class="sub">Med rec + follow-up scheduling</div></div>
+      <div class="kpi"><div class="label">Documentation defensibility</div><div class="value" id="lai5_doc">&#8212;</div><div class="sub">Documentation + teaching qualifier</div></div>
+    </div>
+    <div class="note" id="lai5_driver_note">Tip: the Pulse increases most when teach-back is completed and documented in the preferred language, follow-up is scheduled before discharge, and teaching-physician attestation requirements are satisfied in teaching settings.</div>
+    <details style="margin-top:12px;">
+      <summary>How the LAI Pulse is calculated (transparent rules)</summary>
+      <div class="inside">
+        <table style="margin-top:8px;">
+          <thead><tr><th>LAI component</th><th>Underlying KPI</th><th>Calculation rule</th></tr></thead>
+          <tbody>
+            <tr><td><b>Comprehension verified</b></td><td>% discharges with completed teach-back (LEP)</td><td>100 if &#8220;Teach-back completed &amp; documented&#8221; is checked; otherwise 20 (gap signal).</td></tr>
+            <tr><td><b>Transitions readiness</b></td><td>% discharges with med rec + follow-up scheduled</td><td>100 if both checked; 70 if one; 40 if neither.</td></tr>
+            <tr><td><b>Documentation defensibility</b></td><td>% discharges with defensible documentation</td><td>Derived from Teaching-setting qualifier: 100 satisfied; 70 partial; 40 not satisfied.</td></tr>
+            <tr><td><b>Preferred-language boost</b></td><td>% discharges with preferred-language materials</td><td>+10 boost when &#8220;Preferred-language materials&#8221; is checked (capped at 100).</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+
+  <div style="display:flex;justify-content:flex-end;margin-top:14px;">
+    <button class="btn btn-primary" onclick="switchROITab('cap',document.querySelector('.roi-tab[data-panel=cap]'))">
+      Step 4: Build Your CAP Summary &#8594;
+    </button>
+  </div>
+
+</div><!-- /panel_simlab -->
+
+
+<!-- ════════════════════════════════════════════════════
+     TAB 4: CAP BUILDER
+════════════════════════════════════════════════════ -->
+<div id="panel_cap" class="roi-panel">
+
+  <div style="background:linear-gradient(135deg,rgba(14,158,140,.07),rgba(14,158,140,.02));border:1px solid rgba(14,158,140,.2);border-radius:12px;padding:14px 18px;margin-bottom:16px;display:flex;gap:16px;align-items:flex-start;">
+    <div style="font-size:28px;flex-shrink:0;">&#128203;</div>
+    <div>
+      <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:3px;">Customized Action Plan &#8212; Financial Summary</div>
+      <div style="font-size:12.5px;color:var(--slate);line-height:1.55;">This tab aggregates your financial projections into a board-ready narrative. Configure your inputs in Step 2, then use the output below for your CAP financial appendix. At Module 7, replace all defaults with your organization&#8217;s actual data for a fully calibrated projection.</div>
+    </div>
+  </div>
+
+  <!-- Live summary table -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-hd"><h2>CAP Financial Summary &#8212; Your Organization</h2><button class="copy-btn" onclick="copyCAP()">&#128203; Copy to Clipboard</button></div>
+    <table class="cap-table">
+      <thead><tr><th>Module</th><th>Best Practice</th><th>Curriculum Alignment</th><th style="text-align:right;">Annual Savings / Offset</th><th>Status</th></tr></thead>
+      <tbody id="tbl_cap_rows"></tbody>
+      <tfoot>
+        <tr style="border-top:2px solid var(--border);">
+          <td colspan="3" style="font-weight:700;font-size:13px;">Total Annual (per hospital)</td>
+          <td class="num" style="font-size:15px;font-weight:800;color:var(--accent);" id="cap_total_hospital">$0</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan="3" style="font-weight:700;font-size:13px;">Total Annual (system-wide)</td>
+          <td class="num" style="font-size:15px;font-weight:800;color:var(--gold);" id="cap_total_system">$0</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!-- Exportable narrative -->
+  <div class="card">
+    <div class="card-hd"><h2>Board-Ready Narrative Output</h2><button class="copy-btn" onclick="copyNarrative()">&#128203; Copy Narrative</button></div>
+    <div class="note" style="margin-bottom:10px;">This narrative is generated from your live inputs. Copy it directly into your CAP financial appendix or executive summary.</div>
+    <div class="cap-output" id="cap_narrative">Configure inputs in Step 2 to generate your narrative.</div>
+  </div>
+
+</div><!-- /panel_cap -->
+
+
+<script>
+    (function(){
+      var s = document.createElement('script');
+      s.src = 'lib/chart.umd.min.js';
+      s.onerror = function(){
+        var fallback = document.createElement('script');
+        fallback.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js';
+        document.head.appendChild(fallback);
+      };
+      document.head.appendChild(s);
+    })();
+  </script>
+
+  <script>
+    // ---------- Formatting helpers ----------
+    const money0 = new Intl.NumberFormat('en-US', { style:'currency', currency:'USD', maximumFractionDigits:0 });
+    const num2 = new Intl.NumberFormat('en-US', { maximumFractionDigits:2 });
+    const num1 = new Intl.NumberFormat('en-US', { maximumFractionDigits:1 });
+    const clamp = (x, lo=0, hi=1) => Math.max(lo, Math.min(hi, x));
+    const pctTo01 = (p) => clamp((+p || 0)/100, 0, 1);
+
+    // ---------- Default values (mirror Python dashboard) ----------
+    const DEFAULTS = {
+      hospitals_in_system: 10,
+
+      // Toggles
+      use_ed_lang_stroke: true,
+      use_engagement_los: true,
+      use_teachback: true,
+      use_vbp: true,
+      use_state_reimb: true,
+      use_malpractice: true,
+
+      // ED Language Access — three-track (Schulson 2018; QI return visit literature)
+      // Track 1: Admission Avoidance
+      ed_lep_ed_month: 200,
+      ed_excess_admit_pct: 9,
+      ed_admit_reduction_pct: 40,
+      ed_cost_per_admission: 11000,
+      ed_admit_attrib_pct: 60,
+      // Track 2: Return Visit Avoidance
+      ed_lep_discharge_month: 170,
+      ed_excess_return_pct: 3,
+      ed_return_reduction_pct: 45,
+      ed_cost_per_return: 1200,
+      ed_return_attrib_pct: 55,
+      // Stroke sub-model (existing — all preserved)
+      ed_suspected_stroke_month: 30,
+      ed_lep_share_pct: 20,
+      ed_timely_baseline_pct: 40,
+      ed_timely_target_pct: 75,
+      ed_target_qbs_share_pct: 40,
+      ed_ivtpa_elig_rate_pct: 12,
+      ed_evt_elig_rate_pct: 6,
+      ed_misclass_risk_pct: 35,
+      ed_ivtpa_revenue: 2500,
+      ed_evt_revenue: 12000,
+      ed_high_acuity_uplift: 250,
+      ed_interp_minutes_per_case: 10,
+      ed_vendor_rate: 0.75,
+      ed_qbs_incremental_cost_per_case: 0,
+      ed_attrib_pct: 70,
+
+      // Engagement & LOS (baseline + QBS enhancement)
+      eng_lep_patients_month: 40,
+      eng_los_reduction_days: 1.0,
+      eng_cost_per_inpatient_day: 3000,
+      eng_qbs_current_pct: 20,
+      eng_qbs_target_pct: 50,
+      eng_qbs_los_uplift: 0.5,
+
+      // Teach-back
+      tb_horizon_months: 12,
+      tb_lep_patients_month: 40,
+      tb_lep_readmit_rate: 0.178,
+      tb_projected_pct: 0.75,
+      tb_max_reduction: 0.23,
+      tb_median_cost_per_stay: 11086,
+      tb_provider_minutes_per_tb: 2.0,
+      tb_provider_cost_per_min: 3.0,
+      tb_vendor_rate: 0.75,
+      tb_interp_minutes_per_tb: 3.0,
+      tb_qbs_share_pct: 30,
+      tb_prov_start_pct: 5,
+      tb_prov_end_pct: 10,
+      tb_can_start_pct: 0,
+      tb_can_end_pct: 25,
+      tb_midpoint: 6,
+      tb_steepness: 1.0,
+      tb_cap_net: true,
+      tb_annualize: true,
+
+      // VBP
+      vbp_medicare_revenue: 50000000,
+      vbp_withhold_pct: 2.0,
+      vbp_recoup_rate_pct: 100,
+      vbp_incremental_improvement_pct: 10,
+
+      // State reimb
+      ia_reimbursable_minutes_month: 3100,
+      ia_reimb_rate_per_min: 0.75,
+      ia_approval_rate_pct: 80,
+      ia_capture_rate_pct: 70,
+
+      // Malpractice (two-track, Berkeley-calibrated)
+      mal_lep_encounters: 1800,
+      mal_doc_gap_pct: 35,
+      mal_claim_rate_pct: 2.5,
+      mal_damage_pmt_pct: 29,
+      mal_avg_damage: 385000,
+      mal_avg_defense: 118000,
+      mal_interp_rr_pct: 15,
+      mal_doc_rr_pct: 8,
+    };
+
+    function setDefaults(){
+      for (const [k,v] of Object.entries(DEFAULTS)){
+        const el = document.getElementById(k);
+        if(!el) continue;
+        if(el.type === 'checkbox') el.checked = !!v;
+        else el.value = v;
+      }
+      updateAll();
+    }
+
+    
+    // ---------- Revenue Integrity helpers (plan-agnostic) ----------
+    function riskBand(netCoveragePct){
+      // Thresholds intentionally simple and transparent for learners
+      if(netCoveragePct >= 50) return { label: "✅ Risk mitigated", cls: "good" };
+      if(netCoveragePct >= 20) return { label: "⚠️ Moderate risk", cls: "warn" };
+      return { label: "❌ High risk", cls: "bad" };
+    }
+
+    function setRiskKPI(id, band){
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.textContent = band.label;
+      el.classList.remove("good","warn","bad");
+      el.classList.add(band.cls);
+    }
+
+    function renderRevenueIntegrityOverlay(tb){
+      // Use final-month net coverage as a conservative proxy for operational reliability
+      const netFinal = tb.finalNetPct || 0;
+
+      const dischargeBand = riskBand(netFinal);
+
+      // TCM is operationally more brittle; require higher reliability for "mitigated"
+      const tcmBand = (netFinal >= 60) ? {label:"✅ Risk mitigated", cls:"good"} :
+                      (netFinal >= 30) ? {label:"⚠️ Moderate risk", cls:"warn"} :
+                                        {label:"❌ High risk", cls:"bad"};
+
+      setRiskKPI("kpi_discharge_risk", dischargeBand);
+      setRiskKPI("kpi_tcm_risk", tcmBand);
+
+      // Primary risk type heuristic (learner-facing)
+      let primaryRisk = "Documentation insufficiency";
+      if(netFinal < 20) primaryRisk = "Missed billing (prerequisites not reliably completed)";
+      else if(netFinal < 50) primaryRisk = "Downcoding / conservative coding risk";
+      const pr = document.getElementById("kpi_primary_risk_type");
+      if(pr) pr.textContent = primaryRisk;
+
+      // Teaching-setting qualifier (plan-agnostic CMS readiness proxy)
+      // This is NOT billing advice. It flags whether a teaching site likely has the minimum evidence discipline:
+      // teaching physician presence/participation attested (GC) or primary care exception workflow (GE) where applicable.
+      const teachBand = (netFinal >= 60) ? {label:"✅ Satisfied (attestation-ready)", cls:"good"} :
+                        (netFinal >= 30) ? {label:"⚠️ Partial (inconsistent evidence)", cls:"warn"} :
+                                          {label:"❌ Not satisfied (high audit risk)", cls:"bad"};
+      setRiskKPI("kpi_teaching_qualifier", teachBand);
+
+
+      const rows = [
+        {
+          stage: "Discharge day (Inpatient/Observation)",
+          task: "Teach-back + comprehension confirmation + discharge instructions in preferred language",
+          dep: "Critical",
+          cpt: "Hospital discharge day management (99238–99239)",
+          mdm: "Risk of patient management; counseling/education; time-based discharge work where applicable",
+          risk: "Downcoding / documentation insufficiency",
+          status: dischargeBand,
+          qualifier: teachBand,
+
+          evidence: "Teach-back documented (who/when); interpreter or QBS documented; discharge meds & red flags in preferred language; follow-up plan recorded"
+        },
+        {
+          stage: "Post-discharge transition",
+          task: "Interactive contact + medication reconciliation + follow-up visit scheduling",
+          dep: "Critical",
+          cpt: "Transitional Care Management (99495–99496)",
+          mdm: "Care transition requirements + clinical complexity; timely contact and documented follow-up",
+          risk: "Missed billing + audit vulnerability",
+          status: tcmBand,
+          qualifier: teachBand,
+
+          evidence: "Contact attempt(s) within required window; comprehension documented; med rec completed; appointment within timeframe; escalation plan if unreachable"
+        }
+      ];
+
+      const tbody = document.getElementById("tbl_rev_integrity");
+      if(!tbody) return;
+      tbody.innerHTML = "";
+      for(const r of rows){
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${r.stage}</td>
+          <td>${r.task}</td>
+          <td>${r.dep}</td>
+          <td><span class="tag">${r.cpt}</span></td>
+          <td>${r.mdm}</td>
+          <td>${r.risk}</td>
+          <td class="${r.status.cls}"><b>${r.status.label}</b></td>
+          <td>${r.evidence}</td>
+        `;
+        tbody.appendChild(tr);
+      }
+    }
+
+
+    // ---------- Math functions (match Python) ----------
+    function linearRamp(month, months, start, end){
+      if(months <= 1) return end;
+      const t = (month - 1) / (months - 1);
+      return start + (end - start) * t;
+    }
+
+    function logisticNorm(month, months, midpoint, steepness){
+      const logistic = (m) => 1 / (1 + Math.exp(-steepness * (m - midpoint)));
+      const a = logistic(1);
+      const b = logistic(months);
+      const x = logistic(month);
+      if(Math.abs(b - a) < 1e-12) return month >= midpoint ? 1 : 0;
+      return (x - a) / (b - a);
+    }
+
+    // ---------- Read inputs ----------
+    function getVal(id){ return document.getElementById(id); }
+    function num(id){ return +getVal(id).value || 0; }
+    function chk(id){ return !!getVal(id).checked; }
+
+    // ---------- Charts ----------
+    let chAdoption, chOutcome, chSavCost, chNet;
+
+    function makeLineChart(canvasId, labels, datasets, yTitle){
+      const ctx = document.getElementById(canvasId);
+      // Apply LAI palette colors to each dataset
+      const palette = ['#0e9e8c','#d48e1a','#0c1e35','#18a76f','#c94040','#4a637d'];
+      datasets.forEach((ds, i) => {
+        if (!ds.borderColor) ds.borderColor = palette[i % palette.length];
+        if (!ds.backgroundColor) ds.backgroundColor = palette[i % palette.length] + '22';
+        ds.borderWidth = ds.borderWidth || 2;
+        ds.pointRadius = ds.pointRadius ?? 2;
+      });
+      return new Chart(ctx, {
+        type: 'line',
+        data: { labels, datasets },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { labels: { color: '#0c1e35', font: { family: "'DM Sans', sans-serif", size: 11 } } } },
+          scales: {
+            x: { ticks: { color: '#4a637d', font: { family: "'DM Sans', sans-serif", size: 11 } }, grid: { color: 'rgba(12,30,53,.07)' } },
+            y: { ticks: { color: '#4a637d', font: { family: "'DM Sans', sans-serif", size: 11 } }, grid: { color: 'rgba(12,30,53,.07)' }, title: { display: true, text: yTitle, color: '#4a637d', font: { size: 11 } } }
+          }
+        }
+      });
+    }
+
+    function ensureCharts(labels){
+      if(!chAdoption){
+        chAdoption = makeLineChart('ch_adoption', labels, [
+          { label:'Provider adoption (%)', data:[], tension:.3 },
+          { label:'Canopy adoption (%)', data:[], tension:.3 },
+          { label:'Net teach-back coverage (%)', data:[], tension:.3 },
+        ], 'Coverage (%)');
+      }
+      if(!chOutcome){
+        chOutcome = makeLineChart('ch_outcome', labels, [
+          { label:'Monthly averted readmissions', data:[], tension:.3 },
+        ], 'Averted readmissions');
+      }
+      if(!chSavCost){
+        chSavCost = makeLineChart('ch_savings_cost', labels, [
+          { label:'Monthly readmission savings ($)', data:[], tension:.3 },
+          { label:'Monthly TB delivery cost ($)', data:[], tension:.3 },
+        ], 'Dollars ($)');
+      }
+      if(!chNet){
+        chNet = makeLineChart('ch_net', labels, [
+          { label:'Monthly NET savings ($)', data:[], tension:.3 },
+        ], 'Net savings ($)');
+      }
+    }
+
+    function setText(id, txt){ const el = document.getElementById(id); if(el) el.textContent = txt; }
+
+    // ---------- Core module calculations ----------
+    function calcEDAccess(){
+      // ── TRACK 1: Admission Avoidance (all LEP ED encounters) ───────────────────
+      // Schulson et al. (2018, JGIM): LEP patients had OR 1.09 for ED admission and
+      // OR 1.51 for cardiovascular stress testing. Mechanism: diagnostic uncertainty
+      // from communication failure leads clinicians to order more tests and admit at
+      // higher rates. Default 9% excess admission rate maps to the OR 1.09 finding.
+      const lepEdMonth       = num('ed_lep_ed_month');
+      const excessAdmitPct   = clamp(num('ed_excess_admit_pct'),   0, 100) / 100;
+      const admitReductPct   = clamp(num('ed_admit_reduction_pct'),0, 100) / 100;
+      const costPerAdmit     = num('ed_cost_per_admission');
+      const admitAttrib      = clamp(num('ed_admit_attrib_pct'),   0, 100) / 100;
+
+      const avertedAdmitsMonth = lepEdMonth * excessAdmitPct * admitReductPct * admitAttrib;
+      const track1Monthly      = avertedAdmitsMonth * costPerAdmit;
+      const track1Annual       = track1Monthly * 12;
+
+      // ── TRACK 2: Same-Complaint Return Visit Avoidance ────────────────────────
+      // QI evidence (PMC8677944): 79.2% of LEP 48-hour ED return visits were for the
+      // same complaint — the clinical signature of an encounter where communication
+      // was insufficient to resolve the presenting problem. Systematic interpreter
+      // identification and documentation reduced return visit rates measurably.
+      const lepDischargeMonth  = num('ed_lep_discharge_month');
+      const excessReturnPct    = clamp(num('ed_excess_return_pct'),   0, 100) / 100;
+      const returnReductPct    = clamp(num('ed_return_reduction_pct'),0, 100) / 100;
+      const costPerReturn      = num('ed_cost_per_return');
+      const returnAttrib       = clamp(num('ed_return_attrib_pct'),   0, 100) / 100;
+
+      const avertedReturnsMonth = lepDischargeMonth * excessReturnPct * returnReductPct * returnAttrib;
+      const track2Monthly       = avertedReturnsMonth * costPerReturn;
+      const track2Annual        = track2Monthly * 12;
+
+      // ── STROKE SUB-MODEL (existing logic — all inputs preserved) ─────────────
+      // Stroke is the most financially legible single-pathway example of the
+      // admission avoidance mechanism: onset-time misreporting from language barriers
+      // produces a precisely quantifiable treatment-exclusion and revenue consequence.
+      const suspected  = num('ed_suspected_stroke_month');
+      const lepShare   = pctTo01(num('ed_lep_share_pct'));
+      const base       = pctTo01(num('ed_timely_baseline_pct'));
+      const targ       = pctTo01(num('ed_timely_target_pct'));
+      const qbsShare   = pctTo01(num('ed_target_qbs_share_pct'));
+      const interpShare = 1 - qbsShare;
+
+      const ivElig   = pctTo01(num('ed_ivtpa_elig_rate_pct'));
+      const evtElig  = pctTo01(num('ed_evt_elig_rate_pct'));
+      const misclass = pctTo01(num('ed_misclass_risk_pct'));
+      const attrib   = pctTo01(num('ed_attrib_pct'));
+
+      const revIvt  = num('ed_ivtpa_revenue');
+      const revEvt  = num('ed_evt_revenue');
+      const emUplift = num('ed_high_acuity_uplift');
+
+      const interpMin = num('ed_interp_minutes_per_case');
+      const vendorRate = num('ed_vendor_rate');
+      const qbsCost    = num('ed_qbs_incremental_cost_per_case');
+
+      const lepStrokeMonth = suspected * lepShare;
+      const delta          = Math.max(0, targ - base);
+      const incTimely      = lepStrokeMonth * delta;
+      const incQbs         = incTimely * qbsShare;
+      const incInterp      = incTimely * interpShare;
+
+      const incIvtCases = incTimely * misclass * ivElig * attrib;
+      const incEvtCases = incTimely * misclass * evtElig * attrib;
+
+      const rev_ivt = incIvtCases * revIvt;
+      const rev_evt = incEvtCases * revEvt;
+      const rev_em  = incTimely * emUplift * attrib;
+
+      const cost_interp = incInterp * interpMin * vendorRate;
+      const cost_qbs    = incQbs * qbsCost;
+
+      const strokeNetMonthly = (rev_ivt + rev_evt + rev_em) - (cost_interp + cost_qbs);
+      const strokeNetAnnual  = strokeNetMonthly * 12;
+
+      // ── COMBINED ─────────────────────────────────────────────────────────────
+      const monthlyNet = track1Monthly + track2Monthly + strokeNetMonthly;
+      const annualNet  = track1Annual  + track2Annual  + strokeNetAnnual;
+
+      const steps = [
+        ['── TRACK 1: Admission Avoidance ──', '', ''],
+        ['Total LEP ED encounters (monthly)', lepEdMonth, 'count/mo'],
+        ['Excess admission rate (LEP vs EP)', excessAdmitPct, 'fraction'],
+        ['Target reduction in excess admissions', admitReductPct, 'fraction'],
+        ['Attribution to language access', admitAttrib, 'fraction'],
+        ['Averted admissions (monthly)', avertedAdmitsMonth, 'count/mo'],
+        ['Cost per averted inpatient admission', costPerAdmit, '$/admit'],
+        ['Track 1 — Admission avoidance (monthly)', track1Monthly, '$/mo'],
+        ['Track 1 — Admission avoidance (annual)', track1Annual, '$/yr'],
+        ['── TRACK 2: Return Visit Avoidance ──', '', ''],
+        ['LEP ED discharges (monthly)', lepDischargeMonth, 'count/mo'],
+        ['Excess same-complaint 48h return rate', excessReturnPct, 'fraction'],
+        ['Target reduction in excess returns', returnReductPct, 'fraction'],
+        ['Attribution to language access', returnAttrib, 'fraction'],
+        ['Averted return visits (monthly)', avertedReturnsMonth, 'count/mo'],
+        ['Cost per averted ED return visit', costPerReturn, '$/visit'],
+        ['Track 2 — Return visit avoidance (monthly)', track2Monthly, '$/mo'],
+        ['Track 2 — Return visit avoidance (annual)', track2Annual, '$/yr'],
+        ['── STROKE SUB-MODEL ──', '', ''],
+        ['Suspected stroke ED arrivals (monthly)', suspected, 'count/mo'],
+        ['LEP share', lepShare, 'fraction'],
+        ['LEP suspected stroke (monthly)', lepStrokeMonth, 'count/mo'],
+        ['Baseline timely access', base, 'fraction'],
+        ['Target timely access', targ, 'fraction'],
+        ['Incremental timely-access LEP stroke cases (monthly)', incTimely, 'count/mo'],
+        ['Misclassification risk (onset-time exclusion)', misclass, 'fraction'],
+        ['IV thrombolysis eligibility rate', ivElig, 'fraction'],
+        ['EVT eligibility rate', evtElig, 'fraction'],
+        ['Stroke attribution', attrib, 'fraction'],
+        ['Incremental IV thrombolysis cases (monthly)', incIvtCases, 'count/mo'],
+        ['Incremental EVT cases (monthly)', incEvtCases, 'count/mo'],
+        ['Revenue preserved – IV thrombolysis (monthly)', rev_ivt, '$/mo'],
+        ['Revenue preserved – EVT (monthly)', rev_evt, '$/mo'],
+        ['Revenue preserved – ED E/M (monthly)', rev_em, '$/mo'],
+        ['Interpreter cost (monthly)', cost_interp, '$/mo'],
+        ['QBS incremental cost (monthly)', cost_qbs, '$/mo'],
+        ['Stroke sub-model net (monthly)', strokeNetMonthly, '$/mo'],
+        ['Stroke sub-model net (annual)', strokeNetAnnual, '$/yr'],
+        ['── COMBINED ──', '', ''],
+        ['Combined net revenue preserved (monthly)', monthlyNet, '$/mo'],
+        ['Combined net revenue preserved (annual)', annualNet, '$/yr'],
+      ];
+
+      return { monthlyNet, annualNet, track1Annual, track2Annual, strokeNetAnnual,
+               avertedAdmitsMonth, avertedReturnsMonth,
+               incTimely, incTreated: (incIvtCases + incEvtCases), steps };
+    }
+
+    function calcEngLOS(){
+      const lepMonth   = num('eng_lep_patients_month');
+      const losRed     = num('eng_los_reduction_days');
+      const costDay    = num('eng_cost_per_inpatient_day');
+      const qbsCurrent = clamp(num('eng_qbs_current_pct'), 0, 100) / 100;
+      const qbsTarget  = clamp(num('eng_qbs_target_pct'), 0, 100) / 100;
+      const qbsUplift  = num('eng_qbs_los_uplift');
+
+      // Track 1: baseline interpreter-integration saving
+      const baseMonthly = lepMonth * losRed * costDay;
+      const baseAnnual  = baseMonthly * 12;
+
+      // Track 2: QBS uplift — incremental from coverage delta only
+      const qbsDelta         = Math.max(0, qbsTarget - qbsCurrent);
+      const qbsEncounters    = lepMonth * qbsDelta;
+      const qbsMonthly       = qbsEncounters * qbsUplift * costDay;
+      const qbsAnnual        = qbsMonthly * 12;
+
+      const monthly = baseMonthly + qbsMonthly;
+      const annual  = baseAnnual  + qbsAnnual;
+
+      return {
+        monthly, annual,
+        baseAnnual, qbsAnnual,
+        qbsDelta, qbsEncounters,
+        formula: `Baseline: ${lepMonth}×${losRed}d×${money0.format(costDay)}=${money0.format(baseAnnual)}/yr | QBS: ${lepMonth}×${(qbsDelta*100).toFixed(0)}%Δ×${qbsUplift}d×${money0.format(costDay)}=${money0.format(qbsAnnual)}/yr`
+      };
+    }
+
+    function calcTeachBack(){
+      const months = Math.max(3, Math.min(24, Math.round(num('tb_horizon_months') || 12)));
+
+      const lepMonth = num('tb_lep_patients_month');
+      const readmitRate = clamp(num('tb_lep_readmit_rate'), 0, 1);
+      const projectedPct = clamp(num('tb_projected_pct'), 0, 1);
+      const maxReduction = clamp(num('tb_max_reduction'), 0, 1);
+      const costStay = num('tb_median_cost_per_stay');
+
+      const provMin = num('tb_provider_minutes_per_tb');
+      const provCostMin = num('tb_provider_cost_per_min');
+      const vendorRate = num('tb_vendor_rate');
+      const interpMin = num('tb_interp_minutes_per_tb');
+      const qbsShare = pctTo01(num('tb_qbs_share_pct'));
+
+      const provStart = pctTo01(num('tb_prov_start_pct'));
+      const provEnd = pctTo01(num('tb_prov_end_pct'));
+      const canStart = pctTo01(num('tb_can_start_pct'));
+      const canEnd = pctTo01(num('tb_can_end_pct'));
+
+      const midpoint = Math.max(1, Math.min(months, Math.round(num('tb_midpoint') || 6)));
+      const steep = Math.max(0.2, Math.min(2.5, num('tb_steepness') || 1.0));
+
+      const capNet = chk('tb_cap_net');
+      const annualize = chk('tb_annualize');
+
+      // baseline outcome quantities (constant per month)
+      const expectedReadm = lepMonth * readmitRate;
+      const projectedNoTB = expectedReadm * projectedPct;
+
+      const rows = [];
+      for(let m=1; m<=months; m++){
+        const prov = clamp(linearRamp(m, months, provStart, provEnd));
+        const norm = clamp(logisticNorm(m, months, midpoint, steep));
+        const can = clamp(canStart + (canEnd - canStart) * norm);
+
+        const netUncapped = prov + can;
+        const net = capNet ? clamp(netUncapped, 0, 1) : Math.max(0, netUncapped);
+
+        // if capped and prov+can >1, scale volumes proportionally
+        let scale = 1.0;
+        if(capNet && netUncapped > 1e-9 && netUncapped > 1.0){
+          scale = 1.0 / netUncapped;
+        }
+
+        const vProv = lepMonth * prov * scale;
+        const vCan  = lepMonth * can  * scale;
+
+        const vProvConcord = vProv * qbsShare;
+        const vProvInterp  = vProv * (1 - qbsShare);
+
+        const averted = projectedNoTB * (capNet ? clamp(net,0,1) : Math.min(net,1)) * maxReduction;
+        const readmSav = averted * costStay;
+
+        const providerTimeCost = vProv * provMin * provCostMin;
+        const interpreterCost = vProvInterp * interpMin * vendorRate;
+        const deliveryCost = providerTimeCost + interpreterCost;
+
+        const netSav = readmSav - deliveryCost;
+
+        rows.push({
+          m,
+          provPct: prov*100,
+          canPct: can*100,
+          netPct: (capNet ? Math.min(net,1) : net)*100,
+          vProv, vProvConcord, vProvInterp,
+          averted,
+          readmSav,
+          providerTimeCost,
+          interpreterCost,
+          deliveryCost,
+          netSav
+        });
+      }
+
+      const horizonNet = rows.reduce((s,r)=>s+r.netSav, 0);
+      const annualNet = annualize ? horizonNet * (12 / months) : horizonNet;
+      const monthlyNet = annualNet / 12;
+
+      const last = rows[rows.length-1];
+
+      return {
+        months,
+        rows,
+        annualNet,
+        monthlyNet,
+        finalNetPct: last ? last.netPct : 0,
+        finalAverted: last ? last.averted : 0
+      };
+    }
+
+    function calcVBP(){
+      const rev = num('vbp_medicare_revenue');
+      const withhold = clamp(num('vbp_withhold_pct')/100, 0, 0.1);
+      const recoup = clamp(num('vbp_recoup_rate_pct')/100, 0, 2);
+      const improve = clamp(num('vbp_incremental_improvement_pct')/100, 0, 2);
+
+      const annual = rev * withhold * improve * recoup;
+      const monthly = annual / 12;
+      return { annual, monthly, formula: `${money0.format(rev)} × ${withhold} × ${improve} × ${recoup} = ${money0.format(annual)}/yr` };
+    }
+
+    // ── State Medicaid Reimbursement Data (NHeLP 2024) ──────────────────────
+    const STATE_PROFILES = {
+      CA: {
+        name: "California", model: "bundled_mco",
+        ratePerMin: null,
+        billingDisplay: "MCO capitation (bundled — not separately billable via FFS)",
+        alert: "⚠️ California reimburses language services through managed care capitation rates only. There is no separate FFS billing mechanism for interpreter costs. Rates are negotiated independently between MCOs and contracted language lines. This module cannot model California MCO reimbursement — contact your health plan for your contracted rate.",
+        fmap: "MCO capitation — no administrative or covered-service FFS FMAP applies",
+        claimType: "MCO Capitation"
+      },
+      DC: {
+        name: "District of Columbia", model: "per_minute",
+        ratePerMin: 0.75, // rate undisclosed; placeholder at conservative midpoint
+        billingDisplay: "Administrative expense — contracted vendor (rate undisclosed)",
+        alert: "DC reimburses a contracted language services vendor directly; the rate is not publicly disclosed. A conservative placeholder of $0.75/min is pre-loaded. Update with your contracted rate. Coverage extends to FFS Medicaid only (since 2006). In-person and virtual reimbursed at the same rate.",
+        fmap: "Adults/Pregnant Women/Aged/Blind/Disabled: 50% | Children: 75% | CHIP: 84%",
+        claimType: "Administrative"
+      },
+      ID: {
+        name: "Idaho", model: "per_minute",
+        ratePerMin: 3.04 / 15, // oral standard rate; sign = $12.50/15-min
+        billingDisplay: "Covered service — T1013 — $3.04/15-min (oral); $12.50/15-min (sign)",
+        alert: "Idaho reimburses oral interpreting at $3.04/15-min unit ($0.2027/min) and sign language at $12.50/15-min ($0.833/min). Rate pre-loaded for oral. For a sign-heavy population, change rate to $0.833/min. Provider hires and pays interpreter, then submits T1013 claims. EXCLUDES: hospitals/facilities, bilingual staff, family members, administrative tasks. Same rate in-person and virtual.",
+        fmap: "Non-expansion: 69.72% | Expansion adults: 90% | CHIP: 78.80%",
+        claimType: "Covered Service", code: "T1013"
+      },
+      IA: {
+        name: "Iowa", model: "per_minute",
+        ratePerMin: 14.39 / 15,
+        billingDisplay: "Covered service — T1013 — $14.39/15-min (in-person); $1.63/min (video)",
+        alert: "Iowa reimburses in-person oral/sign at $14.39/15-min unit ($0.959/min) and video interpreting at $1.63/min (use UC modifier). Rate pre-loaded for in-person. Hospital inpatient: billed as a separate outpatient T1013 claim distinct from the DRG. Provider hires and pays interpreter, then claims. Interpreter must be employed or contracted by billing provider. Travel and wait time are billable.",
+        fmap: "Non-expansion: 64.13% | Expansion adults: 90% | CHIP: 74.89%",
+        claimType: "Covered Service", code: "T1013"
+      },
+      KS: {
+        name: "Kansas", model: "per_minute",
+        ratePerMin: 0.65, // blended midpoint: Spanish $0.49, other $0.70
+        billingDisplay: "Administrative expense — telephonic via Propio Language Services",
+        alert: "Kansas FFS covers only ~2% of the state's Medicaid population (majority are MCO). Rate: Spanish $0.49/min, other languages $0.70/min. Blended midpoint ($0.65) pre-loaded — adjust for your language mix. Services routed through state's contracted telephonic vendor (Propio). MCO language services are handled separately within capitation.",
+        fmap: "Adults: 50% | Children: 75% | CHIP: 77.68%",
+        claimType: "Administrative"
+      },
+      ME: {
+        name: "Maine", model: "per_minute",
+        ratePerMin: 20.00 / 15, // lesser of $20/15-min or usual & customary
+        billingDisplay: "Administrative expense — T1013 — lesser of $20/15-min or usual & customary",
+        alert: "Maine's reimbursement rate is the lesser of $20/15-min unit ($1.33/min) or the usual and customary fee. As of 2023, Maine operates FFS only (no MCO). Billable: in-person oral, sign language, telephonic. Providers must include a verification statement in the medical record documenting duration and cost. EXCLUDES: travel, wait time, mileage, family interpreters, nursing facilities/ICF/IID (bundled in facility rates).",
+        fmap: "Adults: 50% | Children: 75% | CHIP: 78.86%",
+        claimType: "Administrative", code: "T1013"
+      },
+      MN: {
+        name: "Minnesota", model: "per_minute",
+        ratePerMin: 12.50 / 15,
+        capMinutesPerDay: 120, // max 8 units (2 hrs) per day without authorization
+        billingDisplay: "Administrative expense — $12.50/15-min — max 8 units/day (2 hrs) without auth",
+        alert: "Minnesota reimburses $12.50/15-min ($0.833/min) for outpatient services. CAP: 8 units (120 min/day) without prior authorization. Inpatient interpreter costs are bundled into the hospital payment rate — not separately billable. Providers must use interpreters listed on the DOH-maintained roster. Telephonic and video included at the same rate.",
+        fmap: "Adults: 50% | Children: 75% | CHIP: 75%",
+        claimType: "Administrative"
+      },
+      MT: {
+        name: "Montana", model: "per_minute",
+        ratePerMin: 8.75 / 15, // in-person oral standard; sign: $10/15-min; video/phone: $6.25/15-min
+        billingDisplay: "Administrative expense — $8.75/15-min in-person oral; $10/15-min sign; $6.25/15-min video/phone",
+        alert: "Montana reimburses interpreters directly (not providers). In-person oral: $8.75/15-min ($0.583/min) — pre-loaded. Sign language: lesser of UC or $10/15-min ($0.667/min). Video/telephonic: $6.25/15-min ($0.417/min). Provider signs billing invoice to verify medical necessity. EXCLUDES: travel, wait time, no-shows, paid staff interpreters, family members. Up to 1 extra unit for time spent with beneficiary at pharmacy etc.",
+        fmap: "Adults: 50% | Children: 75% | CHIP: 79.74%",
+        claimType: "Administrative"
+      },
+      NC: {
+        name: "North Carolina (Deaf/HoH only)", model: "per_minute",
+        ratePerMin: 67.50 / 60, // midpoint of $35-$100/hr business hours range
+        billingDisplay: "Administrative expense — $35–$100/hr (business hrs); $52.50–$105/hr (after hours) — DEAF/HOH ONLY",
+        alert: "⚠️ IMPORTANT: North Carolina reimburses ONLY for Deaf, Hard of Hearing, and DeafBlind communication access services. There is NO Medicaid reimbursement for spoken language LEP services in NC. Annual budget is capped at $800,000 state (matched by CMS for $1.6M total). Rate range pre-loaded at business-hours midpoint ($67.50/hr = $1.125/min). 2-hr minimum billing for sign language interpreters. Providers must register with DSDHH. EXCLUDES: telephonic services (not feasible for Deaf), hospital inpatient/outpatient/ED, ambulance.",
+        fmap: "Adults/Children: 50%",
+        claimType: "Administrative", annualBudgetCap: 1600000
+      },
+      ND: {
+        name: "North Dakota", model: "per_minute",
+        ratePerMin: 16.78 / 15,
+        capMinutesPerVisit: 120, // max 8 units (2 hrs) per visit
+        billingDisplay: "Covered service — T1013 — $16.78/15-min — max 8 units/visit (2 hrs)",
+        alert: "North Dakota reimburses $16.78/15-min unit ($1.119/min) for both sign and oral. CAP: 8 units (120 min) per visit; time billed cannot exceed office visit length. Professional service providers only (physicians, NPs, dentists, behavioral health, optometrists). Interpreter must be employed or contracted by billing provider. EXCLUDES: inpatient, nursing facilities, ICF/IID, FQHCs, RHCs, IHS, PRTFs, family members, admin tasks, no-shows.",
+        fmap: "Non-expansion: 53.82% | Expansion adults: 90% | CHIP: 67.67%",
+        claimType: "Covered Service", code: "T1013"
+      },
+      NH: {
+        name: "New Hampshire", model: "per_event",
+        ratePerMin: 98.54 / 120, // effective rate for ≤2-hr events (~$0.82/min)
+        rateEvent: 98.54,
+        rateAdditional15: 12.32,
+        billingDisplay: "Administrative expense — $98.54/event (≤2 hrs); $12.32/add'l 15-min — interpreters enroll as Medicaid providers",
+        alert: "New Hampshire bills per event: $98.54 for encounters up to 2 hours; $12.32 per additional 15-min unit beyond 2 hours. Effective rate pre-loaded at ~$0.82/min (assuming typical ≤2-hr events). Interpreters must enroll as Medicaid providers. Language Bank coordinates most services. EXCLUDES: non-face-to-face time (e.g., appointment-setting calls), travel/mileage, inpatient hospitals, community health centers, nursing facilities (these providers negotiate own rates).",
+        fmap: "Adults/Children: 50% | CHIP: 65%",
+        claimType: "Administrative"
+      },
+      NY: {
+        name: "New York", model: "per_session",
+        ratePerMin: 22.00 / 30, // approx for typical 30-min session (23+ min rate)
+        rateShort: 11.11, rateLong: 22.00,
+        billingDisplay: "Covered service — $11.11 (8–22 min session); $22.00 (23+ min session)",
+        alert: "New York bills by session length, not by minute. $11.11 for sessions of 8–22 minutes; $22.00 for sessions of 23+ minutes. Eligible settings: hospitals, mental health/substance abuse clinics, EDs, Diagnostic & Treatment Centers, FQHCs, medical offices, treatment facilities for developmental disabilities. Provider pays interpreter, then claims. FQHCs on federal prospective payment rates may not bill separately. EXCLUDES: all virtual/telephonic (in-person only per state plan).",
+        fmap: "Non-expansion: 50% | Expansion adults: 90% | CHIP: 65%",
+        claimType: "Covered Service"
+      },
+      OR: {
+        name: "Oregon", model: "per_visit_flat",
+        ratePerVisit: 60.00,
+        billingDisplay: "Covered service — $60 flat add-on per covered health care visit (oral & sign; in-person & virtual)",
+        alert: "Oregon reimburses a flat $60 add-on fee per covered health care visit — one of the simplest billing structures nationally. Interpreter must be certified or qualified per OHA Health Care Interpreter Registry. EXCLUDES: services billed at bundled rates — inpatient hospital stays, home health/hospice, long-term care, FQHCs/RHCs/tribal health centers on encounter rates. Enter monthly visit count (not minutes) below.",
+        fmap: "Non-expansion: 59.31% | Expansion adults: 90% | CHIP: 71.52%",
+        claimType: "Covered Service"
+      },
+      RI: {
+        name: "Rhode Island", model: "per_minute",
+        ratePerMin: 17.65 / 15,
+        capMinutesPerVisit: 120, // max 8 units per visit
+        billingDisplay: "Covered service — T1013 — $17.65/15-min — max 8 units/visit (2 hrs)",
+        alert: "Rhode Island reimburses $17.65/15-min unit ($1.177/min) for oral and sign language. CAP: 8 units (120 min) per visit; time billed cannot exceed office visit length. HBTS (children early intervention/home-based): $25.59/15-min (update rate field if applicable). One-on-one face-to-face outpatient visits only. Providers must establish a relationship with a language service agency. T1013 billing. EXCLUDES: bilingual staff, interpreting services by provider staff, non-outpatient settings.",
+        fmap: "Non-expansion: 55.01% | Expansion adults: 90% | CHIP: 68.51%",
+        claimType: "Covered Service", code: "T1013"
+      },
+      UT: {
+        name: "Utah", model: "per_minute",
+        ratePerMin: 0.85, // midpoint of telephonic range ($0.60–$1.10/min)
+        billingDisplay: "Administrative expense — In-person: $30–$48/hr; Virtual: $0.60–$1.10/min; ASL: $57–$90/hr",
+        alert: "Utah uses 6 contracted Interpreting Service Providers (ISPs) — interpreters bill Medicaid directly (providers do not submit claims). Rate range: in-person $30–$48/hr (1-hr min); virtual telephonic/video $0.60–$1.10/min (no minimum); ASL $57–$90/hr (2-hr min). Telephonic midpoint ($0.85/min) pre-loaded. Rates vary by modality, time-of-day, ISP, and language. Hospitals must cover inpatient costs; Medicaid covers FFS outpatient only. MCO program is expanding, reducing FFS volume.",
+        fmap: "Adults: 50% | Children: 75% | CHIP: 81.13%",
+        claimType: "Administrative"
+      },
+      VT: {
+        name: "Vermont", model: "per_minute",
+        ratePerMin: 15.00 / 15, // lesser of $15/15-min or usual & customary
+        billingDisplay: "Covered service — T1013 — lesser of $15/15-min or usual & customary",
+        alert: "Vermont reimburses the lesser of $15/15-min unit ($1.00/min) or the usual and customary fee. Billable: in-person and telephonic oral/sign. Unique: Vermont permits reimbursement for interpreter time spent with a beneficiary filling out forms or reviewing instructions outside the clinical encounter. EXCLUDES: travel time, wait time, no-shows, bilingual staff who serve as interpreters.",
+        fmap: "Non-expansion: 56% | Expansion adults: 90% | CHIP: 69.73%",
+        claimType: "Covered Service", code: "T1013"
+      },
+      WA: {
+        name: "Washington", model: "per_minute",
+        ratePerMin: 0.62, // telephonic maximum ($0.62/min) — most common modality
+        billingDisplay: "Administrative expense — In-person: max $46.09/hr; Telephonic: max $0.62/min; VRI: max $3.18/min",
+        alert: "Washington (Apple Health) uses a single contracted coordinating entity for spoken language (Language Access Providers — LAPs). Rates: in-person max $46.09/hr ($0.768/min); telephonic max $0.62/min (pre-loaded); video remote max $3.18/min. Sign language: separate ODHH contracting; mileage, travel time, and tolls are reimbursable. Unique: LAPs are also paid for short-notice cancellations and no-shows. EXCLUDES: inpatient hospital, nursing facilities, family members, general admin tasks.",
+        fmap: "Adults: 50% | Children: 75% | CHIP: 75%",
+        claimType: "Administrative"
+      },
+      WY: {
+        name: "Wyoming", model: "per_minute",
+        ratePerMin: 10.61 / 15,
+        billingDisplay: "Covered service — T1013 — $10.61/15-min (oral & sign; in-person & virtual)",
+        alert: "Wyoming reimburses $10.61/15-min unit ($0.707/min) for oral and sign language at the same rate, in-person and virtual. Providers hire/pay interpreters, then submit T1013 claims with modifier for virtual services. Documentation required: beneficiary name, date, times in/out, service, provider signature. EXCLUDES: inpatient/outpatient hospitals, ICF/IIDs, nursing facilities, ambulance, PRTFs, rehabilitation facilities, federally-funded agencies, family/friends, travel time.",
+        fmap: "Medicaid all: 50% | CHIP: 65%",
+        claimType: "Covered Service", code: "T1013"
+      },
+      CUSTOM: {
+        name: "Custom / Not listed", model: "per_minute",
+        ratePerMin: 0.75,
+        billingDisplay: "Custom — enter your state's rate manually",
+        alert: "Your state is not among the 18 states + DC identified in the NHeLP 2024 report as having a direct reimbursement program. You may still have a reimbursable program — verify with your state Medicaid agency. Enter your rate manually. Standard HCPCS billing code for interpreter services is T1013.",
+        fmap: "Verify with your state Medicaid agency",
+        claimType: "Varies"
+      }
+    };
+
+    function onStateSelect(){
+      const code = document.getElementById('ia_state_select').value;
+      const p = STATE_PROFILES[code];
+
+      const alertEl = document.getElementById('ia_state_alert');
+      const modelEl = document.getElementById('ia_billing_model_display');
+      const fmapEl  = document.getElementById('ia_fmap_display');
+      const fmapField = document.getElementById('ia_field_fmap');
+      const capNotice = document.getElementById('ia_cap_notice');
+      const rateField = document.getElementById('ia_field_rate');
+      const rateInput = document.getElementById('ia_reimb_rate_per_min');
+
+      // Hide all special input fields first
+      document.getElementById('ia_field_minutes').style.display = '';
+      document.getElementById('ia_field_visits').style.display = 'none';
+      document.getElementById('ia_field_sessions').style.display = 'none';
+      document.getElementById('ia_field_session_long').style.display = 'none';
+      capNotice.style.display = 'none';
+
+      if(!p){
+        alertEl.style.display = 'none';
+        modelEl.textContent = 'Select a state above';
+        fmapField.style.display = 'none';
+        document.getElementById('kpi_state_basis').textContent = 'Select a state';
+        return;
+      }
+
+      // Billing model display
+      modelEl.innerHTML = `<span style="color:var(--navy);font-weight:600;">${p.claimType || ''}</span>&nbsp;&nbsp;<span style="color:var(--slate);">${p.billingDisplay}</span>`;
+
+      // State alert
+      alertEl.innerHTML = p.alert;
+      alertEl.style.display = '';
+
+      // FMAP
+      fmapEl.innerHTML = p.fmap;
+      fmapField.style.display = '';
+
+      // Model-specific input swap
+      if(p.model === 'bundled_mco'){
+        document.getElementById('ia_field_minutes').style.display = 'none';
+        rateField.style.display = 'none';
+        document.getElementById('ia_approval_rate_pct').closest('.field').style.display = 'none';
+        document.getElementById('ia_capture_rate_pct').closest('.field').style.display = 'none';
+      } else {
+        rateField.style.display = '';
+        document.getElementById('ia_approval_rate_pct').closest('.field').style.display = '';
+        document.getElementById('ia_capture_rate_pct').closest('.field').style.display = '';
+      }
+
+      if(p.model === 'per_visit_flat'){
+        document.getElementById('ia_field_minutes').style.display = 'none';
+        document.getElementById('ia_field_visits').style.display = '';
+        // Show per-visit rate in the rate field
+        document.getElementById('ia_rate_label').textContent = 'State reimbursement rate';
+        document.getElementById('ia_rate_tag').textContent = '$/visit';
+        rateInput.value = p.ratePerVisit.toFixed(2);
+        rateInput.step = '5';
+        document.getElementById('ia_rate_note').textContent = `Oregon pays a flat $${p.ratePerVisit}/visit add-on. Edit if rate is updated.`;
+      } else if(p.model === 'per_session'){
+        document.getElementById('ia_field_minutes').style.display = 'none';
+        document.getElementById('ia_field_sessions').style.display = '';
+        document.getElementById('ia_field_session_long').style.display = '';
+        // Rate field shows blended effective rate
+        document.getElementById('ia_rate_label').textContent = 'Effective blended rate';
+        document.getElementById('ia_rate_tag').textContent = '$/session (auto)';
+        document.getElementById('ia_rate_note').textContent = `Auto-calculated from session-length mix: (% long × $22.00) + (% short × $11.11). You may override.`;
+        rateInput.step = '0.01';
+      } else if(p.model !== 'bundled_mco'){
+        document.getElementById('ia_rate_label').textContent = 'State reimbursement rate';
+        document.getElementById('ia_rate_tag').textContent = '$/minute';
+        rateInput.step = '0.01';
+        if(p.ratePerMin != null) rateInput.value = p.ratePerMin.toFixed(4);
+        document.getElementById('ia_rate_note').textContent = 'Auto-populated from NHeLP 2024. Edit for updated rates or contract-specific adjustments.';
+      }
+
+      // Cap notice
+      if(p.capMinutesPerVisit){
+        capNotice.innerHTML = `⏱ <strong>Per-visit cap:</strong> ${p.name} limits billing to <strong>${p.capMinutesPerVisit} minutes (8 units) per encounter</strong>. The calculator applies this cap per-visit. Adjust your monthly minutes to reflect actual capped time, not total interpreter time.`;
+        capNotice.style.display = '';
+      } else if(p.capMinutesPerDay){
+        capNotice.innerHTML = `⏱ <strong>Daily cap:</strong> ${p.name} limits billing to <strong>${p.capMinutesPerDay} minutes (8 units) per day</strong> without prior authorization. Adjust monthly minutes to reflect capped volume.`;
+        capNotice.style.display = '';
+      } else if(p.annualBudgetCap){
+        capNotice.innerHTML = `⚠️ <strong>Annual budget cap:</strong> ${p.name}'s program is funded at an annual ceiling of <strong>$${(p.annualBudgetCap/1e6).toFixed(1)}M (federal + state)</strong>. System-level projections may exceed available funding if organization volume is large relative to the state program.`;
+        capNotice.style.display = '';
+      }
+
+      // Update basis KPI label
+      document.getElementById('kpi_state_basis').textContent = p.billingDisplay.split('—')[0].trim();
+
+      updateAll();
+    }
+
+    function calcStateReimb(){
+      const code = document.getElementById('ia_state_select') ? document.getElementById('ia_state_select').value : '';
+      const p = STATE_PROFILES[code] || null;
+      const approval = pctTo01(num('ia_approval_rate_pct'));
+      const capture = pctTo01(num('ia_capture_rate_pct'));
+
+      // CA (bundled MCO) — not separately billable
+      if(p && p.model === 'bundled_mco'){
+        return { annual: 0, monthly: 0, formula: 'Not applicable — MCO bundled capitation' };
+      }
+
+      // OR — per-visit flat ($60/visit)
+      if(p && p.model === 'per_visit_flat'){
+        const visits = num('ia_reimbursable_visits_month') || 0;
+        const rate = num('ia_reimb_rate_per_min') || 60; // $/visit stored in rate field
+        const monthly = visits * rate * approval * capture;
+        const annual = monthly * 12;
+        return { annual, monthly, formula: `${visits} visits × $${rate.toFixed(2)}/visit × ${(approval*100).toFixed(0)}% appr × ${(capture*100).toFixed(0)}% cap = ${money0.format(monthly)}/mo` };
+      }
+
+      // NY — per-session (blended rate from session-length mix)
+      if(p && p.model === 'per_session'){
+        const sessions = num('ia_reimbursable_sessions_month') || 0;
+        const longPct  = pctTo01(num('ia_session_long_pct') || 75);
+        const blended  = longPct * 22.00 + (1 - longPct) * 11.11;
+        // Update the rate field to reflect blended
+        const rateEl = document.getElementById('ia_reimb_rate_per_min');
+        if(rateEl) rateEl.value = blended.toFixed(2);
+        const monthly = sessions * blended * approval * capture;
+        const annual  = monthly * 12;
+        return { annual, monthly, formula: `${sessions} sessions × $${blended.toFixed(2)} blended × ${(approval*100).toFixed(0)}% × ${(capture*100).toFixed(0)}% = ${money0.format(monthly)}/mo` };
+      }
+
+      // All per-minute / per-unit states
+      const mins  = num('ia_reimbursable_minutes_month') || 0;
+      const rate  = num('ia_reimb_rate_per_min') || 0;
+      const monthly = mins * rate * approval * capture;
+      const annual  = monthly * 12;
+      const stateLabel = p ? p.name : (code || 'Custom');
+      return { annual, monthly, formula: `${mins} min × $${rate.toFixed(4)}/min × ${(approval*100).toFixed(0)}% × ${(capture*100).toFixed(0)}% = ${money0.format(monthly)}/mo` };
+    }
+
+    function calcMalpractice(){
+      // Two-track model: damage exposure + defense legal cost exposure (Berkeley-calibrated)
+      const lepEncounters   = num('mal_lep_encounters');
+      const docGapPct       = clamp(num('mal_doc_gap_pct'), 0, 100) / 100;
+      const claimRatePct    = clamp(num('mal_claim_rate_pct'), 0, 100) / 100;
+      const damagePmtPct    = clamp(num('mal_damage_pmt_pct'), 0, 100) / 100;
+      const avgDamage       = num('mal_avg_damage');
+      const avgDefense      = num('mal_avg_defense');
+      const interpRR        = clamp(num('mal_interp_rr_pct'), 0, 60) / 100;
+      const docRR           = clamp(num('mal_doc_rr_pct'), 0, 40) / 100;
+
+      // Multiplicative risk reduction
+      const combinedRR = 1 - (1 - interpRR) * (1 - docRR);
+
+      // At-risk encounters and expected claims filed
+      const atRiskEncounters = lepEncounters * docGapPct;
+      const claimsFiled      = atRiskEncounters * claimRatePct;
+
+      // Track 1: Damage avoidance
+      const damageTrack = claimsFiled * damagePmtPct * avgDamage * combinedRR;
+
+      // Track 2: Defense cost avoidance (applies to all filed claims regardless of outcome)
+      const defenseTrack = claimsFiled * avgDefense * combinedRR;
+
+      const annual = damageTrack + defenseTrack;
+      const monthly = annual / 12;
+      return {
+        annual, monthly,
+        damageTrack, defenseTrack,
+        combinedRR, atRiskEncounters, claimsFiled,
+        formula: `${Math.round(atRiskEncounters)} at-risk × ${(claimRatePct*100).toFixed(1)}% filed = ${claimsFiled.toFixed(1)} claims | Dmg: ${claimsFiled.toFixed(1)}×${(damagePmtPct*100).toFixed(0)}%×${money0.format(avgDamage)}×${(combinedRR*100).toFixed(1)}% = ${money0.format(damageTrack)}/yr | Defense: ${claimsFiled.toFixed(1)}×${money0.format(avgDefense)}×${(combinedRR*100).toFixed(1)}% = ${money0.format(defenseTrack)}/yr`
+      };
+    }
+
+    // ---------- Render tables ----------
+    function renderModuleTable(rows){
+      const tb = document.getElementById('tbl_by_module');
+      tb.innerHTML = '';
+      for(const r of rows){
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${r.name}</td>
+          <td class="num">${money0.format(r.monthly)}</td>
+          <td class="num">${money0.format(r.annual)}</td>
+        `;
+        tb.appendChild(tr);
+      }
+      if(rows.length === 0){
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td colspan="3" class="small">No modules selected.</td>`;
+        tb.appendChild(tr);
+      }
+    }
+
+    function renderSnapshot(perHospitalMonthly, perHospitalAnnual, systemMonthly, systemAnnual){
+      const tb = document.getElementById('tbl_snapshot');
+      tb.innerHTML = '';
+      const rows = [
+        { level:'Per Hospital', m: perHospitalMonthly, a: perHospitalAnnual },
+        { level:'System', m: systemMonthly, a: systemAnnual },
+      ];
+      for(const r of rows){
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${r.level}</td>
+          <td class="num">${money0.format(r.m)}</td>
+          <td class="num">${money0.format(r.a)}</td>
+        `;
+        tb.appendChild(tr);
+      }
+    }
+
+    function renderEDSteps(steps){
+      const tb = document.getElementById('tbl_ed_steps');
+      tb.innerHTML = '';
+      for(const [label, val, unit] of steps){
+        const tr = document.createElement('tr');
+        let disp = '';
+        if(unit === '$/mo' || unit === '$/yr'){
+          disp = money0.format(val);
+        } else if(unit === 'fraction'){
+          disp = (val*100).toFixed(1) + '%';
+        } else if(unit === 'count/mo'){
+          disp = num2.format(val);
+        } else {
+          disp = String(val);
+        }
+        tr.innerHTML = `<th>${label}</th><td class="num">${disp}</td><td class="small">${unit}</td>`;
+        tb.appendChild(tr);
+      }
+    }
+
+    function renderTeachBackTable(rows){
+      const tb = document.getElementById('tbl_tb_rows');
+      tb.innerHTML = '';
+      for(const r of rows){
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${r.m}</td>
+          <td class="num">${r.provPct.toFixed(0)}%</td>
+          <td class="num">${r.canPct.toFixed(0)}%</td>
+          <td class="num">${r.netPct.toFixed(0)}%</td>
+          <td class="num">${r.vProv.toFixed(1)}</td>
+          <td class="num">${r.vProvConcord.toFixed(1)}</td>
+          <td class="num">${r.vProvInterp.toFixed(1)}</td>
+          <td class="num">${r.averted.toFixed(2)}</td>
+          <td class="num">${money0.format(r.readmSav)}</td>
+          <td class="num">${money0.format(r.providerTimeCost)}</td>
+          <td class="num">${money0.format(r.interpreterCost)}</td>
+          <td class="num">${money0.format(r.deliveryCost)}</td>
+          <td class="num">${money0.format(r.netSav)}</td>
+        `;
+        tb.appendChild(tr);
+      }
+    }
+
+    function updateCharts(tb){
+      const labels = tb.rows.map(r => `M${r.m}`);
+      ensureCharts(labels);
+
+      chAdoption.data.labels = labels;
+      chAdoption.data.datasets[0].data = tb.rows.map(r => r.provPct);
+      chAdoption.data.datasets[1].data = tb.rows.map(r => r.canPct);
+      chAdoption.data.datasets[2].data = tb.rows.map(r => r.netPct);
+      chAdoption.update();
+
+      chOutcome.data.labels = labels;
+      chOutcome.data.datasets[0].data = tb.rows.map(r => r.averted);
+      chOutcome.update();
+
+      chSavCost.data.labels = labels;
+      chSavCost.data.datasets[0].data = tb.rows.map(r => r.readmSav);
+      chSavCost.data.datasets[1].data = tb.rows.map(r => r.deliveryCost);
+      chSavCost.update();
+
+      chNet.data.labels = labels;
+      chNet.data.datasets[0].data = tb.rows.map(r => r.netSav);
+      chNet.update();
+    }
+
+    // ---------- Main update ----------
+    function updateAll(){
+      const hospitals = Math.max(1, Math.round(num('hospitals_in_system') || 1));
+
+      // module toggles
+      const useED = chk('use_ed_lang_stroke');
+      const useENG = chk('use_engagement_los');
+      const useTB = chk('use_teachback');
+      const useVBP = chk('use_vbp');
+      const useSTATE = chk('use_state_reimb');
+      const useMAL = chk('use_malpractice');
+
+      // module calcs
+      const ed = calcEDAccess();
+      const eng = calcEngLOS();
+      const tb = calcTeachBack();
+      const vbp = calcVBP();
+      const state = calcStateReimb();
+      const mal = calcMalpractice();
+
+      // per-hospital annual total (match Python aggregation philosophy)
+      const perHospitalAnnual =
+        (useED ? ed.annualNet : 0) +
+        (useENG ? eng.annual : 0) +
+        (useTB ? tb.annualNet : 0) +
+        (useVBP ? vbp.annual : 0) +
+        (useSTATE ? state.annual : 0) +
+        (useMAL ? mal.annual : 0);
+
+      const systemAnnual = perHospitalAnnual * hospitals;
+      const perHospitalMonthly = perHospitalAnnual / 12;
+      const systemMonthly = systemAnnual / 12;
+
+      // top KPIs
+      setText('kpi_hosp_month', money0.format(perHospitalMonthly));
+      setText('kpi_hosp_year', money0.format(perHospitalAnnual));
+      setText('kpi_sys_month', money0.format(systemMonthly));
+      setText('kpi_sys_year', money0.format(systemAnnual));
+
+      // module table
+      const moduleRows = [];
+      if(useED) moduleRows.push({ name:'ED Language Access — Admission Avoidance + Return Visits + Stroke (net)', monthly: ed.annualNet/12, annual: ed.annualNet });
+      if(useENG) moduleRows.push({ name:'Engagement & LOS Reduction', monthly: eng.annual/12, annual: eng.annual });
+      if(useTB) moduleRows.push({ name:'Teach-Back (Dual; net of delivery cost)', monthly: tb.annualNet/12, annual: tb.annualNet });
+      if(useVBP) moduleRows.push({ name:'Value-Based Care (VBP)', monthly: vbp.annual/12, annual: vbp.annual });
+      const stateCode = document.getElementById('ia_state_select') ? document.getElementById('ia_state_select').value : '';
+      const stateLabel = stateCode && STATE_PROFILES[stateCode] ? STATE_PROFILES[stateCode].name : (stateCode || 'Custom');
+      if(useSTATE) moduleRows.push({ name:`State Reimbursement — ${stateLabel} Medicaid interpreter offset`, monthly: state.annual/12, annual: state.annual });
+      if(useMAL) moduleRows.push({ name:'Malpractice Cost-Avoidance', monthly: mal.annual/12, annual: mal.annual });
+
+      renderModuleTable(moduleRows);
+      renderSnapshot(perHospitalMonthly, perHospitalAnnual, systemMonthly, systemAnnual);
+
+      // ED KPIs + steps
+      setText('kpi_ed_month',         money0.format(ed.monthlyNet));
+      setText('kpi_ed_year',          money0.format(ed.annualNet));
+      setText('kpi_ed_track1',        money0.format(ed.track1Annual));
+      setText('kpi_ed_track2',        money0.format(ed.track2Annual));
+      setText('kpi_ed_stroke',        money0.format(ed.strokeNetAnnual));
+      setText('kpi_ed_averted_admits',ed.avertedAdmitsMonth.toFixed(2) + '/mo');
+      setText('kpi_ed_averted_returns',ed.avertedReturnsMonth.toFixed(2) + '/mo');
+      setText('kpi_ed_inc_timely',    num2.format(ed.incTimely));
+      setText('kpi_ed_inc_treated',   num2.format(ed.incTreated));
+      renderEDSteps(ed.steps);
+
+      // ENG KPIs
+      setText('kpi_eng_month',  money0.format(eng.monthly));
+      setText('kpi_eng_year',   money0.format(eng.annual));
+      setText('kpi_eng_base',   money0.format(eng.baseAnnual));
+      setText('kpi_eng_qbs',    money0.format(eng.qbsAnnual));
+      setText('kpi_eng_qbs_delta',      (eng.qbsDelta * 100).toFixed(0) + '% coverage increase');
+      setText('kpi_eng_qbs_encounters', eng.qbsEncounters.toFixed(1) + ' encounters/month');
+      setText('kpi_eng_formula', eng.formula);
+
+      // Teach-back KPIs + charts + table
+      setText('kpi_tb_horizon', String(tb.months));
+      setText('kpi_tb_net_final', `${tb.finalNetPct.toFixed(0)}%`);
+      setText('kpi_tb_avert_final', tb.finalAverted.toFixed(2));
+      setText('kpi_tb_annual_net', money0.format(tb.annualNet));
+      renderTeachBackTable(tb.rows);
+      updateCharts(tb);
+      renderRevenueIntegrityOverlay(tb);
+
+      // VBP
+      setText('kpi_vbp_year', money0.format(vbp.annual));
+      setText('kpi_vbp_month', money0.format(vbp.monthly));
+      setText('kpi_vbp_formula', vbp.formula);
+
+      // State
+      setText('kpi_state_year', money0.format(state.annual));
+      setText('kpi_state_month', money0.format(state.monthly));
+      setText('kpi_state_formula', state.formula);
+
+      // Malpractice
+      setText('kpi_mal_year', money0.format(mal.annual));
+      setText('kpi_mal_month', money0.format(mal.monthly));
+      setText('kpi_mal_damage', money0.format(mal.damageTrack));
+      setText('kpi_mal_defense', money0.format(mal.defenseTrack));
+      setText('kpi_mal_combined_rr', (mal.combinedRR * 100).toFixed(1) + '%');
+      setText('kpi_mal_at_risk', Math.round(mal.atRiskEncounters).toLocaleString());
+      setText('kpi_mal_claims', mal.claimsFiled.toFixed(1));
+      setText('kpi_mal_formula', mal.formula);
+    }
+
+    // ---------- Wire up events ----------
+    function wire(){
+      const ids = Object.keys(DEFAULTS);
+      for(const id of ids){
+        const el = document.getElementById(id);
+        if(!el) continue;
+        el.addEventListener('input', () => updateAll());
+        el.addEventListener('change', () => updateAll());
+      }
+      document.getElementById('resetDefaults').addEventListener('click', () => setDefaults());
+    }
+
+    
+    // ---------- Workflow Simulation Lab (stage-based exemplars) ----------
+    const SIM_STAGES = [
+      {
+        id: "ed_stroke",
+        label: "Emergency Department — Stroke triage & time-sensitive MDM",
+        story: `
+          <b>Stage focus:</b> ED triage and time-sensitive stroke decision-making.<br><br>
+          <b>Patient:</b> A 62-year-old Spanish-speaking patient arrives with facial droop and slurred speech. A family member tries to interpret,
+          but key details are lost. The triage note records last-known-well as “this morning” instead of “about 45 minutes ago.”<br><br>
+          <b>What goes wrong:</b> Without rapid interpreter access and a structured last-known-well script, the team’s history and neurologic assessment
+          are incomplete. Imaging and stroke-team activation are delayed. The patient falls outside the thrombolysis window.<br><br>
+          <b>Why it matters:</b> The same communication gap that harms care also weakens documentation supporting the ED E/M MDM level (and, when applicable, critical care).
+        `,
+        codes: [
+          { fam: "ED E/M (99281–99285)", note: "MDM-driven ED visit; documentation quality affects defensibility" },
+          { fam: "Critical care (99291–99292) (if criteria met)", note: "If critical care is provided after the ED service" }
+        ],
+        riskType: "Downcoding / documentation insufficiency",
+        teaching: { enabled: true, time_based: false, primary_care_exception_possible: false },
+        practices: [
+          { key:"interp_fast", label:"Rapid interpreter access protocol (≤10 minutes) + escalation path", must:true, auto:false },
+          { key:"lkw", label:"Standardized last-known-well workflow (scripted questions + confirmation)", must:true, auto:true },
+          { key:"stroke_bundle", label:"Stroke bundle triggers documented (timing, imaging, consults)", must:false, auto:true },
+          { key:"mdm_risk", label:"Risk discussion + shared decision-making documented when appropriate", must:true, auto:false }
+        ],
+        audit: [
+          "Interpreter/QBS mode + timestamp documented",
+          "Last-known-well captured with confirmation (patient/family)",
+          "Neurologic exam elements documented (medically appropriate)",
+          "Rationale for thrombolysis / transfer / escalation documented"
+        ],
+        thresholds: { mitigated: 3, moderate: 2 }
+      },
+      {
+        id: "maternal_preeclampsia",
+        label: "Maternal Health — L&D triage, escalation, and perinatal risk",
+        story: `
+          <b>Stage focus:</b> Maternal warning signs at triage and the defensibility of escalation decisions.<br><br>
+          <b>Patient:</b> A 29-year-old Spanish-speaking patient at 36 weeks gestation presents to triage with severe headache, visual changes, nausea,
+          and swelling in her hands and face. A partner attempts to interpret, and the initial note describes the patient as “anxious.” Blood pressure is borderline elevated;
+          labs are pending.<br><br>
+          <b>What goes wrong:</b> Without immediate interpreter/QBS engagement and a structured symptom-severity assessment, the neurologic warning signs are not fully explored.
+          Visual changes are minimized as “common in pregnancy,” and escalation to the attending is delayed. Hours later, the patient deteriorates and is diagnosed with severe
+          preeclampsia requiring emergent intervention.<br><br>
+          <b>Why it matters:</b> Maternal harm often results from progressive understatement of risk across encounters. The same communication gap that delays care also weakens
+          the medical record’s support for high-risk MDM and timely escalation.
+        `,
+        codes: [
+          { fam: "Triage E/M (setting-specific)", note: "Depending on location and billing pathway, triage may map to ED-style E/M or hospital outpatient E/M" },
+          { fam: "Inpatient/observation (99221–99223; 99231–99233)", note: "If admitted/observed, MDM must support maternal/fetal risk and escalation decisions" },
+          { fam: "Critical care (99291–99292) (if criteria met)", note: "If critical care is provided due to severe maternal instability" }
+        ],
+        riskType: "Downcoding / escalation ambiguity / documentation insufficiency",
+        teaching: { enabled: true, time_based: false, primary_care_exception_possible: true },
+        practices: [
+          { key:"interp_now", label:"Immediate interpreter or QBS engagement at triage (document language + timestamp)", must:true, auto:true },
+          { key:"warn_signs", label:"Structured maternal warning sign assessment (headache, vision, neuro, RUQ pain) with confirmation", must:true, auto:true },
+          { key:"risk_doc", label:"Explicit documentation of maternal + fetal risk and rationale for management decisions", must:true, auto:false },
+          { key:"escalate", label:"Timely escalation to OB attending documented with clinical rationale and response", must:true, auto:true },
+          { key:"handoff", label:"Structured handoff between triage/OB/anesthesia with interpreter/QBS mode recorded", must:false, auto:true }
+        ],
+        audit: [
+          "Preferred language and interpreter/QBS mode documented with timestamp",
+          "Warning signs and severity captured using a structured prompt and confirmation",
+          "MDM risk element documented: maternal/fetal morbidity risk and escalation rationale",
+          "Attending notification/escalation time, response, and plan documented",
+          "If transferred/OR/anesthesia: handoff documentation and consent language support recorded"
+        ],
+        thresholds: { mitigated: 4, moderate: 3 }
+      },
+
+      {
+        id: "inpt_consent",
+        label: "Inpatient/Observation — Consent + plan-of-care documentation",
+        story: `
+          <b>Stage focus:</b> Inpatient/observation plan-of-care, consent, and daily MDM.<br><br>
+          <b>Patient:</b> An LEP patient is admitted for sepsis evaluation. During a busy shift change, the team proceeds with consent using limited English
+          and non-specific “yes/no” confirmation.<br><br>
+          <b>What goes wrong:</b> The patient agrees without true comprehension. Later, family members dispute the plan and request delays.
+          Orders are paused and the record lacks clear documentation of risks/benefits and patient understanding.<br><br>
+          <b>Why it matters:</b> Care delays increase clinical risk, and documentation gaps increase audit vulnerability and conservative coding for inpatient E/M services.
+        `,
+        codes: [
+          { fam: "Initial inpatient/observation (99221–99223)", note: "Admission-level MDM and risk documentation" },
+          { fam: "Subsequent inpatient/observation (99231–99233)", note: "Daily progress notes; MDM defensibility" }
+        ],
+        riskType: "Documentation insufficiency / characterization risk",
+        teaching: { enabled: true, time_based: false, primary_care_exception_possible: true },
+        practices: [
+          { key:"consent", label:"Informed consent in preferred language + teach-back confirmation", must:true, auto:true },
+          { key:"plan", label:"Plan-of-care discussion documented (risks/benefits/alternatives)", must:true, auto:false },
+          { key:"sdoh", label:"Barriers/SDOH impacting treatment documented when relevant", must:false, auto:true },
+          { key:"rounds", label:"Structured daily LEP prompt for communication + documentation", must:false, auto:true }
+        ],
+        audit: [
+          "Consent documented with interpreter/QBS involvement",
+          "Plan-of-care discussion documented (risks/benefits/alternatives)",
+          "Medication changes and monitoring rationale documented",
+          "Barriers to adherence (including language) documented when relevant"
+        ],
+        thresholds: { mitigated: 3, moderate: 2 }
+      },
+      {
+        id: "discharge_tb",
+        label: "Discharge — Teach-back & instructions (99238–99239)",
+        story: `
+          <b>Stage focus:</b> Discharge day management and teach-back reliability.<br><br>
+          <b>Patient:</b> An LEP patient is discharged after a stroke evaluation with medication changes and red-flag symptoms to monitor.
+          Instructions are provided in English; the patient nods politely but does not demonstrate comprehension.<br><br>
+          <b>What goes wrong:</b> Without teach-back in the preferred language, the patient misunderstands dosing and misses follow-up.
+          The patient returns within a week with preventable complications and a higher readmission risk.<br><br>
+          <b>Why it matters:</b> Discharge documentation may not support the appropriate discharge code level, and downstream transitions (e.g., TCM) become harder to substantiate.
+        `,
+        codes: [
+          { fam: "Hospital discharge day management (99238–99239)", note: "Discharge work and documentation on the date of discharge" },
+          { fam: "Downstream: TCM readiness (99495–99496)", note: "Teach-back supports transition prerequisites" }
+        ],
+        riskType: "Downcoding / missed billing prerequisites",
+        teaching: { enabled: true, time_based: true, primary_care_exception_possible: false },
+        practices: [
+          { key:"tb", label:"Teach-back completed & documented (meds + red flags + follow-up)", must:true, auto:true },
+          { key:"materials", label:"Preferred-language discharge materials (audio/video reinforcement)", must:true, auto:true },
+          { key:"medrec", label:"Medication reconciliation + refill access confirmed", must:false, auto:true },
+          { key:"appt", label:"Follow-up appointment scheduled before discharge", must:false, auto:true }
+        ],
+        audit: [
+          "Teach-back documented (who/what/when; remediation if needed)",
+          "Language of materials provided + interpreter/QBS mode documented",
+          "Medication changes reviewed + understanding confirmed",
+          "Follow-up plan and contact info documented"
+        ],
+        thresholds: { mitigated: 3, moderate: 2 }
+      },
+      {
+        id: "post_tcm",
+        label: "Post-discharge — TCM prerequisites (99495–99496)",
+        story: `
+          <b>Stage focus:</b> Post-discharge contact and Transitional Care Management (TCM) readiness.<br><br>
+          <b>Patient:</b> Staff attempt follow-up calls in English. The patient cannot confirm identity and understanding, and no interactive contact is documented.
+          The team assumes TCM is billable, but the record lacks evidence of timely contact and medication reconciliation in the preferred language.<br><br>
+          <b>What goes wrong:</b> TCM prerequisites are not reliably completed or documented. Follow-up visits are delayed and medication discrepancies persist.<br><br>
+          <b>Why it matters:</b> The organization loses an auditable trail—creating missed billing risk and increased exposure during payer audits.
+        `,
+        codes: [
+          { fam: "TCM (99495–99496)", note: "Requires interactive contact + med reconciliation + timely follow-up visit" },
+          { fam: "Optional access pathways (G2012/G2010) (when appropriate)", note: "Supplemental digital communications" }
+        ],
+        riskType: "Missed billing + audit vulnerability",
+        teaching: { enabled: true, time_based: false, primary_care_exception_possible: true },
+        practices: [
+          { key:"contact", label:"Preferred-language interactive contact within required window (document attempts)", must:true, auto:true },
+          { key:"medrec", label:"Medication reconciliation completed and documented", must:true, auto:true },
+          { key:"visit", label:"Follow-up visit scheduled within required timeframe", must:true, auto:true },
+          { key:"escalate", label:"Escalation protocol if unreachable (alternate contacts/support)", must:false, auto:true }
+        ],
+        audit: [
+          "Interactive contact date/time + language + modality documented",
+          "Medication reconciliation documented",
+          "Follow-up visit date documented (7/14-day window as applicable)",
+          "Clinical complexity rationale documented (supports 99495 vs 99496)"
+        ],
+        thresholds: { mitigated: 3, moderate: 2 }
+      },
+      {
+        id: "chronic_ccm",
+        label: "Chronic care — CCM/PCM/RPM documentation reliability",
+        story: `
+          <b>Stage focus:</b> Ongoing care management and documentation reliability for chronic services.<br><br>
+          <b>Patient:</b> An LEP patient with diabetes and hypertension is enrolled in care management. Education materials and outreach are English-only,
+          and communication attempts are inconsistently documented.<br><br>
+          <b>What goes wrong:</b> Engagement remains low, adherence barriers are not captured, and time-based requirements are difficult to evidence.
+          Clinical issues escalate, increasing avoidable utilization.<br><br>
+          <b>Why it matters:</b> Even when care is provided, incomplete documentation can compromise CCM/PCM/RPM defensibility and undermine quality and financial outcomes.
+        `,
+        codes: [
+          { fam: "CCM (99490/99439) / PCM (99424–99427)", note: "Time-based care management requires documented time and qualifying activities" },
+          { fam: "RPM mgmt (99457/99458) (if used)", note: "Treatment management time and documentation" }
+        ],
+        riskType: "Documentation insufficiency / missed thresholds",
+        teaching: { enabled: true, time_based: false, primary_care_exception_possible: true },
+        practices: [
+          { key:"edu", label:"Preferred-language education + teach-back reinforcement", must:true, auto:true },
+          { key:"logs", label:"Automated outreach + engagement logs (time, modality, language)", must:true, auto:true },
+          { key:"plan", label:"Care plan updated with goals + barriers (language/SDOH)", must:false, auto:true },
+          { key:"coord", label:"Care coordination documented when relevant", must:false, auto:true }
+        ],
+        audit: [
+          "Documented time and qualifying CCM/PCM activities",
+          "Preferred-language outreach logs retained",
+          "Care plan and goals documented with updates",
+          "Evidence of engagement and follow-up actions"
+        ],
+        thresholds: { mitigated: 3, moderate: 2 }
+      }
+    ];
+
+    function simBand(checked, stage){
+      const t = stage.thresholds || { mitigated: 3, moderate: 2 };
+      if(checked >= t.mitigated) return { label: "✅ Risk mitigated", cls: "good" };
+      if(checked >= t.moderate) return { label: "⚠️ Moderate risk", cls: "warn" };
+      return { label: "❌ High risk", cls: "bad" };
+    }
+
+    function simPrimaryRisk(stage, checked){
+      const t = stage.thresholds || { mitigated: 3, moderate: 2 };
+      if(checked < t.moderate) return "Missed billing / missing prerequisites";
+      if(checked < t.mitigated) return "Downcoding / conservative coding risk";
+      return stage.riskType || "Documentation defensibility improved";
+    }
+
+    // ---------- LAI Pulse (Module 5 subset: Discharge Reliability) ----------
+    function lai5Band(score){
+      if(score >= 80) return {label:"High readiness", cls:"good"};
+      if(score >= 60) return {label:"Moderate readiness", cls:"warn"};
+      return {label:"Low readiness", cls:"bad"};
+    }
+
+    function setText(id, text){
+      const el = document.getElementById(id);
+      if(el) el.textContent = text;
+    }
+
+    function renderLAI5(stage, checks, teachBand){
+      // Only active for the Discharge module stage
+      if(!stage || stage.id !== "discharge_tb"){
+        setText("lai5_pulse", "—");
+        setText("lai5_band", "Select the Discharge stage to activate.");
+        setText("lai5_comp", "—");
+        setText("lai5_trans", "—");
+        setText("lai5_doc", "—");
+        return;
+      }
+
+      // Expect keys: tb, materials, medrec, appt (from discharge stage)
+      const tb = !!checks.tb;
+      const materials = !!checks.materials;
+      const medrec = !!checks.medrec;
+      const appt = !!checks.appt;
+
+      // Subscores (0–100): intentionally simple & transparent
+      const comp = tb ? 100 : 20;  // comprehension verified
+      const trans = (medrec && appt) ? 100 : (medrec || appt) ? 70 : 40;  // transitions readiness
+      const doc = (teachBand && teachBand.cls === "good") ? 100 :
+                  (teachBand && teachBand.cls === "warn") ? 70 : 40;
+
+      // Materials strengthens discharge reliability and patient-facing evidence
+      const materialsBoost = materials ? 10 : 0;
+
+      // Pulse: average of core subscores + small materials boost, capped 100
+      let pulse = Math.round(((comp + trans + doc) / 3) + materialsBoost);
+      pulse = Math.max(0, Math.min(100, pulse));
+
+      const band = lai5Band(pulse);
+
+      setText("lai5_pulse", pulse + "/100");
+      setText("lai5_band", band.label);
+
+      // Color the band label using existing classes
+      const bandEl = document.getElementById("lai5_band");
+      if(bandEl){
+        bandEl.classList.remove("good","warn","bad");
+        bandEl.classList.add(band.cls);
+      }
+
+      setText("lai5_comp", comp + "/100");
+      setText("lai5_trans", trans + "/100");
+      setText("lai5_doc", doc + "/100");
+
+      // Dynamic driver note
+      const driver = document.getElementById("lai5_driver_note");
+      if(driver){
+        const parts = [];
+        if(!tb) parts.push("Increase teach-back completion/documentation.");
+        if(!(medrec && appt)) parts.push("Strengthen med rec + follow-up scheduling before discharge.");
+        if(!(teachBand && teachBand.cls === "good")) parts.push("Satisfy teaching-physician presence/attestation (if residents involved).");
+        if(!materials) parts.push("Add preferred-language discharge materials (audio/video where feasible).");
+        driver.textContent = parts.length ? ("Top drivers: " + parts.join(" ")) : "Pulse optimized: discharge comprehension, transitions, and defensible documentation are all reliable.";
+      }
+    }
+
+
+    
+    function renderSimStage(stageId){
+      const stage = SIM_STAGES.find(s => s.id === stageId) || SIM_STAGES[0];
+
+      const story = document.getElementById("sim_story");
+      const codes = document.getElementById("sim_codes");
+      const controls = document.getElementById("sim_controls");
+      const audit = document.getElementById("sim_audit");
+      const teach = document.getElementById("sim_teaching_controls");
+
+      if(story) story.innerHTML = stage.story;
+
+      if(codes){
+        codes.innerHTML = stage.codes.map(c => `
+          <div style="margin-bottom:8px;">
+            <span class="pill"><span class="tag">${c.fam}</span> ${c.note}</span>
+          </div>
+        `).join("");
+      }
+
+      if(audit){
+        audit.innerHTML = stage.audit.map(x => `<li>${x}</li>`).join("");
+      }
+
+      // Best-practice controls
+      if(controls){
+        controls.innerHTML = `
+          <div class="note" style="margin-bottom:10px;">
+            Check best practices you will implement for this stage. Items marked <span class="tag">Required</span> are needed to reach “mitigated.”
+          </div>
+          ${stage.practices.map(p => `
+            <div class="field" style="margin-bottom:10px;">
+              <label style="margin:0;">
+                <span style="display:flex; align-items:center; gap:10px;">
+                  <input type="checkbox" class="sim_cb" data-key="${p.key}">
+                  <span>${p.label}</span>
+                </span>
+                <span>
+                  ${p.must ? '<span class="tag">Required</span>' : ''}
+                  ${p.auto ? '<span class="tag">Automation</span>' : ''}
+                </span>
+              </label>
+            </div>
+          `).join("")}
+        `;
+        controls.querySelectorAll(".sim_cb").forEach(cb => cb.addEventListener("change", () => updateSimRisk(stage)));
+      }
+
+      // Teaching-setting controls (CMS)
+      if(teach){
+        if(stage.teaching && stage.teaching.enabled){
+          const showPCE = !!stage.teaching.primary_care_exception_possible;
+          const showTime = !!stage.teaching.time_based;
+
+          teach.innerHTML = `
+            <div class="note" style="margin-bottom:10px;">
+              Medicare payment in teaching settings depends on documented teaching-physician involvement (or the primary care exception in qualifying settings).
+              Select the items that are true for this encounter. (Source: CMS MLN Teaching Physicians Guidelines.)
+            </div>
+
+            <div class="grid cols2" style="margin-top:6px;">
+              <div class="field">
+                <label><span>Teaching physician involvement</span><span class="tag">required for GC</span></label>
+                <div style="display:grid; gap:8px;">
+                  <label style="display:flex; gap:10px; align-items:flex-start;">
+                    <input type="checkbox" class="teach_cb" data-key="tp_present">
+                    <span>Teaching physician present for critical/key portions (physical or approved audio-video telehealth)</span>
+                  </label>
+                  <label style="display:flex; gap:10px; align-items:flex-start;">
+                    <input type="checkbox" class="teach_cb" data-key="tp_participation">
+                    <span>Teaching physician participated in patient management (risk/plan decision) and this is patient-specific</span>
+                  </label>
+                  <label style="display:flex; gap:10px; align-items:flex-start;">
+                    <input type="checkbox" class="teach_cb" data-key="tp_signed">
+                    <span>Teaching physician signed/dated documentation reflecting presence and participation</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="field">
+                <label><span>Resident context</span><span class="tag">GC/GE</span></label>
+                <div style="display:grid; gap:8px;">
+                  <label style="display:flex; gap:10px; align-items:flex-start;">
+                    <input type="checkbox" class="teach_cb" data-key="gc_context">
+                    <span>Resident participated under teaching-physician direction (GC context)</span>
+                  </label>
+                  ${showPCE ? `
+                  <label style="display:flex; gap:10px; align-items:flex-start;">
+                    <input type="checkbox" class="teach_cb" data-key="ge_pce">
+                    <span>Primary care exception applies (GE context; eligible low/mid E/M only)</span>
+                  </label>` : ``}
+                </div>
+
+                ${showTime ? `
+                  <div class="hr"></div>
+                  <label><span>Time-based safeguard</span><span class="tag">time</span></label>
+                  <div style="display:grid; gap:8px; margin-top:6px;">
+                    <label style="display:flex; gap:10px; align-items:flex-start;">
+                      <input type="checkbox" class="teach_cb" data-key="time_tp_only">
+                      <span>Only teaching-physician time counted for time-based services (e.g., discharge day management)</span>
+                    </label>
+                  </div>` : ``}
+              </div>
+            </div>
+
+            <div class="mini" style="margin-top:10px;">
+              Tip: You can deliver great care and still fail an audit if teaching-physician presence/participation is not documented.
+            </div>
+          `;
+
+          teach.querySelectorAll(".teach_cb").forEach(cb => cb.addEventListener("change", () => updateSimRisk(stage)));
+        } else {
+          teach.innerHTML = `<div class="mini">Teaching-setting controls are not enabled for this scenario.</div>`;
+        }
+      }
+
+      updateSimRisk(stage);
+    }
+
+
+    
+    function updateSimRisk(stage){
+      // Best-practice selections
+      const cbs = document.querySelectorAll("#sim_controls .sim_cb");
+      let checked = 0;
+      let autoChecked = 0;
+      let mustTotal = 0;
+      let mustChecked = 0;
+
+      cbs.forEach(cb => {
+        const key = cb.getAttribute("data-key");
+        const p = (stage.practices || []).find(x => x.key === key);
+        const isChecked = !!cb.checked;
+        if(isChecked) checked += 1;
+        if(p && p.auto && isChecked) autoChecked += 1;
+        if(p && p.must){
+          mustTotal += 1;
+          if(isChecked) mustChecked += 1;
+        }
+      });
+
+      // Automation leverage
+      const autoPct = (checked > 0) ? Math.round((autoChecked / checked) * 100) : 0;
+      const autoEl = document.getElementById("sim_auto");
+      if(autoEl) autoEl.textContent = checked ? (autoPct + "%") : "—";
+
+      // Stage risk posture (clinical + documentation reliability)
+      let band = simBand(checked, stage);
+      if(mustTotal > 0 && mustChecked < mustTotal){
+        band = (checked >= (stage.thresholds?.moderate ?? 2)) ? { label: "⚠️ Moderate risk", cls: "warn" }
+                                                             : { label: "❌ High risk", cls: "bad" };
+      }
+
+      const el = document.getElementById("sim_risk");
+      if(el){
+        el.textContent = band.label;
+        el.classList.remove("good","warn","bad");
+        el.classList.add(band.cls);
+      }
+
+      // Primary risk narrative
+      let primary = simPrimaryRisk(stage, checked);
+      if(band.cls === "good" && autoPct >= 50){
+        primary = "Audit-defensible + scalable (automation strengthens evidence)";
+      } else if(band.cls !== "good" && autoPct >= 50 && checked){
+        primary = "Improving reliability; automation can accelerate closure";
+      }
+      const rt = document.getElementById("sim_risk_type");
+      if(rt) rt.textContent = primary;
+
+      // Teaching-setting qualifier (CMS) — learner-controlled
+      let teachBand = { label: "—", cls: "" };
+
+      if(stage.teaching && stage.teaching.enabled){
+        const tps = {
+          present: document.querySelector('#sim_teaching_controls .teach_cb[data-key="tp_present"]')?.checked || false,
+          participation: document.querySelector('#sim_teaching_controls .teach_cb[data-key="tp_participation"]')?.checked || false,
+          signed: document.querySelector('#sim_teaching_controls .teach_cb[data-key="tp_signed"]')?.checked || false,
+          gc: document.querySelector('#sim_teaching_controls .teach_cb[data-key="gc_context"]')?.checked || false,
+          ge: document.querySelector('#sim_teaching_controls .teach_cb[data-key="ge_pce"]')?.checked || false,
+          timeok: document.querySelector('#sim_teaching_controls .teach_cb[data-key="time_tp_only"]')?.checked || false,
+        };
+
+        const requiresTime = !!stage.teaching.time_based;
+
+        // Determine satisfaction:
+        // - GC pathway: needs present + participation + signed + GC checked
+        // - GE pathway: needs GE checked + signed + participation (review) (simplified)
+        const gc_ok = tps.gc && tps.present && tps.participation && tps.signed;
+        const ge_ok = tps.ge && tps.participation && tps.signed; // PCE still requires review/documentation
+        const time_ok = (!requiresTime) || tps.timeok;
+
+        if((gc_ok || ge_ok) && time_ok){
+          teachBand = { label: "✅ Satisfied (CMS-defensible)", cls: "good" };
+        } else if((tps.present || tps.participation || tps.signed || tps.gc || tps.ge) && time_ok){
+          teachBand = { label: "⚠️ Partial (tighten evidence)", cls: "warn" };
+        } else {
+          teachBand = { label: "❌ Not satisfied (audit risk)", cls: "bad" };
+        }
+      }
+
+      const teachEl = document.getElementById("sim_teach");
+      if(teachEl){
+        teachEl.textContent = teachBand.label;
+        teachEl.classList.remove("good","warn","bad");
+        if(teachBand.cls) teachEl.classList.add(teachBand.cls);
+      }
+
+      // Module 5 LAI subset render (Discharge stage)
+      const checks = {
+        tb: document.querySelector('#sim_controls .sim_cb[data-key="tb"]')?.checked || false,
+        materials: document.querySelector('#sim_controls .sim_cb[data-key="materials"]')?.checked || false,
+        medrec: document.querySelector('#sim_controls .sim_cb[data-key="medrec"]')?.checked || false,
+        appt: document.querySelector('#sim_controls .sim_cb[data-key="appt"]')?.checked || false
+      };
+      renderLAI5(stage, checks, teachBand);
+
+    }
+
+
+    function initWorkflowSimulationLab(){
+      const sel = document.getElementById("sim_stage");
+      if(!sel) return;
+      sel.innerHTML = SIM_STAGES.map(s => `<option value="${s.id}">${s.label}</option>`).join("");
+      sel.addEventListener("change", () => renderSimStage(sel.value));
+      sel.value = SIM_STAGES[0].id;
+      renderSimStage(sel.value);
+    }
+
+
+// Boot
+    window.addEventListener('load', () => {
+      wire();
+      setDefaults();
+      initWorkflowSimulationLab();
+    });
+  </script>
+
+  <script>
+    // ── Tab navigation ──
+    function switchROITab(panelId, btn) {
+      document.querySelectorAll('.roi-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.roi-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('panel_' + panelId).classList.add('active');
+      if (btn) btn.classList.add('active');
+      if (panelId === 'cap') renderCAPTab();
+    }
+
+    // ── Module panel navigation ──
+    function switchModPanel(modId, btn) {
+      document.querySelectorAll('.mod-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.mod-nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('modp_' + modId).classList.add('active');
+      if (btn) btn.classList.add('active');
+    }
+
+    // ── Module card toggle styling ──
+    function updateModCard(cardId, cb) {
+      const card = document.getElementById(cardId);
+      if (!card) return;
+      if (cb.checked) card.classList.add('active');
+      else card.classList.remove('active');
+    }
+
+    // ── Patch updateAll to also refresh sidebar vals + mod cards ──
+    const _origUpdateAll = typeof updateAll === 'function' ? updateAll : null;
+
+    function patchedUpdateAll() {
+      if (_origUpdateAll) _origUpdateAll();
+      refreshSidebarVals();
+    }
+
+    function refreshSidebarVals() {
+      const money0Local = new Intl.NumberFormat("en-US", {style:"currency",currency:"USD",maximumFractionDigits:0});
+      const pairs = [
+        ["mnb_ed_val","kpi_ed_year"],
+        ["mnb_eng_val","kpi_eng_year"],
+        ["mnb_tb_val","kpi_tb_annual_net"],
+        ["mnb_vbp_val","kpi_vbp_year"],
+        ["mnb_state_val","kpi_state_year"],
+        ["mnb_mal_val","kpi_mal_year"],
+      ];
+      const mcPairs = [
+        ["mc_ed_val","kpi_ed_year"],
+        ["mc_eng_val","kpi_eng_year"],
+        ["mc_tb_val","kpi_tb_annual_net"],
+        ["mc_vbp_val","kpi_vbp_year"],
+        ["mc_state_val","kpi_state_year"],
+        ["mc_mal_val","kpi_mal_year"],
+      ];
+      pairs.forEach(([navId, kpiId]) => {
+        const src = document.getElementById(kpiId);
+        const tgt = document.getElementById(navId);
+        if (src && tgt) tgt.textContent = src.textContent + "/yr";
+      });
+      mcPairs.forEach(([mcId, kpiId]) => {
+        const src = document.getElementById(kpiId);
+        const tgt = document.getElementById(mcId);
+        if (src && tgt) tgt.textContent = src.textContent;
+      });
+    }
+
+    // ── CAP Tab rendering ──
+    function renderCAPTab() {
+      const money0Local = new Intl.NumberFormat("en-US", {style:"currency",currency:"USD",maximumFractionDigits:0});
+      const useED = document.getElementById("use_ed_lang_stroke")?.checked;
+      const useENG = document.getElementById("use_engagement_los")?.checked;
+      const useTB = document.getElementById("use_teachback")?.checked;
+      const useVBP = document.getElementById("use_vbp")?.checked;
+      const useSTATE = document.getElementById("use_state_reimb")?.checked;
+      const useMAL = document.getElementById("use_malpractice")?.checked;
+
+      const getVal = id => {
+        const el = document.getElementById(id);
+        return el ? el.textContent : "$0";
+      };
+
+      const rows = [
+        {mod:"M1",name:"ED Language Access — Admission Avoidance + Return Visits + Stroke",align:"Pre-Assessment & Triage",val:getVal("kpi_ed_year"),active:useED},
+        {mod:"M3",name:"Engagement & LOS Reduction",align:"Inpatient Communication Reliability",val:getVal("kpi_eng_year"),active:useENG},
+        {mod:"M4",name:"Teach-Back (Provider + Automation) — net of delivery cost",align:"Discharge Planning & Patient Education",val:getVal("kpi_tb_annual_net"),active:useTB},
+        {mod:"M6–7",name:"Value-Based Care (VBP) — Medicare withhold recapture",align:"Policy, Governance & CAP",val:getVal("kpi_vbp_year"),active:useVBP},
+        {mod:"M5–6",name:"State Reimbursement — Medicaid interpreter offset",align:"Financial Stewardship",val:getVal("kpi_state_year"),active:useSTATE},
+        {mod:"M5",name:"Malpractice Cost-Avoidance",align:"Patient Safety & Risk Management",val:getVal("kpi_mal_year"),active:useMAL},
+      ];
+
+      const tbody = document.getElementById("tbl_cap_rows");
+      if (tbody) {
+        tbody.innerHTML = rows.map(r => `
+          <tr style="opacity:${r.active?1:.4}">
+            <td><span style="font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--slate);">${r.mod}</span></td>
+            <td style="font-size:12.5px;">${r.name}</td>
+            <td style="font-size:12px;color:var(--slate);">${r.align}</td>
+            <td class="num" style="font-size:13px;font-weight:700;">${r.active ? r.val : "<span style=\"color:var(--slate);\">— excluded</span>"}</td>
+            <td>${r.active ? "<span style=\"color:var(--green);font-size:12px;\">&#9989; Active</span>" : "<span style=\"color:var(--slate);font-size:12px;\">&#10060; Off</span>"}</td>
+          </tr>
+        `).join("");
+      }
+
+      const hospEl = document.getElementById("cap_total_hospital");
+      const sysEl = document.getElementById("cap_total_system");
+      const hospSrc = document.getElementById("kpi_hosp_year");
+      const sysSrc = document.getElementById("kpi_sys_year");
+      if (hospEl && hospSrc) hospEl.textContent = hospSrc.textContent;
+      if (sysEl && sysSrc) sysEl.textContent = sysSrc.textContent;
+
+      // Narrative
+      const hospitals = document.getElementById("hospitals_in_system")?.value || "10";
+      const activeRows = rows.filter(r => r.active);
+      const narrative = `CLEAR EXECUTIVE LANGUAGE ACCESS CERTIFICATE PROGRAM
+Customized Action Plan — Financial Summary
+Generated: ${new Date().toLocaleDateString("en-US", {year:"numeric",month:"long",day:"numeric"})}
+
+FINANCIAL IMPACT OVERVIEW
+==========================
+Annual Savings (per hospital):  ${hospSrc ? hospSrc.textContent : "$0"}
+Annual Savings (system-wide, ${hospitals} hospitals):  ${sysSrc ? sysSrc.textContent : "$0"}
+
+SAVINGS BY BEST PRACTICE
+==========================
+${activeRows.map(r => `${r.mod.padEnd(6)} ${r.name.padEnd(55)} ${r.val}`).join("\n")}
+
+MODULE ALIGNMENT
+==========================
+${activeRows.map(r => `- ${r.mod}: ${r.name} (${r.align})`).join("\n")}
+
+NOTES
+==========================
+- Hospital-perspective savings only; payer savings excluded.
+- Replace default inputs with your organization\'s actual parameters
+  for a fully calibrated projection.
+- Malpractice estimates are probabilistic; validate with Risk Management.
+- Teach-Back projections assume linear provider ramp + S-curve automation adoption.
+- Complete at Module 7 with organization-specific data for your board presentation.
+
+This financial summary was generated using the CLEAR ROI & Readiness Dashboard.
+`;
+      const narrativeEl = document.getElementById("cap_narrative");
+      if (narrativeEl) narrativeEl.textContent = narrative;
+    }
+
+    function copyCAP() {
+      renderCAPTab();
+      const el = document.getElementById("cap_narrative");
+      if (!el) return;
+      navigator.clipboard.writeText(el.textContent).then(() => {
+        const btn = document.querySelector(".copy-btn");
+        if(btn) { const orig = btn.textContent; btn.textContent = "✓ Copied!"; setTimeout(()=>btn.textContent=orig,2000); }
+      });
+    }
+
+    function copyNarrative() {
+      renderCAPTab();
+      const el = document.getElementById("cap_narrative");
+      if (!el) return;
+      navigator.clipboard.writeText(el.textContent).then(() => {
+        const btn = document.querySelectorAll(".copy-btn")[1];
+        if(btn) { const orig = btn.textContent; btn.textContent = "✓ Copied!"; setTimeout(()=>btn.textContent=orig,2000); }
+      });
+    }
+
+    // ── Override wire() to also patch updateAll ──
+    const _origWire = typeof wire === 'function' ? wire : null;
+    document.addEventListener('DOMContentLoaded', () => {
+      // After original boot runs, patch updateAll
+      setTimeout(() => {
+        const allInputs = document.querySelectorAll('input, select');
+        allInputs.forEach(el => {
+          el.addEventListener('change', refreshSidebarVals);
+          el.addEventListener('input', refreshSidebarVals);
+        });
+        refreshSidebarVals();
+      }, 300);
+    });
+  </script>
+
+</body>
+</html>

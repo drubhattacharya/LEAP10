@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>CLEAR — Executive Language Access Certificate Program</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js" onerror="loadDocxFb()"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script>function loadDocxFb(){var s=document.createElement('script');s.src='https://unpkg.com/docx@8.5.0/build/index.umd.js';document.head.appendChild(s);}</script>
+<style>
+:root{
+  --navy:#0C1E35;--navy2:#132a46;--navy3:#1a3557;
+  --teal:#0E9E8C;--teal2:#0CC5AD;--teal3:#d0f5f0;
+  --amber:#D48E1A;--amber2:#F5C842;--amber3:#FFF8E1;
+  --red:#C94040;--red2:#ffeaea;
+  --green:#18A76F;--green2:#e2f8ee;
+  --slate:#4A637D;--silver:#8AACBF;--mist:#C8D5E0;
+  --ice:#E8F4FA;--fog:#F3F7FB;--white:#FFFFFF;
+  --bd:rgba(12,30,53,.10);--bd2:rgba(12,30,53,.18);
+  --sh:0 2px 16px rgba(12,30,53,.08);--sh2:0 6px 32px rgba(12,30,53,.14);
+  --r:10px;--r2:14px;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --serif:'DM Serif Display','Georgia',serif;
+  --s1:#4A637D;--s1bg:#EEF3F7;--s2:#0E9E8C;--s2bg:#E8F9F6;
+  --s3:#1867B8;--s3bg:#E8F0FB;--s4:#7B3FA8;--s4bg:#F3EAF9;
+  --s5:#C9631A;--s5bg:#FDF0E4;--s6:#B01B1B;--s6bg:#FDEAEA;
+  --s7:#0A6B5C;--s7bg:#E4F5F1;--s8:#C9A227;--s8bg:#FEF9E7;
+  --s9:#0C1E35;--s9bg:#EBF0F5;--s10:#18A76F;--s10bg:#E6F8F1;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{height:100%;-webkit-font-smoothing:antialiased;}
+body{font-family:var(--sans);background:var(--fog);color:var(--navy);font-size:14px;line-height:1.65;display:flex;flex-direction:column;min-height:100vh;}
+
+/* LANDING */
+#landing-overlay{position:fixed;inset:0;z-index:900;background:linear-gradient(160deg,#071422 0%,var(--navy) 55%,#0f2a45 100%);display:flex;align-items:center;justify-content:center;padding:32px 24px;overflow-y:auto;}
+.ld-inner{max-width:880px;width:100%;display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;}
+.ld-eyebrow{font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--teal2);margin-bottom:22px;}
+.ld-h1{font-family:var(--serif);font-size:clamp(26px,5vw,50px);color:#fff;line-height:1.1;margin-bottom:12px;font-style:italic;}
+.ld-h1 em{color:var(--amber2);font-style:normal;}
+.ld-sub{font-size:clamp(13px,1.6vw,16px);color:rgba(255,255,255,.5);line-height:1.8;max-width:560px;margin-bottom:32px;}
+.ld-stats{display:flex;gap:2px;border-radius:12px;overflow:hidden;width:100%;max-width:680px;margin-bottom:32px;}
+.ld-stat{flex:1;padding:16px 12px;display:flex;flex-direction:column;align-items:center;gap:3px;background:rgba(255,255,255,.04);}
+.ld-stat-n{font-family:var(--serif);font-size:clamp(24px,4vw,38px);color:var(--amber2);font-style:italic;line-height:1;}
+.ld-stat-l{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.33);}
+.ld-phases{width:100%;max-width:760px;display:flex;align-items:stretch;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.07);margin-bottom:32px;}
+.ld-ph{flex:1;padding:16px 10px;display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center;background:rgba(255,255,255,.03);}
+.ld-ph+.ld-ph{border-left:1px solid rgba(255,255,255,.06);}
+.ld-ph-steps{font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.26);}
+.ld-ph-icon{font-size:18px;}
+.ld-ph-name{font-size:11.5px;font-weight:700;color:#fff;line-height:1.3;}
+.ld-cta{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--teal),#0a7a6d);color:#fff;border:none;border-radius:12px;padding:15px 38px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--sans);box-shadow:0 6px 28px rgba(14,158,140,.4);transition:transform .15s,box-shadow .15s;margin-bottom:14px;}
+.ld-cta:hover{transform:translateY(-2px);box-shadow:0 10px 40px rgba(14,158,140,.5);}
+.ld-fine{font-size:10px;color:rgba(255,255,255,.18);letter-spacing:.05em;}
+
+/* HEADER */
+.top-hdr{background:linear-gradient(140deg,var(--navy) 0%,var(--navy2) 60%,#1a3a5c 100%);box-shadow:0 2px 24px rgba(0,0,0,.4);position:sticky;top:0;z-index:600;flex-shrink:0;}
+.top-hdr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(14,158,140,.4),transparent);}
+.hdr-inner{display:flex;align-items:center;gap:16px;padding:13px 24px;max-width:1600px;margin:0 auto;width:100%;}
+.hdr-brand{display:flex;flex-direction:column;gap:1px;}
+.hdr-brand-name{font-family:var(--serif);font-size:17px;font-style:italic;color:var(--white);}
+.hdr-brand-name strong{font-style:normal;background:linear-gradient(120deg,var(--teal),var(--teal2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hdr-brand-sub{font-size:9.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);}
+.hdr-divider{width:1px;height:26px;background:rgba(255,255,255,.12);flex-shrink:0;}
+.hdr-org-chip{display:none;background:rgba(14,158,140,.15);border:1px solid rgba(14,158,140,.3);border-radius:99px;padding:4px 12px;font-size:11px;font-weight:700;color:var(--teal2);}
+.hdr-prog{margin-left:auto;display:flex;align-items:center;gap:10px;}
+.hdr-prog-label{font-size:11px;color:rgba(255,255,255,.4);white-space:nowrap;}
+.hdr-prog-bar{width:130px;height:3px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;}
+.hdr-prog-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--teal2));border-radius:2px;width:0;transition:width .5s cubic-bezier(.4,0,.2,1);}
+
+/* LAYOUT */
+.app-body{display:flex;flex:1;max-width:1600px;margin:0 auto;width:100%;}
+
+/* SIDEBAR */
+.sidebar{width:272px;flex-shrink:0;background:var(--navy);position:sticky;top:54px;height:calc(100vh - 54px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent;}
+.sidebar::-webkit-scrollbar{width:3px;}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px;}
+.sb-head{padding:16px 20px 10px;border-bottom:1px solid rgba(255,255,255,.05);}
+.sb-head-label{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:4px;}
+.sb-head-title{font-size:12px;font-weight:700;color:rgba(255,255,255,.7);}
+.sb-phase-label{padding:8px 20px 2px;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.18);}
+.sb-divider{height:1px;background:rgba(255,255,255,.05);margin:3px 0;}
+.sb-step{display:flex;align-items:flex-start;gap:10px;padding:7px 16px;cursor:pointer;transition:background .15s;border:none;background:none;width:100%;text-align:left;font-family:var(--sans);}
+.sb-step:hover{background:rgba(255,255,255,.03);}
+.sb-step.active{background:rgba(14,158,140,.1);border-left:2px solid var(--teal);padding-left:14px;}
+.sb-num{width:24px;height:24px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;transition:all .2s;margin-top:2px;}
+.sb-step.done .sb-num{background:rgba(24,167,111,.25);color:#5ae0a0;font-size:0;}
+.sb-step.done .sb-num::after{content:'✓';font-size:11px;}
+.sb-step.active .sb-num{background:var(--teal);color:var(--navy);}
+.sb-step.future .sb-num{background:rgba(255,255,255,.06);color:rgba(255,255,255,.2);}
+.sb-step-text{flex:1;min-width:0;}
+.sb-step-ey{font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:1px;}
+.sb-step.done .sb-step-ey{color:rgba(24,167,111,.5);}
+.sb-step.active .sb-step-ey{color:var(--teal);}
+.sb-step.future .sb-step-ey{color:rgba(255,255,255,.2);}
+.sb-step-lbl{font-size:11.5px;font-weight:600;line-height:1.3;}
+.sb-step.done .sb-step-lbl{color:rgba(255,255,255,.4);}
+.sb-step.active .sb-step-lbl{color:var(--white);}
+.sb-step.future .sb-step-lbl{color:rgba(255,255,255,.28);}
+.sb-eq-section{padding:10px 20px 14px;border-top:1px solid rgba(255,255,255,.05);margin-top:6px;}
+.sb-eq-label{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:8px;}
+.eq-dots{display:flex;gap:4px;flex-wrap:wrap;}
+.eq-dot{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:rgba(255,255,255,.22);transition:all .2s;}
+.eq-dot.risk.answered{background:rgba(201,64,64,.2);border-color:rgba(201,64,64,.4);color:#ff9090;}
+.eq-dot.reliability.answered{background:rgba(14,158,140,.2);border-color:rgba(14,158,140,.4);color:var(--teal2);}
+.eq-dot.value.answered{background:rgba(212,142,26,.2);border-color:rgba(212,142,26,.4);color:var(--amber2);}
+.eq-dot.action.answered{background:rgba(24,167,111,.2);border-color:rgba(24,167,111,.4);color:#5ae0a0;}
+
+/* MAIN */
+.main{flex:1;min-width:0;overflow-x:hidden;}
+.step-pane{display:none;animation:stepIn .28s ease;}
+.step-pane.active{display:block;}
+@keyframes stepIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* STEP HEADER */
+.step-hdr{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);padding:26px 36px 22px;display:flex;align-items:flex-start;gap:20px;border-bottom:1px solid rgba(14,158,140,.15);}
+.step-num-badge{width:50px;height:50px;border-radius:50%;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:900;color:var(--navy);box-shadow:0 4px 18px rgba(0,0,0,.3);}
+.step-hdr-content{flex:1;}
+.step-eyebrow{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:5px;}
+.step-title{font-family:var(--serif);font-size:clamp(17px,2vw,24px);font-style:italic;color:var(--white);line-height:1.2;margin-bottom:8px;}
+.step-desc{font-size:13px;color:rgba(255,255,255,.55);line-height:1.75;max-width:820px;}
+.eq-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.eq-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:6px;font-size:10px;font-weight:700;border:1px solid transparent;}
+.eq-chip.risk{background:rgba(201,64,64,.1);border-color:rgba(201,64,64,.25);color:#ff9090;}
+.eq-chip.reliability{background:rgba(14,158,140,.1);border-color:rgba(14,158,140,.25);color:var(--teal2);}
+.eq-chip.value{background:rgba(212,142,26,.1);border-color:rgba(212,142,26,.25);color:var(--amber2);}
+.eq-chip.action{background:rgba(24,167,111,.1);border-color:rgba(24,167,111,.25);color:#5ae0a0;}
+.tool-btn-row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 2px;}
+.tool-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border:none;border-radius:10px;font-family:var(--sans);font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;}
+.tool-btn-lai{background:rgba(14,158,140,.15);color:var(--teal2);border:1.5px solid rgba(14,158,140,.35);}
+.tool-btn-lai:hover{background:rgba(14,158,140,.25);transform:translateY(-1px);}
+.tool-btn-roi{background:rgba(212,142,26,.12);color:var(--amber2);border:1.5px solid rgba(212,142,26,.3);}
+.tool-btn-roi:hover{background:rgba(212,142,26,.22);transform:translateY(-1px);}
+
+/* STEP BODY */
+.step-body{padding:26px 36px;background:var(--white);border-bottom:1px solid var(--bd);}
+
+/* LEARN MORE DRAWER */
+.lm-drawer{border-radius:var(--r2);overflow:hidden;margin-bottom:18px;border:1px solid var(--bd2);}
+.lm-toggle{width:100%;text-align:left;background:linear-gradient(135deg,rgba(14,158,140,.05),rgba(12,30,53,.03));border:none;padding:12px 16px;cursor:pointer;font-family:var(--sans);display:flex;align-items:center;gap:10px;transition:background .15s;}
+.lm-toggle:hover{background:linear-gradient(135deg,rgba(14,158,140,.09),rgba(12,30,53,.05));}
+.lm-icon{font-size:15px;flex-shrink:0;}
+.lm-lbl{font-size:12px;font-weight:700;color:var(--teal);flex:1;}
+.lm-mod{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:var(--teal3);color:var(--teal);}
+.lm-arrow{font-size:10px;color:rgba(14,158,140,.4);transition:transform .2s;margin-left:4px;}
+.lm-drawer.open .lm-arrow{transform:rotate(90deg);}
+.lm-body{display:none;padding:18px 20px;background:var(--ice);border-top:1px solid rgba(14,158,140,.1);}
+.lm-drawer.open .lm-body{display:block;}
+.lm-section{margin-bottom:14px;}
+.lm-section:last-child{margin-bottom:0;}
+.lm-sec-title{font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
+.lm-text{font-size:13px;color:var(--slate);line-height:1.75;}
+.lm-stat-row{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0;}
+.lm-stat{background:var(--white);border:1px solid var(--bd2);border-radius:8px;padding:10px 14px;min-width:130px;}
+.lm-stat-val{font-size:20px;font-weight:900;letter-spacing:-.02em;color:var(--navy);}
+.lm-stat-val.sig{color:var(--teal);}
+.lm-stat-val.warn{color:var(--amber);}
+.lm-stat-val.crit{color:var(--red);}
+.lm-stat-lbl{font-size:11px;color:var(--silver);margin-top:2px;}
+
+/* EVIDENCE CARDS */
+.ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:16px;}
+.ev-card{background:var(--white);border:1px solid var(--bd2);border-radius:var(--r);padding:14px;}
+.ev-card-hdr{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.ev-card-num{font-size:10px;font-weight:800;background:var(--navy);color:#fff;padding:2px 7px;border-radius:4px;}
+.ev-card-test{font-size:10px;color:var(--silver);font-weight:600;}
+.ev-card-title{font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:5px;}
+.ev-card-result{font-size:16px;font-weight:900;margin-bottom:6px;letter-spacing:-.01em;}
+.ev-card-result.sig{color:var(--teal);}
+.ev-card-result.ns{color:var(--slate);}
+.ev-card-result.crit{color:var(--red);}
+.ev-card-result.warn{color:var(--amber);}
+.ev-card-finding{font-size:11.5px;color:var(--slate);line-height:1.6;}
+
+/* SECTION */
+.sec-title{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:4px;letter-spacing:-.01em;}
+.sec-sub{font-size:12.5px;color:var(--slate);line-height:1.55;margin-bottom:16px;}
+.sec-divider{height:1px;background:var(--bd);margin:20px 0;}
+
+/* FORMS */
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+.form-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.form-grid-1{display:grid;grid-template-columns:1fr;gap:14px;}
+.field-span{grid-column:1/-1;}
+.field-group{display:flex;flex-direction:column;gap:5px;}
+.field-label{font-size:11px;font-weight:700;color:var(--slate);letter-spacing:.04em;text-transform:uppercase;}
+.field-hint{font-size:11px;color:var(--silver);line-height:1.4;}
+.field-input,.field-select,.field-ta{border:1.5px solid var(--bd);border-radius:8px;padding:9px 12px;font-size:13.5px;font-family:var(--sans);color:var(--navy);outline:none;transition:border-color .15s,box-shadow .15s;background:#fff;width:100%;}
+.field-input:focus,.field-select:focus,.field-ta:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(14,158,140,.1);}
+.field-ta{resize:vertical;min-height:68px;line-height:1.65;}
+.range-row{display:flex;align-items:center;gap:10px;}
+.field-range{flex:1;accent-color:var(--teal);}
+.range-val{font-size:14px;font-weight:800;color:var(--navy);min-width:40px;text-align:right;}
+
+/* JOURNEY BAR */
+.journey-bar{display:flex;overflow-x:auto;border-radius:var(--r);overflow:hidden;border:1px solid var(--bd);margin-bottom:20px;}
+.jb-stage{flex:1;min-width:75px;padding:9px 7px;text-align:center;background:var(--fog);border-right:1px solid var(--bd);transition:background .15s;}
+.jb-stage:last-child{border-right:none;}
+.jb-stage.active{background:rgba(14,158,140,.09);}
+.jb-stage-n{font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--silver);}
+.jb-stage.active .jb-stage-n{color:var(--teal);}
+.jb-stage-l{font-size:11px;font-weight:600;color:var(--slate);line-height:1.3;margin-top:2px;}
+.jb-stage.active .jb-stage-l{color:var(--navy);}
+
+/* CALLOUT */
+.callout{border-left:3px solid;border-radius:var(--r);padding:13px 16px;margin-bottom:16px;}
+.callout.teal{border-color:var(--teal);background:rgba(14,158,140,.04);}
+.callout.amber{border-color:var(--amber);background:rgba(212,142,26,.04);}
+.callout.red{border-color:var(--red);background:rgba(201,64,64,.04);}
+.callout.navy{border-color:var(--navy);background:rgba(12,30,53,.03);}
+.callout-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;}
+.callout-body{font-size:13px;color:#334155;line-height:1.7;}
+
+/* CAP TABLE */
+.cap-table{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.cap-row{display:flex;border:1.5px solid var(--bd);border-radius:var(--r);overflow:hidden;transition:box-shadow .15s;}
+.cap-row:focus-within{box-shadow:0 0 0 2px var(--teal);}
+.cap-row-lbl{width:170px;flex-shrink:0;background:var(--fog);padding:11px 13px;display:flex;flex-direction:column;gap:3px;border-right:1.5px solid var(--bd);}
+.cap-row-mod{font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);}
+.cap-row-name{font-size:12px;font-weight:700;color:var(--navy);line-height:1.3;}
+.cap-row-input{flex:1;padding:11px 13px;font-size:13px;font-family:var(--sans);color:var(--navy);border:none;outline:none;resize:none;min-height:56px;background:#fff;line-height:1.65;}
+.cap-row-input::placeholder{color:var(--silver);font-style:italic;font-size:12px;}
+
+/* COMMITMENT */
+.commit-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px;}
+.commit-card{background:var(--fog);border-radius:var(--r);padding:14px;}
+.commit-card-lbl{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);margin-bottom:7px;}
+.commit-span{grid-column:1/-1;}
+
+/* BOARD BUILDER */
+.board-comp{border:1.5px solid var(--bd);border-radius:var(--r);overflow:hidden;margin-bottom:12px;}
+.board-comp-hdr{background:var(--navy);padding:10px 14px;display:flex;align-items:center;gap:10px;}
+.board-comp-n{width:24px;height:24px;border-radius:50%;background:var(--teal);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.board-comp-title{font-size:12px;font-weight:700;color:#fff;}
+.board-comp-hint{font-size:11px;color:rgba(255,255,255,.38);margin-left:auto;}
+.board-comp-body{padding:13px 14px;background:#fff;}
+
+/* ROI SUMMARY */
+.roi-modules{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:18px;}
+.roi-mod{border:1px solid var(--bd);border-radius:var(--r);padding:12px 14px;background:#fff;}
+.roi-mod-lbl{font-size:11px;font-weight:700;color:var(--slate);margin-bottom:5px;}
+.roi-mod-input{font-size:16px;font-weight:800;border:none;outline:none;color:var(--navy);font-family:var(--sans);background:transparent;width:100%;}
+.roi-mod-sub{font-size:10.5px;color:var(--silver);margin-top:3px;}
+.roi-total-bar{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--r2);padding:18px 22px;color:#fff;display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin:0 0 20px;}
+.roi-tb-item{display:flex;flex-direction:column;gap:3px;}
+.roi-tb-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.42);}
+.roi-tb-val{font-family:var(--serif);font-size:clamp(20px,3vw,32px);color:var(--amber2);font-style:italic;line-height:1;}
+.roi-tb-sub{font-size:11px;color:rgba(255,255,255,.38);}
+
+/* PREVIEW CARD */
+.preview-card{border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden;margin-bottom:18px;}
+.preview-hdr{background:var(--navy);padding:12px 18px;display:flex;align-items:center;gap:12px;}
+.preview-icon{font-size:22px;}
+.preview-meta{flex:1;}
+.preview-title{font-size:13px;font-weight:700;color:#fff;}
+.preview-desc{font-size:11px;color:rgba(255,255,255,.45);margin-top:2px;}
+.preview-body{padding:16px 18px;background:var(--fog);}
+.preview-tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.preview-tbl th{background:var(--navy);color:#fff;padding:7px 10px;text-align:left;font-weight:700;}
+.preview-tbl td{padding:7px 10px;border-bottom:1px solid var(--bd);color:#334155;vertical-align:top;}
+.preview-tbl tr:last-child td{border-bottom:none;}
+.preview-tbl tr:nth-child(even) td{background:rgba(12,30,53,.025);}
+.preview-tbl .total-row td{font-weight:800;color:var(--teal);background:rgba(14,158,140,.05)!important;}
+
+/* BUTTONS */
+.dl-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--teal),#0a7a6d);color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--sans);transition:transform .1s;margin-top:10px;}
+.dl-btn:hover{transform:translateY(-1px);}
+.dl-btn:disabled{opacity:.4;cursor:default;transform:none;}
+.dl-btn.amber{background:linear-gradient(135deg,var(--amber),#a07010);}
+
+/* STEP FOOTER */
+.step-foot{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:18px 36px 22px;background:linear-gradient(135deg,rgba(14,158,140,.04),rgba(12,30,53,.02));border-top:1px solid rgba(14,158,140,.15);}
+.step-bridge{flex:1;min-width:200px;font-size:13px;color:var(--slate);line-height:1.7;font-style:italic;padding-left:14px;border-left:3px solid rgba(14,158,140,.3);}
+.step-nav{display:flex;gap:8px;align-items:center;flex-shrink:0;}
+.btn-back{background:#fff;border:1.5px solid var(--bd);border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--sans);color:var(--slate);transition:all .15s;}
+.btn-back:hover{border-color:var(--teal);color:var(--teal);}
+.btn-continue{background:linear-gradient(135deg,var(--teal),#0a7a6d);color:#fff;border:none;border-radius:10px;padding:11px 26px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--sans);box-shadow:0 4px 14px rgba(14,158,140,.35);transition:transform .1s;}
+.btn-continue:hover{transform:translateY(-1px);}
+
+/* KPI DASHBOARD */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:16px;}
+.kpi-tile{border:1px solid var(--bd);border-radius:var(--r);padding:13px 15px;background:#fff;}
+.kpi-tile-label{font-size:11px;font-weight:700;color:var(--silver);text-transform:uppercase;letter-spacing:.04em;}
+.kpi-tile-val{font-size:22px;font-weight:900;color:var(--navy);letter-spacing:-.02em;margin-top:3px;}
+.kpi-tile-sub{font-size:11px;color:var(--mist);margin-top:4px;line-height:1.4;}
+.kpi-tile.highlight{border-color:rgba(14,158,140,.3);background:rgba(14,158,140,.03);}
+.kpi-tile.highlight .kpi-tile-val{color:var(--teal);}
+
+/* DOMAIN TABLE */
+.domain-tbl{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:16px;}
+.domain-tbl th{background:var(--navy);color:#fff;padding:8px 12px;text-align:left;font-size:12px;font-weight:700;}
+.domain-tbl td{padding:8px 12px;border-bottom:1px solid var(--bd);color:#334155;vertical-align:top;}
+.domain-tbl td:first-child{font-weight:700;color:var(--navy);white-space:nowrap;}
+.domain-tbl tr:nth-child(even) td{background:rgba(12,30,53,.02);}
+
+/* CHECKLIST */
+.checklist{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:11px 14px;border:1.5px solid var(--bd);border-radius:var(--r);background:#fff;transition:all .15s;cursor:pointer;}
+.check-item:hover{border-color:var(--teal);}
+.check-item.checked{border-color:var(--green);background:rgba(24,167,111,.03);}
+.check-box{width:20px;height:20px;border-radius:5px;border:2px solid var(--bd);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .15s;margin-top:1px;}
+.check-item.checked .check-box{background:var(--green);border-color:var(--green);color:#fff;}
+.check-label{font-size:13px;font-weight:600;color:var(--navy);line-height:1.35;}
+.check-detail{font-size:11.5px;color:var(--slate);margin-top:2px;line-height:1.5;}
+
+/* EXEC Q CARDS */
+.eq-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;}
+.eq-card{border:1px solid var(--bd);border-radius:8px;padding:12px 14px;background:#fff;}
+.eq-card-cat{font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;}
+.eq-card-cat.risk{color:var(--red);}
+.eq-card-cat.rel{color:var(--teal);}
+.eq-card-cat.val{color:var(--amber);}
+.eq-card-cat.act{color:var(--green);}
+.eq-card-text{font-size:12.5px;color:var(--navy);line-height:1.5;}
+
+/* COMPLETE BANNER */
+.complete-banner{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--r2);padding:26px 30px;text-align:center;margin-bottom:22px;border:1px solid rgba(14,158,140,.2);}
+.complete-banner h2{font-family:var(--serif);font-size:clamp(19px,2.5vw,27px);color:#fff;margin-bottom:8px;font-style:italic;}
+.complete-banner p{font-size:13px;color:rgba(255,255,255,.52);line-height:1.7;}
+
+/* GOVERNANCE */
+.gov-table{width:100%;border-collapse:collapse;font-size:13px;}
+.gov-table td:first-child{font-weight:700;color:var(--slate);width:200px;padding:9px 12px;background:var(--fog);border-bottom:1px solid var(--bd);}
+.gov-table td:last-child{padding:9px 12px;border-bottom:1px solid var(--bd);}
+
+/* RESPONSIVE */
+@media(max-width:900px){.sidebar{width:220px;}.step-hdr,.step-body,.step-foot{padding-left:18px;padding-right:18px;}}
+@media(max-width:680px){.sidebar{display:none;}.form-grid,.form-grid-3,.eq-cards,.commit-grid{grid-template-columns:1fr;}.cap-row{flex-direction:column;}.cap-row-lbl{width:100%;}}
+</style>
+</head>
+
+<!-- ══ LANDING ══════════════════════════════════════════════════════════ -->
+<div id="landing-overlay">
+  <div class="ld-inner">
+    <div class="ld-eyebrow">CLEAR · Executive Language Access Certificate Program</div>
+    <h1 class="ld-h1">Communication reliability<br>is not a cost center.<br><em>It is a lever.</em></h1>
+    <p class="ld-sub">A structured 10-step executive training program that translates peer-reviewed evidence into operational governance — and delivers a board-ready action plan by Step 10.</p>
+    <div class="ld-stats">
+      <div class="ld-stat"><div class="ld-stat-n">215</div><div class="ld-stat-l">Empirical Studies</div></div>
+      <div class="ld-stat"><div class="ld-stat-n">18</div><div class="ld-stat-l">Statistical Exercises</div></div>
+      <div class="ld-stat"><div class="ld-stat-n">6</div><div class="ld-stat-l">Financial Models</div></div>
+      <div class="ld-stat"><div class="ld-stat-n">1</div><div class="ld-stat-l">Board-Ready CAP</div></div>
+    </div>
+    <div class="ld-phases">
+      <div class="ld-ph"><div class="ld-ph-steps">Step 1</div><div class="ld-ph-icon">🏥</div><div class="ld-ph-name">Foundation &amp; Baseline</div></div>
+      <div class="ld-ph"><div class="ld-ph-steps">Steps 2–7</div><div class="ld-ph-icon">🔬</div><div class="ld-ph-name">The Clinical Evidence</div></div>
+      <div class="ld-ph"><div class="ld-ph-steps">Step 8</div><div class="ld-ph-icon">💰</div><div class="ld-ph-name">The Full Financial Case</div></div>
+      <div class="ld-ph"><div class="ld-ph-steps">Steps 9–10</div><div class="ld-ph-icon">📋</div><div class="ld-ph-name">Your Plan &amp; Documents</div></div>
+    </div>
+    <button class="ld-cta" onclick="startProgram()">Begin the 10 Steps &nbsp;→</button>
+    <div class="ld-fine">Built on NIH-funded research · 25-leader validation · α = 0.91</div>
+  </div>
+</div>
+
+<!-- ══ HEADER ════════════════════════════════════════════════════════════ -->
+<header class="top-hdr">
+  <div class="hdr-inner">
+    <div class="hdr-brand">
+      <div class="hdr-brand-name"><strong>CLEAR</strong></div>
+      <div class="hdr-brand-sub">Executive Language Access Certificate</div>
+    </div>
+    <div class="hdr-divider"></div>
+    <div id="hdr-org-chip" class="hdr-org-chip"></div>
+    <div class="hdr-prog">
+      <span class="hdr-prog-label" id="hdr-prog-label">Step 1 of 10</span>
+      <div class="hdr-prog-bar"><div class="hdr-prog-fill" id="hdr-prog-fill"></div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ══ APP BODY ══════════════════════════════════════════════════════════ -->
+<div class="app-body">
+
+<!-- ── SIDEBAR ───────────────────────────────────────────────────────── -->
+<nav class="sidebar" id="sidebar">
+  <div class="sb-head">
+    <div class="sb-head-label">Your Progress</div>
+    <div class="sb-head-title">10-Step Executive Program</div>
+  </div>
+
+  <div style="padding:6px 0;">
+    <div class="sb-phase-label">Phase 1 — Foundation</div>
+    <button class="sb-step future" id="sb_1" onclick="goStep(1)"><div class="sb-num">1</div><div class="sb-step-text"><div class="sb-step-ey">Step 1</div><div class="sb-step-lbl">Organization &amp; Baseline</div></div></button>
+    <div class="sb-divider"></div>
+    <div class="sb-phase-label">Phase 2 — The Evidence</div>
+    <button class="sb-step future" id="sb_2" onclick="goStep(2)"><div class="sb-num">2</div><div class="sb-step-text"><div class="sb-step-ey">Step 2 · Module 1</div><div class="sb-step-lbl">Pre-Arrival &amp; Triage Access</div></div></button>
+    <button class="sb-step future" id="sb_3" onclick="goStep(3)"><div class="sb-num">3</div><div class="sb-step-text"><div class="sb-step-ey">Step 3 · Module 2</div><div class="sb-step-lbl">Clinical Evaluation &amp; Diagnostic Risk</div></div></button>
+    <button class="sb-step future" id="sb_4" onclick="goStep(4)"><div class="sb-num">4</div><div class="sb-step-text"><div class="sb-step-ey">Step 4 · Module 3</div><div class="sb-step-lbl">Inpatient Reliability &amp; Rework</div></div></button>
+    <button class="sb-step future" id="sb_5" onclick="goStep(5)"><div class="sb-num">5</div><div class="sb-step-text"><div class="sb-step-ey">Step 5 · Module 4</div><div class="sb-step-lbl">Discharge &amp; Comprehension</div></div></button>
+    <button class="sb-step future" id="sb_6" onclick="goStep(6)"><div class="sb-num">6</div><div class="sb-step-text"><div class="sb-step-ey">Step 6 · Module 5</div><div class="sb-step-lbl">Post-Discharge Safety &amp; Risk</div></div></button>
+    <button class="sb-step future" id="sb_7" onclick="goStep(7)"><div class="sb-num">7</div><div class="sb-step-text"><div class="sb-step-ey">Step 7 · Module 6</div><div class="sb-step-lbl">Governance &amp; Execution Variance</div></div></button>
+    <div class="sb-divider"></div>
+    <div class="sb-phase-label">Phase 3 — The Financial Case</div>
+    <button class="sb-step future" id="sb_8" onclick="goStep(8)"><div class="sb-num">8</div><div class="sb-step-text"><div class="sb-step-ey">Step 8 · Synthesis</div><div class="sb-step-lbl">The Full Financial Case</div></div></button>
+    <div class="sb-divider"></div>
+    <div class="sb-phase-label">Phase 4 — Your Plan</div>
+    <button class="sb-step future" id="sb_9" onclick="goStep(9)"><div class="sb-num">9</div><div class="sb-step-text"><div class="sb-step-ey">Step 9 · Module 7</div><div class="sb-step-lbl">Customized Action Plan</div></div></button>
+    <button class="sb-step future" id="sb_10" onclick="goStep(10)"><div class="sb-num">10</div><div class="sb-step-text"><div class="sb-step-ey">Step 10 · Output</div><div class="sb-step-lbl">Board Presentation &amp; Documents</div></div></button>
+  </div>
+
+  <div class="sb-eq-section">
+    <div class="sb-eq-label">Executive Agenda — 10 Questions</div>
+    <div class="eq-dots">
+      <div class="eq-dot risk" id="eq1" title="Q1: Where are we actually exposed?">1</div>
+      <div class="eq-dot risk" id="eq2" title="Q2: Which populations at risk?">2</div>
+      <div class="eq-dot reliability" id="eq3" title="Q3: What constrains our maturity?">3</div>
+      <div class="eq-dot reliability" id="eq4" title="Q4: Workflow vs documentation failure?">4</div>
+      <div class="eq-dot value" id="eq5" title="Q5: Where losing revenue invisibly?">5</div>
+      <div class="eq-dot value" id="eq6" title="Q6: Which service lines perform better?">6</div>
+      <div class="eq-dot action" id="eq7" title="Q7: One thing in 30 days?">7</div>
+      <div class="eq-dot action" id="eq8" title="Q8: What improves scores but not maturity?">8</div>
+      <div class="eq-dot action" id="eq9" title="Q9: How do interventions differ by setting?">9</div>
+      <div class="eq-dot action" id="eq10" title="Q10: What do we commit to?">10</div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ MAIN ══════════════════════════════════════════════════════════════ -->
+<div class="main">
+
+<!-- ══ STEP 1: Organization & Baseline ══════════════════════════════════ -->
+<div class="step-pane" id="step-1">
+  <div class="step-hdr">
+    <div class="step-num-badge" style="background:var(--s1);">1</div>
+    <div class="step-hdr-content">
+      <div class="step-eyebrow">Step 1 of 10 — Phase 1: Foundation</div>
+      <h2 class="step-title">Tell CLEAR about your organization — and establish your baseline.</h2>
+      <p class="step-desc">Every finding, financial projection, and CAP contribution in this program is calibrated to your context. Enter details once — they carry through all 10 steps. Then complete your initial LAI self-assessment before the evidence begins. The gap between your intuition here and the data in Steps 2–7 is where the most important learning occurs.</p>
+      <div class="eq-chips"><span class="eq-chip risk">Q1 · Where exposed?</span><span class="eq-chip risk">Q2 · Which populations?</span></div>
+      <div class="tool-btn-row">
+        <button class="tool-btn tool-btn-lai" onclick="openTool('lai','t1')"><span>🔬</span>Open LAI Platform → Tier 1 Self-Assessment</button>
+        <button class="tool-btn tool-btn-roi" onclick="openTool('roi','')"><span>💰</span>Open ROI Dashboard → Observe Headline KPIs</button>
+      </div>
+    </div>
+  </div>
+  <div class="step-body">
+    <div class="sec-title">Your Organization</div>
+    <div class="sec-sub">Used in all generated documents and financial projections.</div>
+    <div class="form-grid">
+      <div class="field-group field-span"><label class="field-label">Hospital / Health System Name *</label><input id="s1_org" class="field-input" placeholder="e.g., Riverside Health System" oninput="updateOrgChip()"></div>
+      <div class="field-group"><label class="field-label">City</label><input id="s1_city" class="field-input" placeholder="e.g., Springfield"></div>
+      <div class="field-group"><label class="field-label">State</label><select id="s1_state" class="field-select"><option value="">— Select —</option><option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option><option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option><option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option><option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option><option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option><option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option><option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option><option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option><option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option><option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option></select></div>
+      <div class="field-group"><label class="field-label">Your Role</label><select id="s1_role" class="field-select"><option value="">— Select —</option><option>Chief Medical Officer (CMO)</option><option>Chief Nursing Officer (CNO)</option><option>Chief Operating Officer (COO)</option><option>Chief Executive Officer (CEO)</option><option>Chief Financial Officer (CFO)</option><option>VP / Director of Quality</option><option>VP / Director of Patient Safety</option><option>Director of Language Services</option><option>Compliance Officer</option><option>Risk Management Officer</option><option>Other Executive / Senior Leader</option></select></div>
+      <div class="field-group"><label class="field-label">Number of Hospitals in System</label><input id="s1_hospitals" type="number" class="field-input" min="1" max="500" value="1" placeholder="e.g., 5"></div>
+      <div class="field-group"><label class="field-label">Annual LEP Encounters (estimate)</label><input id="s1_lep" type="number" class="field-input" min="0" step="100" value="1800" placeholder="e.g., 1800"><span class="field-hint">Used to calibrate all ROI projections</span></div>
+    </div>
+
+    <div class="lm-drawer" id="lm1a">
+      <button class="lm-toggle" onclick="toggleLM('lm1a')"><span class="lm-icon">📚</span><span class="lm-lbl">Why Communication Failures Persist — and the Regulatory Inflection Point</span><span class="lm-mod">Module 0 · Orientation</span><span class="lm-arrow">▶</span></button>
+      <div class="lm-body">
+        <div class="lm-section"><div class="lm-sec-title">The Predictable Adaptation Problem</div><div class="lm-text">When a patient's language need cannot be immediately met, clinicians adapt — they use family members, proceed without interpreters, defer communication steps. These are not negligent choices; they are predictable responses to real constraints. They are also the source of some of the most consequential preventable failures in modern healthcare. The problem is not that people are careless. The system is not designed to make reliability easy.</div><div class="lm-stat-row"><div class="lm-stat"><div class="lm-stat-val crit">20–30%</div><div class="lm-stat-lbl">Higher preventable adverse event rate for LEP patients</div></div><div class="lm-stat"><div class="lm-stat-val warn">1.5–3.0</div><div class="lm-stat-lbl">Additional inpatient days per encounter without communication support</div></div><div class="lm-stat"><div class="lm-stat-val sig">~70%</div><div class="lm-stat-lbl">Of communication tasks can be automated or technologically supported</div></div></div></div>
+        <div class="lm-section"><div class="lm-sec-title">The 2024 Regulatory Inflection Point</div><div class="lm-text">The 2024 Section 1557 Final Rule and the Joint Commission's 2026 National Patient Safety Goals signal a decisive shift: regulators are no longer asking whether interpreter services exist. They are asking whether meaningful access was reliably delivered, documented, and embedded into care. Policy presence is no longer sufficient. Operational reliability is now the expected standard — with executive accountability.</div></div>
+        <div class="lm-section"><div class="lm-sec-title">Why This Program Starts with Measurement</div><div class="lm-text">The Language Access Index was developed through NIH-funded research: stakeholder interviews with 12 national health system leaders, and a structured scoping review of 215 contemporary empirical studies (2020–2025). Validated by 25 healthcare executives — acceptability, appropriateness, and feasibility rated 4.72–4.88/5 (α = 0.91). The LAI organizes communication performance into ten interdependent domains, making visible what data currently hides.</div></div>
+      </div>
+    </div>
+
+    <div class="sec-divider"></div>
+    <div class="sec-title">Initial LAI Self-Assessment</div>
+    <div class="sec-sub">Record your instinctive first-pass score for each domain before reviewing any data. These represent your current perception — the baseline against which the evidence will be measured.</div>
+    <div class="callout amber"><div class="callout-title" style="color:var(--amber)">What Not to Do Yet</div><div class="callout-body">Do not judge whether scores are good or bad. At this stage, Tier 1 is a mirror of perception, not a verdict. You will return to these scores after each module and compare your intuition to the evidence.</div></div>
+    <div class="form-grid">
+      <div class="field-group"><label class="field-label">Access — Interpreter wait time · workforce alignment</label><div class="range-row"><input type="range" class="field-range" min="0" max="100" value="50" id="d1" oninput="rv('d1v',this.value)"><span class="range-val" id="d1v">50</span></div></div>
+      <div class="field-group"><label class="field-label">Patient Experience — HCAHPS communication equity</label><div class="range-row"><input type="range" class="field-range" min="0" max="100" value="50" id="d2" oninput="rv('d2v',this.value)"><span class="range-val" id="d2v">50</span></div></div>
+      <div class="field-group"><label class="field-label">Outcomes — Preventive services · prescriptions filled</label><div class="range-row"><input type="range" class="field-range" min="0" max="100" value="50" id="d3" oninput="rv('d3v',this.value)"><span class="range-val" id="d3v">50</span></div></div>
+      <div class="field-group"><label class="field-label">Compliance — 1557 documentation · touchpoint completeness</label><div class="range-row"><input type="range" class="field-range" min="0" max="100" value="50" id="d4" oninput="rv('d4v',this.value)"><span class="range-val" id="d4v">50</span></div></div>
+      <div class="field-group"><label class="field-label">Patient Engagement — Teach-back · 3-day follow-up</label><div class="range-row"><input type="range" class="field-range" min="0" max="100" value="50" id="d5" oninput="rv('d5v',this.value)"><span class="range-val" id="d5v">50</span></div></div>
+      <div class="field-group"><label class="field-label">Financial Stewardship — Cost exposure tracked · LOS benchmarked</label><div class="range-row"><input type="range" class="field-range" min="0" max="100" value="50" id="d6" oninput="rv('d6v',this.value)"><span class="range-val" id="d6v">50</span></div></div>
+      <div class="field-group"><label class="field-label">Quality &amp; Safety — 30-day readmission · adverse event harm</label><div class="range-row"><input type="range" class="field-range" min="0" max="100" value="50" id="d7" oninput="rv('d7v',this.value)"><span class="range-val" id="d7v">50</span></div></div>
+      <div class="field-group"><label class="field-label">Workforce Development — Training currency · QBS qualification</label><div class="range-row"><input type="range" class="field-range" min="0" max="100" value="50" id="d8" oninput="rv('d8v',this.value)"><span class="range-val" id="d8v">50</span></div></div>
+      <div class="field-group"><label class="field-label">Workflow Optimization — 7-touchpoint coverage · rework burden</label><div class="range-row"><input type="range" class="field-range" min="0" max="100" value="50" id="d9" oninput="rv('d9v',this.value)"><span class="range-val" id="d9v">50</span></div></div>
+      <div class="field-group"><label class="field-label">Technology Innovation — VRI coverage · EHR automation</label><div class="range-row"><input type="range" class="field-range" min="0" max="100" value="50" id="d10" oninput="rv('d10v',this.value)"><span class="range-val" id="d10v">50</span></div></div>
+    </div>
+
+    <div class="sec-divider"></div>
+    <div class="sec-title">The 10 Executive Questions This Program Answers</div>
+    <div class="sec-sub">Which two feel most urgent for your organization right now?</div>
+    <div class="eq-cards">
+      <div class="eq-card"><div class="eq-card-cat risk">RISK · Q1</div><div class="eq-card-text">Where are we actually exposed right now — even if our averages look acceptable?</div></div>
+      <div class="eq-card"><div class="eq-card-cat risk">RISK · Q2</div><div class="eq-card-text">Which patient populations would experience harm first if we do not intervene?</div></div>
+      <div class="eq-card"><div class="eq-card-cat rel">RELIABILITY · Q3</div><div class="eq-card-text">Which single pillar is preventing us from claiming the next level of maturity?</div></div>
+      <div class="eq-card"><div class="eq-card-cat rel">RELIABILITY · Q4</div><div class="eq-card-text">Are our gaps driven by workflow failure or by documentation and evidence-capture failure?</div></div>
+      <div class="eq-card"><div class="eq-card-cat val">VALUE · Q5</div><div class="eq-card-text">Where are we losing revenue without seeing it, due to documentation fragility or rework?</div></div>
+      <div class="eq-card"><div class="eq-card-cat val">VALUE · Q6</div><div class="eq-card-text">Which service lines perform better — and why — when controlling for population risk?</div></div>
+      <div class="eq-card"><div class="eq-card-cat act">ACTION · Q7</div><div class="eq-card-text">If we could fix only one thing in the next 30 days, what would move the needle most?</div></div>
+      <div class="eq-card"><div class="eq-card-cat act">ACTION · Q10</div><div class="eq-card-text">What do we commit to next — and how will we know if it worked?</div></div>
+    </div>
+    <div class="form-grid-1">
+      <div class="field-group"><label class="field-label">Which two questions feel most urgent — and why?</label><textarea id="s1_q_urgent" class="field-ta" placeholder="Name the questions and the recent events, pressures, or signals that make them pressing…" style="min-height:72px;"></textarea></div>
+      <div class="field-group"><label class="field-label">Where is your organization most exposed to communication-related risk today?</label><textarea id="s1_exposure" class="field-ta" placeholder="Consider: patient harm · compliance exposure · operational disruption · financial / reputational risk…" style="min-height:72px;"></textarea></div>
+    </div>
+  </div>
+  <div class="step-foot">
+    <p class="step-bridge">Your profile and assumptions are anchored. As evidence accumulates across Steps 2–7, the gap between what you declared here and what the data reveals is where the most important learning occurs.</p>
+    <div class="step-nav"><button class="btn-continue" onclick="goStep(2)">Begin Step 2: Pre-Arrival Evidence →</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 2: Pre-Arrival & Triage ══════════════════════════════════ -->
+<div class="step-pane" id="step-2">
+  <div class="step-hdr">
+    <div class="step-num-badge" style="background:var(--s2);">2</div>
+    <div class="step-hdr-content">
+      <div class="step-eyebrow">Step 2 of 10 — The Evidence · Module 1 · Access · Compliance · Quality &amp; Safety</div>
+      <h2 class="step-title">Language access failure doesn't start at the bedside. It starts at arrival.</h2>
+      <p class="step-desc">OB median interpreter delay is 35.6 minutes. Advanced maternal LEP cases wait 11.7 minutes longer. Technology integration does not reduce delay without workflow redesign. Three statistical exercises. Three financial tracks. One structural conclusion: delay is a workflow design problem, not a staffing problem.</p>
+      <div class="eq-chips"><span class="eq-chip risk">Q1 · Where exposed?</span><span class="eq-chip risk">Q2 · Which populations?</span><span class="eq-chip reliability">Q4 · Workflow vs documentation?</span></div>
+      <div class="tool-btn-row">
+        <button class="tool-btn tool-btn-lai" onclick="openTool('lai','ex')"><span>🔬</span>Open LAI Platform → Exercises → Module 1 (Ex 1.1–1.3)</button>
+        <button class="tool-btn tool-btn-roi" onclick="openTool('roi','#modp_ed')"><span>💰</span>Open ROI Dashboard → ED Language Access &amp; Stroke</button>
+      </div>
+    </div>
+  </div>
+  <div class="step-body">
+    <div class="journey-bar"><div class="jb-stage active"><div class="jb-stage-n">Now</div><div class="jb-stage-l">Pre-Arrival</div></div><div class="jb-stage"><div class="jb-stage-n">Step 3</div><div class="jb-stage-l">H&amp;P</div></div><div class="jb-stage"><div class="jb-stage-n">Step 4</div><div class="jb-stage-l">Rounds</div></div><div class="jb-stage"><div class="jb-stage-n">Step 5</div><div class="jb-stage-l">Discharge</div></div><div class="jb-stage"><div class="jb-stage-n">Step 6</div><div class="jb-stage-l">Post-Discharge</div></div><div class="jb-stage"><div class="jb-stage-n">Step 7</div><div class="jb-stage-l">Governance</div></div></div>
+    <div class="lm-drawer" id="lm2a">
+      <button class="lm-toggle" onclick="toggleLM('lm2a')"><span class="lm-icon">📊</span><span class="lm-lbl">The Evidence — Delay, Risk, and What Technology Cannot Fix</span><span class="lm-mod">Module 1 · Exercises 1.1–1.3</span><span class="lm-arrow">▶</span></button>
+      <div class="lm-body">
+        <div class="ev-grid">
+          <div class="ev-card"><div class="ev-card-hdr"><span class="ev-card-num">Ex 1.1</span><span class="ev-card-test">Kruskal-Wallis</span></div><div class="ev-card-title">Interpreter Delay by Service Line</div><div class="ev-card-result sig">H = 57.0 · p &lt; .0001</div><div class="ev-card-finding">OB median delay 35.6 min — 53% longer than ED (23.2 min). Delay is not uniformly distributed. It concentrates where the clinical consequence of delay is highest.</div></div>
+          <div class="ev-card"><div class="ev-card-hdr"><span class="ev-card-num">Ex 1.2</span><span class="ev-card-test">Mann-Whitney U</span></div><div class="ev-card-title">Advanced Maternal vs. Core Encounters</div><div class="ev-card-result sig">z = 7.49 · p &lt; .0001</div><div class="ev-card-finding">Advanced maternal LEP cases wait +11.7 min longer than core encounters. Higher acuity intersects with communication failure at the moment of highest clinical consequence. The risk is multiplicative, not additive.</div></div>
+          <div class="ev-card"><div class="ev-card-hdr"><span class="ev-card-num">Ex 1.3</span><span class="ev-card-test">Mann-Whitney U</span></div><div class="ev-card-title">Technology Integration vs. Delay</div><div class="ev-card-result ns">p = .098 — NS</div><div class="ev-card-finding">Technology integration level does not significantly reduce interpreter wait time. Technology without workflow redesign does not remove the constraint. A null result is evidence about what the data cannot confirm.</div></div>
+        </div>
+        <div class="lm-section"><div class="lm-sec-title">The Three-Track Financial Model</div><div class="lm-text"><strong>Track 1 — Admission Avoidance:</strong> Schulson et al. (2018, n=57,435): LEP patients significantly more likely to be admitted (OR 1.09). Diagnostic uncertainty triggers defensive testing and over-admission. Conservative model: 9% excess admission rate, 40% reduction from timely access.<br><br><strong>Track 2 — Same-Complaint Return Visit Avoidance:</strong> 79.2% of LEP 48-hour ED returns were for the same complaint — the signature of first-encounter communication failure. High return rates are a leading indicator of systematic failure at first contact.<br><br><strong>Stroke Sub-Model:</strong> LEP patients cannot communicate symptom onset time — the binary criterion for IV thrombolysis and EVT eligibility. The revenue consequence is independently auditable by service line. The most persuasive executive-facing example of the Track 1 mechanism.</div></div>
+      </div>
+    </div>
+    <div class="callout teal"><div class="callout-title" style="color:var(--teal)">Before You Open the LAI Platform</div><div class="callout-body">Write your prediction: which service line do you believe carries the highest interpreter delay burden — and is that based on data, a report, or operational intuition? Record it before running Exercises 1.1–1.3. The gap between your prediction and the result is the most valuable output.</div></div>
+    <div class="sec-divider"></div>
+    <div class="sec-title">Your Step 2 CAP Contribution</div>
+    <div class="cap-table">
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 1</div><div class="cap-row-name">Highest-Risk Population</div></div><textarea class="cap-row-input" id="s2_pop" placeholder="Which LEP population faces the highest interpreter delay risk at triage? Be specific: service line, language, and why."></textarea></div>
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 1</div><div class="cap-row-name">Primary Delay Driver</div></div><textarea class="cap-row-input" id="s2_driver" placeholder="Is delay driven by workflow design, staffing, technology gaps, or documentation failure? Rank if multiple."></textarea></div>
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 1</div><div class="cap-row-name">ED Revenue at Risk</div></div><textarea class="cap-row-input" id="s2_roi" placeholder="From ROI Dashboard: Track 1 + Track 2 + Stroke combined (annual, per hospital). Record each track separately for different audiences."></textarea></div>
+    </div>
+  </div>
+  <div class="step-foot">
+    <p class="step-bridge">You've established where delay concentrates and what it costs. The next step follows that same patient into the clinical evaluation — where communication failure becomes diagnostic risk.</p>
+    <div class="step-nav"><button class="btn-back" onclick="goStep(1)">← Back</button><button class="btn-continue" onclick="goStep(3)">Step 3: Clinical Evaluation →</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 3: Clinical Evaluation & Diagnostic Risk ════════════════════ -->
+<div class="step-pane" id="step-3">
+  <div class="step-hdr">
+    <div class="step-num-badge" style="background:var(--s3);">3</div>
+    <div class="step-hdr-content">
+      <div class="step-eyebrow">Step 3 of 10 — The Evidence · Module 2 · Quality &amp; Safety · Patient Experience · Outcomes</div>
+      <h2 class="step-title">Documentation compliance is not the same as delivered care — and the data proves it.</h2>
+      <p class="step-desc">Section 1557 documentation is not associated with adverse event reduction (p=0.642). Interpreter use is not associated with readmission reduction in cross-sectional data (p=0.933). And teach-back collapses from 95% "felt respected" to 1.7% documented — the program's most concentrated finding. Two null results and one catastrophic gap, all in one module.</p>
+      <div class="eq-chips"><span class="eq-chip reliability">Q4 · Workflow vs documentation?</span><span class="eq-chip value">Q5 · Where losing revenue?</span></div>
+      <div class="tool-btn-row">
+        <button class="tool-btn tool-btn-lai" onclick="openTool('lai','ex')"><span>🔬</span>Open LAI Platform → Exercises → Module 2 (Ex 2.1–2.3)</button>
+        <button class="tool-btn tool-btn-roi" onclick="openTool('roi','')"><span>💰</span>Open ROI Dashboard → Workflow Simulation Lab</button>
+      </div>
+    </div>
+  </div>
+  <div class="step-body">
+    <div class="journey-bar"><div class="jb-stage"><div class="jb-stage-n">Step 2</div><div class="jb-stage-l">Pre-Arrival</div></div><div class="jb-stage active"><div class="jb-stage-n">Now</div><div class="jb-stage-l">H&amp;P</div></div><div class="jb-stage"><div class="jb-stage-n">Step 4</div><div class="jb-stage-l">Rounds</div></div><div class="jb-stage"><div class="jb-stage-n">Step 5</div><div class="jb-stage-l">Discharge</div></div><div class="jb-stage"><div class="jb-stage-n">Step 6</div><div class="jb-stage-l">Post-Discharge</div></div><div class="jb-stage"><div class="jb-stage-n">Step 7</div><div class="jb-stage-l">Governance</div></div></div>
+    <div class="lm-drawer" id="lm3a">
+      <button class="lm-toggle" onclick="toggleLM('lm3a')"><span class="lm-icon">📊</span><span class="lm-lbl">The Evidence — Two Null Results and One Engagement Collapse</span><span class="lm-mod">Module 2 · Exercises 2.1–2.3</span><span class="lm-arrow">▶</span></button>
+      <div class="lm-body">
+        <div class="ev-grid">
+          <div class="ev-card"><div class="ev-card-hdr"><span class="ev-card-num">Ex 2.1</span><span class="ev-card-test">Chi-Square</span></div><div class="ev-card-title">1557 Documentation vs. Adverse Events</div><div class="ev-card-result ns">p = .642 — NS</div><div class="ev-card-finding">Documentation compliance does not predict adverse event reduction. A compliant documentation record does not confirm that meaningful access was delivered — it confirms that a field was filled in.</div></div>
+          <div class="ev-card"><div class="ev-card-hdr"><span class="ev-card-num">Ex 2.2</span><span class="ev-card-test">Chi-Square</span></div><div class="ev-card-title">Interpreter Use vs. 30-Day Readmission</div><div class="ev-card-result ns">p = .933 — NS</div><div class="ev-card-finding">Cross-sectional administrative data cannot isolate a single intervention's effect. Severity confounding explains the null: sicker patients trigger both interpreter requests and readmissions. This is a methodology limitation, not evidence that interpreters don't reduce readmissions.</div></div>
+          <div class="ev-card"><div class="ev-card-hdr"><span class="ev-card-num">Ex 2.3</span><span class="ev-card-test">Kruskal-Wallis</span></div><div class="ev-card-title">Engagement Collapse Across Care Stages</div><div class="ev-card-result crit">95% → 1.7%</div><div class="ev-card-finding">Felt respected: 95%. Explained clearly: ~72%. Teach-back documented: 1.7%. An organization can report high patient satisfaction scores and have virtually no verified comprehension at the highest-risk transition point.</div></div>
+        </div>
+        <div class="lm-section"><div class="lm-sec-title">What Two Null Results Actually Mean</div><div class="lm-text">Organizations invest heavily in documentation compliance and interpreter availability while producing no measurable improvement in adverse events or readmissions. That combination points to one conclusion: the investment is concentrated in the wrong layer. Compliance documentation reduces regulatory risk; it does not deliver communication. The layer that produces outcomes is workflow execution — and the data shows it is dramatically underdeveloped.</div></div>
+      </div>
+    </div>
+    <div class="sec-divider"></div>
+    <div class="sec-title">Your Step 3 CAP Contribution</div>
+    <div class="cap-table">
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 2</div><div class="cap-row-name">Diagnostic Risk Stage</div></div><textarea class="cap-row-input" id="s3_risk" placeholder="Where is diagnostic communication reliability most fragile — H&P, diagnostic explanation, or consent? Which service line?"></textarea></div>
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 2</div><div class="cap-row-name">Null Result Implication</div></div><textarea class="cap-row-input" id="s3_null" placeholder="What do Exercises 2.1 and 2.2 tell you about investments that may be producing compliance improvement without outcome improvement?"></textarea></div>
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 2</div><div class="cap-row-name">Engagement Breakdown Point</div></div><textarea class="cap-row-input" id="s3_engage" placeholder="At which care stage does comprehension collapse in your organization — and what is the operational reason it has not been addressed?"></textarea></div>
+    </div>
+  </div>
+  <div class="step-foot">
+    <p class="step-bridge">Two null results and one collapse. The comprehension gap doesn't resolve at H&P — it compounds through the inpatient stay as rework burden. Step 4 measures that accumulation.</p>
+    <div class="step-nav"><button class="btn-back" onclick="goStep(2)">← Back</button><button class="btn-continue" onclick="goStep(4)">Step 4: Inpatient Reliability →</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 4: Inpatient Reliability & Rework ═══════════════════════════ -->
+<div class="step-pane" id="step-4">
+  <div class="step-hdr">
+    <div class="step-num-badge" style="background:var(--s4);">4</div>
+    <div class="step-hdr-content">
+      <div class="step-eyebrow">Step 4 of 10 — The Evidence · Module 3 · Workflow Optimization · Workforce Development</div>
+      <h2 class="step-title">Which service line carries the highest rework burden — and what does it take to reduce LOS?</h2>
+      <p class="step-desc">OB leads on interpreter delay (Step 2), on rework burden (this step), and on adverse event reporting complexity (Step 6). The pattern is structural. CLAS training currency is not associated with reduced rework — the intervention must be embedded in the workflow, not added to it.</p>
+      <div class="eq-chips"><span class="eq-chip reliability">Q4 · Workflow vs documentation?</span><span class="eq-chip value">Q6 · Which service lines perform better?</span></div>
+      <div class="tool-btn-row">
+        <button class="tool-btn tool-btn-lai" onclick="openTool('lai','ex')"><span>🔬</span>Open LAI Platform → Exercises → Module 3 (Ex 3.1–3.3)</button>
+        <button class="tool-btn tool-btn-roi" onclick="openTool('roi','#modp_eng')"><span>💰</span>Open ROI Dashboard → Engagement &amp; LOS Reduction</button>
+      </div>
+    </div>
+  </div>
+  <div class="step-body">
+    <div class="journey-bar"><div class="jb-stage"><div class="jb-stage-n">Step 2</div><div class="jb-stage-l">Pre-Arrival</div></div><div class="jb-stage"><div class="jb-stage-n">Step 3</div><div class="jb-stage-l">H&amp;P</div></div><div class="jb-stage active"><div class="jb-stage-n">Now</div><div class="jb-stage-l">Rounds</div></div><div class="jb-stage"><div class="jb-stage-n">Step 5</div><div class="jb-stage-l">Discharge</div></div><div class="jb-stage"><div class="jb-stage-n">Step 6</div><div class="jb-stage-l">Post-Discharge</div></div><div class="jb-stage"><div class="jb-stage-n">Step 7</div><div class="jb-stage-l">Governance</div></div></div>
+    <div class="lm-drawer" id="lm4a">
+      <button class="lm-toggle" onclick="toggleLM('lm4a')"><span class="lm-icon">📊</span><span class="lm-lbl">The Evidence — Rework, LOS, and the Training Trap</span><span class="lm-mod">Module 3 · Exercises 3.1–3.3</span><span class="lm-arrow">▶</span></button>
+      <div class="lm-body">
+        <div class="ev-grid">
+          <div class="ev-card"><div class="ev-card-hdr"><span class="ev-card-num">Ex 3.1</span><span class="ev-card-test">Kruskal-Wallis</span></div><div class="ev-card-title">Rework Burden by Service Line</div><div class="ev-card-result sig">H = 71.7 · p &lt; .0001</div><div class="ev-card-finding">OB median: 13.0 attendant tasks — the largest H-statistic in the dataset. Rework concentrates in the same service line that leads on interpreter delay. The pattern is structural, not coincidental.</div></div>
+          <div class="ev-card"><div class="ev-card-hdr"><span class="ev-card-num">Ex 3.2</span><span class="ev-card-test">Mann-Whitney U</span></div><div class="ev-card-title">Interpreter Use vs. LOS</div><div class="ev-card-result ns">p = .172 — NS (11.9h direction)</div><div class="ev-card-finding">Near-miss: the effect is in the expected direction but underpowered. Lindholm et al. (2012): LEP patients without interpretation at admission/discharge had +0.75–1.47 additional inpatient days. Use this as the LOS financial anchor.</div></div>
+          <div class="ev-card"><div class="ev-card-hdr"><span class="ev-card-num">Ex 3.3</span><span class="ev-card-test">Mann-Whitney U</span></div><div class="ev-card-title">Training Currency vs. Rework</div><div class="ev-card-result ns">p = .382 — NS</div><div class="ev-card-finding">Training communicates knowledge. It does not change workflow. Structural EHR prompts and hard-stops are required to move operational metrics — training alone will not close the rework gap.</div></div>
+        </div>
+        <div class="lm-section"><div class="lm-sec-title">The Two-Component LOS Model</div><div class="lm-text"><strong>Component 1 — Baseline:</strong> Lindholm et al. (2012) — systematic interpreter integration at admission and discharge: 0.75–1.47 fewer inpatient days. ROI default: 1.0 day at $3,000/day.<br><br><strong>Component 2 — QBS Uplift:</strong> For advanced maternal, behavioral health, and high-acuity encounters, QBS-qualified providers deliver an additional 0.5-day reduction by eliminating handoff delays and rework cycles. Amobi et al. (2024): "Would you bet someone's life on it?" — the standard for QBS deployment.</div></div>
+      </div>
+    </div>
+    <div class="sec-divider"></div>
+    <div class="sec-title">Your Step 4 CAP Contribution</div>
+    <div class="cap-table">
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 3</div><div class="cap-row-name">Highest-Rework Unit</div></div><textarea class="cap-row-input" id="s4_rework" placeholder="Which inpatient unit carries the highest rework burden in your organization? What is the communication workflow design explanation?"></textarea></div>
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 3</div><div class="cap-row-name">LOS Reduction Target</div></div><input id="s4_los" class="cap-row-input field-input" style="min-height:auto;padding:11px 13px;" placeholder="Baseline: ___ days reduction · QBS uplift: +___ days · $___/year from ROI Dashboard"></div>
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 3</div><div class="cap-row-name">QBS Coverage Target</div></div><input id="s4_qbs" class="cap-row-input field-input" style="min-height:auto;padding:11px 13px;" placeholder="Current QBS coverage: ___% · 12-month target: ___% · Priority service line: ___"></div>
+    </div>
+  </div>
+  <div class="step-foot">
+    <p class="step-bridge">Rework accumulates across rounds. The financial consequence materializes at discharge — where comprehension failure converts directly into readmission risk. Step 5 addresses the 98.3% finding.</p>
+    <div class="step-nav"><button class="btn-back" onclick="goStep(3)">← Back</button><button class="btn-continue" onclick="goStep(5)">Step 5: Discharge &amp; Comprehension →</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 5: Discharge & Comprehension ════════════════════════════════ -->
+<div class="step-pane" id="step-5">
+  <div class="step-hdr">
+    <div class="step-num-badge" style="background:var(--s5);">5</div>
+    <div class="step-hdr-content">
+      <div class="step-eyebrow">Step 5 of 10 — The Evidence · Module 4 · Patient Engagement · Outcomes · Financial Stewardship</div>
+      <h2 class="step-title">98.3% of encounters reach discharge without verified comprehension. That is not a gap. That is the baseline.</h2>
+      <p class="step-desc">Language-concordant discharge is not significantly associated with lower readmission — because the confounders are too strong for cross-sectional analysis. But teach-back is. Hong et al. (2019): HR 0.77, 23% lower condition-related readmission within 12 months. The same documentation failure that drives readmissions also undermines billing defensibility.</p>
+      <div class="eq-chips"><span class="eq-chip value">Q5 · Where losing revenue?</span><span class="eq-chip action">Q7 · One thing in 30 days?</span></div>
+      <div class="tool-btn-row">
+        <button class="tool-btn tool-btn-lai" onclick="openTool('lai','ex')"><span>🔬</span>Open LAI Platform → Exercises → Module 4 (Ex 4.1–4.3)</button>
+        <button class="tool-btn tool-btn-roi" onclick="openTool('roi','#modp_tb')"><span>💰</span>Open ROI Dashboard → Teach-Back (Dual: Provider + Automation)</button>
+      </div>
+    </div>
+  </div>
+  <div class="step-body">
+    <div class="journey-bar"><div class="jb-stage"><div class="jb-stage-n">Step 2</div><div class="jb-stage-l">Pre-Arrival</div></div><div class="jb-stage"><div class="jb-stage-n">Step 3</div><div class="jb-stage-l">H&amp;P</div></div><div class="jb-stage"><div class="jb-stage-n">Step 4</div><div class="jb-stage-l">Rounds</div></div><div class="jb-stage active"><div class="jb-stage-n">Now</div><div class="jb-stage-l">Discharge</div></div><div class="jb-stage"><div class="jb-stage-n">Step 6</div><div class="jb-stage-l">Post-Discharge</div></div><div class="jb-stage"><div class="jb-stage-n">Step 7</div><div class="jb-stage-l">Governance</div></div></div>
+    <div class="lm-drawer" id="lm5a">
+      <button class="lm-toggle" onclick="toggleLM('lm5a')"><span class="lm-icon">📊</span><span class="lm-lbl">The Evidence — The 98.3% Finding and Its Financial Consequences</span><span class="lm-mod">Module 4 · Exercises 4.1–4.3</span><span class="lm-arrow">▶</span></button>
+      <div class="lm-body">
+        <div class="ev-grid">
+          <div class="ev-card"><div class="ev-card-hdr"><span class="ev-card-num">Ex 4.1</span><span class="ev-card-test">Chi-Square</span></div><div class="ev-card-title">Language-Concordant Discharge vs. Readmission</div><div class="ev-card-result ns">p = .782 — NS</div><div class="ev-card-finding">Concordance is necessary but insufficient. Confounding by case complexity explains the null. Patients receiving concordant discharge instructions differ systematically from those who do not.</div></div>
+          <div class="ev-card"><div class="ev-card-hdr"><span class="ev-card-num">Ex 4.2</span><span class="ev-card-test">Gap Analysis</span></div><div class="ev-card-title">Teach-Back Gap at Discharge</div><div class="ev-card-result crit">98.3% — Neither</div><div class="ev-card-finding">Performed: 3.3%. Documented: 1.7%. Neither performed nor documented: 98.3%. Hong et al. (2019): teach-back associated with HR 0.77 — 23% lower condition-related readmission at 12 months. This is the most financially actionable single finding in the program.</div></div>
+          <div class="ev-card"><div class="ev-card-hdr"><span class="ev-card-num">Ex 4.3</span><span class="ev-card-test">Chi-Square</span></div><div class="ev-card-title">Avoidable LOS vs. Missed Reimbursement</div><div class="ev-card-result ns">p = .490 — NS</div><div class="ev-card-finding">Not correlated — both are uniformly high regardless of subgroup. This is a systemic billing documentation failure, not a risk-stratification problem. The exposure is distributed across all encounters.</div></div>
+        </div>
+        <div class="lm-section"><div class="lm-sec-title">The Dual Teach-Back Adoption Model</div><div class="lm-text"><strong>Provider adoption</strong> grows linearly over 12 months — constrained by clinical behavior change timelines.<br><strong>Automation adoption</strong> follows an S-curve — slow initial uptake, rapid acceleration once the EHR trigger is established, plateau at capacity. The model shows larger net savings from automation in the back half of the year, making the data infrastructure investment for automated teach-back prompts the most efficient single action in Module 4.</div></div>
+      </div>
+    </div>
+    <div class="sec-divider"></div>
+    <div class="sec-title">Your Step 5 CAP Contribution</div>
+    <div class="cap-table">
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 4</div><div class="cap-row-name">30-Day Readmission Rate (LEP)</div></div><input id="s5_readmit" class="cap-row-input field-input" style="min-height:auto;padding:11px 13px;" placeholder="Your org's current rate: ___% · Or document the data gap and identify who owns this metric."></div>
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 4</div><div class="cap-row-name">Single Discharge Change</div></div><textarea class="cap-row-input" id="s5_change" placeholder="One structural change at discharge. Name the EHR field, workflow trigger, clinical role, and 90-day metric."></textarea></div>
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 4</div><div class="cap-row-name">12-Month Teach-Back ROI</div></div><input id="s5_roi" class="cap-row-input field-input" style="min-height:auto;padding:11px 13px;" placeholder="From ROI Dashboard: provider-only $___/yr · combined (provider + automation) $___/yr"></div>
+    </div>
+  </div>
+  <div class="step-foot">
+    <p class="step-bridge">What isn't verified at discharge doesn't just become readmission risk. It becomes an adverse event, a safety report gap, and a malpractice exposure. Step 6 measures the safety consequences.</p>
+    <div class="step-nav"><button class="btn-back" onclick="goStep(4)">← Back</button><button class="btn-continue" onclick="goStep(6)">Step 6: Post-Discharge Safety →</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 6: Post-Discharge Safety & Risk ════════════════════════════ -->
+<div class="step-pane" id="step-6">
+  <div class="step-hdr">
+    <div class="step-num-badge" style="background:var(--s6);">6</div>
+    <div class="step-hdr-content">
+      <div class="step-eyebrow">Step 6 of 10 — The Evidence · Module 5 · Quality &amp; Safety · Outcomes · Compliance</div>
+      <h2 class="step-title">74.4% of adverse events were never reported. The safety data leaders use to make decisions is systematically incomplete.</h2>
+      <p class="step-desc">The interpreter-adverse event null result (p=0.821) has only 8% statistical power — it would miss a real safety signal 9 times out of 10. The QBS-safety hypothesis cannot be tested because the dataset is 40× too small. These are governance findings: the organization cannot currently measure whether its highest-investment safety interventions are working.</p>
+      <div class="eq-chips"><span class="eq-chip risk">Q1 · Where exposed?</span><span class="eq-chip value">Q5 · Where losing revenue?</span></div>
+      <div class="tool-btn-row">
+        <button class="tool-btn tool-btn-lai" onclick="openTool('lai','ex')"><span>🔬</span>Open LAI Platform → Exercises → Module 6 (Ex 6.1–6.3)</button>
+        <button class="tool-btn tool-btn-roi" onclick="openTool('roi','#modp_mal')"><span>💰</span>Open ROI Dashboard → Malpractice Cost-Avoidance + State Reimbursement</button>
+      </div>
+    </div>
+  </div>
+  <div class="step-body">
+    <div class="journey-bar"><div class="jb-stage"><div class="jb-stage-n">Step 2</div><div class="jb-stage-l">Pre-Arrival</div></div><div class="jb-stage"><div class="jb-stage-n">Step 3</div><div class="jb-stage-l">H&amp;P</div></div><div class="jb-stage"><div class="jb-stage-n">Step 4</div><div class="jb-stage-l">Rounds</div></div><div class="jb-stage"><div class="jb-stage-n">Step 5</div><div class="jb-stage-l">Discharge</div></div><div class="jb-stage active"><div class="jb-stage-n">Now</div><div class="jb-stage-l">Post-Discharge</div></div><div class="jb-stage"><div class="jb-stage-n">Step 7</div><div class="jb-stage-l">Governance</div></div></div>
+    <div class="lm-drawer" id="lm6a">
+      <button class="lm-toggle" onclick="toggleLM('lm6a')"><span class="lm-icon">📊</span><span class="lm-lbl">The Evidence — Safety Culture, Statistical Power, and the 40× Gap</span><span class="lm-mod">Module 5 · Exercises 6.1–6.3</span><span class="lm-arrow">▶</span></button>
+      <div class="lm-body">
+        <div class="ev-grid">
+          <div class="ev-card"><div class="ev-card-hdr"><span class="ev-card-num">Ex 6.1</span><span class="ev-card-test">Chi-Square</span></div><div class="ev-card-title">Interpreter Use vs. Adverse Events</div><div class="ev-card-result warn">~8% Power</div><div class="ev-card-finding">43 adverse events in 1,000 encounters. At 8% power, this test would miss a real safety signal 9 times out of 10. A non-significant result from an underpowered test is a broken instrument, not a safe building.</div></div>
+          <div class="ev-card"><div class="ev-card-hdr"><span class="ev-card-num">Ex 6.2</span><span class="ev-card-test">Safety Culture Analysis</span></div><div class="ev-card-title">Adverse Event Reporting Gap</div><div class="ev-card-result crit">74.4% Unreported</div><div class="ev-card-finding">Of 43 adverse events identified, only 11 were formally reported. 74.4% were not. Inpatient: 7.1% AE rate (highest). OB: 1.9% — likely compensatory heroics, not solved design. No RCA, no system learning for three-quarters of documented harm.</div></div>
+          <div class="ev-card"><div class="ev-card-hdr"><span class="ev-card-num">Ex 6.3</span><span class="ev-card-test">Power Analysis</span></div><div class="ev-card-title">QBS-Safety Hypothesis</div><div class="ev-card-result warn">40× Data Gap</div><div class="ev-card-finding">2,700 QBS encounters needed for 80% power. Available: 68 (6.8%). Current power: ~6%. The organization cannot test whether its highest-investment safety intervention is working. This is a governance finding about data infrastructure.</div></div>
+        </div>
+        <div class="lm-section"><div class="lm-sec-title">The Two-Track Malpractice Model</div><div class="lm-text"><strong>Track 1 — Damage Avoidance:</strong> Berkeley/NHeLP (2010): 35 language-barrier claims, 10 resulting in damage payments averaging $228,900 (2010) ≈ $385,000 (2025 adj.). This track requires a judgment to materialize.<br><br><strong>Track 2 — Defense Cost Avoidance (the more persuasive track):</strong> 91% of the 35 claims incurred defense legal costs regardless of outcome — averaging ~$118,000 (2025 adj.). Every filed claim generates $118K in expected legal fees before any ruling. Expected value per avoided filing: $219K. The exposure begins at filing, not at judgment — making this argument more actionable for General Counsel and Risk Management.</div></div>
+      </div>
+    </div>
+    <div class="sec-divider"></div>
+    <div class="sec-title">Your Step 6 CAP Contribution</div>
+    <div class="cap-table">
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 5</div><div class="cap-row-name">Adverse Event Reporting Rate</div></div><textarea class="cap-row-input" id="s6_reporting" placeholder="Current estimated reporting rate for communication-related adverse events. If unknown: document the data gap and identify who owns it."></textarea></div>
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 5</div><div class="cap-row-name">Risk Management Argument</div></div><textarea class="cap-row-input" id="s6_risk" placeholder="Malpractice cost-avoidance argument in one sentence for your Chief Risk Officer. Include both tracks: damage avoidance + defense cost avoidance."></textarea></div>
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 5</div><div class="cap-row-name">Annual Cost-Avoidance + State Reimbursement</div></div><input id="s6_roi" class="cap-row-input field-input" style="min-height:auto;padding:11px 13px;" placeholder="From ROI Dashboard: malpractice cost-avoidance $___/yr + state Medicaid reimbursement $___/yr (record separately)"></div>
+    </div>
+  </div>
+  <div class="step-foot">
+    <p class="step-bridge">The safety and financial case is built. The next step asks the governance question: why, with all of this evidence, do organizations still have 28% audit readiness and 2.3% touchpoint completion?</p>
+    <div class="step-nav"><button class="btn-back" onclick="goStep(5)">← Back</button><button class="btn-continue" onclick="goStep(7)">Step 7: Governance &amp; Execution →</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 7: Governance & Execution Variance ══════════════════════════ -->
+<div class="step-pane" id="step-7">
+  <div class="step-hdr">
+    <div class="step-num-badge" style="background:var(--s7);">7</div>
+    <div class="step-hdr-content">
+      <div class="step-eyebrow">Step 7 of 10 — The Evidence · Module 6 · Compliance · Workflow Optimization · All Domains</div>
+      <h2 class="step-title">A policy is only as durable as the person enforcing it. Governance is what survives turnover.</h2>
+      <p class="step-desc">2.3% of encounters have all 7 touchpoints documented. 28% are audit-ready. Execution varies 18 percentage points across service lines — statistically significant evidence of leadership dependency, not system design. Even OB, the best performer at 52%, fails nearly half its encounters. This step identifies what governance infrastructure must be built.</p>
+      <div class="eq-chips"><span class="eq-chip reliability">Q3 · What constrains maturity?</span><span class="eq-chip action">Q7 · One thing in 30 days?</span><span class="eq-chip action">Q10 · What do we commit to?</span></div>
+      <div class="tool-btn-row">
+        <button class="tool-btn tool-btn-lai" onclick="openTool('lai','ex')"><span>🔬</span>Open LAI Platform → Exercises → Module 5 (Ex 5.1–5.3)</button>
+        <button class="tool-btn tool-btn-roi" onclick="openTool('roi','#modp_vbp')"><span>💰</span>Open ROI Dashboard → Value-Based Care (VBP)</button>
+      </div>
+    </div>
+  </div>
+  <div class="step-body">
+    <div class="journey-bar"><div class="jb-stage"><div class="jb-stage-n">Step 2</div><div class="jb-stage-l">Pre-Arrival</div></div><div class="jb-stage"><div class="jb-stage-n">Step 3</div><div class="jb-stage-l">H&amp;P</div></div><div class="jb-stage"><div class="jb-stage-n">Step 4</div><div class="jb-stage-l">Rounds</div></div><div class="jb-stage"><div class="jb-stage-n">Step 5</div><div class="jb-stage-l">Discharge</div></div><div class="jb-stage"><div class="jb-stage-n">Step 6</div><div class="jb-stage-l">Post-Discharge</div></div><div class="jb-stage active"><div class="jb-stage-n">Now</div><div class="jb-stage-l">Governance</div></div></div>
+    <div class="lm-drawer" id="lm7a">
+      <button class="lm-toggle" onclick="toggleLM('lm7a')"><span class="lm-icon">📊</span><span class="lm-lbl">The Evidence — Policy Presence vs. Performance Accountability</span><span class="lm-mod">Module 6 · Exercises 5.1–5.3</span><span class="lm-arrow">▶</span></button>
+      <div class="lm-body">
+        <div class="ev-grid">
+          <div class="ev-card"><div class="ev-card-hdr"><span class="ev-card-num">Ex 5.1</span><span class="ev-card-test">Kruskal-Wallis</span></div><div class="ev-card-title">7-Touchpoint Coverage by Service Line</div><div class="ev-card-result crit">2.3% All-Complete</div><div class="ev-card-finding">Per-touchpoint median: ~29%. All-7-complete: 2.3%. The uniform 28–31% range across all seven touchpoints signals one governance failure — the model has never been operationalized as a workflow requirement.</div></div>
+          <div class="ev-card"><div class="ev-card-hdr"><span class="ev-card-num">Ex 5.2</span><span class="ev-card-test">Proportional Analysis</span></div><div class="ev-card-title">Compliance Composite (Audit Readiness)</div><div class="ev-card-result crit">~28% Audit-Ready</div><div class="ev-card-finding">1557 documented: 44.2%. Timestamp integrity: 75.9%. All touchpoints complete: 2.3%. The composite is multiplicative. An unannounced Joint Commission survey would very likely trigger a corrective action plan.</div></div>
+          <div class="ev-card"><div class="ev-card-hdr"><span class="ev-card-num">Ex 5.3</span><span class="ev-card-test">Kruskal-Wallis</span></div><div class="ev-card-title">Execution Variance by Service Line</div><div class="ev-card-result crit">18pp Spread</div><div class="ev-card-finding">OB: ~52% (best). Behavioral Health: ~34% (lowest). Statistically significant variation is the formal test for leadership dependency — performance driven by local management quality, not system design.</div></div>
+        </div>
+        <div class="lm-section"><div class="lm-sec-title">Why Uniform Low Performance Is Good News</div><div class="lm-text">The near-identical 28–31% range across all seven touchpoints is a diagnostic signal. If implementation were genuinely under way, you would expect some touchpoints to be much higher than others as early-adopters focused on the easiest ones first. Uniform low coverage means the model has never been operationalized — not that seven separate things failed. One governance intervention (EHR smart form requiring all 7 fields before discharge completion) addresses all seven simultaneously.</div></div>
+      </div>
+    </div>
+    <div class="sec-divider"></div>
+    <div class="sec-title">Your Step 7 CAP Contribution</div>
+    <div class="cap-table">
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 6</div><div class="cap-row-name">Biggest Policy Constraint</div></div><textarea class="cap-row-input" id="s7_constraint" placeholder="Which policy or governance mechanism is the greatest obstacle to system-wide reliability? Gap in the policy itself, EHR workflow, accountability, or measurement?"></textarea></div>
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 6</div><div class="cap-row-name">One Structural Change</div></div><textarea class="cap-row-input" id="s7_change" placeholder="One governance change that improves execution consistency. Name the EHR modification, accountability structure, or measurement mechanism — not the training program."></textarea></div>
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 6</div><div class="cap-row-name">VBP Improvement Target</div></div><input id="s7_vbp" class="cap-row-input field-input" style="min-height:auto;padding:11px 13px;" placeholder="HCAHPS communication domain improvement target: ___% · VBP annual recapture from ROI Dashboard: $___/yr"></div>
+    </div>
+  </div>
+  <div class="step-foot">
+    <p class="step-bridge">The evidence is complete. Six modules, one patient journey, six financial levers. Step 8 activates all six simultaneously — and produces the single number that answers your CFO's question.</p>
+    <div class="step-nav"><button class="btn-back" onclick="goStep(6)">← Back</button><button class="btn-continue" onclick="goStep(8)">Step 8: The Full Financial Case →</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 8: The Full Financial Case ═════════════════════════════════ -->
+<div class="step-pane" id="step-8">
+  <div class="step-hdr">
+    <div class="step-num-badge" style="background:var(--s8);">8</div>
+    <div class="step-hdr-content">
+      <div class="step-eyebrow">Step 8 of 10 — Phase 3: The Full Financial Case</div>
+      <h2 class="step-title">Six financial levers. One system-level number. This is what language access reliability is worth.</h2>
+      <p class="step-desc">Open the ROI Dashboard, activate all six modules, replace defaults with your actual data, and set your hospital count. The system total is your board presentation number. Build from the conservative end of every evidence range — a projection that holds under CFO scrutiny is worth more than one that inflates to impress.</p>
+      <div class="eq-chips"><span class="eq-chip value">Q5 · Where losing revenue?</span><span class="eq-chip value">Q6 · Which service lines?</span><span class="eq-chip action">Q10 · What do we commit to?</span></div>
+      <div class="tool-btn-row">
+        <button class="tool-btn tool-btn-roi" onclick="openTool('roi','')"><span>💰</span>Open ROI Dashboard → Activate All 6 Modules → Set Hospital Count</button>
+        <button class="tool-btn tool-btn-lai" onclick="openTool('lai','t3')"><span>🔬</span>Open LAI Platform → Tier 3 → Review All 10 Domain KPI Scores</button>
+      </div>
+    </div>
+  </div>
+  <div class="step-body">
+    <div class="callout navy"><div class="callout-title" style="color:var(--navy)">Calibration Principles</div><div class="callout-body">Use the conservative end of every evidence range. Lindholm lower bound (0.75 days, not 1.47). Hong's readmission reduction applied only to your documented teach-back coverage rate. Berkeley's average defense cost figure ($118K), not maximum award scenarios. A conservative projection that holds under CFO scrutiny is worth more than one that inflates to impress and collapses when challenged.</div></div>
+
+    <div class="sec-title">Six Financial Modules — Enter Your Calibrated Figures</div>
+    <div class="sec-sub">Enter the calibrated annual figure per hospital from the ROI Dashboard. The system total calculates automatically.</div>
+    <div class="roi-modules">
+      <div class="roi-mod"><div class="roi-mod-lbl">M1 · ED Language Access &amp; Stroke</div><input type="text" id="f_ed" class="roi-mod-input" placeholder="$___/year" oninput="calcROITotal()"><div class="roi-mod-sub">Track 1 + Track 2 + Stroke (net)</div></div>
+      <div class="roi-mod"><div class="roi-mod-lbl">M3 · Engagement &amp; LOS Reduction</div><input type="text" id="f_los" class="roi-mod-input" placeholder="$___/year" oninput="calcROITotal()"><div class="roi-mod-sub">Baseline + QBS uplift</div></div>
+      <div class="roi-mod"><div class="roi-mod-lbl">M4 · Teach-Back (Dual)</div><input type="text" id="f_tb" class="roi-mod-input" placeholder="$___/year" oninput="calcROITotal()"><div class="roi-mod-sub">Net of delivery cost at 12 months</div></div>
+      <div class="roi-mod"><div class="roi-mod-lbl">M5 · Malpractice Cost-Avoidance</div><input type="text" id="f_mal" class="roi-mod-input" placeholder="$___/year" oninput="calcROITotal()"><div class="roi-mod-sub">Damage + defense cost avoidance</div></div>
+      <div class="roi-mod"><div class="roi-mod-lbl">M5–6 · State Reimbursement</div><input type="text" id="f_state" class="roi-mod-input" placeholder="$___/year" oninput="calcROITotal()"><div class="roi-mod-sub">Medicaid interpreter billing offset</div></div>
+      <div class="roi-mod"><div class="roi-mod-lbl">M6 · Value-Based Care (VBP)</div><input type="text" id="f_vbp_roi" class="roi-mod-input" placeholder="$___/year" oninput="calcROITotal()"><div class="roi-mod-sub">HCAHPS communication domain recapture</div></div>
+    </div>
+    <div class="roi-total-bar">
+      <div class="roi-tb-item"><div class="roi-tb-lbl">Annual Per Hospital</div><div class="roi-tb-val" id="roi_hosp">$—</div></div>
+      <div class="roi-tb-item"><div class="roi-tb-lbl">Number of Hospitals</div><div class="roi-tb-val" id="roi_n">—</div></div>
+      <div class="roi-tb-item"><div class="roi-tb-lbl">System-Level Annual Total</div><div class="roi-tb-val" id="roi_system">$—</div><div class="roi-tb-sub">Your board presentation number</div></div>
+    </div>
+    <div class="sec-divider"></div>
+    <div class="sec-title">Your Step 8 CAP Contribution</div>
+    <div class="cap-table">
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Cross-Module</div><div class="cap-row-name">System-Level Annual Savings</div></div><textarea class="cap-row-input" id="s8_total" placeholder="Record the system-level figure with your hospital count. Name the two or three modules driving the most value — these are your board presentation anchors."></textarea></div>
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Cross-Module</div><div class="cap-row-name">Conservative Anchors</div></div><textarea class="cap-row-input" id="s8_anchors" placeholder="Which defaults did you change? Which are you keeping as conservative anchors — and which figures still need organization-specific data to validate?"></textarea></div>
+    </div>
+  </div>
+  <div class="step-foot">
+    <p class="step-bridge">The financial case is complete. Everything from Steps 2–8 now becomes your Customized Action Plan. Step 9 compiles all CAP contributions into the governance document you will implement.</p>
+    <div class="step-nav"><button class="btn-back" onclick="goStep(7)">← Back</button><button class="btn-continue" onclick="goStep(9)">Step 9: Build Your CAP →</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 9: Customized Action Plan ══════════════════════════════════ -->
+<div class="step-pane" id="step-9">
+  <div class="step-hdr">
+    <div class="step-num-badge" style="background:var(--s9);">9</div>
+    <div class="step-hdr-content">
+      <div class="step-eyebrow">Step 9 of 10 — Phase 4: Your Plan · Module 7</div>
+      <h2 class="step-title">The CAP is not a summary of what you learned. It is a blueprint for what you will do.</h2>
+      <p class="step-desc">Review and refine each CAP entry from Steps 1–8 against the five-element standard. Then complete the 30-day commitment — the program's most consequential deliverable. Not a strategy. Not a working group. One specific action, one accountable owner, one deadline, one measurable outcome.</p>
+      <div class="eq-chips"><span class="eq-chip action">Q7 · One thing in 30 days?</span><span class="eq-chip action">Q10 · What do we commit to?</span></div>
+    </div>
+  </div>
+  <div class="step-body">
+    <div class="callout teal"><div class="callout-title" style="color:var(--teal)">The Five-Element Standard</div><div class="callout-body">Every CAP row must have: (1) <strong>Specific finding</strong> — a named number, rate, or service line. (2) <strong>Named intervention</strong> — something that can be physically initiated on Tuesday. (3) <strong>Accountable owner</strong> — one person, one role. (4) <strong>90-day metric</strong> — measurable without ambiguity. (5) <strong>Financial connection</strong> — traceable to your calibrated dashboard figure.</div></div>
+    <div class="sec-title">Full 8-Module CAP — Review &amp; Finalize</div>
+    <div class="cap-table">
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 0</div><div class="cap-row-name">Orientation</div></div><textarea class="cap-row-input" id="cap0" placeholder="Your two most urgent executive questions — and where your organization is most exposed."></textarea></div>
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 1</div><div class="cap-row-name">Pre-Arrival &amp; Triage</div></div><textarea class="cap-row-input" id="cap1" placeholder="Highest-risk population · primary delay driver · ED revenue at risk ($___/year)"></textarea></div>
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 2</div><div class="cap-row-name">H&amp;P &amp; Diagnostic</div></div><textarea class="cap-row-input" id="cap2" placeholder="Diagnostic risk stage · engagement breakdown point · revenue integrity gap"></textarea></div>
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 3</div><div class="cap-row-name">Inpatient Rounding</div></div><textarea class="cap-row-input" id="cap3" placeholder="Highest-rework unit · LOS reduction target ($___/year) · QBS coverage target"></textarea></div>
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 4</div><div class="cap-row-name">Discharge</div></div><textarea class="cap-row-input" id="cap4" placeholder="30-day readmission rate · single discharge change · 12-month teach-back ROI ($___/year)"></textarea></div>
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 5</div><div class="cap-row-name">Post-Discharge / Safety</div></div><textarea class="cap-row-input" id="cap5" placeholder="Adverse event reporting rate · risk argument · malpractice + state reimbursement ($___/year)"></textarea></div>
+      <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 6</div><div class="cap-row-name">Governance</div></div><textarea class="cap-row-input" id="cap6" placeholder="Biggest constraint · structural change · VBP target · system total ($___/year)"></textarea></div>
+    </div>
+    <div class="sec-divider"></div>
+    <div class="sec-title">The 30-Day Commitment</div>
+    <div class="sec-sub">One thing, one owner, one deadline. Not a strategy.</div>
+    <div class="commit-grid">
+      <div class="commit-card"><div class="commit-card-lbl">The action I will take</div><textarea id="commit_action" class="field-ta" placeholder="Specific action, specific system/protocol, specific location."></textarea></div>
+      <div class="commit-card"><div class="commit-card-lbl">Accountable owner (name and role)</div><textarea id="commit_owner" class="field-ta" placeholder="If this is you, say so explicitly."></textarea></div>
+      <div class="commit-card"><div class="commit-card-lbl">Deadline</div><input type="date" id="commit_deadline" class="field-input"></div>
+      <div class="commit-card"><div class="commit-card-lbl">The measure that confirms it was done</div><textarea id="commit_measure" class="field-ta" placeholder="A specific rate, count, or documented output — not 'improvement noted.'"></textarea></div>
+      <div class="commit-card commit-span"><div class="commit-card-lbl">The person I need to align or persuade</div><textarea id="commit_stakeholder" class="field-ta" placeholder="Name the stakeholder and describe the conversation in one sentence."></textarea></div>
+    </div>
+    <div class="sec-divider"></div>
+    <div class="sec-title">Governance Structure</div>
+    <table class="gov-table" style="width:100%;margin-bottom:16px;">
+      <tr><td>Reporting body</td><td><input id="gov_body" class="field-input" placeholder="e.g., Quality &amp; Safety Committee / Board Quality Committee"></td></tr>
+      <tr><td>Reporting frequency</td><td><select id="gov_freq" class="field-select"><option value="">— Select —</option><option>Monthly</option><option>Quarterly</option><option>Semi-annually</option><option>Annually</option></select></td></tr>
+      <tr><td>Escalation pathway</td><td><input id="gov_escalation" class="field-input" placeholder="e.g., Director of Language Services → CNO → Board Quality Committee"></td></tr>
+      <tr><td>Next LAI assessment date</td><td><input type="date" id="gov_next_lai" class="field-input"></td></tr>
+      <tr><td>Program sponsor</td><td><input id="gov_sponsor" class="field-input" placeholder="Name and role"></td></tr>
+      <tr><td>1557 Coordinator</td><td><input id="gov_1557" class="field-input" placeholder="Name and role"></td></tr>
+    </table>
+  </div>
+  <div class="step-foot">
+    <p class="step-bridge">Your plan is written. The final step translates it into three board-ready documents: your governance-ready CAP, your financial summary for the CFO, and your three-sentence board presentation.</p>
+    <div class="step-nav"><button class="btn-back" onclick="goStep(8)">← Back</button><button class="btn-continue" onclick="goStep(10)">Step 10: Generate Your Documents →</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 10: Board Presentation & Documents ══════════════════════════ -->
+<div class="step-pane" id="step-10">
+  <div class="step-hdr">
+    <div class="step-num-badge" style="background:var(--s10);">10</div>
+    <div class="step-hdr-content">
+      <div class="step-eyebrow">Step 10 of 10 — Phase 4: Output Generation</div>
+      <h2 class="step-title">Build your board argument. Generate your three deliverable documents.</h2>
+      <p class="step-desc">Complete the four-component board presentation below. Then generate and download your three documents — previewed here before download. Everything from Steps 1–9 populates these documents automatically.</p>
+      <div class="eq-chips"><span class="eq-chip action">Q7 · One thing in 30 days?</span><span class="eq-chip action">Q10 · What do we commit to?</span></div>
+    </div>
+  </div>
+  <div class="step-body">
+    <div class="sec-title">Board Presentation Builder — The 5-Minute Argument</div>
+    <div class="sec-sub">Four components. Complete each before generating documents.</div>
+    <div class="board-comp">
+      <div class="board-comp-hdr"><div class="board-comp-n">1</div><div class="board-comp-title">Safety Claim</div><div class="board-comp-hint">2–3 sentences · one specific number · frame as patient safety, not equity or compliance</div></div>
+      <div class="board-comp-body"><textarea id="bp_safety" class="field-ta" style="min-height:72px;" placeholder="In [period], [X]% of LEP patients in our system experienced [specific communication gap] at [touchpoint]. Evidence shows these gaps are associated with [specific harm]. The financial consequence is [specific figure]."></textarea></div>
+    </div>
+    <div class="board-comp">
+      <div class="board-comp-hdr"><div class="board-comp-n">2</div><div class="board-comp-title">Financial Case</div><div class="board-comp-hint">Your system-level figure + 2 sentences · name the two biggest modules</div></div>
+      <div class="board-comp-body"><textarea id="bp_financial" class="field-ta" style="min-height:72px;" placeholder="Based on CLEAR program analysis calibrated to our actual patient volume, systematic language access improvement represents approximately $[X] in annual value for our health system. The largest contributors are [Module X: mechanism] and [Module Y: mechanism]."></textarea></div>
+    </div>
+    <div class="board-comp">
+      <div class="board-comp-hdr"><div class="board-comp-n">3</div><div class="board-comp-title">Governance Ask</div><div class="board-comp-hint">1 decision · 1 sentence · requires board-level authority</div></div>
+      <div class="board-comp-body"><textarea id="bp_ask" class="field-ta" style="min-height:52px;" placeholder="Approve [specific action] by [date], accountable to [role], reported to [body] quarterly."></textarea></div>
+    </div>
+    <div class="board-comp">
+      <div class="board-comp-hdr"><div class="board-comp-n">4</div><div class="board-comp-title">30-Day Proof Point</div><div class="board-comp-hint">2 sentences · already begun · board sustains, not starts</div></div>
+      <div class="board-comp-body"><textarea id="bp_proof" class="field-ta" style="min-height:52px;" placeholder="[Specific action] has already been initiated as of [date], producing [early result]. Board endorsement will accelerate the timeline from [current pace] to [target pace]."></textarea></div>
+    </div>
+
+    <div class="sec-divider"></div>
+    <div class="sec-title">Your Three Documents</div>
+    <div class="sec-sub">Preview each document below, then download. Click "Refresh Preview" after completing all entries above.</div>
+
+    <!-- CAP Document Preview -->
+    <div class="preview-card">
+      <div class="preview-hdr">
+        <div class="preview-icon">📋</div>
+        <div class="preview-meta">
+          <div class="preview-title" id="cap_doc_title">CLEAR_CAP_Organization.docx</div>
+          <div class="preview-desc">8-module Customized Action Plan · KPI Dashboard · 30-Day Commitment · Governance Structure</div>
+        </div>
+      </div>
+      <div class="preview-body">
+        <table class="preview-tbl" id="cap_preview_tbl">
+          <tr><th>Module</th><th>Focus</th><th>Your Entry</th></tr>
+          <tr><td>0</td><td>Orientation</td><td id="pv0">—</td></tr>
+          <tr><td>1</td><td>Pre-Arrival &amp; Triage</td><td id="pv1">—</td></tr>
+          <tr><td>2</td><td>H&P &amp; Diagnostic</td><td id="pv2">—</td></tr>
+          <tr><td>3</td><td>Inpatient Rounding</td><td id="pv3">—</td></tr>
+          <tr><td>4</td><td>Discharge</td><td id="pv4">—</td></tr>
+          <tr><td>5</td><td>Post-Discharge / Safety</td><td id="pv5">—</td></tr>
+          <tr><td>6</td><td>Governance</td><td id="pv6">—</td></tr>
+          <tr><td>7</td><td>30-Day Commitment</td><td id="pv7">—</td></tr>
+        </table>
+        <button class="dl-btn" onclick="refreshPreviews();generateCAPDoc()">⬇ Download CAP (.docx)</button>
+      </div>
+    </div>
+
+    <!-- ROI Document Preview -->
+    <div class="preview-card">
+      <div class="preview-hdr">
+        <div class="preview-icon">📊</div>
+        <div class="preview-meta">
+          <div class="preview-title" id="roi_doc_title">CLEAR_ROI_Summary_Organization.xlsx</div>
+          <div class="preview-desc">All 6 ROI modules · Inputs · Projections · Per-Hospital + System Totals</div>
+        </div>
+      </div>
+      <div class="preview-body">
+        <table class="preview-tbl">
+          <tr><th>Module</th><th>Mechanism</th><th>Annual (Per Hospital)</th><th>Evidence Basis</th></tr>
+          <tr><td>M1 · ED Access</td><td>Admission + Return + Stroke</td><td id="rv1">Enter in Step 8</td><td>Schulson 2018 (OR 1.09)</td></tr>
+          <tr><td>M3 · LOS</td><td>Inpatient bed-days saved</td><td id="rv2">Enter in Step 8</td><td>Lindholm 2012</td></tr>
+          <tr><td>M4 · Teach-Back</td><td>Readmission avoidance</td><td id="rv3">Enter in Step 8</td><td>Hong 2019 (HR 0.77)</td></tr>
+          <tr><td>M5 · Malpractice</td><td>Damage + defense cost</td><td id="rv4">Enter in Step 8</td><td>Berkeley/NHeLP 2010</td></tr>
+          <tr><td>M5–6 · State Reimb.</td><td>Medicaid billing offset</td><td id="rv5">Enter in Step 8</td><td>NHeLP 2024</td></tr>
+          <tr><td>M6 · VBP</td><td>HCAHPS withhold recapture</td><td id="rv6">Enter in Step 8</td><td>CMS VBP Program</td></tr>
+          <tr class="total-row"><td colspan="2"><strong>System Total</strong></td><td id="rv_total" colspan="2">—</td></tr>
+        </table>
+        <button class="dl-btn amber" onclick="generateROIDoc()">⬇ Download ROI Summary (.xlsx)</button>
+      </div>
+    </div>
+
+    <!-- Board Presentation Document Preview -->
+    <div class="preview-card">
+      <div class="preview-hdr">
+        <div class="preview-icon">🎤</div>
+        <div class="preview-meta">
+          <div class="preview-title" id="board_doc_title">CLEAR_BoardPresentation_Organization.docx</div>
+          <div class="preview-desc">4-Component Board Argument · Safety Claim · Financial Case · Governance Ask · 30-Day Proof Point</div>
+        </div>
+      </div>
+      <div class="preview-body">
+        <table class="preview-tbl">
+          <tr><th>Component</th><th>Your Entry</th></tr>
+          <tr><td>1 · Safety Claim</td><td id="bv1">Complete the Board Presentation Builder above</td></tr>
+          <tr><td>2 · Financial Case</td><td id="bv2">—</td></tr>
+          <tr><td>3 · Governance Ask</td><td id="bv3">—</td></tr>
+          <tr><td>4 · 30-Day Proof Point</td><td id="bv4">—</td></tr>
+        </table>
+        <button class="dl-btn" onclick="generateBoardDoc()">⬇ Download Board Presentation (.docx)</button>
+      </div>
+    </div>
+
+    <div class="complete-banner">
+      <h2>Program Complete</h2>
+      <p>The evidence is in hand. The plan is written. The commitment is made.<br>What happens next is not determined by this program. It is determined by what you do with what you know.</p>
+    </div>
+  </div>
+  <div class="step-foot">
+    <p class="step-bridge">Your three documents are ready to download. Return to the LAI Navigation Platform at any time to track progress against the KPIs established in your CAP.</p>
+    <div class="step-nav"><button class="btn-back" onclick="goStep(9)">← Back</button></div>
+  </div>
+</div>
+
+</div><!-- end .main -->
+</div><!-- end .app-body -->
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════
+   CLEAR Executive Training Platform — Complete JavaScript
+   Navigation · ROI Calculator · Document Generation
+═══════════════════════════════════════════════════════════════════════ */
+
+const TOTAL_STEPS = 10;
+let _step = 1;
+const LAI_URL  = 'index.html';
+const ROI_URL  = 'roi-simulator.html';
+
+/* ── RANGE VALUE HELPER ─────────────────────────────────────────────── */
+function rv(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+
+/* ── LANDING ────────────────────────────────────────────────────────── */
+function startProgram() {
+  const overlay = document.getElementById('landing-overlay');
+  if (overlay) {
+    overlay.style.opacity = '0';
+    overlay.style.transition = 'opacity .4s';
+    setTimeout(() => overlay.style.display = 'none', 420);
+  }
+  goStep(1);
+}
+
+/* ── NAVIGATION ─────────────────────────────────────────────────────── */
+function goStep(n) {
+  document.querySelectorAll('.step-pane').forEach(p => p.classList.remove('active'));
+  const pane = document.getElementById('step-' + n);
+  if (pane) { pane.classList.add('active'); pane.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+
+  for (let i = 1; i <= TOTAL_STEPS; i++) {
+    const btn = document.getElementById('sb_' + i);
+    if (!btn) continue;
+    btn.classList.remove('done', 'active', 'future');
+    if (i < n)      btn.classList.add('done');
+    else if (i === n) btn.classList.add('active');
+    else            btn.classList.add('future');
+  }
+
+  _step = n;
+  updateProgress();
+  if (n === 10) { refreshPreviews(); }
+}
+
+function advance(n) { goStep(n + 1); }
+
+function updateProgress() {
+  const fill  = document.getElementById('hdr-prog-fill');
+  const label = document.getElementById('hdr-prog-label');
+  if (fill)  fill.style.width = (((_step - 1) / (TOTAL_STEPS - 1)) * 100) + '%';
+  if (label) label.textContent = 'Step ' + _step + ' of ' + TOTAL_STEPS;
+}
+
+/* ── ORG CHIP ───────────────────────────────────────────────────────── */
+function updateOrgChip() {
+  const name  = (document.getElementById('s1_org')  || {}).value || '';
+  const city  = (document.getElementById('s1_city') || {}).value || '';
+  const state = (document.getElementById('s1_state')|| {}).value || '';
+  const chip  = document.getElementById('hdr-org-chip');
+  if (!chip) return;
+  if (name) {
+    chip.textContent = name + (city ? ' · ' + city : '') + (state ? ', ' + state : '');
+    chip.style.display = 'block';
+  } else {
+    chip.style.display = 'none';
+  }
+  // Update doc title previews
+  const slug = name.replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_|_$/g, '') || 'Organization';
+  ['cap_doc_title','roi_doc_title','board_doc_title'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (el) {
+      const names = [`CLEAR_CAP_${slug}.docx`, `CLEAR_ROI_Summary_${slug}.xlsx`, `CLEAR_BoardPresentation_${slug}.docx`];
+      el.textContent = names[i];
+    }
+  });
+}
+
+/* ── LEARN MORE DRAWER ──────────────────────────────────────────────── */
+function toggleLM(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('open');
+}
+
+/* ── TOOL LAUNCHER ──────────────────────────────────────────────────── */
+function openTool(tool, anchor) {
+  const base = tool === 'lai' ? LAI_URL : ROI_URL;
+  const url  = anchor ? base + anchor : base;
+  window.open(url, '_blank');
+}
+
+/* ── ROI TOTAL CALCULATOR ───────────────────────────────────────────── */
+function parseDollar(str) {
+  if (!str) return 0;
+  const n = parseFloat(str.replace(/[$,\s]/g, ''));
+  return isNaN(n) ? 0 : n;
+}
+
+function fmtDollar(n) {
+  if (!n || n === 0) return '$—';
+  return '$' + Math.round(n).toLocaleString();
+}
+
+function calcROITotal() {
+  const ids = ['f_ed','f_los','f_tb','f_mal','f_state','f_vbp_roi'];
+  const perHosp = ids.reduce((s, id) => s + parseDollar((document.getElementById(id)||{}).value), 0);
+  const nHosp   = parseInt((document.getElementById('s1_hospitals')||{}).value) || 1;
+  const system  = perHosp * nHosp;
+
+  const hospEl   = document.getElementById('roi_hosp');
+  const nEl      = document.getElementById('roi_n');
+  const systemEl = document.getElementById('roi_system');
+  if (hospEl)   hospEl.textContent   = fmtDollar(perHosp);
+  if (nEl)      nEl.textContent      = nHosp;
+  if (systemEl) systemEl.textContent = fmtDollar(system);
+}
+
+/* ── PREVIEW REFRESH ────────────────────────────────────────────────── */
+function refreshPreviews() {
+  // CAP preview
+  const capMap = [
+    ['pv0', 's1_q_urgent'],
+    ['pv1', 's2_pop'],
+    ['pv2', 's3_risk'],
+    ['pv3', 's4_rework'],
+    ['pv4', 's5_change'],
+    ['pv5', 's6_reporting'],
+    ['pv6', 's7_constraint'],
+  ];
+  capMap.forEach(([pvId, srcId]) => {
+    const src = document.getElementById(srcId);
+    const pv  = document.getElementById(pvId);
+    if (src && pv) pv.textContent = src.value.trim().slice(0, 120) || '—';
+  });
+  // commitment row
+  const commitEl = document.getElementById('commit_action');
+  const pv7 = document.getElementById('pv7');
+  if (commitEl && pv7) pv7.textContent = commitEl.value.trim().slice(0, 120) || '—';
+
+  // ROI preview
+  const roiMap = [['rv1','f_ed'],['rv2','f_los'],['rv3','f_tb'],['rv4','f_mal'],['rv5','f_state'],['rv6','f_vbp_roi']];
+  let total = 0;
+  roiMap.forEach(([pvId, srcId]) => {
+    const src = document.getElementById(srcId);
+    const pv  = document.getElementById(pvId);
+    const val = src ? src.value.trim() : '';
+    if (pv) pv.textContent = val || 'Not entered';
+    total += parseDollar(val);
+  });
+  const nHosp = parseInt((document.getElementById('s1_hospitals')||{}).value) || 1;
+  const rvt = document.getElementById('rv_total');
+  if (rvt) rvt.textContent = total > 0 ? fmtDollar(total) + '/yr per hospital · ' + fmtDollar(total * nHosp) + '/yr system' : '—';
+
+  // Board preview
+  [['bv1','bp_safety'],['bv2','bp_financial'],['bv3','bp_ask'],['bv4','bp_proof']].forEach(([pvId,srcId]) => {
+    const src = document.getElementById(srcId);
+    const pv  = document.getElementById(pvId);
+    if (src && pv) pv.textContent = src.value.trim().slice(0, 160) || '—';
+  });
+
+  // Update ROI total bar
+  calcROITotal();
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   DOCUMENT GENERATION
+═══════════════════════════════════════════════════════════════════════ */
+
+function getOrg() {
+  return (document.getElementById('s1_org')||{}).value || 'Your Organization';
+}
+
+function capText(id) {
+  return (document.getElementById(id)||{}).value || '—';
+}
+
+/* ── CAP DOCX ───────────────────────────────────────────────────────── */
+async function generateCAPDoc() {
+  if (typeof docx === 'undefined') { alert('Document library loading — please wait a moment and try again.'); return; }
+  const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
+          WidthType, BorderStyle, ShadingType, AlignmentType, Footer, PageNumber } = docx;
+
+  const org    = getOrg();
+  const NAVY   = '0C1E35';
+  const TEAL   = '0E9E8C';
+  const AMBER  = 'D48E1A';
+  const WHITE  = 'FFFFFF';
+  const SLATE  = '4A637D';
+  const FOG    = 'F3F7FB';
+  const bd     = { style: BorderStyle.SINGLE, size: 1, color: 'C8D5E0' };
+  const bords  = { top:bd, bottom:bd, left:bd, right:bd };
+  const cp     = { top:80, bottom:80, left:120, right:120 };
+  const cps    = { top:60, bottom:60, left:100, right:100 };
+
+  const hdrCell = (text, w, span=1) => new TableCell({
+    borders: bords, shading:{fill:NAVY,type:ShadingType.CLEAR}, margins:cps,
+    width:{size:w,type:WidthType.DXA}, columnSpan:span,
+    children:[new Paragraph({children:[new TextRun({text,bold:true,size:18,color:WHITE,font:'Arial'})]})]
+  });
+  const lblCell = (text, w) => new TableCell({
+    borders: bords, shading:{fill:FOG,type:ShadingType.CLEAR}, margins:cps,
+    width:{size:w,type:WidthType.DXA},
+    children:[new Paragraph({children:[new TextRun({text,bold:true,size:18,color:NAVY,font:'Arial'})]})]
+  });
+  const wCell = (text, w) => {
+    const children = text
+      ? [new Paragraph({children:[new TextRun({text:text.slice(0,500),size:18,color:SLATE,font:'Arial'})]})]
+      : [new Paragraph({children:[new TextRun({text:'',size:18,font:'Arial'})]})];
+    for(let i=0;i<2;i++) children.push(new Paragraph({children:[]}));
+    return new TableCell({borders:bords,margins:cp,width:{size:w,type:WidthType.DXA},children});
+  };
+
+  const TOTAL = 9360;
+  const C1=700, C2=2000, C3=2600, C4=1460, C5=1600, C6=1000;
+
+  const capRows = [
+    ['0','Orientation', capText('s1_q_urgent')],
+    ['1','Pre-Arrival & Triage', capText('s2_pop')],
+    ['2','H&P & Diagnostic', capText('s3_risk')],
+    ['3','Inpatient Rounding', capText('s4_rework')],
+    ['4','Discharge', capText('s5_change')],
+    ['5','Post-Discharge / Safety', capText('s6_reporting')],
+    ['6','Governance', capText('s7_constraint')],
+    ['7','30-Day Commitment', capText('commit_action')],
+  ];
+
+  const doc = new Document({
+    sections:[{
+      properties:{page:{size:{width:12240,height:15840},margin:{top:1080,right:1080,bottom:1080,left:1080}}},
+      footers:{default:new Footer({children:[new Paragraph({children:[new TextRun({text:`CLEAR Executive Language Access Certificate Program · CAP · ${org} · Page `,size:16,color:SLATE,font:'Arial'}),new TextRun({children:[PageNumber.CURRENT],size:16,color:SLATE,font:'Arial'})],alignment:AlignmentType.CENTER})]})},
+      children:[
+        new Table({
+          width:{size:TOTAL,type:WidthType.DXA},columnWidths:[TOTAL],
+          rows:[new TableRow({children:[new TableCell({
+            borders:bords,shading:{fill:NAVY,type:ShadingType.CLEAR},
+            margins:{top:160,bottom:160,left:200,right:200},width:{size:TOTAL,type:WidthType.DXA},
+            children:[
+              new Paragraph({children:[new TextRun({text:'CLEAR Executive Language Access Certificate Program',size:18,color:'7AADCC',font:'Arial'})]}),
+              new Paragraph({children:[new TextRun({text:'Customized Action Plan (CAP)',size:28,bold:true,color:WHITE,font:'Arial'})],spacing:{before:40,after:40}}),
+              new Paragraph({children:[new TextRun({text:org,size:22,color:'BBCCDD',font:'Arial'})]}),
+              new Paragraph({children:[new TextRun({text:`Generated: ${new Date().toLocaleDateString()}`,size:18,color:'7AADCC',font:'Arial'})]}),
+            ]
+          })]})],
+        }),
+        new Paragraph({children:[],spacing:{before:160,after:0}}),
+        new Table({
+          width:{size:TOTAL,type:WidthType.DXA},columnWidths:[C1,C2,C3,C4,C5,C6],
+          rows:[
+            new TableRow({children:[hdrCell('MOD',C1),hdrCell('FOCUS',C2),hdrCell('ENTRY / FINDING',C3),hdrCell('OWNER',C4),hdrCell('90-DAY METRIC',C5),hdrCell('$',C6)]}),
+            ...capRows.map(([mod,focus,entry]) => new TableRow({children:[
+              lblCell(mod,C1),lblCell(focus,C2),wCell(entry,C3),wCell('',C4),wCell('',C5),wCell('',C6)
+            ]}))
+          ]
+        }),
+        new Paragraph({children:[],spacing:{before:200,after:0}}),
+        new Table({
+          width:{size:TOTAL,type:WidthType.DXA},columnWidths:[2400,6960],
+          rows:[
+            new TableRow({children:[hdrCell('30-DAY COMMITMENT',2400),hdrCell('DETAIL',6960)]}),
+            ...['Action','Owner','Deadline','Measure','Stakeholder'].map((lbl,i) => {
+              const ids=['commit_action','commit_owner','commit_deadline','commit_measure','commit_stakeholder'];
+              return new TableRow({children:[lblCell(lbl,2400),wCell(capText(ids[i]),6960)]});
+            })
+          ]
+        }),
+        new Paragraph({children:[],spacing:{before:200,after:0}}),
+        new Table({
+          width:{size:TOTAL,type:WidthType.DXA},columnWidths:[2400,6960],
+          rows:[
+            new TableRow({children:[hdrCell('GOVERNANCE',2400),hdrCell('',6960)]}),
+            ...['Reporting Body','Frequency','Escalation Pathway','Next LAI Assessment','Program Sponsor','1557 Coordinator'].map((lbl,i) => {
+              const ids=['gov_body','gov_freq','gov_escalation','gov_next_lai','gov_sponsor','gov_1557'];
+              return new TableRow({children:[lblCell(lbl,2400),wCell(capText(ids[i]),6960)]});
+            })
+          ]
+        }),
+      ]
+    }]
+  });
+
+  const buf = await Packer.toBuffer(doc);
+  const slug = (document.getElementById('s1_org')||{}).value.replace(/[^a-zA-Z0-9]+/g,'_').replace(/^_|_$/g,'') || 'Organization';
+  saveFile(buf, `CLEAR_CAP_${slug}.docx`, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+}
+
+/* ── ROI XLSX ───────────────────────────────────────────────────────── */
+function generateROIDoc() {
+  if (typeof XLSX === 'undefined') { alert('Spreadsheet library loading — please wait and try again.'); return; }
+  const org    = getOrg();
+  const nHosp  = parseInt((document.getElementById('s1_hospitals')||{}).value) || 1;
+  const roiIds = [['f_ed','M1 · ED Language Access & Stroke','Track 1 (Admission Avoidance) + Track 2 (Return Visits) + Stroke Sub-Model','Schulson 2018 (OR 1.09); QI return visit literature'],
+                  ['f_los','M3 · Engagement & LOS Reduction','Inpatient bed-days: baseline interpreter integration (Lindholm 1.0 day default) + QBS uplift (+0.5 day)','Lindholm et al. 2012'],
+                  ['f_tb','M4 · Teach-Back (Dual)','Readmission avoidance: provider ramp (linear) + automation S-curve at 12 months, net of delivery cost','Hong et al. 2019 (HR 0.77; 23% lower readmission)'],
+                  ['f_mal','M5 · Malpractice Cost-Avoidance','Two-track: damage avoidance + defense legal cost avoidance (91% of claims; ~$118K avg, 2025 adj.)','Berkeley/NHeLP 2010; Divi et al. 2007'],
+                  ['f_state','M5–6 · State Reimbursement','Medicaid interpreter billing offset (T1013); 18 states + DC eligible','NHeLP 2024 Medicaid/CHIP Reimbursement Report'],
+                  ['f_vbp_roi','M6 · Value-Based Care (VBP)','HCAHPS communication domain improvement → Medicare VBP withhold recapture','CMS VBP Program methodology']];
+
+  let totalPer = 0;
+  const rows = [['CLEAR Executive Language Access Certificate Program — ROI Summary'],[`Organization: ${org}`],[`Generated: ${new Date().toLocaleDateString()}`],[`System Size: ${nHosp} hospital${nHosp>1?'s':''}`],[],[
+    'Module','Mechanism','Evidence Basis','Annual Per Hospital','System Total'
+  ]];
+
+  roiIds.forEach(([id, mod, mech, ev]) => {
+    const val = parseDollar((document.getElementById(id)||{}).value);
+    totalPer += val;
+    rows.push([mod, mech, ev, val > 0 ? val : '(not entered)', val > 0 ? val * nHosp : '(not entered)']);
+  });
+  rows.push([]);
+  rows.push(['TOTAL (Per Hospital)', '', '', totalPer > 0 ? totalPer : '(complete Step 8)', totalPer > 0 ? totalPer * nHosp : '']);
+  rows.push([]);
+  rows.push(['CALIBRATION INPUTS']);
+  rows.push(['Input','Default','Your Value']);
+  [['Annual LEP Encounters (for malpractice model)','1,800',(document.getElementById('s1_lep')||{}).value||'1,800'],
+   ['Hospitals in System','1',String(nHosp)],
+   ['LOS Reduction Days (baseline)','1.0','(from ROI Dashboard)'],
+   ['Teach-Back Provider Coverage (start)','5%','(from ROI Dashboard)'],
+   ['Documentation Gap Rate (malpractice)','35%','(from ROI Dashboard)']].forEach(r => rows.push(r));
+
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols'] = [{wch:45},{wch:55},{wch:45},{wch:22},{wch:22}];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'ROI Summary');
+
+  // Conservative anchors sheet
+  const anchors = [
+    ['CONSERVATIVE ANCHORING PRINCIPLES'],[''],
+    ['Module','Conservative Anchor (Use This)','Optimistic Range (Avoid Unless Justified)'],
+    ['LOS Reduction','0.75 days (Lindholm lower bound)','Up to 1.47 days (upper bound)'],
+    ['Teach-Back Readmission Reduction','HR 0.77 applied to documented coverage rate','23% headline number applied broadly'],
+    ['Malpractice Defense Cost','$118K average per filed claim (Berkeley, 2025 adj.)','Maximum award ranges ($450K+)'],
+    ['VBP Improvement','10% incremental (default)','15–20% only if materially below peer benchmark'],
+    ['T1013 Recovery','70% eligible encounters captured','100% capture (requires full documentation redesign)'],
+  ];
+  const ws2 = XLSX.utils.aoa_to_sheet(anchors);
+  ws2['!cols'] = [{wch:30},{wch:55},{wch:55}];
+  XLSX.utils.book_append_sheet(wb, ws2, 'Calibration Principles');
+
+  const slug = (document.getElementById('s1_org')||{}).value.replace(/[^a-zA-Z0-9]+/g,'_').replace(/^_|_$/g,'') || 'Organization';
+  XLSX.writeFile(wb, `CLEAR_ROI_Summary_${slug}.xlsx`);
+}
+
+/* ── BOARD DOCX ─────────────────────────────────────────────────────── */
+async function generateBoardDoc() {
+  if (typeof docx === 'undefined') { alert('Document library loading — please wait and try again.'); return; }
+  const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
+          WidthType, BorderStyle, ShadingType, AlignmentType, Footer, PageNumber } = docx;
+
+  const org   = getOrg();
+  const NAVY  = '0C1E35'; const TEAL='0E9E8C'; const WHITE='FFFFFF'; const SLATE='4A637D'; const FOG='F3F7FB';
+  const bd    = {style:BorderStyle.SINGLE,size:1,color:'C8D5E0'};
+  const bords = {top:bd,bottom:bd,left:bd,right:bd};
+  const cp    = {top:80,bottom:80,left:120,right:120};
+  const cps   = {top:60,bottom:60,left:100,right:100};
+  const TOTAL = 9360;
+
+  const hdrCell = (text,w) => new TableCell({borders:bords,shading:{fill:NAVY,type:ShadingType.CLEAR},margins:cps,width:{size:w,type:WidthType.DXA},children:[new Paragraph({children:[new TextRun({text,bold:true,size:18,color:WHITE,font:'Arial'})]})]});
+  const lblCell = (text,w) => new TableCell({borders:bords,shading:{fill:FOG,type:ShadingType.CLEAR},margins:cps,width:{size:w,type:WidthType.DXA},children:[new Paragraph({children:[new TextRun({text,bold:true,size:18,color:NAVY,font:'Arial'})]})]});
+  const wCell = (text,w) => new TableCell({borders:bords,margins:cp,width:{size:w,type:WidthType.DXA},children:[new Paragraph({children:[new TextRun({text:text.slice(0,1000),size:20,color:SLATE,font:'Arial'})]}),new Paragraph({children:[]}),new Paragraph({children:[]})]});
+
+  const components = [
+    ['1 · Safety Claim','2–3 sentences · ground in one specific number · frame as patient safety',capText('bp_safety')],
+    ['2 · Financial Case','Your system-level figure + 2 sentences naming the two biggest modules',capText('bp_financial')],
+    ['3 · Governance Ask','1 decision · 1 sentence · requires board-level authority',capText('bp_ask')],
+    ['4 · 30-Day Proof Point','2 sentences · already begun · board sustains, not starts',capText('bp_proof')],
+  ];
+
+  const doc = new Document({
+    sections:[{
+      properties:{page:{size:{width:12240,height:15840},margin:{top:1080,right:1080,bottom:1080,left:1080}}},
+      footers:{default:new Footer({children:[new Paragraph({children:[new TextRun({text:`CLEAR Executive Language Access Certificate Program · Board Presentation · ${org} · Page `,size:16,color:SLATE,font:'Arial'}),new TextRun({children:[PageNumber.CURRENT],size:16,color:SLATE,font:'Arial'})],alignment:AlignmentType.CENTER})]})},
+      children:[
+        new Table({
+          width:{size:TOTAL,type:WidthType.DXA},columnWidths:[TOTAL],
+          rows:[new TableRow({children:[new TableCell({
+            borders:bords,shading:{fill:NAVY,type:ShadingType.CLEAR},
+            margins:{top:200,bottom:200,left:240,right:240},width:{size:TOTAL,type:WidthType.DXA},
+            children:[
+              new Paragraph({children:[new TextRun({text:'CLEAR Executive Language Access Certificate Program',size:18,color:'7AADCC',font:'Arial'})]}),
+              new Paragraph({children:[new TextRun({text:'Board Presentation — The 5-Minute Argument',size:26,bold:true,color:WHITE,font:'Arial'})],spacing:{before:40,after:40}}),
+              new Paragraph({children:[new TextRun({text:org,size:20,color:'BBCCDD',font:'Arial'})]}),
+              new Paragraph({children:[new TextRun({text:new Date().toLocaleDateString(),size:18,color:'7AADCC',font:'Arial'})]}),
+            ]
+          })]})],
+        }),
+        new Paragraph({children:[],spacing:{before:200,after:0}}),
+        new Table({
+          width:{size:TOTAL,type:WidthType.DXA},columnWidths:[2400,6960],
+          rows:[
+            new TableRow({children:[hdrCell('COMPONENT',2400),hdrCell('YOUR ENTRY',6960)]}),
+            ...components.map(([comp,hint,entry]) => new TableRow({children:[
+              new TableCell({borders:bords,shading:{fill:FOG,type:ShadingType.CLEAR},margins:cps,width:{size:2400,type:WidthType.DXA},children:[
+                new Paragraph({children:[new TextRun({text:comp,bold:true,size:18,color:NAVY,font:'Arial'})]}),
+                new Paragraph({children:[new TextRun({text:hint,size:16,color:SLATE,font:'Arial'})],spacing:{before:40}}),
+              ]}),
+              wCell(entry,6960)
+            ]}))
+          ]
+        }),
+        new Paragraph({children:[],spacing:{before:200,after:0}}),
+        new Table({
+          width:{size:TOTAL,type:WidthType.DXA},columnWidths:[2400,6960],
+          rows:[
+            new TableRow({children:[hdrCell('30-DAY COMMITMENT',2400),hdrCell('DETAIL',6960)]}),
+            new TableRow({children:[lblCell('The action',2400),wCell(capText('commit_action'),6960)]}),
+            new TableRow({children:[lblCell('Accountable owner',2400),wCell(capText('commit_owner'),6960)]}),
+            new TableRow({children:[lblCell('Deadline',2400),wCell(capText('commit_deadline'),6960)]}),
+            new TableRow({children:[lblCell('Success measure',2400),wCell(capText('commit_measure'),6960)]}),
+          ]
+        }),
+        new Paragraph({children:[],spacing:{before:200,after:0}}),
+        new Table({
+          width:{size:TOTAL,type:WidthType.DXA},columnWidths:[TOTAL],
+          rows:[new TableRow({children:[new TableCell({
+            borders:bords,shading:{fill:NAVY,type:ShadingType.CLEAR},
+            margins:{top:160,bottom:160,left:200,right:200},width:{size:TOTAL,type:WidthType.DXA},
+            children:[
+              new Paragraph({children:[new TextRun({text:'PROGRAM COMPLETE',bold:true,size:22,color:'5DE8C0',font:'Arial'})],spacing:{after:60}}),
+              new Paragraph({children:[new TextRun({text:'The evidence is in hand. The plan is written. The commitment is made.',size:20,italic:true,color:WHITE,font:'Arial'})]}),
+              new Paragraph({children:[new TextRun({text:'What happens next is not determined by this program. It is determined by what you do with what you know.',size:18,color:'AABBCC',font:'Arial'})],spacing:{before:40}}),
+            ]
+          })]})],
+        }),
+      ]
+    }]
+  });
+
+  const buf = await Packer.toBuffer(doc);
+  const slug = (document.getElementById('s1_org')||{}).value.replace(/[^a-zA-Z0-9]+/g,'_').replace(/^_|_$/g,'') || 'Organization';
+  saveFile(buf, `CLEAR_BoardPresentation_${slug}.docx`, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+}
+
+/* ── FILE SAVE HELPER ───────────────────────────────────────────────── */
+function saveFile(data, filename, mimeType) {
+  const blob = new Blob([data], { type: mimeType });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 30000);
+}
+
+/* ── INIT ───────────────────────────────────────────────────────────── */
+window.addEventListener('DOMContentLoaded', () => {
+  updateProgress();
+  document.querySelectorAll('.sb-step').forEach(btn => btn.classList.add('future'));
+});
+
+/* ── CHECKLIST TOGGLE ───────────────────────────────────────────────── */
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+  const box = el.querySelector('.check-box');
+  if (box) box.textContent = el.classList.contains('checked') ? '✓' : '';
+}
+</script>
+</body>
+</html>
