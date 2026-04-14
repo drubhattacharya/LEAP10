@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>CLEAR Module 7 - CAP Capstone and Board Argument</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#1E3448;--primary2:#243D56;
+  --accent:#C4571B;--accent2:#E07B45;
+  --amber:#C9922A;--amber2:#F0B84A;
+  --green:#2A7A58;--red:#B83232;
+  --slate:#4A5E72;--silver:#7E9AAD;
+  --ice:#EAF2F7;--fog:#F4F6F8;--white:#FFFFFF;
+  --bd:rgba(30,52,72,.10);--bd2:rgba(30,52,72,.18);
+  --sh:0 2px 16px rgba(30,52,72,.08);--r:10px;--r2:14px;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --serif:'DM Serif Display','Georgia',serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{height:100%;-webkit-font-smoothing:antialiased;}
+body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-size:14px;line-height:1.65;min-height:100vh;}
+.mod-hdr{background:linear-gradient(135deg,var(--primary) 0%,var(--primary2) 100%);padding:0;border-bottom:2px solid rgba(196,87,27,.3);}
+.mod-hdr-inner{max-width:960px;margin:0 auto;padding:24px 32px;}
+.mod-back{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:rgba(255,255,255,.4);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px;cursor:pointer;background:none;border:none;font-family:var(--sans);}
+.mod-back:hover{color:rgba(255,255,255,.7);}
+.mod-eyebrow{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:8px;}
+.mod-title{font-family:var(--serif);font-size:clamp(22px,3vw,32px);font-style:italic;color:#fff;line-height:1.15;margin-bottom:8px;}
+.mod-subtitle{font-size:14px;color:rgba(255,255,255,.55);line-height:1.6;max-width:680px;margin-bottom:18px;}
+.mod-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.mod-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:6px;font-size:10.5px;font-weight:700;letter-spacing:.04em;}
+.badge-phase{background:rgba(196,87,27,.2);color:var(--accent2);}
+.badge-step{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);}
+.badge-domain{background:rgba(201,146,42,.15);color:var(--amber2);}
+.tab-bar{background:var(--primary);border-bottom:1px solid rgba(255,255,255,.07);}
+.tab-bar-inner{max-width:960px;margin:0 auto;padding:0 32px;display:flex;gap:0;}
+.tab-btn{padding:12px 20px;font-size:12px;font-weight:700;color:rgba(255,255,255,.38);background:none;border:none;cursor:pointer;font-family:var(--sans);letter-spacing:.04em;text-transform:uppercase;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;}
+.tab-btn:hover{color:rgba(255,255,255,.7);}
+.tab-btn.active{color:var(--accent2);border-bottom-color:var(--accent);}
+.phase-score{margin-left:auto;padding:12px 0;display:flex;align-items:center;gap:8px;}
+.phase-score-label{font-size:10px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.08em;}
+.phase-score-val{font-size:13px;font-weight:800;color:var(--accent2);}
+.content-area{max-width:960px;margin:0 auto;padding:28px 32px;}
+.phase-pane{display:none;}
+.phase-pane.active{display:block;}
+.f-screen{display:none;}
+.f-screen.active{display:block;animation:fadeUp .25s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.f-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.f-nav-label{font-size:11px;font-weight:700;color:var(--silver);text-transform:uppercase;letter-spacing:.08em;}
+.f-dots{display:flex;gap:6px;}
+.f-dot{width:8px;height:8px;border-radius:50%;background:var(--bd2);transition:all .2s;cursor:pointer;}
+.f-dot.active{background:var(--accent);transform:scale(1.3);}
+.f-dot.done{background:rgba(196,87,27,.4);}
+.f-screen-title{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.f-principle{font-family:var(--serif);font-size:clamp(20px,2.5vw,27px);font-style:italic;color:var(--primary);line-height:1.25;margin-bottom:20px;}
+.f-body{font-size:13.5px;color:var(--slate);line-height:1.8;margin-bottom:16px;}
+.f-body strong{color:var(--primary);font-weight:700;}
+.callout{border-left:3px solid;border-radius:var(--r);padding:14px 18px;margin:14px 0;}
+.callout.accent{border-color:var(--accent);background:rgba(196,87,27,.05);}
+.callout.amber{border-color:var(--amber);background:rgba(201,146,42,.05);}
+.callout.red{border-color:var(--red);background:rgba(184,50,50,.05);}
+.callout.navy{border-color:var(--primary);background:rgba(30,52,72,.04);}
+.callout-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;}
+.callout-body{font-size:13px;color:#334155;line-height:1.7;}
+.stat-row{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;}
+.stat-card{background:#fff;border:1px solid var(--bd2);border-radius:var(--r);padding:14px 16px;min-width:140px;flex:1;}
+.stat-val{font-family:var(--serif);font-size:clamp(22px,3vw,30px);font-style:italic;color:var(--primary);line-height:1;margin-bottom:4px;}
+.stat-val.sig{color:var(--accent);}
+.stat-val.crit{color:var(--red);}
+.stat-val.warn{color:var(--amber);}
+.stat-val.ns{color:var(--slate);}
+.stat-lbl{font-size:11px;color:var(--silver);line-height:1.4;}
+.cite{color:var(--accent);font-size:11px;font-weight:800;vertical-align:super;cursor:pointer;margin-left:1px;text-decoration:none;}
+.cite:hover{text-decoration:underline;}
+.cite-overlay{position:fixed;inset:0;background:rgba(30,52,72,.55);z-index:800;display:none;align-items:center;justify-content:center;padding:24px;}
+.cite-overlay.open{display:flex;}
+.cite-panel{background:#fff;border-radius:var(--r2);max-width:560px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden;}
+.cp-hdr{background:var(--primary);padding:16px 20px;display:flex;align-items:flex-start;gap:12px;}
+.cp-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.cp-title{font-size:13.5px;font-weight:700;color:#fff;flex:1;line-height:1.35;}
+.cp-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:20px;cursor:pointer;padding:0;margin-left:8px;line-height:1;}
+.cp-close:hover{color:#fff;}
+.cp-body{padding:18px 20px;}
+.cp-meta{font-size:11px;color:var(--silver);margin-bottom:10px;font-style:italic;}
+.cp-text{font-size:13px;color:var(--slate);line-height:1.75;}
+.cp-relevance{margin-top:12px;padding:10px 14px;background:var(--fog);border-radius:8px;border-left:3px solid var(--accent);}
+.cp-relevance-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);margin-bottom:4px;}
+.cp-relevance-text{font-size:12px;color:var(--slate);line-height:1.65;}
+.chain{display:flex;flex-direction:column;gap:0;margin:16px 0;}
+.chain-item{display:flex;gap:0;cursor:pointer;}
+.chain-node{display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;}
+.chain-dot{width:28px;height:28px;border-radius:50%;background:var(--bd2);border:2px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--silver);transition:all .2s;z-index:1;}
+.chain-item.confirmed .chain-dot{background:var(--accent);border-color:var(--accent);color:#fff;}
+.chain-line{flex:1;width:2px;background:var(--bd2);margin:0 auto;}
+.chain-item.confirmed .chain-line{background:var(--accent);}
+.chain-item:last-child .chain-line{display:none;}
+.chain-content{flex:1;padding:0 0 18px 14px;}
+.chain-title{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:4px;}
+.chain-detail{font-size:12px;color:var(--slate);line-height:1.6;display:none;}
+.chain-item.confirmed .chain-detail{display:block;}
+.chain-confirm-btn{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 12px;background:rgba(196,87,27,.1);border:1px solid rgba(196,87,27,.3);border-radius:6px;font-size:11px;font-weight:700;color:var(--accent);cursor:pointer;transition:all .15s;font-family:var(--sans);}
+.chain-confirm-btn:hover{background:rgba(196,87,27,.2);}
+.chain-confirm-btn.done{pointer-events:none;}
+.chain-progress{margin:12px 0;background:rgba(196,87,27,.08);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;}
+.chain-progress-bar{flex:1;height:6px;background:var(--bd2);border-radius:3px;overflow:hidden;}
+.chain-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width .4s ease;}
+.chain-progress-label{font-size:11px;font-weight:700;color:var(--accent);white-space:nowrap;}
+.formative{background:#fff;border:1.5px solid var(--bd2);border-radius:var(--r2);padding:20px;margin:20px 0;}
+.formative-label{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--silver);margin-bottom:10px;}
+.formative-q{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:16px;line-height:1.4;}
+.choice-grid{display:flex;flex-direction:column;gap:8px;}
+.choice-btn{width:100%;text-align:left;padding:12px 14px;border:1.5px solid var(--bd2);border-radius:var(--r);background:#fff;cursor:pointer;font-family:var(--sans);font-size:13px;color:var(--primary);line-height:1.5;transition:all .15s;display:flex;align-items:flex-start;gap:10px;}
+.choice-btn:hover:not(:disabled){border-color:var(--accent);background:rgba(196,87,27,.03);}
+.choice-btn:disabled{cursor:default;}
+.choice-letter{width:22px;height:22px;border-radius:50%;background:var(--fog);border:1.5px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;margin-top:1px;transition:all .15s;}
+.choice-btn.reveal-correct{border-color:var(--green);background:rgba(42,122,88,.04);}
+.choice-btn.reveal-correct .choice-letter{background:var(--green);border-color:var(--green);color:#fff;}
+.choice-btn.selected-wrong{border-color:var(--red);background:rgba(184,50,50,.04);}
+.choice-btn.selected-wrong .choice-letter{background:var(--red);border-color:var(--red);color:#fff;}
+.choice-btn.selected-correct{border-color:var(--green);background:rgba(42,122,88,.06);}
+.choice-btn.selected-correct .choice-letter{background:var(--green);border-color:var(--green);color:#fff;}
+.choice-btn.dimmed{opacity:.45;}
+.feedback-box{display:none;margin-top:12px;padding:14px 16px;border-radius:var(--r);border-left:3px solid;}
+.feedback-box.correct{border-color:var(--green);background:rgba(42,122,88,.05);}
+.feedback-box.wrong{border-color:var(--red);background:rgba(184,50,50,.04);}
+.feedback-box h4{font-size:13px;font-weight:800;margin-bottom:6px;}
+.feedback-box.correct h4{color:var(--green);}
+.feedback-box.wrong h4{color:var(--red);}
+.feedback-box p{font-size:12.5px;color:var(--slate);line-height:1.7;}
+.gateway{background:#fff;border:1.5px solid var(--bd2);border-radius:var(--r2);padding:22px;margin:20px 0;}
+.gateway-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--slate);margin-bottom:14px;}
+.gateway-q{margin-bottom:16px;}
+.gateway-q-text{font-size:13.5px;font-weight:600;color:var(--primary);margin-bottom:10px;}
+.gw-choices{display:flex;flex-direction:column;gap:6px;}
+.gw-choice{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--bd);border-radius:8px;cursor:pointer;font-size:13px;color:var(--slate);transition:all .15s;}
+.gw-choice:hover{border-color:var(--accent);background:rgba(196,87,27,.03);}
+.gw-choice input{accent-color:var(--accent);}
+.gw-answer{display:none;margin-top:8px;padding:10px 14px;border-radius:8px;font-size:12.5px;line-height:1.65;}
+.gw-answer.correct{background:rgba(42,122,88,.06);border-left:3px solid var(--green);color:var(--slate);}
+.gw-answer.incorrect{background:rgba(184,50,50,.04);border-left:3px solid var(--red);color:var(--slate);}
+.app-screen{display:none;}
+.app-screen.active{display:block;animation:fadeUp .25s ease;}
+.scenario-hdr{background:linear-gradient(135deg,var(--primary),var(--primary2));border-radius:var(--r2);padding:20px 24px;margin-bottom:20px;color:#fff;}
+.scenario-eyebrow{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px;}
+.scenario-title{font-family:var(--serif);font-size:clamp(17px,2.5vw,22px);font-style:italic;color:#fff;line-height:1.2;margin-bottom:8px;}
+.scenario-role{font-size:13px;color:rgba(255,255,255,.55);line-height:1.6;}
+.scenario-body{background:#fff;border:1.5px solid var(--bd2);border-radius:var(--r2);padding:20px;margin-bottom:18px;}
+.scenario-body-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--slate);margin-bottom:12px;}
+.scenario-facts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.scenario-fact{display:flex;gap:10px;font-size:13px;line-height:1.5;}
+.scenario-fact-key{font-weight:700;color:var(--primary);min-width:180px;flex-shrink:0;}
+.scenario-fact-val{color:var(--slate);}
+.scenario-prompt{font-size:14px;font-weight:700;color:var(--primary);padding:14px 16px;background:var(--fog);border-radius:var(--r);border-left:3px solid var(--accent);line-height:1.55;margin-bottom:16px;}
+.screen-nav{display:flex;align-items:center;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid var(--bd);}
+.btn-prev{background:#fff;border:1.5px solid var(--bd2);border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;color:var(--slate);font-family:var(--sans);transition:all .15s;}
+.btn-prev:hover{border-color:var(--accent);color:var(--accent);}
+.btn-next{background:linear-gradient(135deg,var(--accent),#9A3D10);color:#fff;border:none;border-radius:10px;padding:11px 26px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--sans);box-shadow:0 4px 14px rgba(196,87,27,.3);transition:transform .1s;}
+.btn-next:hover{transform:translateY(-1px);}
+.btn-next:disabled{opacity:.4;cursor:default;transform:none;}
+.enter-sim-btn{background:linear-gradient(135deg,var(--amber),#8A6010);color:#fff;border:none;border-radius:10px;padding:13px 30px;font-size:14.5px;font-weight:800;cursor:pointer;font-family:var(--sans);box-shadow:0 4px 16px rgba(201,146,42,.35);transition:transform .1s;}
+.enter-sim-btn:hover{transform:translateY(-1px);}
+.enter-sim-btn:disabled{opacity:.4;cursor:default;transform:none;}
+.debrief{display:none;}
+.debrief.show{display:block;animation:fadeUp .3s ease;}
+.score-ring-wrap{display:flex;flex-direction:column;align-items:center;margin:24px 0;}
+.score-ring{width:120px;height:120px;border-radius:50%;background:conic-gradient(var(--accent) calc(var(--pct,0)*1%),var(--bd2) 0);display:flex;align-items:center;justify-content:center;position:relative;}
+.score-ring::before{content:'';position:absolute;inset:12px;border-radius:50%;background:#fff;}
+.score-ring-inner{position:relative;text-align:center;}
+.score-ring-num{font-family:var(--serif);font-size:28px;font-style:italic;color:var(--primary);}
+.score-ring-denom{font-size:12px;color:var(--silver);}
+.score-ring-label{margin-top:10px;font-size:13px;font-weight:700;color:var(--slate);}
+.debrief-verdict{font-size:14px;color:var(--slate);line-height:1.75;text-align:center;max-width:580px;margin:0 auto 24px;}
+.debrief-cards{display:flex;flex-direction:column;gap:12px;}
+.debrief-card{border:1px solid var(--bd2);border-radius:var(--r);padding:16px;}
+.debrief-card-q{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--silver);margin-bottom:6px;}
+.debrief-card-verdict{font-size:13px;font-weight:800;margin-bottom:6px;}
+.debrief-card-verdict.correct{color:var(--green);}
+.debrief-card-verdict.wrong{color:var(--red);}
+.debrief-expert{font-size:12.5px;color:var(--slate);line-height:1.7;}
+.debrief-ctas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px;}
+.btn-return{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:linear-gradient(135deg,var(--accent),#9A3D10);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--sans);}
+.btn-retry{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#fff;color:var(--slate);border:1.5px solid var(--bd2);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--sans);}
+@media(max-width:680px){
+  .content-area,.mod-hdr-inner,.tab-bar-inner{padding-left:16px;padding-right:16px;}
+  .stat-row{flex-direction:column;}
+  .scenario-fact{flex-direction:column;}
+  .scenario-fact-key{min-width:auto;}
+}
+</style></head><body>
+<div class="cite-overlay" id="cite-overlay" onclick="if(event.target===this)closeCite()">
+  <div class="cite-panel"><div class="cp-hdr"><div class="cp-num" id="cp-num">1</div><div class="cp-title" id="cp-title">Loading...</div><button class="cp-close" onclick="closeCite()">x</button></div>
+  <div class="cp-body"><div class="cp-meta" id="cp-meta"></div><div class="cp-text" id="cp-text"></div>
+  <div class="cp-relevance"><div class="cp-relevance-label">Relevance to Module 7</div><div class="cp-relevance-text" id="cp-relevance"></div></div></div></div>
+</div>
+<div class="mod-hdr"><div class="mod-hdr-inner">
+  <button class="mod-back" onclick="window.close()">Return to Training Platform</button>
+  <div class="mod-eyebrow">CLEAR Executive Language Access Certificate Program - Module 7 of 7</div>
+  <h1 class="mod-title">CAP Capstone and Board Argument</h1>
+  <p class="mod-subtitle">Seven modules of evidence. One governance commitment. This is where the data becomes a decision.</p>
+  <div class="mod-meta">
+    <span class="mod-badge badge-phase">Phase 1 - Foundation</span>
+    <span class="mod-badge badge-phase" id="phase2-badge" style="display:none;">Phase 2 - Application</span>
+    <span class="mod-badge badge-step">Training Platform Steps 9 and 10</span>
+    <span class="mod-badge badge-domain">All Domains - Financial Synthesis - Governance Commitment</span>
+  </div>
+</div></div>
+<div class="tab-bar"><div class="tab-bar-inner">
+  <button class="tab-btn active" id="tab-foundation" onclick="switchTab('foundation')">Phase 1 - Foundation</button>
+  <button class="tab-btn" id="tab-application" onclick="switchTab('application')">Phase 2 - Application</button>
+  <div class="phase-score"><span class="phase-score-label">Application</span><span class="phase-score-val" id="f-score-display">0 / 3</span></div>
+</div></div>
+<div class="content-area">
+<div class="phase-pane active" id="phase-foundation">
+  <div class="f-nav"><div class="f-nav-label" id="f-screen-label">Foundation 1 of 4</div><div class="f-dots" id="f-dots"><div class="f-dot active" onclick="goF(1)"></div><div class="f-dot" onclick="goF(2)"></div><div class="f-dot" onclick="goF(3)"></div><div class="f-dot" onclick="goF(4)"></div></div></div>
+
+  <div class="f-screen active" id="fs1">
+    <div class="f-screen-title">Foundation 1 of 4 - The Synthesis</div>
+    <div class="f-principle">Seven modules. One argument. The financial case for language access is not a values argument. It is a measurement argument. You have now built the measurement.</div>
+    <p class="f-body">Module 7 is the capstone. It does not introduce new evidence — it asks you to synthesize what you have learned across Modules 1 through 6 into a complete, financially defensible, board-ready argument. By this point you have the data, the causal mechanisms, the financial models, and the governance framework. The only remaining question is whether you can assemble them into a coherent case that produces a governance commitment — and whether that commitment is specific enough to be actionable.</p>
+    <div class="callout navy">
+      <div class="callout-title" style="color:var(--primary)">What a Complete Argument Requires</div>
+      <div class="callout-body">A complete language access governance argument has four components: (1) the financial exposure — what the current gap costs, priced across the ROI dashboard tracks; (2) the clinical evidence — what the literature demonstrates about outcomes when access is provided; (3) the governance infrastructure — what the scorecard, accountability structure, and CAP commit the organization to; and (4) the investment case — what the proposed interventions cost and what they return. An argument missing any of these components can be deflected. An argument containing all four can be governed.</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-val sig">7</div><div class="stat-lbl">Modules of evidence synthesized in your CAP. Each maps to a specific LAI domain and ROI track.</div></div>
+      <div class="stat-card"><div class="stat-val warn">20</div><div class="stat-lbl">KPIs across 10 domains. Your LAI score is the governance baseline for your improvement targets.</div></div>
+      <div class="stat-card"><div class="stat-val sig">4</div><div class="stat-lbl">Components required in every board-ready language access financial argument.</div></div>
+    </div>
+    <div class="screen-nav"><div></div><button class="btn-next" onclick="goF(2)">Foundation 2: The Financial Architecture</button></div>
+  </div>
+
+  <div class="f-screen" id="fs2">
+    <div class="f-screen-title">Foundation 2 of 4 - The Financial Architecture</div>
+    <div class="f-principle">The ROI Dashboard prices five distinct exposure tracks. Each has a different mechanism and a different audience.</div>
+    <p class="f-body">The complete financial architecture connects each module to a specific ROI track. Understanding the mapping is required to present the financial case without conflating mechanisms — which is the most common error in executive language access arguments.</p>
+    <div class="chain" id="chain7">
+      <div class="chain-item" id="chain-f1">
+        <div class="chain-node"><div class="chain-dot" id="cdot-f1">M1</div><div class="chain-line"></div></div>
+        <div class="chain-content">
+          <div class="chain-title">Module 1 - ED Admission Avoidance (Tracks 1 and 2) and Stroke Sub-Model</div>
+          <div class="chain-detail">Schulson 2018 OR 1.09 drives Track 1 (excess admission rate from diagnostic uncertainty at triage). 79.2% same-complaint return rate drives Track 2 (first-contact failure producing return visits). The stroke sub-model independently prices IV-tPA and EVT reimbursement forfeiture from symptom onset communication failure. Total ED exposure is the sum of Track 1 and Track 2; stroke is an illustration of the mechanism, not an additive track.</div>
+          <button class="chain-confirm-btn" id="cbtn-f1" onclick="confirmChain('f1')">Confirm mapping</button>
+        </div>
+      </div>
+      <div class="chain-item" id="chain-f2">
+        <div class="chain-node"><div class="chain-dot" id="cdot-f2">M3</div><div class="chain-line"></div></div>
+        <div class="chain-content">
+          <div class="chain-title">Module 3 - Inpatient LOS Reduction (Lindholm anchor)</div>
+          <div class="chain-detail">Lindholm 2012 0.75 to 1.47 additional days. Conservative model default: 1.0 day. Two-component: baseline interpreter integration at admission and discharge, plus QBS uplift (additional 0.5 days) for high-acuity service lines. Exercise 3.2 directionally consistent but underpowered — use Lindholm as the primary anchor.</div>
+          <button class="chain-confirm-btn" id="cbtn-f2" onclick="confirmChain('f2')">Confirm mapping</button>
+        </div>
+      </div>
+      <div class="chain-item" id="chain-f3">
+        <div class="chain-node"><div class="chain-dot" id="cdot-f3">M4</div><div class="chain-line"></div></div>
+        <div class="chain-content">
+          <div class="chain-title">Module 4 - Readmission Avoidance (Hong HR 0.77)</div>
+          <div class="chain-detail">Hong 2019 HR 0.77 applies to condition-related readmissions only. Apply to the LEP condition-related readmission subset, not total readmissions. Attribution percentage required. Dual adoption model: provider ramp (linear 12-month) plus automation S-curve. Automation ROI exceeds provider-only in back half of year 1. Do not add to LOS track — mechanisms are independent, not additive per encounter.</div>
+          <button class="chain-confirm-btn" id="cbtn-f3" onclick="confirmChain('f3')">Confirm mapping</button>
+        </div>
+      </div>
+      <div class="chain-item" id="chain-f4">
+        <div class="chain-node"><div class="chain-dot" id="cdot-f4">M5</div><div class="chain-line"></div></div>
+        <div class="chain-content">
+          <div class="chain-title">Module 5 - Malpractice Defense Cost Avoidance (Berkeley $118K)</div>
+          <div class="chain-detail">Berkeley 2010 $118,000 average defense cost, 91% incurred regardless of outcome. Two-track structure: Track 1 (negligence) + Track 2 (1557 civil rights) roughly doubles per-incident cost. Apply to estimated actual annual events (reported count divided by 0.256 for 74.4% underreporting correction). Do not overstate — conservative attribution is essential for CFO credibility.</div>
+          <button class="chain-confirm-btn" id="cbtn-f4" onclick="confirmChain('f4')">Confirm mapping</button>
+        </div>
+      </div>
+      <div class="chain-item" id="chain-f5">
+        <div class="chain-node"><div class="chain-dot" id="cdot-f5">M6</div></div>
+        <div class="chain-content">
+          <div class="chain-title">Module 6 - VBP and Audit Penalty Avoidance</div>
+          <div class="chain-detail">HCAHPS communication domain scores drive VBP reimbursement. LEP HCAHPS gaps reduce scores that affect Medicare payments. The LEP HCAHPS gap is independently priced in the ROI Dashboard VBP module. Audit penalty avoidance prices the HHS OCR settlement risk from 1557 non-compliance — separate from malpractice defense costs and should not be double-counted with Module 5 tracks.</div>
+          <button class="chain-confirm-btn" id="cbtn-f5" onclick="confirmChain('f5')">Confirm mapping</button>
+        </div>
+      </div>
+    </div>
+    <div class="chain-progress" id="chain-prog">
+      <span style="font-size:11px;font-weight:700;color:var(--slate);">Confirm all five:</span>
+      <div class="chain-progress-bar"><div class="chain-progress-fill" id="chain-fill" style="width:0%"></div></div>
+      <span class="chain-progress-label" id="chain-label">0 / 5</span>
+    </div>
+    <div class="screen-nav"><button class="btn-prev" onclick="goF(1)">Back</button><button class="btn-next" onclick="goF(3)">Foundation 3: The CAP Architecture</button></div>
+  </div>
+
+  <div class="f-screen" id="fs3">
+    <div class="f-screen-title">Foundation 3 of 4 - The CAP Architecture</div>
+    <div class="f-principle">A CAP without named owners, timelines, and accountability mechanisms is a document. A CAP with all three is a governance commitment.</div>
+    <p class="f-body">Your Corrective Action Plan maps each module finding to a specific organizational intervention, assigns an owner, sets a 90-day and 12-month target, and specifies the governance mechanism that will confirm completion. The CAP template is pre-structured to capture all seven modules — your job is to enter your organization-specific numbers, owners, and timelines.</p>
+    <div class="callout amber">
+      <div class="callout-title" style="color:var(--amber)">The Four CAP Elements</div>
+      <div class="callout-body">For each intervention in your CAP: (1) Finding — the specific data point or gap from the module exercises. (2) Intervention — the structural change, not the training or policy. (3) Owner — by name and title, not by department. (4) Accountability mechanism — the specific metric, reporting cadence, and escalation trigger if the target is not met. A CAP entry without an accountability mechanism is an aspiration, not a commitment.</div>
+    </div>
+    <p class="f-body">The LAI score you entered at the beginning of the program is your baseline. The CAP targets are your 12-month improvement commitments. At the end of the program, re-enter your data into the LAI platform. The delta between your baseline and your 12-month score is the governance output of the CLEAR program — not the certificate, not the training completion, but the measurable improvement in the 20 KPIs that determine your organization readiness to deliver equitable care.</p>
+    <div class="screen-nav"><button class="btn-prev" onclick="goF(2)">Back</button><button class="btn-next" onclick="goF(4)">Foundation 4: Gateway Check</button></div>
+  </div>
+
+  <div class="f-screen" id="fs4">
+    <div class="f-screen-title">Foundation 4 of 4 - Gateway Check</div>
+    <div class="f-principle">Two synthesis questions before the final application begins.</div>
+    <div class="gateway">
+      <div class="gateway-title">Synthesis Questions</div>
+      <div class="gateway-q">
+        <div class="gateway-q-text">A CFO asks: "What is the total financial exposure from our language access gaps?" What is the correct answer structure?</div>
+        <div class="gw-choices">
+          <label class="gw-choice"><input type="radio" name="gq1" value="a" onchange="gwAnswer(1,'a')"> Sum all five ROI tracks and present the total as the annual exposure</label>
+          <label class="gw-choice"><input type="radio" name="gq1" value="b" onchange="gwAnswer(1,'b')"> Present each track separately with its evidence anchor, apply conservative attribution percentages, and identify which tracks can be improved by the proposed interventions within the specified timeline — without summing tracks that reflect different time horizons or mechanisms</label>
+          <label class="gw-choice"><input type="radio" name="gq1" value="c" onchange="gwAnswer(1,'c')"> Present only the highest-value track to keep the argument simple</label>
+          <label class="gw-choice"><input type="radio" name="gq1" value="d" onchange="gwAnswer(1,'d')"> Defer the financial answer to the next quarter after completing your own organization data entry in the ROI Dashboard</label>
+        </div>
+        <div class="gw-answer correct" id="gwa1-b">Correct. Each track has a different mechanism, time horizon, and attribution logic. Summing them without qualification produces a number that a finance-literate CFO will immediately challenge. Presenting them separately with conservative anchors produces a more credible, if smaller, total that holds under scrutiny.</div>
+        <div class="gw-answer incorrect" id="gwa1-a">Summing all tracks without accounting for different mechanisms and time horizons produces a number that is inflated and difficult to defend. Track 1 (ED admissions) and Track 4 (malpractice defense) measure different things on different time horizons — they are not simply additive.</div>
+        <div class="gw-answer incorrect" id="gwa1-c">Presenting one track leaves the CFO without the full picture and misses the structural argument: multiple independent mechanisms produce language access financial exposure, making the investment case diversified and durable rather than dependent on a single pathway.</div>
+        <div class="gw-answer incorrect" id="gwa1-d">Deferring the financial answer until internal data is complete is appropriate for the final CAP calibration, but the CFO question requires a response now using conservative default assumptions. The ROI Dashboard defaults are specifically designed to be defensible before organization-specific data is entered.</div>
+      </div>
+      <div class="gateway-q" style="margin-top:16px;">
+        <div class="gateway-q-text">What is the single most important characteristic that distinguishes a CAP that produces governance change from one that does not?</div>
+        <div class="gw-choices">
+          <label class="gw-choice"><input type="radio" name="gq2" value="a" onchange="gwAnswer(2,'a')"> Comprehensiveness — the CAP covers all seven modules</label>
+          <label class="gw-choice"><input type="radio" name="gq2" value="b" onchange="gwAnswer(2,'b')"> Named individual accountability — every intervention has a specific person responsible by name and title, with an explicit accountability mechanism that triggers if the target is not met</label>
+          <label class="gw-choice"><input type="radio" name="gq2" value="c" onchange="gwAnswer(2,'c')"> Financial precision — the CAP includes a fully calibrated ROI for each intervention</label>
+          <label class="gw-choice"><input type="radio" name="gq2" value="d" onchange="gwAnswer(2,'d')"> Board approval — a CAP presented to and approved by the board is more likely to be implemented</label>
+        </div>
+        <div class="gw-answer correct" id="gwa2-b">Correct. Organizations regularly produce comprehensive, financially precise, board-approved plans that are not implemented because no individual owns the execution and no mechanism triggers when targets are missed. Named accountability with an escalation trigger is what converts a plan into a governance commitment.</div>
+        <div class="gw-answer incorrect" id="gwa2-a">Comprehensiveness is valuable, but a comprehensive plan without named accountability produces comprehensive inaction. Coverage without ownership is the most common failure mode of institutional improvement plans.</div>
+        <div class="gw-answer incorrect" id="gwa2-c">Financial precision supports the investment decision but does not produce implementation. The ROI argument gets the plan approved; named accountability determines whether it gets executed.</div>
+        <div class="gw-answer incorrect" id="gwa2-d">Board approval creates organizational endorsement, which is important. But approval without named execution ownership and escalation mechanisms frequently produces plans that are endorsed but not implemented. Governance change requires the accountability structure, not just the endorsement.</div>
+      </div>
+    </div>
+    <div class="screen-nav"><button class="btn-prev" onclick="goF(3)">Back</button><button class="enter-sim-btn" onclick="enterApplication()">Enter Phase 2: Final Application</button></div>
+  </div>
+</div>
+
+<div class="phase-pane" id="phase-application">
+  <div class="f-nav"><div class="f-nav-label" id="app-screen-label">Application 1 of 3</div><div class="f-dots" id="app-dots"><div class="f-dot active" id="adot1"></div><div class="f-dot" id="adot2"></div><div class="f-dot" id="adot3"></div></div></div>
+
+  <div class="app-screen active" id="as1">
+    <div class="scenario-hdr">
+      <div class="scenario-eyebrow">Application 1 of 3 - Board Presentation</div>
+      <div class="scenario-title">The Board Finance Committee Argument</div>
+      <div class="scenario-role">You are the CMO. The Board Finance Committee has 15 minutes on its agenda for your language access investment request: $1.2M over 18 months for EHR workflow changes, QBS credentialing, and active safety surveillance. The committee chair opens with: "Walk us through why this is a financial investment, not a compliance cost."</div>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-body-title">Investment Summary</div>
+      <div class="scenario-facts">
+        <div class="scenario-fact"><div class="scenario-fact-key">EHR workflow changes</div><div class="scenario-fact-val">$480,000: teach-back hard-stop at discharge, interpreter record linkage, T1-T7 documentation automation</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">QBS credentialing program</div><div class="scenario-fact-val">$340,000: assessment tool, staff time, ongoing credentialing for high-acuity service lines</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Active safety surveillance</div><div class="scenario-fact-val">$85,000: quarterly structured review, administrative data integration, reporting infrastructure</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Program management</div><div class="scenario-fact-val">$295,000: implementation oversight and CAP tracking over 18 months</div></div>
+      </div>
+      <div class="scenario-prompt">What is your opening argument to the Finance Committee?</div>
+    </div>
+    <div class="formative">
+      <div class="formative-label">Scored Decision</div>
+      <div class="formative-q">Which opening argument is most effective with a finance-literate board?</div>
+      <div class="choice-grid" id="q1choices">
+        <button class="choice-btn" onclick="answer(1,'a')"><span class="choice-letter">A</span><span>Section 1557 requires meaningful language access. This investment ensures compliance and reduces enforcement risk. Without it, we face regulatory penalties that could exceed the investment amount.</span></button>
+        <button class="choice-btn" onclick="answer(1,'b')"><span class="choice-letter">B</span><span>The data across our LEP patient population quantifies five independent mechanisms generating financial exposure: over-admission from diagnostic uncertainty at triage; same-complaint ED returns from first-contact failure; avoidable inpatient LOS from communication failures at rounding; preventable readmissions from discharge comprehension gaps; and malpractice defense costs running on two legal tracks simultaneously. Conservative modeling of these five mechanisms produces annual exposure between $1.8M and $2.6M depending on volume inputs. The $1.2M investment reduces exposure across all five tracks with a projected payback period under 12 months on the admission and LOS tracks alone. This is a return-on-investment decision, not a compliance decision.</span></button>
+        <button class="choice-btn" onclick="answer(1,'c')"><span class="choice-letter">C</span><span>Our LEP patients experience worse outcomes than our English-proficient patients across every measured dimension. This investment is the right thing to do for our patients and our community, and it also happens to make financial sense.</span></button>
+        <button class="choice-btn" onclick="answer(1,'d')"><span class="choice-letter">D</span><span>Peer organizations are investing at this level. We risk falling behind on accreditation standards and community benefit reputation if we do not match the investment.</span></button>
+      </div>
+      <div class="feedback-box" id="q1fb"></div>
+    </div>
+    <div class="screen-nav"><div></div><button class="btn-next" id="as1-next" onclick="goApp(2)" disabled>Next Scenario</button></div>
+  </div>
+
+  <div class="app-screen" id="as2">
+    <div class="scenario-hdr">
+      <div class="scenario-eyebrow">Application 2 of 3 - CFO Challenge</div>
+      <div class="scenario-title">The Attribution Challenge</div>
+      <div class="scenario-role">You are the CMO. After your opening, the CFO challenges: "Your five-track model assumes we can attribute those financial losses to language access gaps. How do you know these admissions, LOS days, and readmissions are caused by communication failure rather than just being sicker patients?"</div>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-body-title">Attribution Defense Required</div>
+      <div class="scenario-facts">
+        <div class="scenario-fact"><div class="scenario-fact-key">Schulson 2018</div><div class="scenario-fact-val">n=57,435 ED visits. LEP OR 1.09 for admission after controlling for acuity. Mechanism: diagnostic uncertainty from incomplete history.</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Lindholm 2012</div><div class="scenario-fact-val">Retrospective cohort. 0.75-1.47 additional LOS days. Acuity-matched comparison.</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Hong 2019</div><div class="scenario-fact-val">HR 0.77 in condition-related readmission. Prospective study design.</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Conservative attributions used</div><div class="scenario-fact-val">9% excess admission rate (OR 1.09), 60% attribution to language access, 1.0-day LOS (conservative midpoint), condition-related readmissions only.</div></div>
+      </div>
+      <div class="scenario-prompt">How do you answer the attribution challenge?</div>
+    </div>
+    <div class="formative">
+      <div class="formative-label">Scored Decision</div>
+      <div class="formative-q">Which response best defends the attribution?</div>
+      <div class="choice-grid" id="q2choices">
+        <button class="choice-btn" onclick="answer(2,'a')"><span class="choice-letter">A</span><span>The CFO is raising a valid concern. Without our own propensity-matched data, we cannot confirm the attribution. Present the model as preliminary until we conduct an internal study.</span></button>
+        <button class="choice-btn" onclick="answer(2,'b')"><span class="choice-letter">B</span><span>The attribution concern is built into the model. Schulson controls for acuity — OR 1.09 is the residual after acuity is removed. Lindholm uses an acuity-matched comparison cohort. Hong uses a prospective design that eliminates severity confounding. We are not attributing all LEP excess utilization to language barriers — we are using the conservative midpoints of studies that specifically control for acuity. The 60% attribution percentage and the condition-specific readmission scope are both conservative choices designed to survive exactly this challenge. If anything, the model understates exposure.</span></button>
+        <button class="choice-btn" onclick="answer(2,'c')"><span class="choice-letter">C</span><span>Attribution precision is not required for a governance decision at this level. The directional evidence is sufficient to justify the investment.</span></button>
+        <button class="choice-btn" onclick="answer(2,'d')"><span class="choice-letter">D</span><span>Commission a 90-day internal data study to validate the attribution before proceeding with the investment proposal.</span></button>
+      </div>
+      <div class="feedback-box" id="q2fb"></div>
+    </div>
+    <div class="screen-nav"><button class="btn-prev" onclick="goApp(1)">Back</button><button class="btn-next" id="as2-next" onclick="goApp(3)" disabled>Next Scenario</button></div>
+  </div>
+
+  <div class="app-screen" id="as3">
+    <div class="scenario-hdr">
+      <div class="scenario-eyebrow">Application 3 of 3 - The Governance Commitment</div>
+      <div class="scenario-title">The CAP Accountability Structure</div>
+      <div class="scenario-role">You are the CNO presenting the CAP to the Quality Committee. A committee member asks: "We have approved language access improvement plans before. They did not produce lasting change. What is different this time?"</div>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-body-title">CAP Accountability Structure</div>
+      <div class="scenario-facts">
+        <div class="scenario-fact"><div class="scenario-fact-key">Previous plan outcome</div><div class="scenario-fact-val">Training completed. T1-T7 rate improved from 1.8% to 3.1% over 6 months then reverted to 2.3% when training emphasis ended.</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Current CAP structure</div><div class="scenario-fact-val">Named owners per intervention. Quarterly metric review at Quality Committee. EHR hard-stops (non-bypassable). Escalation trigger: two consecutive quarters below target triggers executive review.</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">LAI baseline</div><div class="scenario-fact-val">Organization LAI composite: 41.3 (Stage 2 Established). 12-month target: 58.0 (Stage 2 upper bound, trajectory toward Stage 3).</div></div>
+      </div>
+      <div class="scenario-prompt">How do you answer the committee member?</div>
+    </div>
+    <div class="formative">
+      <div class="formative-label">Scored Decision</div>
+      <div class="formative-q">Which response correctly explains what makes this CAP structurally different?</div>
+      <div class="choice-grid" id="q3choices">
+        <button class="choice-btn" onclick="answer(3,'a')"><span class="choice-letter">A</span><span>We have stronger executive commitment this time. The CMO, CNO, and COO are all personally invested in the outcome, and senior leadership alignment will prevent the reversion we saw previously.</span></button>
+        <button class="choice-btn" onclick="answer(3,'b')"><span class="choice-letter">B</span><span>The previous plan improved through training — which works until training emphasis ends, then reverts, exactly as it did. This CAP is structurally different in three ways: the primary interventions are EHR hard-stops, not training — the behavior is required regardless of whether commitment is high or low; each intervention has a named individual owner, not a department; and the accountability mechanism is explicit — two consecutive quarters below target triggers an executive review that is already calendared. The LAI baseline is 41.3. The 12-month target is 58.0. The Quality Committee will see those numbers quarterly. The governance structure is designed so that reversion produces a visible signal before it becomes a failure.</span></button>
+        <button class="choice-btn" onclick="answer(3,'c')"><span class="choice-letter">C</span><span>We are investing significantly more this time. The $1.2M investment signals organizational commitment that was absent from the previous plan.</span></button>
+        <button class="choice-btn" onclick="answer(3,'d')"><span class="choice-letter">D</span><span>The regulatory environment has changed. Section 1557 enforcement under the 2024 Final Rule creates external pressure that did not exist for the previous plan, which will sustain organizational focus.</span></button>
+      </div>
+      <div class="feedback-box" id="q3fb"></div>
+    </div>
+    <div class="screen-nav"><button class="btn-prev" onclick="goApp(2)">Back</button><button class="btn-next" id="as3-next" onclick="showDebrief()" disabled>Complete Program</button></div>
+  </div>
+
+  <div class="debrief" id="debrief">
+    <div class="score-ring-wrap">
+      <div class="score-ring" id="scoreRing" style="--pct:0;"><div class="score-ring-inner"><div class="score-ring-num"><span id="debriefNum">0</span>/3</div></div></div>
+      <div class="score-ring-label" id="debrief-label">CLEAR Program Complete</div>
+    </div>
+    <div class="debrief-verdict" id="debrief-verdict"></div>
+    <div class="debrief-cards" id="debrief-cards"></div>
+    <div class="callout accent" style="margin-top:24px;">
+      <div class="callout-title" style="color:var(--accent)">Your CLEAR Program Certificate</div>
+      <div class="callout-body">You have completed all seven modules of the CLEAR Executive Language Access Certificate Program. Your CAP is the deliverable. Return to the Training Platform to finalize your Corrective Action Plan, calibrate your ROI Dashboard with organization-specific data, and record your governance commitments. Your LAI score in 12 months is the measure of your program success.</div>
+    </div>
+    <div class="debrief-ctas">
+      <button class="btn-return" onclick="window.close()">Return to Training Platform - Finalize Your CAP</button>
+      <button class="btn-retry" onclick="retryModule()">Retry Final Application</button>
+    </div>
+  </div>
+</div>
+</div>
+<script>var F_TOTAL=4,APP_TOTAL=3,TOTAL_Q=3,CHAIN_TOTAL=5;
+var CITES={};var GW_CORRECT={1:"b",2:"b"};var Q_LABELS=["Scenario 1: Board Finance Committee Argument","Scenario 2: Attribution Challenge","Scenario 3: Governance Commitment Structure"];var Q={
+  1:{correct:"b",feedback:{
+    a:{ok:false,title:"Compliance framing invites the committee to evaluate it as a cost, not an investment",
+       body:"The committee chair explicitly asked why this is a financial investment, not a compliance cost. Answering with a compliance argument directly fails to address the question. Finance committees that hear compliance framing allocate to the legal risk budget at the lowest justifiable level. Finance committees that hear a return-on-investment argument evaluate it against other capital investments on merit."},
+    b:{ok:true,title:"Correct - five-track mechanism argument with return estimate and payback period",
+       body:"This response directly answers the question by naming five independent financial mechanisms, providing a conservative range, and identifying the fastest-returning tracks. It frames language access as a diversified return-on-investment argument rather than a single-mechanism case, which is more resilient to CFO challenge on any individual track."},
+    c:{ok:false,title:"Values framing after a finance question signals that the financial case is secondary",
+       body:"Board Finance Committees respond to financial arguments. A values argument that pivots to financial justification can be read as the financial case being weak and the presenter falling back on ethics. Lead with mechanism, evidence, and return. Values are appropriate for context, not for the opening argument to a Finance Committee."},
+    d:{ok:false,title:"Peer comparison and reputational arguments are the weakest investment justifications",
+       body:"Finance committees can always respond to peer comparison arguments by asking whether peers are achieving returns on their investments, and whether the organization needs to match spending rather than match outcomes. A peer comparison argument does not price the organization specific exposure and does not produce a return estimate."}
+  }},
+  2:{correct:"b",feedback:{
+    a:{ok:false,title:"Conceding attribution uncertainty without defending the acuity-controlled evidence base surrenders the argument",
+       body:"The CFO challenge is a standard finance committee test — checking whether the presenter has thought through the attribution logic. Conceding it without explaining how the evidence controls for acuity signals that the model has not been rigorously constructed. The evidence base specifically addresses acuity confounding; the answer should demonstrate that."},
+    b:{ok:true,title:"Correct - evidence controls for acuity, conservative anchors chosen specifically for this challenge",
+       body:"The response demonstrates that the attribution challenge was anticipated and addressed in the model construction. Schulson OR 1.09 is post-acuity control. Lindholm uses acuity-matched comparison. Hong uses prospective design. The 60% attribution is explicitly conservative. This is the answer of a presenter who built the model to survive CFO scrutiny."},
+    c:{ok:false,title:"Dismissing precision requirements in a board-level financial argument undermines credibility",
+       body:"Finance Committees making $1.2M allocation decisions require attribution precision, not directional evidence. Responding that precision is not required signals that the presenter does not understand the standard of evidence expected at board level."},
+    d:{ok:false,title:"A 90-day internal study delays a decision supported by peer-reviewed acuity-controlled evidence",
+       body:"The external evidence base (Schulson, Lindholm, Hong) already addresses the acuity confounding concern. An internal study would take 90 days and produce a sample too small to be more precise than the external literature. This is a delay tactic disguised as methodological rigor."}
+  }},
+  3:{correct:"b",feedback:{
+    a:{ok:false,title:"Executive commitment is necessary but not sufficient for sustained change",
+       body:"The previous plan also had executive commitment at the time of launch. Commitment that depends on sustained attention from senior leadership will revert when attention shifts to other priorities. Structural interventions that do not require sustained attention are the only reliable mechanism for durable change."},
+    b:{ok:true,title:"Correct - structural intervention, named accountability, visible escalation trigger",
+       body:"The response directly addresses the reversion mechanism (training ends, behavior reverts) and explains why each structural element prevents reversion: EHR hard-stops work regardless of commitment level; named individual owners have no organizational cover if targets are missed; the escalation trigger is pre-calendared so reversion produces a governance response rather than being absorbed quietly."},
+    c:{ok:false,title:"Investment size does not prevent reversion — it is not causally linked to implementation durability",
+       body:"The previous plan reverted not because of insufficient investment but because it relied on training-based behavior change, which reverts without structural reinforcement. A larger investment in the same mechanism would produce a larger initial improvement and the same reversion."},
+    d:{ok:false,title:"External pressure from regulatory change is a useful context but not a substitute for internal accountability structure",
+       body:"Regulatory pressure sustains attention when enforcement action is imminent. It does not sustain daily workflow execution when no enforcement action is pending. The structural accountability mechanisms in the CAP are what produce durable change independent of regulatory environment."}
+  }}
+};
+/* ── CITATION PANEL ─────────────────────────────────────────────────── */
+function showCite(n){
+  var c=CITES[n]; if(!c) return;
+  document.getElementById('cp-num').textContent=n;
+  document.getElementById('cp-title').textContent=c.title;
+  document.getElementById('cp-meta').textContent=c.meta;
+  document.getElementById('cp-text').textContent=c.text;
+  document.getElementById('cp-relevance').textContent=c.relevance;
+  document.getElementById('cite-overlay').classList.add('open');
+}
+function closeCite(){document.getElementById('cite-overlay').classList.remove('open');}
+
+/* ── FOUNDATION NAVIGATION ──────────────────────────────────────────── */
+var _fScreen=1;
+function goF(n){
+  document.getElementById('fs'+_fScreen).classList.remove('active');
+  document.getElementById('fs'+n).classList.add('active');
+  document.getElementById('f-screen-label').textContent='Foundation '+n+' of '+F_TOTAL;
+  var dots=document.querySelectorAll('#f-dots .f-dot');
+  dots.forEach(function(d,i){
+    d.classList.remove('active','done');
+    if(i+1<n) d.classList.add('done');
+    else if(i+1===n) d.classList.add('active');
+  });
+  _fScreen=n;
+}
+
+/* ── EVIDENCE CHAIN ─────────────────────────────────────────────────── */
+var _chainConfirmed=0, CHAIN_TOTAL=0;
+function confirmChain(id){
+  var item=document.getElementById('chain-'+id);
+  var btn=document.getElementById('cbtn-'+id);
+  if(!item||item.classList.contains('confirmed')) return;
+  item.classList.add('confirmed');
+  btn.textContent='Confirmed';
+  btn.classList.add('done');
+  _chainConfirmed++;
+  var pct=(_chainConfirmed/CHAIN_TOTAL)*100;
+  document.getElementById('chain-fill').style.width=pct+'%';
+  document.getElementById('chain-label').textContent=_chainConfirmed+' / '+CHAIN_TOTAL;
+}
+
+/* ── GATEWAY ────────────────────────────────────────────────────────── */
+function gwAnswer(q,choice){
+  var correct=GW_CORRECT[q];
+  ['a','b','c','d'].forEach(function(l){
+    var el=document.getElementById('gwa'+q+'-'+l);
+    if(el) el.style.display='none';
+  });
+  var el=document.getElementById('gwa'+q+'-'+choice);
+  if(el) el.style.display='block';
+  document.querySelectorAll('input[name="gq'+q+'"]').forEach(function(r){r.disabled=true;});
+}
+
+/* ── TAB SWITCHING ──────────────────────────────────────────────────── */
+function switchTab(tab){
+  ['foundation','application'].forEach(function(t){
+    document.getElementById('tab-'+t).classList.remove('active');
+    document.getElementById('phase-'+t).classList.remove('active');
+  });
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.getElementById('phase-'+tab).classList.add('active');
+}
+function enterApplication(){
+  switchTab('application');
+  var b=document.getElementById('phase2-badge');
+  if(b) b.style.display='inline-flex';
+  goApp(1);
+}
+
+/* ── APPLICATION NAVIGATION ─────────────────────────────────────────── */
+var _appScreen=1;
+function goApp(n){
+  document.getElementById('as'+_appScreen).classList.remove('active');
+  var next=document.getElementById('as'+n);
+  if(!next) return;
+  next.classList.add('active');
+  document.getElementById('app-screen-label').textContent='Application '+n+' of '+APP_TOTAL;
+  var dots=document.querySelectorAll('#app-dots .f-dot');
+  dots.forEach(function(d,i){
+    d.classList.remove('active','done');
+    if(i+1<n) d.classList.add('done');
+    else if(i+1===n) d.classList.add('active');
+  });
+  _appScreen=n;
+}
+
+/* ── SCORING ────────────────────────────────────────────────────────── */
+var score=0, answers={};
+function answer(q,choice){
+  if(answers['q'+q]!==undefined) return;
+  var qd=Q[q];
+  var fd=qd.feedback[choice]||{ok:false,title:'No feedback',body:''};
+  answers['q'+q]=fd.ok;
+  if(fd.ok) score++;
+  document.getElementById('f-score-display').textContent=score+' / '+TOTAL_Q;
+  var container=document.getElementById('q'+q+'choices');
+  container.querySelectorAll('.choice-btn').forEach(function(btn,i){
+    var l='abcd'[i]; btn.disabled=true;
+    if(l===qd.correct) btn.classList.add('reveal-correct');
+    else if(l===choice&&!fd.ok) btn.classList.add('selected-wrong');
+    else if(l===choice&&fd.ok) btn.classList.add('selected-correct');
+    else btn.classList.add('dimmed');
+  });
+  var fb=document.getElementById('q'+q+'fb');
+  fb.className='feedback-box '+(fd.ok?'correct':'wrong');
+  fb.style.display='block';
+  fb.innerHTML='<h4>'+fd.title+'<\/h4><p>'+fd.body+'<\/p>';
+  var nb=document.getElementById('as'+q+'-next');
+  if(nb) nb.disabled=false;
+}
+
+/* ── DEBRIEF ────────────────────────────────────────────────────────── */
+function showDebrief(){
+  document.getElementById('as'+TOTAL_Q).classList.remove('active');
+  var debrief=document.getElementById('debrief');
+  debrief.classList.add('show');
+  var pct=Math.round((score/TOTAL_Q)*100);
+  setTimeout(function(){document.getElementById('scoreRing').style.setProperty('--pct',pct);},100);
+  document.getElementById('debriefNum').textContent=score;
+  var msgs=[
+    'Review each scenario carefully. The errors reflect real governance mistakes with clinical and financial consequences. Return to Foundation screens to reinforce the framework before retrying.',
+    'Good progress. One scenario reflects a nuanced judgment call. Review the expert feedback — the reasoning cited is the standard of practice.',
+    'Excellent. You applied the module framework correctly across all three decision scenarios. These competencies directly inform your CAP contribution for this step.'
+  ];
+  var labels=['Review Foundation','Good Progress','Ready for Next Step'];
+  document.getElementById('debrief-verdict').textContent=msgs[Math.min(score,2)];
+  document.getElementById('debrief-label').textContent=labels[Math.min(score,2)];
+  var cc=document.getElementById('debrief-cards');
+  cc.innerHTML='';
+  for(var n=1;n<=TOTAL_Q;n++){
+    var wasCorrect=answers['q'+n];
+    var cf=Q[n].feedback[Q[n].correct];
+    var card=document.createElement('div');
+    card.className='debrief-card';
+    card.innerHTML='<div class="debrief-card-q">'+Q_LABELS[n-1]+'<\/div>'+
+      '<div class="debrief-card-verdict '+(wasCorrect?'correct':'wrong')+'">'+(wasCorrect?'Correct':'Needs review')+'<\/div>'+
+      '<div class="debrief-expert">'+cf.body+'<\/div>';
+    cc.appendChild(card);
+  }
+}
+function retryModule(){
+  score=0; answers={};
+  document.getElementById('f-score-display').textContent='0 / '+TOTAL_Q;
+  document.getElementById('debrief').classList.remove('show');
+  for(var n=1;n<=TOTAL_Q;n++){
+    var c=document.getElementById('q'+n+'choices');
+    if(c){
+      c.querySelectorAll('.choice-btn').forEach(function(b){
+        b.disabled=false;
+        b.classList.remove('reveal-correct','selected-wrong','selected-correct','dimmed');
+      });
+      var fb=document.getElementById('q'+n+'fb');
+      if(fb) fb.style.display='none';
+      var nb=document.getElementById('as'+n+'-next');
+      if(nb) nb.disabled=true;
+    }
+  }
+  goApp(1);
+  document.getElementById('as1').classList.add('active');
+  document.getElementById('scoreRing').style.setProperty('--pct',0);
+}
+</script>
+</body></html>

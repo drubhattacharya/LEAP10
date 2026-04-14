@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>CLEAR Module 1 — Pre-Arrival &amp; Triage Access</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#1E3448;--primary2:#243D56;--accent:#C4571B;--accent2:#E07B45;--teal3:#FDEEE7;
+  --amber:#D48E1A;--amber2:#F5C842;--red:#C94040;--green:#18A76F;
+  --slate:#4A637D;--silver:#7E9AAD;--ice:#EAF2F7;--fog:#F4F6F8;
+  --bd:rgba(30,52,72,.10);--bd2:rgba(30,52,72,.18);
+  --sh:0 2px 16px rgba(30,52,72,.08);--r:10px;--r2:14px;
+  --sans:'DM Sans',system-ui,sans-serif;--serif:'DM Serif Display','Georgia',serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{height:100%;-webkit-font-smoothing:antialiased;}
+body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-size:14px;line-height:1.65;min-height:100vh;}
+
+/* ── MODULE HEADER ───────────────────────────────────────────────────── */
+.mod-hdr{background:linear-gradient(135deg,var(--primary) 0%,var(--primary2) 100%);padding:0;border-bottom:1px solid rgba(196,87,27,.2);}
+.mod-hdr-inner{max-width:960px;margin:0 auto;padding:24px 32px;}
+.mod-back{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:rgba(255,255,255,.4);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px;cursor:pointer;background:none;border:none;font-family:var(--sans);}
+.mod-back:hover{color:rgba(255,255,255,.7);}
+.mod-eyebrow{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:8px;}
+.mod-title{font-family:var(--serif);font-size:clamp(22px,3vw,32px);font-style:italic;color:#fff;line-height:1.15;margin-bottom:8px;}
+.mod-subtitle{font-size:14px;color:rgba(255,255,255,.55);line-height:1.6;max-width:680px;margin-bottom:18px;}
+.mod-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.mod-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:6px;font-size:10.5px;font-weight:700;letter-spacing:.04em;}
+.badge-phase{background:rgba(196,87,27,.2);color:var(--accent2);}
+.badge-step{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);}
+.badge-domain{background:rgba(212,142,26,.15);color:var(--amber2);}
+
+/* ── TAB BAR ─────────────────────────────────────────────────────────── */
+.tab-bar{background:var(--primary);border-bottom:1px solid rgba(255,255,255,.07);}
+.tab-bar-inner{max-width:960px;margin:0 auto;padding:0 32px;display:flex;gap:0;}
+.tab-btn{padding:12px 20px;font-size:12px;font-weight:700;color:rgba(255,255,255,.38);background:none;border:none;cursor:pointer;font-family:var(--sans);letter-spacing:.04em;text-transform:uppercase;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;}
+.tab-btn:hover{color:rgba(255,255,255,.7);}
+.tab-btn.active{color:var(--accent2);border-bottom-color:var(--accent);}
+.phase-score{margin-left:auto;padding:12px 0;display:flex;align-items:center;gap:8px;}
+.phase-score-label{font-size:10px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.08em;}
+.phase-score-val{font-size:13px;font-weight:800;color:var(--accent2);}
+
+/* ── CONTENT AREA ────────────────────────────────────────────────────── */
+.content-area{max-width:960px;margin:0 auto;padding:28px 32px;}
+.phase-pane{display:none;}
+.phase-pane.active{display:block;}
+
+/* ── FOUNDATION SCREENS ──────────────────────────────────────────────── */
+.f-screen{display:none;}
+.f-screen.active{display:block;animation:fadeUp .25s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.f-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.f-nav-label{font-size:11px;font-weight:700;color:var(--silver);text-transform:uppercase;letter-spacing:.08em;}
+.f-dots{display:flex;gap:6px;}
+.f-dot{width:8px;height:8px;border-radius:50%;background:var(--bd2);transition:all .2s;cursor:pointer;}
+.f-dot.active{background:var(--accent);transform:scale(1.3);}
+.f-dot.done{background:rgba(196,87,27,.4);}
+.f-screen-title{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.f-principle{font-family:var(--serif);font-size:clamp(20px,2.5vw,27px);font-style:italic;color:var(--primary);line-height:1.25;margin-bottom:20px;}
+.f-body{font-size:13.5px;color:var(--slate);line-height:1.8;margin-bottom:16px;}
+.f-body strong{color:var(--primary);font-weight:700;}
+
+/* ── CALLOUT CARDS ───────────────────────────────────────────────────── */
+.callout{border-left:3px solid;border-radius:var(--r);padding:14px 18px;margin:14px 0;}
+.callout.teal{border-color:var(--accent);background:rgba(196,87,27,.05);}
+.callout.amber{border-color:var(--amber);background:rgba(212,142,26,.05);}
+.callout.red{border-color:var(--red);background:rgba(201,64,64,.05);}
+.callout.navy{border-color:var(--primary);background:rgba(30,52,72,.04);}
+.callout-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;}
+.callout-body{font-size:13px;color:#334155;line-height:1.7;}
+
+/* ── STAT CARDS ──────────────────────────────────────────────────────── */
+.stat-row{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;}
+.stat-card{background:#fff;border:1px solid var(--bd2);border-radius:var(--r);padding:14px 16px;min-width:140px;flex:1;}
+.stat-val{font-family:var(--serif);font-size:clamp(22px,3vw,30px);font-style:italic;color:var(--primary);line-height:1;margin-bottom:4px;}
+.stat-val.sig{color:var(--accent);}
+.stat-val.crit{color:var(--red);}
+.stat-val.warn{color:var(--amber);}
+.stat-lbl{font-size:11px;color:var(--silver);line-height:1.4;}
+
+/* ── EVIDENCE CHAIN ──────────────────────────────────────────────────── */
+.chain{display:flex;flex-direction:column;gap:0;margin:16px 0;}
+.chain-item{display:flex;gap:0;cursor:pointer;}
+.chain-node{display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;}
+.chain-dot{width:28px;height:28px;border-radius:50%;background:var(--bd2);border:2px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--silver);transition:all .2s;z-index:1;}
+.chain-item.confirmed .chain-dot{background:var(--accent);border-color:var(--accent);color:#fff;}
+.chain-line{flex:1;width:2px;background:var(--bd2);margin:0 auto;}
+.chain-item.confirmed .chain-line{background:var(--accent);}
+.chain-item:last-child .chain-line{display:none;}
+.chain-content{flex:1;padding:0 0 18px 14px;}
+.chain-title{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:4px;}
+.chain-detail{font-size:12px;color:var(--slate);line-height:1.6;display:none;}
+.chain-item.confirmed .chain-detail{display:block;}
+.chain-confirm-btn{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 12px;background:rgba(196,87,27,.1);border:1px solid rgba(196,87,27,.3);border-radius:6px;font-size:11px;font-weight:700;color:var(--accent);cursor:pointer;transition:all .15s;font-family:var(--sans);}
+.chain-confirm-btn:hover{background:rgba(196,87,27,.2);}
+.chain-confirm-btn.done{background:rgba(196,87,27,.15);color:var(--accent);pointer-events:none;}
+.chain-progress{margin:12px 0;background:rgba(196,87,27,.08);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;}
+.chain-progress-bar{flex:1;height:6px;background:var(--bd2);border-radius:3px;overflow:hidden;}
+.chain-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width .4s ease;}
+.chain-progress-label{font-size:11px;font-weight:700;color:var(--accent);white-space:nowrap;}
+
+/* ── CITATION PANEL ──────────────────────────────────────────────────── */
+.cite{color:var(--accent);font-size:11px;font-weight:800;vertical-align:super;cursor:pointer;margin-left:1px;text-decoration:none;}
+.cite:hover{text-decoration:underline;}
+.cite-overlay{position:fixed;inset:0;background:rgba(30,52,72,.55);z-index:800;display:none;align-items:center;justify-content:center;padding:24px;}
+.cite-overlay.open{display:flex;}
+.cite-panel{background:#fff;border-radius:var(--r2);max-width:560px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden;}
+.cp-hdr{background:var(--primary);padding:16px 20px;display:flex;align-items:flex-start;gap:12px;}
+.cp-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.cp-title{font-size:13.5px;font-weight:700;color:#fff;flex:1;line-height:1.35;}
+.cp-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:20px;cursor:pointer;padding:0;margin-left:8px;line-height:1;}
+.cp-close:hover{color:#fff;}
+.cp-body{padding:18px 20px;}
+.cp-meta{font-size:11px;color:var(--silver);margin-bottom:10px;font-style:italic;}
+.cp-text{font-size:13px;color:var(--slate);line-height:1.75;}
+.cp-relevance{margin-top:12px;padding:10px 14px;background:var(--fog);border-radius:8px;border-left:3px solid var(--accent);}
+.cp-relevance-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);margin-bottom:4px;}
+.cp-relevance-text{font-size:12px;color:var(--slate);line-height:1.65;}
+
+/* ── FORMATIVE QUESTION ──────────────────────────────────────────────── */
+.formative{background:#fff;border:1.5px solid var(--bd2);border-radius:var(--r2);padding:20px;margin:20px 0;}
+.formative-label{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--silver);margin-bottom:10px;}
+.formative-q{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:16px;line-height:1.4;}
+.choice-grid{display:flex;flex-direction:column;gap:8px;}
+.choice-btn{width:100%;text-align:left;padding:12px 14px;border:1.5px solid var(--bd2);border-radius:var(--r);background:#fff;cursor:pointer;font-family:var(--sans);font-size:13px;color:var(--primary);line-height:1.5;transition:all .15s;display:flex;align-items:flex-start;gap:10px;}
+.choice-btn:hover:not(:disabled){border-color:var(--accent);background:rgba(196,87,27,.03);}
+.choice-btn:disabled{cursor:default;}
+.choice-letter{width:22px;height:22px;border-radius:50%;background:var(--fog);border:1.5px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;margin-top:1px;transition:all .15s;}
+.choice-btn.reveal-correct{border-color:var(--green);background:rgba(24,167,111,.04);}
+.choice-btn.reveal-correct .choice-letter{background:var(--green);border-color:var(--green);color:#fff;}
+.choice-btn.selected-wrong{border-color:var(--red);background:rgba(201,64,64,.04);}
+.choice-btn.selected-wrong .choice-letter{background:var(--red);border-color:var(--red);color:#fff;}
+.choice-btn.selected-correct{border-color:var(--green);background:rgba(24,167,111,.06);}
+.choice-btn.selected-correct .choice-letter{background:var(--green);border-color:var(--green);color:#fff;}
+.choice-btn.dimmed{opacity:.45;}
+.feedback-box{display:none;margin-top:12px;padding:14px 16px;border-radius:var(--r);border-left:3px solid;}
+.feedback-box.correct{border-color:var(--green);background:rgba(24,167,111,.05);}
+.feedback-box.wrong{border-color:var(--red);background:rgba(201,64,64,.04);}
+.feedback-box h4{font-size:13px;font-weight:800;margin-bottom:6px;}
+.feedback-box.correct h4{color:var(--green);}
+.feedback-box.wrong h4{color:var(--red);}
+.feedback-box p{font-size:12.5px;color:var(--slate);line-height:1.7;}
+.f-gate{margin-top:16px;padding:12px 16px;background:rgba(212,142,26,.06);border:1px solid rgba(212,142,26,.2);border-radius:var(--r);font-size:12.5px;color:var(--slate);display:none;}
+.f-gate.show{display:block;}
+
+/* ── SCREEN NAVIGATION BUTTONS ───────────────────────────────────────── */
+.screen-nav{display:flex;align-items:center;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid var(--bd);}
+.btn-prev{background:#fff;border:1.5px solid var(--bd2);border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;color:var(--slate);font-family:var(--sans);transition:all .15s;}
+.btn-prev:hover{border-color:var(--accent);color:var(--accent);}
+.btn-next{background:linear-gradient(135deg,var(--accent),#9A3D10);color:#fff;border:none;border-radius:10px;padding:11px 26px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--sans);box-shadow:0 4px 14px rgba(196,87,27,.3);transition:transform .1s;}
+.btn-next:hover{transform:translateY(-1px);}
+.btn-next:disabled{opacity:.4;cursor:default;transform:none;}
+.enter-sim-btn{background:linear-gradient(135deg,var(--amber),#a07010);color:#fff;border:none;border-radius:10px;padding:13px 30px;font-size:14.5px;font-weight:800;cursor:pointer;font-family:var(--sans);box-shadow:0 4px 16px rgba(212,142,26,.35);transition:transform .1s;}
+.enter-sim-btn:hover{transform:translateY(-1px);}
+.enter-sim-btn:disabled{opacity:.4;cursor:default;transform:none;}
+
+/* ── GATEWAY CHECK ───────────────────────────────────────────────────── */
+.gateway{background:#fff;border:1.5px solid var(--bd2);border-radius:var(--r2);padding:22px;margin:20px 0;}
+.gateway-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--slate);margin-bottom:14px;}
+.gateway-q{margin-bottom:16px;}
+.gateway-q-text{font-size:13.5px;font-weight:600;color:var(--primary);margin-bottom:10px;}
+.gw-choices{display:flex;flex-direction:column;gap:6px;}
+.gw-choice{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--bd);border-radius:8px;cursor:pointer;font-size:13px;color:var(--slate);transition:all .15s;}
+.gw-choice:hover{border-color:var(--accent);background:rgba(196,87,27,.03);}
+.gw-choice input{accent-color:var(--accent);}
+.gw-answer{display:none;margin-top:8px;padding:10px 14px;border-radius:8px;font-size:12.5px;line-height:1.65;}
+.gw-answer.correct{background:rgba(24,167,111,.06);border-left:3px solid var(--green);color:var(--slate);}
+.gw-answer.incorrect{background:rgba(201,64,64,.04);border-left:3px solid var(--red);color:var(--slate);}
+
+/* ── APPLICATION SCENARIOS ───────────────────────────────────────────── */
+.app-screen{display:none;}
+.app-screen.active{display:block;animation:fadeUp .25s ease;}
+.scenario-hdr{background:linear-gradient(135deg,var(--primary),var(--primary2));border-radius:var(--r2);padding:20px 24px;margin-bottom:20px;color:#fff;}
+.scenario-eyebrow{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px;}
+.scenario-title{font-family:var(--serif);font-size:clamp(17px,2.5vw,22px);font-style:italic;color:#fff;line-height:1.2;margin-bottom:8px;}
+.scenario-role{font-size:13px;color:rgba(255,255,255,.55);line-height:1.6;}
+.scenario-body{background:#fff;border:1.5px solid var(--bd2);border-radius:var(--r2);padding:20px;margin-bottom:18px;}
+.scenario-body-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--slate);margin-bottom:12px;}
+.scenario-facts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.scenario-fact{display:flex;gap:10px;font-size:13px;line-height:1.5;}
+.scenario-fact-key{font-weight:700;color:var(--primary);min-width:180px;flex-shrink:0;}
+.scenario-fact-val{color:var(--slate);}
+.scenario-prompt{font-size:14px;font-weight:700;color:var(--primary);padding:14px 16px;background:var(--fog);border-radius:var(--r);border-left:3px solid var(--accent);line-height:1.55;margin-bottom:16px;}
+
+/* ── DEBRIEF ─────────────────────────────────────────────────────────── */
+.debrief{display:none;}
+.debrief.show{display:block;animation:fadeUp .3s ease;}
+.score-ring-wrap{display:flex;flex-direction:column;align-items:center;margin:24px 0;}
+.score-ring{width:120px;height:120px;border-radius:50%;background:conic-gradient(var(--accent) calc(var(--pct,0)*1%),var(--bd2) 0);display:flex;align-items:center;justify-content:center;position:relative;}
+.score-ring::before{content:'';position:absolute;inset:12px;border-radius:50%;background:#fff;}
+.score-ring-inner{position:relative;text-align:center;}
+.score-ring-num{font-family:var(--serif);font-size:28px;font-style:italic;color:var(--primary);}
+.score-ring-denom{font-size:12px;color:var(--silver);}
+.score-ring-label{margin-top:10px;font-size:13px;font-weight:700;color:var(--slate);}
+.debrief-verdict{font-size:14px;color:var(--slate);line-height:1.75;text-align:center;max-width:580px;margin:0 auto 24px;}
+.debrief-cards{display:flex;flex-direction:column;gap:12px;}
+.debrief-card{border:1px solid var(--bd2);border-radius:var(--r);padding:16px;}
+.debrief-card-q{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--silver);margin-bottom:6px;}
+.debrief-card-verdict{font-size:13px;font-weight:800;margin-bottom:6px;}
+.debrief-card-verdict.correct{color:var(--green);}
+.debrief-card-verdict.wrong{color:var(--red);}
+.debrief-expert{font-size:12.5px;color:var(--slate);line-height:1.7;}
+.debrief-ctas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px;}
+.btn-return{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:linear-gradient(135deg,var(--accent),#9A3D10);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--sans);box-shadow:0 4px 14px rgba(196,87,27,.3);}
+.btn-retry{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#fff;color:var(--slate);border:1.5px solid var(--bd2);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--sans);}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────────── */
+@media(max-width:680px){
+  .content-area,.mod-hdr-inner,.tab-bar-inner{padding-left:16px;padding-right:16px;}
+  .stat-row{flex-direction:column;}
+  .scenario-fact{flex-direction:column;}
+  .scenario-fact-key{min-width:auto;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Citation overlay -->
+<div class="cite-overlay" id="cite-overlay" onclick="if(event.target===this)closeCite()">
+  <div class="cite-panel">
+    <div class="cp-hdr">
+      <div class="cp-num" id="cp-num">1</div>
+      <div class="cp-title" id="cp-title">Loading…</div>
+      <button class="cp-close" onclick="closeCite()">✕</button>
+    </div>
+    <div class="cp-body">
+      <div class="cp-meta" id="cp-meta"></div>
+      <div class="cp-text" id="cp-text"></div>
+      <div class="cp-relevance">
+        <div class="cp-relevance-label">Relevance to Module 1</div>
+        <div class="cp-relevance-text" id="cp-relevance"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Module Header -->
+<div class="mod-hdr">
+  <div class="mod-hdr-inner">
+    <button class="mod-back" onclick="window.close()">← Return to Training Platform</button>
+    <div class="mod-eyebrow">CLEAR Executive Language Access Certificate Program · Module 1 of 7</div>
+    <h1 class="mod-title">Pre-Arrival &amp; Triage Access</h1>
+    <p class="mod-subtitle">Language access failure does not begin at the bedside. It begins at the moment a patient arrives and the system cannot respond within a clinically meaningful window.</p>
+    <div class="mod-meta">
+      <span class="mod-badge badge-phase">Phase 1 — Foundation</span>
+      <span class="mod-badge badge-phase" id="phase2-badge" style="display:none;">Phase 2 — Application</span>
+      <span class="mod-badge badge-step">Training Platform · Step 2</span>
+      <span class="mod-badge badge-domain">Access · Compliance · Quality &amp; Safety</span>
+    </div>
+  </div>
+</div>
+
+<!-- Tab Bar -->
+<div class="tab-bar">
+  <div class="tab-bar-inner">
+    <button class="tab-btn active" id="tab-foundation" onclick="switchTab('foundation')">Phase 1 — Foundation</button>
+    <button class="tab-btn" id="tab-application" onclick="switchTab('application')">Phase 2 — Application</button>
+    <div class="phase-score">
+      <span class="phase-score-label">Foundation</span>
+      <span class="phase-score-val" id="f-score-display">0 / 3</span>
+    </div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="content-area">
+
+<!-- ═══════════════════════════════════════════════════════════
+     PHASE 1 — FOUNDATION (5 screens)
+═══════════════════════════════════════════════════════════ -->
+<div class="phase-pane active" id="phase-foundation">
+
+  <!-- Foundation nav dots -->
+  <div class="f-nav">
+    <div class="f-nav-label" id="f-screen-label">Foundation 1 of 5</div>
+    <div class="f-dots" id="f-dots">
+      <div class="f-dot active" onclick="goF(1)"></div>
+      <div class="f-dot" onclick="goF(2)"></div>
+      <div class="f-dot" onclick="goF(3)"></div>
+      <div class="f-dot" onclick="goF(4)"></div>
+      <div class="f-dot" onclick="goF(5)"></div>
+    </div>
+  </div>
+
+  <!-- ── FOUNDATION SCREEN 1: The Design Principle ─────────────────── -->
+  <div class="f-screen active" id="fs1">
+    <div class="f-screen-title">Foundation 1 of 5 · Design Principle</div>
+    <div class="f-principle">Interpreter delay is not a staffing problem. It is a workflow design problem.</div>
+    <p class="f-body">
+      Language access failure at triage rarely begins with a missing interpreter. It begins with a system that hasn't decided — in advance, in the workflow, in the EHR — exactly when and how interpreter access gets triggered. The result is predictable and consistent: delay concentrates in the service lines where the trigger is least reliable, not where interpreters are least available.
+    </p>
+    <p class="f-body">
+      This distinction matters because the two diagnoses lead to completely different interventions. A staffing diagnosis produces more spending on interpreter contracts. A workflow design diagnosis produces a protocol change and an EHR field — both cheaper, both more durable, both testable.
+    </p>
+
+    <div class="callout navy">
+      <div class="callout-title" style="color:var(--primary)">Core Principle</div>
+      <div class="callout-body">The same organization can have adequate interpreter capacity and still produce clinically significant delay, because the trigger for using that capacity is inconsistent, late, or invisible in the workflow. Measuring delay time by service line is not a workforce metric — it is a process reliability metric.</div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-val crit">35.6 min</div>
+        <div class="stat-lbl">OB median interpreter delay<br>Dataset: 1,000 LEP encounters</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val warn">23.2 min</div>
+        <div class="stat-lbl">ED median interpreter delay<br>Second-highest service line</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val sig">H = 57.0</div>
+        <div class="stat-lbl">Kruskal-Wallis statistic<br>p &lt; 0.0001 — highly significant</div>
+      </div>
+    </div>
+
+    <p class="f-body">
+      The Kruskal-Wallis test compares median distributions across three or more groups without assuming normally distributed data — appropriate for delay times, which cluster differently by service line and don't follow a bell curve. An H-statistic of 57.0 at p &lt; 0.0001 means the probability of observing this distribution pattern by chance is essentially zero. This is not a sampling artifact. It is a structural signal.<a class="cite" onclick="showCite(1)">[1]</a>
+    </p>
+
+    <div class="screen-nav">
+      <div></div>
+      <button class="btn-next" onclick="goF(2)">Foundation 2: The Risk Gradient →</button>
+    </div>
+  </div>
+
+  <!-- ── FOUNDATION SCREEN 2: The Risk Gradient ────────────────────── -->
+  <div class="f-screen" id="fs2">
+    <div class="f-screen-title">Foundation 2 of 5 · Risk Gradient</div>
+    <div class="f-principle">Higher acuity and communication failure do not add. They multiply.</div>
+    <p class="f-body">
+      Exercise 1.2 tests whether advanced maternal LEP cases — patients with elevated clinical complexity — experience longer interpreter delay than standard triage encounters. The Mann-Whitney U test compares the two distributions: advanced maternal encounters versus core encounters.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-val crit">+11.7 min</div>
+        <div class="stat-lbl">Additional delay for advanced<br>maternal LEP cases vs. core</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val sig">z = 7.49</div>
+        <div class="stat-lbl">Mann-Whitney U statistic<br>p &lt; 0.0001</div>
+      </div>
+    </div>
+
+    <p class="f-body">
+      The finding is clinically significant for a reason that goes beyond the delay numbers. Advanced maternal cases — preterm labor, obstetric emergencies, high-risk pregnancy — require faster interpreter access precisely because the clinical stakes are higher. The data shows the opposite is occurring: the patients who need the shortest delay are experiencing the longest.<a class="cite" onclick="showCite(2)">[2]</a>
+    </p>
+
+    <div class="callout red">
+      <div class="callout-title" style="color:var(--red)">The Multiplicative Risk Pattern</div>
+      <div class="callout-body">A standard LEP patient experiencing a 23-minute delay faces communication risk. An advanced maternal LEP patient experiencing a 35-minute delay faces communication risk <em>at the moment of highest clinical consequence</em>. The risks don't add — they interact. A medication history misunderstood at triage becomes a contraindication missed during obstetric intervention. The delay is the same mechanism; the consequence is categorically different.</div>
+    </div>
+
+    <p class="f-body">
+      This is why service-line-specific interpreter protocols are not optional refinements — they are the minimum clinical governance response. A single hospital-wide delay target treats a 23-minute ED delay and a 35-minute OB delay as equivalent. They are not.
+    </p>
+
+    <div class="screen-nav">
+      <button class="btn-prev" onclick="goF(1)">← Back</button>
+      <button class="btn-next" onclick="goF(3)">Foundation 3: The Technology Null →</button>
+    </div>
+  </div>
+
+  <!-- ── FOUNDATION SCREEN 3: The Technology Null ──────────────────── -->
+  <div class="f-screen" id="fs3">
+    <div class="f-screen-title">Foundation 3 of 5 · What Technology Cannot Do</div>
+    <div class="f-principle">Technology investment without workflow redesign does not remove the constraint.</div>
+    <p class="f-body">
+      Exercise 1.3 tests whether technology integration level is associated with reduced interpreter delay. The result is non-significant (p = 0.098). This is the most governance-relevant finding in Module 1 — not because it is surprising, but because it directly challenges a common institutional response to delay data.
+    </p>
+
+    <div class="callout amber">
+      <div class="callout-title" style="color:var(--amber)">How to Read a Non-Significant Result</div>
+      <div class="callout-body">"Non-significant" does not mean "no effect." It means the data does not provide sufficient evidence to confirm one. The p-value of 0.098 is close to the conventional threshold. What this result does confirm: in this dataset, technology integration level alone — without corresponding workflow redesign — does not reliably produce shorter delays. That is evidence about mechanism, not about technology value.</div>
+    </div>
+
+    <p class="f-body">
+      The mechanism explanation is straightforward. Technology reduces delay when it automates the trigger — when the EHR prompts an interpreter request at the right moment, routes it automatically, and timestamps the response. Technology does not reduce delay when it is available but not triggered — when the VRI cart exists in the hallway but the protocol for deploying it hasn't been written into the triage workflow.<a class="cite" onclick="showCite(3)">[3]</a>
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-val warn">p = 0.098</div>
+        <div class="stat-lbl">Technology integration vs. delay<br>Non-significant (threshold: 0.05)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val sig">~70%</div>
+        <div class="stat-lbl">Of communication tasks that can<br>be automated — with workflow design</div>
+      </div>
+    </div>
+
+    <p class="f-body">
+      The governance implication: before approving any new technology investment in language access, ask explicitly what workflow step the technology is replacing or automating — and whether the trigger for that step is currently reliable. If the trigger isn't reliable, the technology will sit unused.
+    </p>
+
+    <div class="screen-nav">
+      <button class="btn-prev" onclick="goF(2)">← Back</button>
+      <button class="btn-next" onclick="goF(4)">Foundation 4: The Financial Mechanism →</button>
+    </div>
+  </div>
+
+  <!-- ── FOUNDATION SCREEN 4: The Three-Track Financial Model ──────── -->
+  <div class="f-screen" id="fs4">
+    <div class="f-screen-title">Foundation 4 of 5 · Financial Mechanism</div>
+    <div class="f-principle">Delay at triage activates three separate financial consequences — each with a different audience and a different mechanism.</div>
+    <p class="f-body">
+      The ROI Dashboard's ED module prices three distinct exposures. Understanding each mechanism — not just the dollar figure — is what makes the financial argument defensible when challenged by a CFO or CMO who pushes back on attribution.
+    </p>
+
+    <!-- Evidence chain -->
+    <div class="chain" id="chain1">
+      <div class="chain-item" id="chain-t1">
+        <div class="chain-node"><div class="chain-dot" id="cdot-t1">T1</div><div class="chain-line"></div></div>
+        <div class="chain-content">
+          <div class="chain-title">Track 1 — Admission Avoidance (all LEP ED encounters)</div>
+          <div class="chain-detail">Schulson et al. (2018, n=57,435 ED visits): LEP patients significantly more likely to be admitted (OR 1.09) and to receive additional imaging (cardiovascular: OR 1.51). The mechanism is diagnostic uncertainty — when a clinician cannot obtain a complete history, they compensate with more tests and higher admission rates. Conservative model: 9% excess admission rate, 40% reduction target from timely access, 60% attribution to language access.<a class="cite" onclick="showCite(4)">[4]</a></div>
+          <button class="chain-confirm-btn" id="cbtn-t1" onclick="confirmChain('t1')">Click to confirm this mechanism ✓</button>
+        </div>
+      </div>
+      <div class="chain-item" id="chain-t2">
+        <div class="chain-node"><div class="chain-dot" id="cdot-t2">T2</div><div class="chain-line"></div></div>
+        <div class="chain-content">
+          <div class="chain-title">Track 2 — Same-Complaint Return Visit Avoidance</div>
+          <div class="chain-detail">79.2% of LEP 48-hour ED return visits were for the same complaint — the direct signature of a first encounter where communication was insufficient to resolve the presenting problem. High same-complaint return rates are a leading indicator of systematic first-contact failure. Cost per event is modest (~$1,200 default) but volume signal is diagnostically important.</div>
+          <button class="chain-confirm-btn" id="cbtn-t2" onclick="confirmChain('t2')">Click to confirm this mechanism ✓</button>
+        </div>
+      </div>
+      <div class="chain-item" id="chain-t3">
+        <div class="chain-node"><div class="chain-dot" id="cdot-t3">S</div></div>
+        <div class="chain-content">
+          <div class="chain-title">Stroke Sub-Model — High-Acuity Revenue Example</div>
+          <div class="chain-detail">LEP patients cannot accurately communicate symptom onset time — the binary criterion for IV thrombolysis and EVT eligibility. The causal chain is precise and independently auditable by service line. The stroke sub-model is the most persuasive executive-facing example of the Track 1 mechanism. It demonstrates that the same delay dynamic that drives over-admission in Track 1 directly forecloses high-revenue interventions in stroke care.<a class="cite" onclick="showCite(5)">[5]</a></div>
+          <button class="chain-confirm-btn" id="cbtn-t3" onclick="confirmChain('t3')">Click to confirm this mechanism ✓</button>
+        </div>
+      </div>
+    </div>
+    <div class="chain-progress" id="chain-prog">
+      <span style="font-size:11px;font-weight:700;color:var(--slate);">Confirm all three tracks:</span>
+      <div class="chain-progress-bar"><div class="chain-progress-fill" id="chain-fill" style="width:0%"></div></div>
+      <span class="chain-progress-label" id="chain-label">0 / 3</span>
+    </div>
+
+    <div class="screen-nav">
+      <button class="btn-prev" onclick="goF(3)">← Back</button>
+      <button class="btn-next" onclick="goF(5)">Foundation 5: Gateway Check →</button>
+    </div>
+  </div>
+
+  <!-- ── FOUNDATION SCREEN 5: Gateway Check ───────────────────────── -->
+  <div class="f-screen" id="fs5">
+    <div class="f-screen-title">Foundation 5 of 5 · Gateway Check</div>
+    <div class="f-principle">Three formative questions before the application begins.</div>
+    <p class="f-body">These questions are not scored — they confirm you have the key schema loaded before the decision scenarios begin. If any feel uncertain, return to the earlier screens before proceeding.</p>
+
+    <div class="gateway">
+      <div class="gateway-title">Formative Question 1</div>
+      <div class="gateway-q">
+        <div class="gateway-q-text">Exercise 1.1 used a Kruskal-Wallis test rather than ANOVA. What is the primary reason this was the correct choice for interpreter delay data?</div>
+        <div class="gw-choices">
+          <label class="gw-choice"><input type="radio" name="gq1" value="a" onchange="gwAnswer(1,'a')"> Kruskal-Wallis is always preferred over ANOVA in healthcare research</label>
+          <label class="gw-choice"><input type="radio" name="gq1" value="b" onchange="gwAnswer(1,'b')"> Delay times across service lines are unlikely to be normally distributed — Kruskal-Wallis makes no distributional assumption</label>
+          <label class="gw-choice"><input type="radio" name="gq1" value="c" onchange="gwAnswer(1,'c')"> The dataset has fewer than 100 observations per group, making ANOVA invalid</label>
+          <label class="gw-choice"><input type="radio" name="gq1" value="d" onchange="gwAnswer(1,'d')"> Kruskal-Wallis produces larger H-statistics, making findings easier to report</label>
+        </div>
+        <div class="gw-answer correct" id="gwa1-b">✓ Correct. Delay times cluster differently by service line and are right-skewed — OB outliers would distort an ANOVA mean comparison. Kruskal-Wallis compares rank distributions, making it robust to these patterns.</div>
+        <div class="gw-answer incorrect" id="gwa1-a">Not quite. ANOVA is not always inferior — it is preferred when data are normally distributed. The key issue here is that interpreter delay times are right-skewed, making Kruskal-Wallis the appropriate choice.</div>
+        <div class="gw-answer incorrect" id="gwa1-c">Sample size alone doesn't determine the test choice. The distribution shape matters more — delay times are right-skewed regardless of n.</div>
+        <div class="gw-answer incorrect" id="gwa1-d">H-statistic magnitude is a function of the actual distribution difference, not a property of the test that can be maximized by test selection.</div>
+      </div>
+      <div class="gateway-q" style="margin-top:16px;">
+        <div class="gateway-q-text">The Stroke Sub-Model is described as sitting "inside Track 1 conceptually." What does this mean for how you present it to a board finance committee?</div>
+        <div class="gw-choices">
+          <label class="gw-choice"><input type="radio" name="gq2" value="a" onchange="gwAnswer(2,'a')"> Present it as an additional revenue track on top of Track 1 and Track 2</label>
+          <label class="gw-choice"><input type="radio" name="gq2" value="b" onchange="gwAnswer(2,'b')"> The stroke sub-model is a detailed example of the Track 1 admission avoidance mechanism — present it to illustrate the mechanism, not as incremental revenue beyond Track 1</label>
+          <label class="gw-choice"><input type="radio" name="gq2" value="c" onchange="gwAnswer(2,'c')"> Stroke is the only Track 1 pathway — other admission avoidance is too uncertain to include</label>
+          <label class="gw-choice"><input type="radio" name="gq2" value="d" onchange="gwAnswer(2,'d')"> Present stroke separately as a patient safety argument, not a financial argument</label>
+        </div>
+        <div class="gw-answer correct" id="gwa2-b">✓ Correct. Double-counting Track 1 and the stroke sub-model would inflate the financial case. The stroke model earns its place because its inputs are independently auditable — but it represents the same Track 1 mechanism applied to one high-precision pathway.</div>
+        <div class="gw-answer incorrect" id="gwa2-a">This would double-count the same mechanism. The stroke sub-model is a detailed instantiation of Track 1 — not an additional layer.</div>
+        <div class="gw-answer incorrect" id="gwa2-c">Track 1 applies to all LEP ED encounters with delayed interpreter access, not just stroke. Stroke is one high-precision example of the broader pattern.</div>
+        <div class="gw-answer incorrect" id="gwa2-d">Stroke is explicitly a financial argument — IV-tPA and EVT reimbursement are the pricing inputs. The safety argument is complementary but not the primary framing for a finance committee.</div>
+      </div>
+      <div class="gateway-q" style="margin-top:16px;">
+        <div class="gateway-q-text">Exercise 1.3 found no significant association between technology integration and delay reduction. What is the most defensible governance conclusion?</div>
+        <div class="gw-choices">
+          <label class="gw-choice"><input type="radio" name="gq3" value="a" onchange="gwAnswer(3,'a')"> Technology investments in language access should be cancelled pending further evidence</label>
+          <label class="gw-choice"><input type="radio" name="gq3" value="b" onchange="gwAnswer(3,'b')"> Technology reduces delay when it automates the workflow trigger — without trigger redesign, the technology sits unused and delay persists</label>
+          <label class="gw-choice"><input type="radio" name="gq3" value="c" onchange="gwAnswer(3,'c')"> The non-significant result confirms that delay is purely a staffing problem, not a technology problem</label>
+          <label class="gw-choice"><input type="radio" name="gq3" value="d" onchange="gwAnswer(3,'d')"> A p-value of 0.098 is close enough to 0.05 to be treated as significant for governance purposes</label>
+        </div>
+        <div class="gw-answer correct" id="gwa3-b">✓ Correct. Technology is a delivery mechanism, not a solution in itself. The question before any technology investment is: what workflow step does this automate, and is that step currently triggered reliably? If the trigger fails, the technology delivers no benefit.</div>
+        <div class="gw-answer incorrect" id="gwa3-a">Cancellation is not the implication. The finding tells you about mechanism — technology without workflow redesign doesn't work. Technology with workflow redesign may work very well.</div>
+        <div class="gw-answer incorrect" id="gwa3-c">The non-significant result doesn't confirm staffing as the cause — it says we cannot confirm technology integration as a solution under current conditions. Those are different conclusions.</div>
+        <div class="gw-answer incorrect" id="gwa3-d">Governance decisions should not treat a p-value of 0.098 as significant. The conventional threshold is 0.05. Treating borderline results as confirmed findings risks building policy on weak evidence.</div>
+      </div>
+    </div>
+
+    <div class="f-gate show" id="f-gate">
+      <strong style="color:var(--amber);">Ready for Phase 2?</strong> Review any Foundation screens that felt uncertain before entering the application scenarios. The decisions ahead directly test the framework from Foundations 1–4.
+    </div>
+
+    <div class="screen-nav">
+      <button class="btn-prev" onclick="goF(4)">← Back</button>
+      <button class="enter-sim-btn" onclick="enterApplication()">Enter Phase 2: Application Scenarios →</button>
+    </div>
+  </div>
+
+</div><!-- end phase-foundation -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     PHASE 2 — APPLICATION (3 scenarios)
+═══════════════════════════════════════════════════════════ -->
+<div class="phase-pane" id="phase-application">
+
+  <!-- App nav -->
+  <div class="f-nav">
+    <div class="f-nav-label" id="app-screen-label">Application 1 of 3</div>
+    <div class="f-dots" id="app-dots">
+      <div class="f-dot active" id="adot1"></div>
+      <div class="f-dot" id="adot2"></div>
+      <div class="f-dot" id="adot3"></div>
+    </div>
+  </div>
+
+  <!-- ── APPLICATION SCENARIO 1: The Service Line Briefing ─────────── -->
+  <div class="app-screen active" id="as1">
+    <div class="scenario-hdr">
+      <div class="scenario-eyebrow">Application 1 of 3 · Workflow Design vs. Staffing</div>
+      <div class="scenario-title">The CNO Briefing — Where Does the Problem Actually Live?</div>
+      <div class="scenario-role">You are the Director of Language Services. Your CNO has reviewed the delay data and scheduled a 20-minute briefing. Before the meeting, she sends one question: <em>"Is this a staffing problem or something else?"</em> Your answer will determine whether the organization's response is a contract expansion or a protocol redesign.</div>
+    </div>
+
+    <div class="scenario-body">
+      <div class="scenario-body-title">Briefing Context — Delay Data Summary</div>
+      <div class="scenario-facts">
+        <div class="scenario-fact"><div class="scenario-fact-key">OB median delay</div><div class="scenario-fact-val">35.6 minutes (highest service line)</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">ED median delay</div><div class="scenario-fact-val">23.2 minutes (second highest)</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Kruskal-Wallis result</div><div class="scenario-fact-val">H = 57.0, p &lt; 0.0001 — differences are statistically significant</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Technology integration</div><div class="scenario-fact-val">No significant association with delay reduction (p = 0.098)</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Current interpreter contract</div><div class="scenario-fact-val">Fully staffed. No documented shortage of available interpreters.</div></div>
+      </div>
+      <div class="scenario-prompt">The CNO asks: "If we're fully staffed, why is OB at 35 minutes? And if it's not staffing, what is it — and what do we do about it?"</div>
+    </div>
+
+    <div class="formative">
+      <div class="formative-label">Scored Decision — Choose the Best Response</div>
+      <div class="formative-q">Which response most accurately diagnoses the problem and prescribes the right governance action?</div>
+      <div class="choice-grid" id="q1choices">
+        <button class="choice-btn" onclick="answer(1,'a')"><span class="choice-letter">A</span><span>The data shows staffing is adequate but interpreter utilization in OB is low. The issue is that OB staff are not requesting interpreters consistently. The fix is a mandatory training requirement for all OB nursing staff on when to call an interpreter — with completion tracked quarterly.</span></button>
+        <button class="choice-btn" onclick="answer(1,'b')"><span class="choice-letter">B</span><span>The data shows delay concentration in OB, not staffing shortage. OB has the highest clinical complexity and the highest delay — which means the workflow trigger for interpreter requests in OB is either late, inconsistent, or not embedded in the standard triage protocol. The fix is a protocol audit: identify where in the OB triage workflow the interpreter request currently gets triggered, and redesign that trigger to fire earlier and more reliably. Training is secondary to the structural change.</span></button>
+        <button class="choice-btn" onclick="answer(1,'c')"><span class="choice-letter">C</span><span>The significant Kruskal-Wallis result means the delay differences are real, but statistical significance doesn't tell us what's causing them. We need to conduct a root cause analysis before recommending any intervention. A six-week data collection period with qualitative interviews across service lines will generate the evidence base needed for a defensible recommendation.</span></button>
+        <button class="choice-btn" onclick="answer(1,'d')"><span class="choice-letter">D</span><span>The problem is most likely acuity-driven — OB cases are more complex and take longer to triage. The delay reflects clinical necessity, not a language access failure. We should recalibrate our delay benchmarks to account for acuity differences before drawing conclusions about workflow design.</span></button>
+      </div>
+      <div class="feedback-box" id="q1fb"></div>
+    </div>
+
+    <div class="screen-nav">
+      <div></div>
+      <button class="btn-next" id="as1-next" onclick="goApp(2)" disabled>Next Scenario →</button>
+    </div>
+  </div>
+
+  <!-- ── APPLICATION SCENARIO 2: The Advanced Maternal Risk Decision ── -->
+  <div class="app-screen" id="as2">
+    <div class="scenario-hdr">
+      <div class="scenario-eyebrow">Application 2 of 3 · Risk Stratification</div>
+      <div class="scenario-title">The Protocol Exception — When Standard Triage Is Not Enough</div>
+      <div class="scenario-role">You are the CMO. Your OB Medical Director has proposed a two-tier interpreter protocol: standard triage encounters follow the existing 20-minute access target; advanced maternal cases (flagged at intake) trigger an immediate interpreter dispatch with a 5-minute target. The ED Medical Director opposes it, arguing that creating tiered protocols introduces complexity and that all LEP patients deserve the same standard of access.</div>
+    </div>
+
+    <div class="scenario-body">
+      <div class="scenario-body-title">Protocol Proposal — Key Parameters</div>
+      <div class="scenario-facts">
+        <div class="scenario-fact"><div class="scenario-fact-key">Advanced maternal delay premium</div><div class="scenario-fact-val">+11.7 min above core encounters (z = 7.49, p &lt; 0.0001)</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Advanced maternal case volume</div><div class="scenario-fact-val">~18% of all OB LEP encounters in dataset</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Current OB target</div><div class="scenario-fact-val">20-minute access (regulatory standard for non-emergent)</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">ED Medical Director's argument</div><div class="scenario-fact-val">"Tiered protocols create inconsistency and signal that some patients matter more than others."</div></div>
+      </div>
+      <div class="scenario-prompt">How do you respond to the ED Medical Director — and what is your decision on the protocol proposal?</div>
+    </div>
+
+    <div class="formative">
+      <div class="formative-label">Scored Decision — Choose the Best Response</div>
+      <div class="formative-q">Which response most accurately applies the evidence and makes the right governance call?</div>
+      <div class="choice-grid" id="q2choices">
+        <button class="choice-btn" onclick="answer(2,'a')"><span class="choice-letter">A</span><span>The ED Medical Director is correct on the equity principle. A single, elevated standard for all LEP patients (10-minute target across all service lines) is both more equitable and simpler to implement than a tiered protocol. Approve the universal 10-minute standard instead.</span></button>
+        <button class="choice-btn" onclick="answer(2,'b')"><span class="choice-letter">B</span><span>The ED Medical Director's equity concern conflates equal treatment with appropriate treatment. Advanced maternal cases have a statistically confirmed delay premium in the dataset — they are not receiving equal access. A tiered protocol doesn't signal that some patients matter more; it signals that clinical risk determines response urgency, which is the foundation of all triage design. Approve the two-tier protocol with the advanced maternal flag embedded in the intake EHR workflow.</span></button>
+        <button class="choice-btn" onclick="answer(2,'c')"><span class="choice-letter">C</span><span>The statistical finding is significant, but 18% of OB encounters is a relatively small subgroup. A blanket protocol change for a minority of cases introduces more operational complexity than the clinical benefit justifies. Recommend a pilot program limited to one OB unit before system-wide implementation.</span></button>
+        <button class="choice-btn" onclick="answer(2,'d')"><span class="choice-letter">D</span><span>Both perspectives have merit. Convene a working group with OB, ED, Language Services, and Compliance to develop a consensus protocol over the next quarter. Meanwhile, issue a clinical advisory reminding OB staff to prioritize interpreter requests for complex cases.</span></button>
+      </div>
+      <div class="feedback-box" id="q2fb"></div>
+    </div>
+
+    <div class="screen-nav">
+      <button class="btn-prev" onclick="goApp(1)">← Back</button>
+      <button class="btn-next" id="as2-next" onclick="goApp(3)" disabled>Next Scenario →</button>
+    </div>
+  </div>
+
+  <!-- ── APPLICATION SCENARIO 3: The Technology Investment Decision ─── -->
+  <div class="app-screen" id="as3">
+    <div class="scenario-hdr">
+      <div class="scenario-eyebrow">Application 3 of 3 · Technology Investment</div>
+      <div class="scenario-title">The CFO Request — Defending the Technology Budget</div>
+      <div class="scenario-role">You are the COO. Your CFO has reviewed the language access data and flagged a budget line: $180,000 allocated for VRI cart expansion across three service lines. She points to Exercise 1.3: "The data shows technology doesn't reduce delay. Why are we spending $180K on carts?" You have five minutes before the budget committee reconvenes.</div>
+    </div>
+
+    <div class="scenario-body">
+      <div class="scenario-body-title">Budget Committee Context</div>
+      <div class="scenario-facts">
+        <div class="scenario-fact"><div class="scenario-fact-key">Exercise 1.3 finding</div><div class="scenario-fact-val">Technology integration level: not significantly associated with delay reduction (p = 0.098)</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Current VRI coverage</div><div class="scenario-fact-val">40% of departments have full VRI + audio capability (LAI Technology Innovation KPI 1)</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Proposed expansion</div><div class="scenario-fact-val">OB, Behavioral Health, and ED — the three highest-delay service lines</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">What the budget does NOT include</div><div class="scenario-fact-val">Protocol redesign, EHR trigger modification, or staff training on when/how to deploy VRI</div></div>
+      </div>
+      <div class="scenario-prompt">How do you respond to the CFO — and what is your recommendation on the $180K budget line?</div>
+    </div>
+
+    <div class="formative">
+      <div class="formative-label">Scored Decision — Choose the Best Response</div>
+      <div class="formative-q">Which response most accurately applies the evidence and makes the right budget recommendation?</div>
+      <div class="choice-grid" id="q3choices">
+        <button class="choice-btn" onclick="answer(3,'a')"><span class="choice-letter">A</span><span>The CFO is right. Exercise 1.3 shows technology doesn't reduce delay. Cancel the VRI expansion and redirect the $180K toward additional interpreter staffing, where the causal pathway to delay reduction is clearer.</span></button>
+        <button class="choice-btn" onclick="answer(3,'b')"><span class="choice-letter">B</span><span>Exercise 1.3 shows that technology integration level alone — without workflow redesign — doesn't reduce delay. That's not an argument against VRI carts; it's an argument for ensuring the budget includes the workflow component. Restructure the $180K: maintain the cart expansion, but require that each deployment includes an EHR trigger modification and a 2-hour staff protocol training. Without both, the CFO is right — the hardware won't move the metric.</span></button>
+        <button class="choice-btn" onclick="answer(3,'c')"><span class="choice-letter">C</span><span>The non-significant result reflects dataset limitations, not a real-world finding. A p-value of 0.098 is close to significant. The practical evidence for VRI effectiveness is strong across the literature. Approve the budget as proposed and don't let one non-significant exercise result override the broader evidence base.</span></button>
+        <button class="choice-btn" onclick="answer(3,'d')"><span class="choice-letter">D</span><span>The $180K is a compliance investment, not a performance investment. We need VRI coverage to meet Section 1557 requirements regardless of whether it reduces delay. Frame it as a regulatory obligation to the CFO and proceed with approval.</span></button>
+      </div>
+      <div class="feedback-box" id="q3fb"></div>
+    </div>
+
+    <div class="screen-nav">
+      <button class="btn-prev" onclick="goApp(2)">← Back</button>
+      <button class="btn-next" id="as3-next" onclick="showDebrief()" disabled>Complete Module →</button>
+    </div>
+  </div>
+
+  <!-- ── DEBRIEF ──────────────────────────────────────────────────────── -->
+  <div class="debrief" id="debrief">
+    <div class="score-ring-wrap">
+      <div class="score-ring" id="scoreRing" style="--pct:0;">
+        <div class="score-ring-inner">
+          <div class="score-ring-num"><span id="debriefNum">0</span>/3</div>
+        </div>
+      </div>
+      <div class="score-ring-label" id="debrief-label">Module 1 Complete</div>
+    </div>
+    <div class="debrief-verdict" id="debrief-verdict"></div>
+
+    <div class="debrief-cards" id="debrief-cards"></div>
+
+    <div class="debrief-ctas">
+      <button class="btn-return" onclick="window.close()">← Return to Training Platform · Complete Step 2 CAP</button>
+      <button class="btn-retry" onclick="retryModule()">↺ Retry Application</button>
+    </div>
+  </div>
+
+</div><!-- end phase-application -->
+</div><!-- end content-area -->
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════
+   CLEAR Module 1 — Complete JavaScript
+   Foundation navigation · Citation panel · Chain interaction
+   Formative questions · Application scoring · Debrief
+══════════════════════════════════════════════════════════════════════ */
+
+/* ── CITATION DATA ──────────────────────────────────────────────────── */
+const CITES = {
+  1: {
+    title: "Kruskal-Wallis Test — Interpreter Delay Distribution by Service Line",
+    meta: "Exercise 1.1 · CLEAR LAI Q1 2026 Sample Dataset (n=1,000 LEP encounters)",
+    text: "Kruskal-Wallis H-statistic = 57.0, p < 0.0001. OB median delay: 35.6 minutes (highest). ED: 23.2 minutes. Behavioral Health: 24.7 minutes. Kruskal-Wallis was selected because interpreter delay times are right-skewed and differ in distributional shape across service lines — assumptions required for parametric ANOVA are not met.",
+    relevance: "Establishes statistically confirmed delay concentration in OB and ED. The significant H-statistic supports a workflow design diagnosis — if delay were random, it would not concentrate systematically by service line."
+  },
+  2: {
+    title: "Mann-Whitney U — Advanced Maternal vs. Core LEP Encounters",
+    meta: "Exercise 1.2 · CLEAR LAI Q1 2026 Sample Dataset (n=1,000 LEP encounters)",
+    text: "Mann-Whitney U: z = 7.49, p < 0.0001. Advanced maternal LEP cases experienced +11.7 minutes longer delay than core encounters. The test compares the full rank distributions of the two groups without assuming normality — appropriate because advanced maternal cases may have a different delay distribution shape than core cases.",
+    relevance: "Confirms that the highest-acuity LEP patients experience the longest delays. This is the multiplicative risk finding — the patients who need faster access are getting slower access. Supports service-line-specific protocol design."
+  },
+  3: {
+    title: "Mann-Whitney U — Technology Integration vs. Interpreter Delay (Non-Significant)",
+    meta: "Exercise 1.3 · CLEAR LAI Q1 2026 Sample Dataset (n=1,000 LEP encounters)",
+    text: "Mann-Whitney U: p = 0.098. Technology integration level is not significantly associated with interpreter delay reduction in this dataset. The result is directionally consistent with a benefit but underpowered or confounded. Critical interpretation: this does not mean technology has no value — it means technology without workflow redesign does not reliably produce the expected benefit.",
+    relevance: "Governance implication: technology investment decisions should specify what workflow trigger the technology automates. Hardware deployment without protocol redesign leaves the trigger mechanism unchanged and the delay unaffected."
+  },
+  4: {
+    title: "Schulson et al. (2018) — LEP Patients and ED Admission Rates",
+    meta: "Shekelle PG, et al. — AHRQ Evidence Report · n=57,435 ED visits",
+    text: "LEP patients were significantly more likely to be admitted (OR 1.09) and to receive additional diagnostic imaging. Cardiovascular LEP patients: OR 1.51 for stress testing. The proposed mechanism is diagnostic uncertainty — incomplete history-taking leads to defensive clinical decision-making, including higher admission rates and more testing.",
+    relevance: "Provides the empirical anchor for ROI Track 1 (Admission Avoidance). OR 1.09 maps directly to the 9% excess admission rate default in the ROI model. The mechanism — diagnostic uncertainty → over-admission — is the link between interpreter delay and financial exposure."
+  },
+  5: {
+    title: "Stroke Sub-Model — Symptom Onset Communication and IV-tPA/EVT Eligibility",
+    meta: "Clinical evidence synthesis · AHA/ASA Stroke Guidelines; CLEAR ROI Stroke Sub-Model",
+    text: "IV-tPA eligibility requires confirmed symptom onset within 4.5 hours. EVT eligibility requires confirmed onset within 6–24 hours depending on imaging criteria. Symptom onset time is communicated verbally by the patient — a direct language-dependent determination. LEP patients who cannot communicate onset time accurately are frequently excluded from consideration for both interventions regardless of clinical suitability.",
+    relevance: "The stroke sub-model prices the revenue consequence of communication-mediated exclusion from high-reimbursement interventions. It is the most financially legible single-pathway example of the Track 1 admission avoidance mechanism."
+  }
+};
+
+/* ── CITATION FUNCTIONS ─────────────────────────────────────────────── */
+function showCite(n) {
+  const c = CITES[n];
+  if (!c) return;
+  document.getElementById('cp-num').textContent = n;
+  document.getElementById('cp-title').textContent = c.title;
+  document.getElementById('cp-meta').textContent = c.meta;
+  document.getElementById('cp-text').textContent = c.text;
+  document.getElementById('cp-relevance').textContent = c.relevance;
+  document.getElementById('cite-overlay').classList.add('open');
+}
+function closeCite() {
+  document.getElementById('cite-overlay').classList.remove('open');
+}
+
+/* ── FOUNDATION NAVIGATION ──────────────────────────────────────────── */
+let _fScreen = 1;
+const F_TOTAL = 5;
+
+function goF(n) {
+  document.getElementById('fs' + _fScreen).classList.remove('active');
+  document.getElementById('fs' + n).classList.add('active');
+  document.getElementById('f-screen-label').textContent = 'Foundation ' + n + ' of ' + F_TOTAL;
+  const dots = document.querySelectorAll('#f-dots .f-dot');
+  dots.forEach((d, i) => {
+    d.classList.remove('active', 'done');
+    if (i + 1 < n) d.classList.add('done');
+    else if (i + 1 === n) d.classList.add('active');
+  });
+  _fScreen = n;
+}
+
+/* ── EVIDENCE CHAIN ─────────────────────────────────────────────────── */
+let _chainConfirmed = 0;
+const CHAIN_IDS = ['t1', 't2', 't3'];
+
+function confirmChain(id) {
+  const item = document.getElementById('chain-' + id);
+  const btn = document.getElementById('cbtn-' + id);
+  const dot = document.getElementById('cdot-' + id);
+  if (!item || item.classList.contains('confirmed')) return;
+  item.classList.add('confirmed');
+  btn.textContent = '✓ Confirmed';
+  btn.classList.add('done');
+  _chainConfirmed++;
+  const pct = (_chainConfirmed / 3) * 100;
+  document.getElementById('chain-fill').style.width = pct + '%';
+  document.getElementById('chain-label').textContent = _chainConfirmed + ' / 3';
+}
+
+/* ── GATEWAY QUESTIONS ──────────────────────────────────────────────── */
+const GW_CORRECT = { 1: 'b', 2: 'b', 3: 'b' };
+
+function gwAnswer(q, choice) {
+  const correct = GW_CORRECT[q];
+  ['a','b','c','d'].forEach(l => {
+    const el = document.getElementById('gwa' + q + '-' + l);
+    if (el) el.style.display = 'none';
+  });
+  const el = document.getElementById('gwa' + q + '-' + choice);
+  if (el) el.style.display = 'block';
+  // Disable all radios for this question
+  document.querySelectorAll('input[name="gq' + q + '"]').forEach(r => r.disabled = true);
+}
+
+/* ── TAB SWITCHING ──────────────────────────────────────────────────── */
+function switchTab(tab) {
+  ['foundation','application'].forEach(t => {
+    document.getElementById('tab-' + t).classList.remove('active');
+    document.getElementById('phase-' + t).classList.remove('active');
+  });
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.getElementById('phase-' + tab).classList.add('active');
+}
+
+function enterApplication() {
+  switchTab('application');
+  document.getElementById('phase2-badge').style.display = 'inline-flex';
+  goApp(1);
+}
+
+/* ── APPLICATION NAVIGATION ─────────────────────────────────────────── */
+let _appScreen = 1;
+const APP_TOTAL = 3;
+
+function goApp(n) {
+  document.getElementById('as' + _appScreen).classList.remove('active');
+  const next = document.getElementById('as' + n);
+  if (!next) return;
+  next.classList.add('active');
+  document.getElementById('app-screen-label').textContent = 'Application ' + n + ' of ' + APP_TOTAL;
+  const dots = document.querySelectorAll('#app-dots .f-dot');
+  dots.forEach((d, i) => {
+    d.classList.remove('active', 'done');
+    if (i + 1 < n) d.classList.add('done');
+    else if (i + 1 === n) d.classList.add('active');
+  });
+  _appScreen = n;
+}
+
+/* ── SCORING ────────────────────────────────────────────────────────── */
+let score = 0;
+const TOTAL_Q = 3;
+const answers = {};
+
+const Q = {
+  1: {
+    correct: 'b',
+    feedback: {
+      a: { ok: false,
+           title: '✗ Training addresses awareness, not the structural trigger',
+           body: 'If the interpreter request trigger is unreliable, training staff to request interpreters more often does not fix the trigger — it adds a human memory dependency on top of a broken process. Training is appropriate after the workflow is redesigned. Prescribing training before diagnosing the workflow gap puts the intervention in the wrong order and will not move the delay metric.' },
+      b: { ok: true,
+           title: '✓ Correct — workflow design diagnosis, structural fix',
+           body: 'The data supports a workflow design diagnosis: delay is concentrated in OB despite adequate staffing, which means the trigger for interpreter access in OB is firing late or inconsistently. The right intervention is a protocol audit — find the step where the request currently occurs, and move it earlier. Training may be a secondary reinforcement once the structural fix is in place, but it cannot substitute for it.' },
+      c: { ok: false,
+           title: '✗ The existing data is sufficient for a defensible recommendation',
+           body: 'A six-week delay for additional data collection is not justified when statistically significant delay data already exists. The CNO is asking for a recommendation, not for a research design. Prescribing more data collection when the mechanism is already well-supported signals analytical paralysis rather than executive readiness.' },
+      d: { ok: false,
+           title: '✗ Acuity confounding is plausible but does not explain the pattern',
+           body: 'If OB delay reflected clinical necessity, you would expect the delay to be clinically distributed — highest for the most acute cases, lower for routine encounters. The data shows OB has the highest delay across the board, not just for high-acuity cases. Recalibrating benchmarks without first testing the workflow trigger is premature and potentially misleading to the CNO.' }
+    }
+  },
+  2: {
+    correct: 'b',
+    feedback: {
+      a: { ok: false,
+           title: '✗ Universal elevation is operationally impractical and misses the mechanism',
+           body: 'A 10-minute universal standard for all LEP encounters is a laudable goal but addresses the wrong problem at the wrong time. The immediate governance question is how to protect the patients with the confirmed risk premium — advanced maternal cases with +11.7-minute delays. Universal standards address population-level equity; tiered protocols address acuity-specific risk. Both have a place; the tiered protocol is the immediate clinical governance response to the statistical finding.' },
+      b: { ok: true,
+           title: '✓ Correct — triage by acuity is the foundation of all clinical protocol design',
+           body: 'The ED Medical Director's equity framing misreads the principle. All patients deserve care appropriate to their clinical risk — which is why every triage system is tiered by acuity. Language access protocols should follow the same logic. Advanced maternal cases have a statistically confirmed delay premium, meaning they are not currently receiving equivalent access. A tiered protocol corrects this disparity. The EHR flag for advanced maternal cases is the mechanism that makes the protocol reliable rather than dependent on staff recognition.' },
+      c: { ok: false,
+           title: '✗ 18% is not a small subgroup — and a pilot introduces its own risks',
+           body: 'If 18% of OB LEP encounters are advanced maternal cases, and OB has 35-minute delays, restricting the protocol to one unit means the majority of affected patients remain unprotected during the pilot period. The statistical evidence is sufficient to support system-wide implementation. A pilot is appropriate for novel interventions with uncertain effects — not for protocol changes supported by highly significant data.' },
+      d: { ok: false,
+           title: '✗ Working groups delay decisions that the evidence already supports',
+           body: 'A quarterly working group with a clinical advisory is a procedural response to an evidence-based question. The statistical finding is clear; the mechanism is well-understood; the intervention is established clinical practice. A working group is appropriate when evidence is ambiguous or stakeholders have legitimate competing interests that require synthesis. Here, the evidence is directional and the only opposition is a framing disagreement — which the CMO can resolve without a working group.' }
+    }
+  },
+  3: {
+    correct: 'b',
+    feedback: {
+      a: { ok: false,
+           title: '✗ The data does not support cancelling technology investment',
+           body: 'Exercise 1.3 shows that technology alone — without workflow redesign — does not reduce delay. That is an argument about mechanism, not about technology value. Redirecting to staffing assumes the problem is interpreter availability, which the data contradicts — the organization is fully staffed. Cancelling technology investment based on a misread of a non-significant result would remove a genuine clinical tool while leaving the actual constraint (unreliable workflow triggers) unchanged.' },
+      b: { ok: true,
+           title: '✓ Correct — the technology is necessary but not sufficient without workflow change',
+           body: 'This response correctly applies the Exercise 1.3 finding: technology without workflow redesign doesn't move the delay metric, but technology with workflow redesign can. The solution is not to cancel the carts — it is to ensure the budget funds the complete intervention: hardware plus EHR trigger modification plus protocol training. The CFO's concern is legitimate; the response addresses it directly by restructuring the investment rather than abandoning it. This is the mark of an executive who understands mechanism, not just association.' },
+      c: { ok: false,
+           title: '✗ A p-value of 0.098 is not significant by the conventional standard',
+           body: 'Dismissing a non-significant result because p=0.098 is "close" is a common error in practical settings. The conventional threshold is 0.05 for good reason — it limits the false positive rate. Treating borderline results as significant, especially when defending a capital budget line, exposes the recommendation to credible challenge from any finance or compliance audience. The correct response acknowledges the finding and explains why the investment is still justified — without misrepresenting the statistics.' },
+      d: { ok: false,
+           title: '✗ Compliance framing evades the CFO's legitimate question',
+           body: 'Reframing a performance investment as a compliance obligation is a common avoidance strategy that often backfires with CFOs. It doesn't answer the question of whether the investment will produce the stated benefit; it shifts the question to one the CFO is less equipped to challenge. A CFO who later learns the compliance framing was used to bypass ROI scrutiny will be less likely to trust future language access budget requests. The correct response engages the question directly.' }
+    }
+  }
+};
+
+function answer(q, choice) {
+  if (answers['q' + q] !== undefined) return;
+  const qd = Q[q];
+  const fd = qd.feedback[choice] || { ok: false, title: 'No feedback', body: '' };
+  answers['q' + q] = fd.ok;
+  if (fd.ok) score++;
+
+  // Update score display
+  let fAnswered = Object.keys(answers).filter(k => k.startsWith('q')).length;
+  document.getElementById('f-score-display').textContent = score + ' / ' + TOTAL_Q;
+
+  // Reveal choices
+  const container = document.getElementById('q' + q + 'choices');
+  container.querySelectorAll('.choice-btn').forEach(function(btn, i) {
+    const l = 'abcd'[i];
+    btn.disabled = true;
+    if (l === qd.correct) btn.classList.add('reveal-correct');
+    else if (l === choice && !fd.ok) btn.classList.add('selected-wrong');
+    else if (l === choice && fd.ok) btn.classList.add('selected-correct');
+    else btn.classList.add('dimmed');
+  });
+
+  const fb = document.getElementById('q' + q + 'fb');
+  fb.className = 'feedback-box ' + (fd.ok ? 'correct' : 'wrong');
+  fb.style.display = 'block';
+  fb.innerHTML = '<h4>' + fd.title + '</h4><p>' + fd.body + '</p>';
+
+  // Enable next button
+  const nextBtn = document.getElementById('as' + q + '-next');
+  if (nextBtn) nextBtn.disabled = false;
+}
+
+/* ── DEBRIEF ────────────────────────────────────────────────────────── */
+function showDebrief() {
+  document.getElementById('as3').classList.remove('active');
+  const debrief = document.getElementById('debrief');
+  debrief.classList.add('show');
+
+  const pct = Math.round((score / TOTAL_Q) * 100);
+  setTimeout(() => {
+    document.getElementById('scoreRing').style.setProperty('--pct', pct);
+  }, 100);
+  document.getElementById('debriefNum').textContent = score;
+
+  const msgs = [
+    'Review each scenario carefully — the errors each choice reflects are real governance mistakes that carry clinical and financial consequences. Return to Foundation screens 1–4 to reinforce the framework before retrying.',
+    'Good progress. One scenario reflects a nuanced judgment call. Review the expert feedback for the scenario you missed — the specific reasoning is the standard of practice for language access governance decisions.',
+    'Excellent. You demonstrated the ability to apply the workflow design framework, the risk stratification principle, and the technology mechanism correctly under pressure. These are the three core competencies of Module 1.'
+  ];
+  const labels = ['Review Foundation', 'Good Progress', 'Ready for Step 3'];
+  document.getElementById('debrief-verdict').textContent = msgs[score] || msgs[2];
+  document.getElementById('debrief-label').textContent = labels[score] || labels[2];
+
+  // Build debrief cards
+  const cardContainer = document.getElementById('debrief-cards');
+  cardContainer.innerHTML = '';
+  const qLabels = ['Scenario 1 · Workflow Design vs. Staffing', 'Scenario 2 · Risk Stratification Protocol', 'Scenario 3 · Technology Investment'];
+  [1, 2, 3].forEach(n => {
+    const wasCorrect = answers['q' + n];
+    const correctChoice = Q[n].correct;
+    const correctFeedback = Q[n].feedback[correctChoice];
+    const card = document.createElement('div');
+    card.className = 'debrief-card';
+    card.innerHTML = \`<div class="debrief-card-q">\${qLabels[n-1]}</div>
+      <div class="debrief-card-verdict \${wasCorrect ? 'correct' : 'wrong'}">\${wasCorrect ? '✓ Correct' : '✗ Needs review'}</div>
+      <div class="debrief-expert">\${correctFeedback.body}</div>\`;
+    cardContainer.appendChild(card);
+  });
+}
+
+function retryModule() {
+  score = 0;
+  Object.keys(answers).forEach(k => delete answers[k]);
+  document.getElementById('f-score-display').textContent = '0 / ' + TOTAL_Q;
+  document.getElementById('debrief').classList.remove('show');
+  [1, 2, 3].forEach(n => {
+    const container = document.getElementById('q' + n + 'choices');
+    if (container) {
+      container.querySelectorAll('.choice-btn').forEach(btn => {
+        btn.disabled = false;
+        btn.classList.remove('reveal-correct','selected-wrong','selected-correct','dimmed');
+      });
+      const fb = document.getElementById('q' + n + 'fb');
+      if (fb) fb.style.display = 'none';
+      const next = document.getElementById('as' + n + '-next');
+      if (next) next.disabled = true;
+    }
+  });
+  goApp(1);
+  document.getElementById('as1').classList.add('active');
+  document.getElementById('scoreRing').style.setProperty('--pct', 0);
+}
+</script>
+</body>
+</html>

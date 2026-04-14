@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>CLEAR Module 5 - Post-Discharge Safety and Malpractice Exposure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#1E3448;--primary2:#243D56;
+  --accent:#C4571B;--accent2:#E07B45;
+  --amber:#C9922A;--amber2:#F0B84A;
+  --green:#2A7A58;--red:#B83232;
+  --slate:#4A5E72;--silver:#7E9AAD;
+  --ice:#EAF2F7;--fog:#F4F6F8;--white:#FFFFFF;
+  --bd:rgba(30,52,72,.10);--bd2:rgba(30,52,72,.18);
+  --sh:0 2px 16px rgba(30,52,72,.08);--r:10px;--r2:14px;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --serif:'DM Serif Display','Georgia',serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{height:100%;-webkit-font-smoothing:antialiased;}
+body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-size:14px;line-height:1.65;min-height:100vh;}
+.mod-hdr{background:linear-gradient(135deg,var(--primary) 0%,var(--primary2) 100%);padding:0;border-bottom:2px solid rgba(196,87,27,.3);}
+.mod-hdr-inner{max-width:960px;margin:0 auto;padding:24px 32px;}
+.mod-back{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:rgba(255,255,255,.4);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px;cursor:pointer;background:none;border:none;font-family:var(--sans);}
+.mod-back:hover{color:rgba(255,255,255,.7);}
+.mod-eyebrow{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:8px;}
+.mod-title{font-family:var(--serif);font-size:clamp(22px,3vw,32px);font-style:italic;color:#fff;line-height:1.15;margin-bottom:8px;}
+.mod-subtitle{font-size:14px;color:rgba(255,255,255,.55);line-height:1.6;max-width:680px;margin-bottom:18px;}
+.mod-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.mod-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:6px;font-size:10.5px;font-weight:700;letter-spacing:.04em;}
+.badge-phase{background:rgba(196,87,27,.2);color:var(--accent2);}
+.badge-step{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);}
+.badge-domain{background:rgba(201,146,42,.15);color:var(--amber2);}
+.tab-bar{background:var(--primary);border-bottom:1px solid rgba(255,255,255,.07);}
+.tab-bar-inner{max-width:960px;margin:0 auto;padding:0 32px;display:flex;gap:0;}
+.tab-btn{padding:12px 20px;font-size:12px;font-weight:700;color:rgba(255,255,255,.38);background:none;border:none;cursor:pointer;font-family:var(--sans);letter-spacing:.04em;text-transform:uppercase;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;}
+.tab-btn:hover{color:rgba(255,255,255,.7);}
+.tab-btn.active{color:var(--accent2);border-bottom-color:var(--accent);}
+.phase-score{margin-left:auto;padding:12px 0;display:flex;align-items:center;gap:8px;}
+.phase-score-label{font-size:10px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.08em;}
+.phase-score-val{font-size:13px;font-weight:800;color:var(--accent2);}
+.content-area{max-width:960px;margin:0 auto;padding:28px 32px;}
+.phase-pane{display:none;}
+.phase-pane.active{display:block;}
+.f-screen{display:none;}
+.f-screen.active{display:block;animation:fadeUp .25s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.f-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.f-nav-label{font-size:11px;font-weight:700;color:var(--silver);text-transform:uppercase;letter-spacing:.08em;}
+.f-dots{display:flex;gap:6px;}
+.f-dot{width:8px;height:8px;border-radius:50%;background:var(--bd2);transition:all .2s;cursor:pointer;}
+.f-dot.active{background:var(--accent);transform:scale(1.3);}
+.f-dot.done{background:rgba(196,87,27,.4);}
+.f-screen-title{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.f-principle{font-family:var(--serif);font-size:clamp(20px,2.5vw,27px);font-style:italic;color:var(--primary);line-height:1.25;margin-bottom:20px;}
+.f-body{font-size:13.5px;color:var(--slate);line-height:1.8;margin-bottom:16px;}
+.f-body strong{color:var(--primary);font-weight:700;}
+.callout{border-left:3px solid;border-radius:var(--r);padding:14px 18px;margin:14px 0;}
+.callout.accent{border-color:var(--accent);background:rgba(196,87,27,.05);}
+.callout.amber{border-color:var(--amber);background:rgba(201,146,42,.05);}
+.callout.red{border-color:var(--red);background:rgba(184,50,50,.05);}
+.callout.navy{border-color:var(--primary);background:rgba(30,52,72,.04);}
+.callout-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;}
+.callout-body{font-size:13px;color:#334155;line-height:1.7;}
+.stat-row{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;}
+.stat-card{background:#fff;border:1px solid var(--bd2);border-radius:var(--r);padding:14px 16px;min-width:140px;flex:1;}
+.stat-val{font-family:var(--serif);font-size:clamp(22px,3vw,30px);font-style:italic;color:var(--primary);line-height:1;margin-bottom:4px;}
+.stat-val.sig{color:var(--accent);}
+.stat-val.crit{color:var(--red);}
+.stat-val.warn{color:var(--amber);}
+.stat-val.ns{color:var(--slate);}
+.stat-lbl{font-size:11px;color:var(--silver);line-height:1.4;}
+.cite{color:var(--accent);font-size:11px;font-weight:800;vertical-align:super;cursor:pointer;margin-left:1px;text-decoration:none;}
+.cite:hover{text-decoration:underline;}
+.cite-overlay{position:fixed;inset:0;background:rgba(30,52,72,.55);z-index:800;display:none;align-items:center;justify-content:center;padding:24px;}
+.cite-overlay.open{display:flex;}
+.cite-panel{background:#fff;border-radius:var(--r2);max-width:560px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden;}
+.cp-hdr{background:var(--primary);padding:16px 20px;display:flex;align-items:flex-start;gap:12px;}
+.cp-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.cp-title{font-size:13.5px;font-weight:700;color:#fff;flex:1;line-height:1.35;}
+.cp-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:20px;cursor:pointer;padding:0;margin-left:8px;line-height:1;}
+.cp-close:hover{color:#fff;}
+.cp-body{padding:18px 20px;}
+.cp-meta{font-size:11px;color:var(--silver);margin-bottom:10px;font-style:italic;}
+.cp-text{font-size:13px;color:var(--slate);line-height:1.75;}
+.cp-relevance{margin-top:12px;padding:10px 14px;background:var(--fog);border-radius:8px;border-left:3px solid var(--accent);}
+.cp-relevance-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);margin-bottom:4px;}
+.cp-relevance-text{font-size:12px;color:var(--slate);line-height:1.65;}
+.chain{display:flex;flex-direction:column;gap:0;margin:16px 0;}
+.chain-item{display:flex;gap:0;cursor:pointer;}
+.chain-node{display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;}
+.chain-dot{width:28px;height:28px;border-radius:50%;background:var(--bd2);border:2px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--silver);transition:all .2s;z-index:1;}
+.chain-item.confirmed .chain-dot{background:var(--accent);border-color:var(--accent);color:#fff;}
+.chain-line{flex:1;width:2px;background:var(--bd2);margin:0 auto;}
+.chain-item.confirmed .chain-line{background:var(--accent);}
+.chain-item:last-child .chain-line{display:none;}
+.chain-content{flex:1;padding:0 0 18px 14px;}
+.chain-title{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:4px;}
+.chain-detail{font-size:12px;color:var(--slate);line-height:1.6;display:none;}
+.chain-item.confirmed .chain-detail{display:block;}
+.chain-confirm-btn{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 12px;background:rgba(196,87,27,.1);border:1px solid rgba(196,87,27,.3);border-radius:6px;font-size:11px;font-weight:700;color:var(--accent);cursor:pointer;transition:all .15s;font-family:var(--sans);}
+.chain-confirm-btn:hover{background:rgba(196,87,27,.2);}
+.chain-confirm-btn.done{pointer-events:none;}
+.chain-progress{margin:12px 0;background:rgba(196,87,27,.08);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;}
+.chain-progress-bar{flex:1;height:6px;background:var(--bd2);border-radius:3px;overflow:hidden;}
+.chain-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width .4s ease;}
+.chain-progress-label{font-size:11px;font-weight:700;color:var(--accent);white-space:nowrap;}
+.formative{background:#fff;border:1.5px solid var(--bd2);border-radius:var(--r2);padding:20px;margin:20px 0;}
+.formative-label{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--silver);margin-bottom:10px;}
+.formative-q{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:16px;line-height:1.4;}
+.choice-grid{display:flex;flex-direction:column;gap:8px;}
+.choice-btn{width:100%;text-align:left;padding:12px 14px;border:1.5px solid var(--bd2);border-radius:var(--r);background:#fff;cursor:pointer;font-family:var(--sans);font-size:13px;color:var(--primary);line-height:1.5;transition:all .15s;display:flex;align-items:flex-start;gap:10px;}
+.choice-btn:hover:not(:disabled){border-color:var(--accent);background:rgba(196,87,27,.03);}
+.choice-btn:disabled{cursor:default;}
+.choice-letter{width:22px;height:22px;border-radius:50%;background:var(--fog);border:1.5px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;margin-top:1px;transition:all .15s;}
+.choice-btn.reveal-correct{border-color:var(--green);background:rgba(42,122,88,.04);}
+.choice-btn.reveal-correct .choice-letter{background:var(--green);border-color:var(--green);color:#fff;}
+.choice-btn.selected-wrong{border-color:var(--red);background:rgba(184,50,50,.04);}
+.choice-btn.selected-wrong .choice-letter{background:var(--red);border-color:var(--red);color:#fff;}
+.choice-btn.selected-correct{border-color:var(--green);background:rgba(42,122,88,.06);}
+.choice-btn.selected-correct .choice-letter{background:var(--green);border-color:var(--green);color:#fff;}
+.choice-btn.dimmed{opacity:.45;}
+.feedback-box{display:none;margin-top:12px;padding:14px 16px;border-radius:var(--r);border-left:3px solid;}
+.feedback-box.correct{border-color:var(--green);background:rgba(42,122,88,.05);}
+.feedback-box.wrong{border-color:var(--red);background:rgba(184,50,50,.04);}
+.feedback-box h4{font-size:13px;font-weight:800;margin-bottom:6px;}
+.feedback-box.correct h4{color:var(--green);}
+.feedback-box.wrong h4{color:var(--red);}
+.feedback-box p{font-size:12.5px;color:var(--slate);line-height:1.7;}
+.gateway{background:#fff;border:1.5px solid var(--bd2);border-radius:var(--r2);padding:22px;margin:20px 0;}
+.gateway-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--slate);margin-bottom:14px;}
+.gateway-q{margin-bottom:16px;}
+.gateway-q-text{font-size:13.5px;font-weight:600;color:var(--primary);margin-bottom:10px;}
+.gw-choices{display:flex;flex-direction:column;gap:6px;}
+.gw-choice{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--bd);border-radius:8px;cursor:pointer;font-size:13px;color:var(--slate);transition:all .15s;}
+.gw-choice:hover{border-color:var(--accent);background:rgba(196,87,27,.03);}
+.gw-choice input{accent-color:var(--accent);}
+.gw-answer{display:none;margin-top:8px;padding:10px 14px;border-radius:8px;font-size:12.5px;line-height:1.65;}
+.gw-answer.correct{background:rgba(42,122,88,.06);border-left:3px solid var(--green);color:var(--slate);}
+.gw-answer.incorrect{background:rgba(184,50,50,.04);border-left:3px solid var(--red);color:var(--slate);}
+.app-screen{display:none;}
+.app-screen.active{display:block;animation:fadeUp .25s ease;}
+.scenario-hdr{background:linear-gradient(135deg,var(--primary),var(--primary2));border-radius:var(--r2);padding:20px 24px;margin-bottom:20px;color:#fff;}
+.scenario-eyebrow{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px;}
+.scenario-title{font-family:var(--serif);font-size:clamp(17px,2.5vw,22px);font-style:italic;color:#fff;line-height:1.2;margin-bottom:8px;}
+.scenario-role{font-size:13px;color:rgba(255,255,255,.55);line-height:1.6;}
+.scenario-body{background:#fff;border:1.5px solid var(--bd2);border-radius:var(--r2);padding:20px;margin-bottom:18px;}
+.scenario-body-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--slate);margin-bottom:12px;}
+.scenario-facts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.scenario-fact{display:flex;gap:10px;font-size:13px;line-height:1.5;}
+.scenario-fact-key{font-weight:700;color:var(--primary);min-width:180px;flex-shrink:0;}
+.scenario-fact-val{color:var(--slate);}
+.scenario-prompt{font-size:14px;font-weight:700;color:var(--primary);padding:14px 16px;background:var(--fog);border-radius:var(--r);border-left:3px solid var(--accent);line-height:1.55;margin-bottom:16px;}
+.screen-nav{display:flex;align-items:center;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid var(--bd);}
+.btn-prev{background:#fff;border:1.5px solid var(--bd2);border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;color:var(--slate);font-family:var(--sans);transition:all .15s;}
+.btn-prev:hover{border-color:var(--accent);color:var(--accent);}
+.btn-next{background:linear-gradient(135deg,var(--accent),#9A3D10);color:#fff;border:none;border-radius:10px;padding:11px 26px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--sans);box-shadow:0 4px 14px rgba(196,87,27,.3);transition:transform .1s;}
+.btn-next:hover{transform:translateY(-1px);}
+.btn-next:disabled{opacity:.4;cursor:default;transform:none;}
+.enter-sim-btn{background:linear-gradient(135deg,var(--amber),#8A6010);color:#fff;border:none;border-radius:10px;padding:13px 30px;font-size:14.5px;font-weight:800;cursor:pointer;font-family:var(--sans);box-shadow:0 4px 16px rgba(201,146,42,.35);transition:transform .1s;}
+.enter-sim-btn:hover{transform:translateY(-1px);}
+.enter-sim-btn:disabled{opacity:.4;cursor:default;transform:none;}
+.debrief{display:none;}
+.debrief.show{display:block;animation:fadeUp .3s ease;}
+.score-ring-wrap{display:flex;flex-direction:column;align-items:center;margin:24px 0;}
+.score-ring{width:120px;height:120px;border-radius:50%;background:conic-gradient(var(--accent) calc(var(--pct,0)*1%),var(--bd2) 0);display:flex;align-items:center;justify-content:center;position:relative;}
+.score-ring::before{content:'';position:absolute;inset:12px;border-radius:50%;background:#fff;}
+.score-ring-inner{position:relative;text-align:center;}
+.score-ring-num{font-family:var(--serif);font-size:28px;font-style:italic;color:var(--primary);}
+.score-ring-denom{font-size:12px;color:var(--silver);}
+.score-ring-label{margin-top:10px;font-size:13px;font-weight:700;color:var(--slate);}
+.debrief-verdict{font-size:14px;color:var(--slate);line-height:1.75;text-align:center;max-width:580px;margin:0 auto 24px;}
+.debrief-cards{display:flex;flex-direction:column;gap:12px;}
+.debrief-card{border:1px solid var(--bd2);border-radius:var(--r);padding:16px;}
+.debrief-card-q{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--silver);margin-bottom:6px;}
+.debrief-card-verdict{font-size:13px;font-weight:800;margin-bottom:6px;}
+.debrief-card-verdict.correct{color:var(--green);}
+.debrief-card-verdict.wrong{color:var(--red);}
+.debrief-expert{font-size:12.5px;color:var(--slate);line-height:1.7;}
+.debrief-ctas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px;}
+.btn-return{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:linear-gradient(135deg,var(--accent),#9A3D10);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--sans);}
+.btn-retry{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#fff;color:var(--slate);border:1.5px solid var(--bd2);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--sans);}
+@media(max-width:680px){
+  .content-area,.mod-hdr-inner,.tab-bar-inner{padding-left:16px;padding-right:16px;}
+  .stat-row{flex-direction:column;}
+  .scenario-fact{flex-direction:column;}
+  .scenario-fact-key{min-width:auto;}
+}
+</style>
+</head>
+<body>
+<div class="cite-overlay" id="cite-overlay" onclick="if(event.target===this)closeCite()">
+  <div class="cite-panel">
+    <div class="cp-hdr"><div class="cp-num" id="cp-num">1</div><div class="cp-title" id="cp-title">Loading...</div><button class="cp-close" onclick="closeCite()">x</button></div>
+    <div class="cp-body"><div class="cp-meta" id="cp-meta"></div><div class="cp-text" id="cp-text"></div>
+      <div class="cp-relevance"><div class="cp-relevance-label">Relevance to Module 5</div><div class="cp-relevance-text" id="cp-relevance"></div></div>
+    </div>
+  </div>
+</div>
+<div class="mod-hdr">
+  <div class="mod-hdr-inner">
+    <button class="mod-back" onclick="window.close()">Return to Training Platform</button>
+    <div class="mod-eyebrow">CLEAR Executive Language Access Certificate Program - Module 5 of 7</div>
+    <h1 class="mod-title">Post-Discharge Safety and Malpractice Exposure</h1>
+    <p class="mod-subtitle">74.4% of LEP adverse events go unreported. The organization is managing risk it cannot see — on two legal tracks simultaneously.</p>
+    <div class="mod-meta">
+      <span class="mod-badge badge-phase">Phase 1 - Foundation</span>
+      <span class="mod-badge badge-phase" id="phase2-badge" style="display:none;">Phase 2 - Application</span>
+      <span class="mod-badge badge-step">Training Platform Step 6</span>
+      <span class="mod-badge badge-domain">Quality and Safety - Compliance - Financial Stewardship</span>
+    </div>
+  </div>
+</div>
+<div class="tab-bar">
+  <div class="tab-bar-inner">
+    <button class="tab-btn active" id="tab-foundation" onclick="switchTab('foundation')">Phase 1 - Foundation</button>
+    <button class="tab-btn" id="tab-application" onclick="switchTab('application')">Phase 2 - Application</button>
+    <div class="phase-score"><span class="phase-score-label">Application</span><span class="phase-score-val" id="f-score-display">0 / 3</span></div>
+  </div>
+</div>
+<div class="content-area">
+<div class="phase-pane active" id="phase-foundation">
+  <div class="f-nav"><div class="f-nav-label" id="f-screen-label">Foundation 1 of 5</div><div class="f-dots" id="f-dots"><div class="f-dot active" onclick="goF(1)"></div><div class="f-dot" onclick="goF(2)"></div><div class="f-dot" onclick="goF(3)"></div><div class="f-dot" onclick="goF(4)"></div><div class="f-dot" onclick="goF(5)"></div></div></div>
+
+  <div class="f-screen active" id="fs1">
+    <div class="f-screen-title">Foundation 1 of 5 - Design Principle</div>
+    <div class="f-principle">Language access failures do not end at discharge. They generate a second wave of harm — adverse events, safety incidents, and malpractice claims — that concentrates in the months after the encounter ends.</div>
+    <p class="f-body">Module 5 addresses what happens when the communication failures documented in Modules 1 through 4 are not intercepted. The post-discharge period is when unresolved comprehension failures manifest as adverse outcomes, when safety events that occurred during hospitalization get reported — or, more commonly, do not get reported — and when malpractice exposure crystallizes into claims.</p>
+    <div class="callout navy">
+      <div class="callout-title" style="color:var(--primary)">The Underreporting Gap</div>
+      <div class="callout-body">Exercise 6.1 finds that 74.4% of LEP adverse events are not reported through standard safety reporting channels. This is not a finding about event frequency — it is a finding about system blindness. An organization cannot manage risk it cannot see. The safety reporting infrastructure was designed for English-proficient patients and relies on self-report and staff identification of events in clinical workflows that are already failing for LEP patients.</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-val crit">74.4%</div><div class="stat-lbl">LEP adverse events NOT reported through standard channels. Exercise 6.1.</div></div>
+      <div class="stat-card"><div class="stat-val warn">8%</div><div class="stat-lbl">Statistical power in study confirming underreporting pattern. Governance signal despite low power.</div></div>
+      <div class="stat-card"><div class="stat-val sig">2x</div><div class="stat-lbl">Divi et al. 2007: LEP patients experience physical harm from adverse events at twice the rate of English-proficient patients.</div></div>
+    </div>
+    <p class="f-body">Divi et al. (2007) established that 52.4% of adverse events involving LEP patients had communication error as a contributing factor, and that LEP patients were significantly more likely to experience physical harm — at twice the rate of English-proficient patients. The underreporting gap means that this already-elevated harm rate is being systematically undercounted, and the organization is managing to a floor that does not reflect actual harm frequency.<a class="cite" onclick="showCite(1)">[1]</a></p>
+    <div class="screen-nav"><div></div><button class="btn-next" onclick="goF(2)">Foundation 2: The 40x Data Gap</button></div>
+  </div>
+
+  <div class="f-screen" id="fs2">
+    <div class="f-screen-title">Foundation 2 of 5 - The Data Gap</div>
+    <div class="f-principle">The 40x gap between what safety data shows and what incident reports capture is not measurement error. It is a governance failure.</div>
+    <p class="f-body">Exercise 6.2 tests the association between safety event severity and language barrier documentation. The result is significant. When severity-stratified, the gap between administrative data and incident reports is approximately 40-fold for LEP patients: administrative records show 40 times more safety-relevant events than formal incident reports capture.</p>
+    <div class="callout red">
+      <div class="callout-title" style="color:var(--red)">What the 40x Gap Means for Governance</div>
+      <div class="callout-body">A risk committee reviewing incident reports for LEP patients is reviewing approximately 2.5% of the actual safety event volume. The risk posture is being set based on an almost entirely invisible dataset. Every governance decision — staffing, protocol design, technology investment, malpractice reserve — is calibrated to a floor that does not exist. The 40x gap is not a data collection improvement opportunity. It is a fundamental governance visibility problem.</div>
+    </div>
+    <p class="f-body">The mechanism is specific. Standard incident reports require staff to identify an event, classify it, and submit it through a workflow. For LEP patient events, the identification step fails most often: the communication failure that caused the event is not legible to the staff member as a reportable safety event because it presented as a clinical outcome, not as an identifiable process failure. The event happened; it was not recognized as language-barrier-attributable; it was not reported.<a class="cite" onclick="showCite(2)">[2]</a></p>
+    <div class="screen-nav"><button class="btn-prev" onclick="goF(1)">Back</button><button class="btn-next" onclick="goF(3)">Foundation 3: The Two-Track Malpractice Model</button></div>
+  </div>
+
+  <div class="f-screen" id="fs3">
+    <div class="f-screen-title">Foundation 3 of 5 - Two-Track Malpractice Exposure</div>
+    <div class="f-principle">LEP malpractice exposure operates on two tracks simultaneously. Conflating them produces the wrong defense strategy.</div>
+    <p class="f-body">Track 1 is clinical negligence: a communication failure caused or contributed to a clinical error that harmed the patient. The standard elements apply — duty, breach, causation, damages — with the additional complexity that the communication failure must be linked to the clinical outcome. Track 2 is civil rights liability under Section 1557: the organization failed to provide meaningful access to a LEP patient, regardless of clinical outcome. Track 2 liability exists even when no clinical harm occurred.</p>
+    <div class="callout amber">
+      <div class="callout-title" style="color:var(--amber)">The Berkeley Evidence Base</div>
+      <div class="callout-body">The Berkeley Law / NHeLP (2010) analysis of 35 language access malpractice claims found: average defense cost $118,000; 91% of organizations incurred defense costs even when cases were resolved favorably; and Track 2 claims (civil rights) were often filed in parallel with Track 1 claims, doubling the legal exposure per incident. An organization that resolves the clinical negligence claim may still face a civil rights enforcement action for the same underlying event.</div>
+    </div>
+    <p class="f-body">The governance implication of the two-track model is structural: the malpractice reserve and the compliance exposure must be managed separately, because their mitigation strategies are different. Track 1 is mitigated by improving clinical communication — qualified interpreters, QBS, teach-back documentation. Track 2 is mitigated by compliance infrastructure — T1-T7 touchpoint documentation, interpreter record linkage, preferred-language attestation in consent. An organization that invests only in Track 1 mitigation remains exposed on Track 2, and vice versa.<a class="cite" onclick="showCite(3)">[3]</a></p>
+    <div class="screen-nav"><button class="btn-prev" onclick="goF(2)">Back</button><button class="btn-next" onclick="goF(4)">Foundation 4: The Evidence Chain</button></div>
+  </div>
+
+  <div class="f-screen" id="fs4">
+    <div class="f-screen-title">Foundation 4 of 5 - Closing the Visibility Gap</div>
+    <div class="f-principle">You cannot reduce what you cannot see. Closing the 74.4% underreporting gap is the precondition for any post-discharge safety intervention.</div>
+    <div class="chain" id="chain5">
+      <div class="chain-item" id="chain-v1">
+        <div class="chain-node"><div class="chain-dot" id="cdot-v1">1</div><div class="chain-line"></div></div>
+        <div class="chain-content">
+          <div class="chain-title">Passive reporting infrastructure fails LEP patients structurally</div>
+          <div class="chain-detail">Standard incident reporting depends on staff recognition of language-barrier-attributable events. When staff do not recognize communication failures as reportable safety events — because they present as clinical outcomes — passive reporting produces a systematically incomplete picture. The 74.4% underreporting rate is the direct consequence of a reporting system designed without LEP patient safety events in mind.</div>
+          <button class="chain-confirm-btn" id="cbtn-v1" onclick="confirmChain('v1')">Confirm mechanism</button>
+        </div>
+      </div>
+      <div class="chain-item" id="chain-v2">
+        <div class="chain-node"><div class="chain-dot" id="cdot-v2">2</div><div class="chain-line"></div></div>
+        <div class="chain-content">
+          <div class="chain-title">Active surveillance bridges the gap</div>
+          <div class="chain-detail">Active surveillance — structured review of administrative data, readmission records, and post-discharge call data filtered by preferred language — identifies safety-relevant events without relying on staff recognition and voluntary reporting. This is not a technology solution; it is a workflow change that requires designating LEP safety event identification as a specific quality function, not a secondary consequence of general incident reporting.</div>
+          <button class="chain-confirm-btn" id="cbtn-v2" onclick="confirmChain('v2')">Confirm approach</button>
+        </div>
+      </div>
+      <div class="chain-item" id="chain-v3">
+        <div class="chain-node"><div class="chain-dot" id="cdot-v3">3</div></div>
+        <div class="chain-content">
+          <div class="chain-title">The governance minimum: stratified safety data</div>
+          <div class="chain-detail">The minimum governance standard is safety event data stratified by preferred language, reviewed quarterly at the same committee level that reviews overall patient safety performance. If the risk committee cannot answer the question — what is our LEP adverse event rate and how does it compare to our English-proficient patient rate — the governance infrastructure is operating on incomplete data.</div>
+          <button class="chain-confirm-btn" id="cbtn-v3" onclick="confirmChain('v3')">Confirm standard</button>
+        </div>
+      </div>
+    </div>
+    <div class="chain-progress" id="chain-prog">
+      <span style="font-size:11px;font-weight:700;color:var(--slate);">Confirm all three:</span>
+      <div class="chain-progress-bar"><div class="chain-progress-fill" id="chain-fill" style="width:0%"></div></div>
+      <span class="chain-progress-label" id="chain-label">0 / 3</span>
+    </div>
+    <div class="screen-nav"><button class="btn-prev" onclick="goF(3)">Back</button><button class="btn-next" onclick="goF(5)">Foundation 5: Gateway Check</button></div>
+  </div>
+
+  <div class="f-screen" id="fs5">
+    <div class="f-screen-title">Foundation 5 of 5 - Gateway Check</div>
+    <div class="f-principle">Two formative questions before the application begins.</div>
+    <div class="gateway">
+      <div class="gateway-title">Formative Questions</div>
+      <div class="gateway-q">
+        <div class="gateway-q-text">An organization has a 74.4% LEP adverse event underreporting rate and a formal incident report system showing 12 LEP safety events per year. What is the most accurate estimate of actual annual LEP safety events?</div>
+        <div class="gw-choices">
+          <label class="gw-choice"><input type="radio" name="gq1" value="a" onchange="gwAnswer(1,'a')"> Approximately 12 — the incident report system captures the reportable events</label>
+          <label class="gw-choice"><input type="radio" name="gq1" value="b" onchange="gwAnswer(1,'b')"> Approximately 47 — if 12 represents 25.6% of actual events, total estimated events = 12 / 0.256</label>
+          <label class="gw-choice"><input type="radio" name="gq1" value="c" onchange="gwAnswer(1,'c')"> Approximately 480 — applying the 40x data gap to the 12 incident reports</label>
+          <label class="gw-choice"><input type="radio" name="gq1" value="d" onchange="gwAnswer(1,'d')"> Cannot be estimated without a formal audit</label>
+        </div>
+        <div class="gw-answer correct" id="gwa1-b">Correct. If 74.4% are unreported, then 25.6% are reported. Reported count / 0.256 = estimated total. 12 / 0.256 = approximately 47. The 40x gap applies to the comparison between administrative data and incident reports — a different measurement frame.</div>
+        <div class="gw-answer incorrect" id="gwa1-a">The incident report system captures approximately 25.6% of actual events. Treating it as complete produces a governance posture calibrated to a fraction of actual risk.</div>
+        <div class="gw-answer incorrect" id="gwa1-c">The 40x gap describes the ratio between administrative safety-relevant records and incident reports — a different comparison than the underreporting rate. The underreporting calculation uses the 74.4% figure directly.</div>
+        <div class="gw-answer incorrect" id="gwa1-d">The estimate can be made from the underreporting rate. The calculation requires the reported count divided by the reporting rate (25.6%). Refusing to estimate leaves the governance function without a risk magnitude figure.</div>
+      </div>
+      <div class="gateway-q" style="margin-top:16px;">
+        <div class="gateway-q-text">An LEP patient experiences a medication error during hospitalization caused by an incomplete allergy history — which the patient provided in Spanish but was documented incompletely by an untested bilingual aide. Which malpractice track or tracks apply?</div>
+        <div class="gw-choices">
+          <label class="gw-choice"><input type="radio" name="gq2" value="a" onchange="gwAnswer(2,'a')"> Track 1 only — the clinical error is what caused harm</label>
+          <label class="gw-choice"><input type="radio" name="gq2" value="b" onchange="gwAnswer(2,'b')"> Both Track 1 and Track 2 — the clinical error creates negligence exposure and the use of an unqualified interpreter creates a Section 1557 civil rights exposure simultaneously</label>
+          <label class="gw-choice"><input type="radio" name="gq2" value="c" onchange="gwAnswer(2,'c')"> Track 2 only — this is a language access compliance failure, not a clinical negligence case</label>
+          <label class="gw-choice"><input type="radio" name="gq2" value="d" onchange="gwAnswer(2,'d')"> Neither track applies if the patient signed a general consent form</label>
+        </div>
+        <div class="gw-answer correct" id="gwa2-b">Correct. The medication error creates Track 1 exposure (clinical negligence — communication failure contributed to a clinical harm). The use of an unqualified interpreter for clinical history-taking creates Track 2 exposure (Section 1557 — meaningful access was not provided). Both exposures are independent and can be pursued simultaneously.</div>
+        <div class="gw-answer incorrect" id="gwa2-a">Track 1 applies, but Track 2 also applies independently. Using an unqualified interpreter for clinical communication is a Section 1557 violation regardless of whether harm occurred.</div>
+        <div class="gw-answer incorrect" id="gwa2-c">Track 1 applies because the communication failure caused a clinical harm. Track 2 applies because an unqualified interpreter was used. Both run simultaneously.</div>
+        <div class="gw-answer incorrect" id="gwa2-d">A general consent form does not waive Section 1557 rights or excuse clinical negligence caused by communication failure. Informed consent in the preferred language is a distinct requirement from general consent.</div>
+      </div>
+    </div>
+    <div class="screen-nav"><button class="btn-prev" onclick="goF(4)">Back</button><button class="enter-sim-btn" onclick="enterApplication()">Enter Phase 2: Application Scenarios</button></div>
+  </div>
+</div>
+
+<div class="phase-pane" id="phase-application">
+  <div class="f-nav"><div class="f-nav-label" id="app-screen-label">Application 1 of 3</div><div class="f-dots" id="app-dots"><div class="f-dot active" id="adot1"></div><div class="f-dot" id="adot2"></div><div class="f-dot" id="adot3"></div></div></div>
+
+  <div class="app-screen active" id="as1">
+    <div class="scenario-hdr">
+      <div class="scenario-eyebrow">Application 1 of 3 - Safety Governance</div>
+      <div class="scenario-title">The Risk Committee Blind Spot</div>
+      <div class="scenario-role">You are the CMO presenting Module 5 findings to the Risk Committee. The committee chair reviews the 74.4% underreporting finding and says: "Our incident report data shows LEP adverse events are below our system average. If they are underreported by that margin, our actual risk posture is materially different from what we are managing to. What do we do with this?"</div>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-body-title">Risk Committee Context</div>
+      <div class="scenario-facts">
+        <div class="scenario-fact"><div class="scenario-fact-key">Reported LEP adverse events/year</div><div class="scenario-fact-val">8 — below system average of 14 per 1,000 encounters</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Estimated actual events (74.4% underreport)</div><div class="scenario-fact-val">8 / 0.256 = approximately 31 actual events per year</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Malpractice reserve (current)</div><div class="scenario-fact-val">Calibrated to reported event frequency — does not reflect estimated actual frequency</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Two-track exposure</div><div class="scenario-fact-val">Track 1 (clinical) + Track 2 (civil rights) both applicable to most unreported events</div></div>
+      </div>
+      <div class="scenario-prompt">What is your recommended governance response?</div>
+    </div>
+    <div class="formative">
+      <div class="formative-label">Scored Decision</div>
+      <div class="formative-q">Which response addresses the Risk Committee correctly?</div>
+      <div class="choice-grid" id="q1choices">
+        <button class="choice-btn" onclick="answer(1,'a')"><span class="choice-letter">A</span><span>The underreporting rate is an estimate based on external data. Do not adjust the malpractice reserve until we have conducted an internal audit confirming the rate applies to this organization specifically.</span></button>
+        <button class="choice-btn" onclick="answer(1,'b')"><span class="choice-letter">B</span><span>Three immediate actions: First, implement active surveillance — structured quarterly review of LEP readmissions and administrative safety records to identify events not captured in incident reports. Second, brief the malpractice carrier on the estimated actual event volume and request a reserve adequacy review. Third, add LEP-stratified safety event data as a standing agenda item at Risk Committee — not as an annual report but as a recurring metric reviewed alongside overall patient safety performance.</span></button>
+        <button class="choice-btn" onclick="answer(1,'c')"><span class="choice-letter">C</span><span>Increase the incident report submission rate among staff who care for LEP patients through a mandatory reporting training. Once reporting rates improve, we will have better data for reserve calibration.</span></button>
+        <button class="choice-btn" onclick="answer(1,'d')"><span class="choice-letter">D</span><span>The 74.4% figure comes from external research. Our organization may have a different underreporting rate. Present the data as a benchmark rather than an organizational finding and defer reserve adjustment pending our own measurement.</span></button>
+      </div>
+      <div class="feedback-box" id="q1fb"></div>
+    </div>
+    <div class="screen-nav"><div></div><button class="btn-next" id="as1-next" onclick="goApp(2)" disabled>Next Scenario</button></div>
+  </div>
+
+  <div class="app-screen" id="as2">
+    <div class="scenario-hdr">
+      <div class="scenario-eyebrow">Application 2 of 3 - Malpractice Reserve</div>
+      <div class="scenario-title">The CFO Reserve Adequacy Question</div>
+      <div class="scenario-role">You are the COO. Your CFO asks whether the organization malpractice reserve is adequate given the two-track exposure model. Your current reserve is based on historical claim frequency. The last LEP-related malpractice claim was settled three years ago for $340,000. The Berkeley analysis found average defense costs of $118,000 per claim — incurred even on cases resolved favorably.</div>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-body-title">Reserve Analysis Context</div>
+      <div class="scenario-facts">
+        <div class="scenario-fact"><div class="scenario-fact-key">Berkeley/NHeLP (2010)</div><div class="scenario-fact-val">35 claims analyzed: average defense cost $118,000; 91% incurred defense costs regardless of outcome</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Two-track exposure</div><div class="scenario-fact-val">Track 1 (negligence) + Track 2 (1557 civil rights) often filed simultaneously — double the per-incident legal cost</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Estimated actual annual LEP events</div><div class="scenario-fact-val">~31 (estimated from 74.4% underreporting correction)</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Current reserve basis</div><div class="scenario-fact-val">2 reported LEP claims in last 5 years. Reserve does not include Track 2 civil rights exposure.</div></div>
+      </div>
+      <div class="scenario-prompt">How do you advise the CFO on reserve adequacy?</div>
+    </div>
+    <div class="formative">
+      <div class="formative-label">Scored Decision</div>
+      <div class="formative-q">Which response produces the most defensible reserve analysis?</div>
+      <div class="choice-grid" id="q2choices">
+        <button class="choice-btn" onclick="answer(2,'a')"><span class="choice-letter">A</span><span>The reserve is based on claims history. Since we have had only 2 claims in 5 years, the reserve is adequate. Historical claim frequency is the standard actuarial basis for reserve setting.</span></button>
+        <button class="choice-btn" onclick="answer(2,'b')"><span class="choice-letter">B</span><span>The reserve based on 2 reported claims underestimates exposure for three reasons: the 74.4% underreporting correction implies approximately 31 actual events per year, not 0.4; the two-track structure means each claim carries approximately double the defense cost of a standard malpractice case; and the current reserve excludes Track 2 civil rights exposure entirely, which does not require clinical harm to trigger. Brief the carrier on all three factors and request a formal reserve adequacy analysis using the corrected event frequency and dual-track defense cost model.</span></button>
+        <button class="choice-btn" onclick="answer(2,'c')"><span class="choice-letter">C</span><span>Increase the reserve by 2x to account for the two-track model and present the adjustment to the board as a conservative risk management decision.</span></button>
+        <button class="choice-btn" onclick="answer(2,'d')"><span class="choice-letter">D</span><span>The reserve adequacy question requires a legal opinion. Refer to General Counsel before making any reserve adjustment recommendations to the CFO.</span></button>
+      </div>
+      <div class="feedback-box" id="q2fb"></div>
+    </div>
+    <div class="screen-nav"><button class="btn-prev" onclick="goApp(1)">Back</button><button class="btn-next" id="as2-next" onclick="goApp(3)" disabled>Next Scenario</button></div>
+  </div>
+
+  <div class="app-screen" id="as3">
+    <div class="scenario-hdr">
+      <div class="scenario-eyebrow">Application 3 of 3 - Safety Infrastructure Investment</div>
+      <div class="scenario-title">The Patient Safety Officer Budget Request</div>
+      <div class="scenario-role">You are the CNO. Your Patient Safety Officer requests $85,000 to implement active LEP safety surveillance — a structured quarterly review process using administrative data, readmission records, and post-discharge call data to identify LEP safety events not captured by incident reporting. Your CFO asks: "What is the return on this investment?"</div>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-body-title">Surveillance Investment Context</div>
+      <div class="scenario-facts">
+        <div class="scenario-fact"><div class="scenario-fact-key">Investment</div><div class="scenario-fact-val">$85,000 for active LEP safety surveillance implementation</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Current annual LEP defense cost exposure</div><div class="scenario-fact-val">2 claims x $118,000 average defense = $236,000/year (reported claims only)</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Corrected exposure estimate</div><div class="scenario-fact-val">~31 potential events/year x dual-track exposure — materially higher than reported claims suggest</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Surveillance benefit</div><div class="scenario-fact-val">Early identification enables intervention before claims materialize. Published evidence: early intervention reduces claim severity and defense cost.</div></div>
+      </div>
+      <div class="scenario-prompt">How do you frame the ROI argument to the CFO?</div>
+    </div>
+    <div class="formative">
+      <div class="formative-label">Scored Decision</div>
+      <div class="formative-q">Which ROI framing is most defensible to a finance-literate CFO?</div>
+      <div class="choice-grid" id="q3choices">
+        <button class="choice-btn" onclick="answer(3,'a')"><span class="choice-letter">A</span><span>The $85,000 investment will reduce malpractice claims. If we prevent even one claim, the defense cost savings ($118,000) exceed the investment. The return is positive at a one-claim prevention threshold.</span></button>
+        <button class="choice-btn" onclick="answer(3,'b')"><span class="choice-letter">B</span><span>The ROI argument has two components. First, the defensive value: early identification of safety events enables intervention before claims materialize — published evidence shows early engagement reduces claim severity and defense cost by 30-50%. Applied conservatively to even 3 of the estimated 31 annual events, that is $118,000 x 3 x 30% = $106,200 in reduced defense costs per year versus an $85,000 investment. Second, the governance value: the CFO is currently managing malpractice reserve against a floor that does not reflect actual event frequency. The surveillance program provides the data to set the reserve correctly — which may prevent a reserve shortfall that creates a material financial disclosure risk.</span></button>
+        <button class="choice-btn" onclick="answer(3,'c')"><span class="choice-letter">C</span><span>Surveillance is a patient safety obligation, not an ROI decision. Frame it to the CFO as a regulatory requirement and present the $85,000 as a compliance cost rather than an investment.</span></button>
+        <button class="choice-btn" onclick="answer(3,'d')"><span class="choice-letter">D</span><span>The ROI cannot be calculated without knowing how many claims the surveillance program will prevent. Request a 6-month pilot at reduced cost before committing to the full $85,000 investment.</span></button>
+      </div>
+      <div class="feedback-box" id="q3fb"></div>
+    </div>
+    <div class="screen-nav"><button class="btn-prev" onclick="goApp(2)">Back</button><button class="btn-next" id="as3-next" onclick="showDebrief()" disabled>Complete Module</button></div>
+  </div>
+
+  <div class="debrief" id="debrief">
+    <div class="score-ring-wrap">
+      <div class="score-ring" id="scoreRing" style="--pct:0;"><div class="score-ring-inner"><div class="score-ring-num"><span id="debriefNum">0</span>/3</div></div></div>
+      <div class="score-ring-label" id="debrief-label">Module 5 Complete</div>
+    </div>
+    <div class="debrief-verdict" id="debrief-verdict"></div>
+    <div class="debrief-cards" id="debrief-cards"></div>
+    <div class="debrief-ctas">
+      <button class="btn-return" onclick="window.close()">Return to Training Platform - Complete Step 6 CAP</button>
+      <button class="btn-retry" onclick="retryModule()">Retry Application</button>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+var F_TOTAL=5,APP_TOTAL=3,TOTAL_Q=3;
+CHAIN_TOTAL=3;
+var CITES={
+  1:{title:"Divi et al. (2007) - Language Barriers and Adverse Events",
+     meta:"Divi C et al. Joint Commission Journal on Quality and Patient Safety, 2007",
+     text:"52.4% of adverse events involving LEP patients had communication error as a contributing factor. LEP patients experienced physical harm from adverse events at twice the rate of English-proficient patients. The severity differential persisted across event categories.",
+     relevance:"Primary evidence anchor for the double-harm-rate finding. Establishes both the prevalence of communication-attributable adverse events and the severity differential that makes LEP safety a distinct governance concern."},
+  2:{title:"Exercise 6.2 - Safety Event Severity and Language Barrier Documentation",
+     meta:"Exercise 6.2 - CLEAR LAI Q1 2026 Sample Dataset",
+     text:"Significant association between safety event severity and language barrier documentation gaps. Administrative data shows approximately 40x more safety-relevant events than formal incident reports capture for LEP patients. The gap reflects structural underidentification in passive reporting systems.",
+     relevance:"Establishes the 40x data gap between administrative records and incident reports. Used to demonstrate that risk governance based on incident report data alone is calibrated to approximately 2.5% of actual LEP safety event volume."},
+  3:{title:"Berkeley Law / NHeLP (2010) - Language Access Malpractice Claims Analysis",
+     meta:"National Health Law Program - Malpractice Risks in Healthcare for LEP Patients",
+     text:"Analysis of 35 language access malpractice claims: average defense cost $118,000; 91% of organizations incurred defense costs regardless of claim outcome. Track 2 (Section 1557 civil rights) claims often filed in parallel with Track 1 (negligence) claims, creating independent dual-track legal exposure per incident.",
+     relevance:"Evidence anchor for the two-track malpractice model and the malpractice reserve adequacy argument. The $118,000 average defense cost is the financial input for reserve calculations."}
+};
+var GW_CORRECT={1:"b",2:"b"};
+var Q_LABELS=["Scenario 1: Risk Committee Response","Scenario 2: Reserve Adequacy","Scenario 3: Surveillance Investment ROI"];
+var Q={
+  1:{correct:"b",feedback:{
+    a:{ok:false,title:"Deferring to internal audit before acting on a known governance gap is not adequate risk management",
+       body:"The 74.4% underreporting rate is a published finding with sufficient external validity to trigger governance action. Waiting for an internal audit to confirm the rate before adjusting governance processes leaves the Risk Committee managing to a demonstrably incomplete dataset for the audit duration. The three-action response addresses the most urgent governance failures immediately."},
+    b:{ok:true,title:"Correct - active surveillance, carrier briefing, and standing agenda item",
+       body:"Three targeted actions addressing the three dimensions of the governance gap: data visibility (active surveillance), financial exposure (carrier briefing), and governance integration (standing agenda item). This response demonstrates that the CMO understands the difference between a data collection problem and a governance structure problem."},
+    c:{ok:false,title:"Training for voluntary reporting does not close a structural identification gap",
+       body:"Staff who do not recognize language-barrier-attributable events as reportable will not report them more frequently after training. The identification failure is the constraint, not the willingness to report. Active surveillance bypasses the identification constraint entirely by using administrative data rather than staff recognition."},
+    d:{ok:false,title:"Treating an established research finding as inapplicable without evidence is not analytically defensible",
+       body:"The burden of proof runs the wrong direction here. If the organization has evidence that its reporting infrastructure is structurally different from the organizations in the research sample, deferring is defensible. Without that evidence, the published finding is the best available estimate and should inform governance action."}
+  }},
+  2:{correct:"b",feedback:{
+    a:{ok:false,title:"Historical claim frequency dramatically underestimates forward-looking exposure when underreporting is known",
+       body:"Two reported claims in five years means 0.4 claims per year. The corrected estimate (31 events/year x claim conversion rate) produces materially higher forward-looking exposure. A reserve set to historical reported frequency is inadequate when underreporting is a known, quantified, structural feature of the data."},
+    b:{ok:true,title:"Correct - three-factor reserve inadequacy argument with carrier engagement",
+       body:"The response correctly identifies all three reserve inadequacy factors: corrected event frequency, dual-track defense cost structure, and complete exclusion of Track 2 civil rights exposure. Engaging the carrier rather than making the reserve adjustment internally is the correct governance sequence — actuarial reserve setting requires carrier involvement."},
+    c:{ok:false,title:"A 2x adjustment without actuarial basis is not defensible to a finance committee or auditor",
+       body:"Reserve adjustments require actuarial justification. Doubling the reserve as a conservative management decision without a formal adequacy analysis may actually under-correct if the corrected event frequency and dual-track costs produce a higher multiplier. The carrier briefing and formal adequacy analysis produce a defensible number."},
+    d:{ok:false,title:"General Counsel advises on legal strategy, not reserve adequacy",
+       body:"Reserve adequacy is a financial and actuarial question, not a legal strategy question. General Counsel should be involved in the litigation response and the Track 2 compliance strategy, but the reserve adequacy analysis is the CFO and carrier domain. Referring the entire question to GC delays the financial governance response."}
+  }},
+  3:{correct:"b",feedback:{
+    a:{ok:false,title:"Single-threshold ROI arguments are vulnerable to the objection that the threshold is arbitrary",
+       body:"A CFO who asks why the relevant threshold is one claim rather than two will not find a principled answer. The one-claim-prevention threshold is not wrong, but it is a simplified version of the correct argument. The full two-component framing (defensive value plus governance value) is more rigorous and addresses the reserve adequacy dimension that the CFO is actually asking about."},
+    b:{ok:true,title:"Correct - two-component ROI: defensive cost reduction plus reserve adequacy governance",
+       body:"The defensive value component provides a concrete financial calculation using conservative assumptions. The governance value component addresses the reserve shortfall risk that is directly material to the CFO role. Together they demonstrate that the $85,000 investment has both near-term financial return and material risk reduction value."},
+    c:{ok:false,title:"Compliance framing produces budget category competition that finance departments win",
+       body:"When the $85,000 is framed as a compliance cost, it competes with other compliance costs for a fixed compliance budget. When it is framed as a risk management investment with quantifiable return, it competes on ROI merits. Finance departments consistently allocate more favorably to investments than to compliance costs."},
+    d:{ok:false,title:"A pilot at reduced cost defers the full benefit while incurring program disruption costs twice",
+       body:"A 6-month pilot produces partial data and then requires a second implementation decision. The ROI argument is already quantifiable from published evidence — the uncertainty that a pilot would resolve is already bounded by the conservative assumptions in the two-component model. Piloting is appropriate when the mechanism is unproven; here the mechanism is established and the question is scale."}
+  }}
+};
+
+/* ── CITATION PANEL ─────────────────────────────────────────────────── */
+function showCite(n){
+  var c=CITES[n]; if(!c) return;
+  document.getElementById('cp-num').textContent=n;
+  document.getElementById('cp-title').textContent=c.title;
+  document.getElementById('cp-meta').textContent=c.meta;
+  document.getElementById('cp-text').textContent=c.text;
+  document.getElementById('cp-relevance').textContent=c.relevance;
+  document.getElementById('cite-overlay').classList.add('open');
+}
+function closeCite(){document.getElementById('cite-overlay').classList.remove('open');}
+
+/* ── FOUNDATION NAVIGATION ──────────────────────────────────────────── */
+var _fScreen=1;
+function goF(n){
+  document.getElementById('fs'+_fScreen).classList.remove('active');
+  document.getElementById('fs'+n).classList.add('active');
+  document.getElementById('f-screen-label').textContent='Foundation '+n+' of '+F_TOTAL;
+  var dots=document.querySelectorAll('#f-dots .f-dot');
+  dots.forEach(function(d,i){
+    d.classList.remove('active','done');
+    if(i+1<n) d.classList.add('done');
+    else if(i+1===n) d.classList.add('active');
+  });
+  _fScreen=n;
+}
+
+/* ── EVIDENCE CHAIN ─────────────────────────────────────────────────── */
+var _chainConfirmed=0, CHAIN_TOTAL=0;
+function confirmChain(id){
+  var item=document.getElementById('chain-'+id);
+  var btn=document.getElementById('cbtn-'+id);
+  if(!item||item.classList.contains('confirmed')) return;
+  item.classList.add('confirmed');
+  btn.textContent='Confirmed';
+  btn.classList.add('done');
+  _chainConfirmed++;
+  var pct=(_chainConfirmed/CHAIN_TOTAL)*100;
+  document.getElementById('chain-fill').style.width=pct+'%';
+  document.getElementById('chain-label').textContent=_chainConfirmed+' / '+CHAIN_TOTAL;
+}
+
+/* ── GATEWAY ────────────────────────────────────────────────────────── */
+function gwAnswer(q,choice){
+  var correct=GW_CORRECT[q];
+  ['a','b','c','d'].forEach(function(l){
+    var el=document.getElementById('gwa'+q+'-'+l);
+    if(el) el.style.display='none';
+  });
+  var el=document.getElementById('gwa'+q+'-'+choice);
+  if(el) el.style.display='block';
+  document.querySelectorAll('input[name="gq'+q+'"]').forEach(function(r){r.disabled=true;});
+}
+
+/* ── TAB SWITCHING ──────────────────────────────────────────────────── */
+function switchTab(tab){
+  ['foundation','application'].forEach(function(t){
+    document.getElementById('tab-'+t).classList.remove('active');
+    document.getElementById('phase-'+t).classList.remove('active');
+  });
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.getElementById('phase-'+tab).classList.add('active');
+}
+function enterApplication(){
+  switchTab('application');
+  var b=document.getElementById('phase2-badge');
+  if(b) b.style.display='inline-flex';
+  goApp(1);
+}
+
+/* ── APPLICATION NAVIGATION ─────────────────────────────────────────── */
+var _appScreen=1;
+function goApp(n){
+  document.getElementById('as'+_appScreen).classList.remove('active');
+  var next=document.getElementById('as'+n);
+  if(!next) return;
+  next.classList.add('active');
+  document.getElementById('app-screen-label').textContent='Application '+n+' of '+APP_TOTAL;
+  var dots=document.querySelectorAll('#app-dots .f-dot');
+  dots.forEach(function(d,i){
+    d.classList.remove('active','done');
+    if(i+1<n) d.classList.add('done');
+    else if(i+1===n) d.classList.add('active');
+  });
+  _appScreen=n;
+}
+
+/* ── SCORING ────────────────────────────────────────────────────────── */
+var score=0, answers={};
+function answer(q,choice){
+  if(answers['q'+q]!==undefined) return;
+  var qd=Q[q];
+  var fd=qd.feedback[choice]||{ok:false,title:'No feedback',body:''};
+  answers['q'+q]=fd.ok;
+  if(fd.ok) score++;
+  document.getElementById('f-score-display').textContent=score+' / '+TOTAL_Q;
+  var container=document.getElementById('q'+q+'choices');
+  container.querySelectorAll('.choice-btn').forEach(function(btn,i){
+    var l='abcd'[i]; btn.disabled=true;
+    if(l===qd.correct) btn.classList.add('reveal-correct');
+    else if(l===choice&&!fd.ok) btn.classList.add('selected-wrong');
+    else if(l===choice&&fd.ok) btn.classList.add('selected-correct');
+    else btn.classList.add('dimmed');
+  });
+  var fb=document.getElementById('q'+q+'fb');
+  fb.className='feedback-box '+(fd.ok?'correct':'wrong');
+  fb.style.display='block';
+  fb.innerHTML='<h4>'+fd.title+'<\/h4><p>'+fd.body+'<\/p>';
+  var nb=document.getElementById('as'+q+'-next');
+  if(nb) nb.disabled=false;
+}
+
+/* ── DEBRIEF ────────────────────────────────────────────────────────── */
+function showDebrief(){
+  document.getElementById('as'+TOTAL_Q).classList.remove('active');
+  var debrief=document.getElementById('debrief');
+  debrief.classList.add('show');
+  var pct=Math.round((score/TOTAL_Q)*100);
+  setTimeout(function(){document.getElementById('scoreRing').style.setProperty('--pct',pct);},100);
+  document.getElementById('debriefNum').textContent=score;
+  var msgs=[
+    'Review each scenario carefully. The errors reflect real governance mistakes with clinical and financial consequences. Return to Foundation screens to reinforce the framework before retrying.',
+    'Good progress. One scenario reflects a nuanced judgment call. Review the expert feedback — the reasoning cited is the standard of practice.',
+    'Excellent. You applied the module framework correctly across all three decision scenarios. These competencies directly inform your CAP contribution for this step.'
+  ];
+  var labels=['Review Foundation','Good Progress','Ready for Next Step'];
+  document.getElementById('debrief-verdict').textContent=msgs[Math.min(score,2)];
+  document.getElementById('debrief-label').textContent=labels[Math.min(score,2)];
+  var cc=document.getElementById('debrief-cards');
+  cc.innerHTML='';
+  for(var n=1;n<=TOTAL_Q;n++){
+    var wasCorrect=answers['q'+n];
+    var cf=Q[n].feedback[Q[n].correct];
+    var card=document.createElement('div');
+    card.className='debrief-card';
+    card.innerHTML='<div class="debrief-card-q">'+Q_LABELS[n-1]+'<\/div>'+
+      '<div class="debrief-card-verdict '+(wasCorrect?'correct':'wrong')+'">'+(wasCorrect?'Correct':'Needs review')+'<\/div>'+
+      '<div class="debrief-expert">'+cf.body+'<\/div>';
+    cc.appendChild(card);
+  }
+}
+function retryModule(){
+  score=0; answers={};
+  document.getElementById('f-score-display').textContent='0 / '+TOTAL_Q;
+  document.getElementById('debrief').classList.remove('show');
+  for(var n=1;n<=TOTAL_Q;n++){
+    var c=document.getElementById('q'+n+'choices');
+    if(c){
+      c.querySelectorAll('.choice-btn').forEach(function(b){
+        b.disabled=false;
+        b.classList.remove('reveal-correct','selected-wrong','selected-correct','dimmed');
+      });
+      var fb=document.getElementById('q'+n+'fb');
+      if(fb) fb.style.display='none';
+      var nb=document.getElementById('as'+n+'-next');
+      if(nb) nb.disabled=true;
+    }
+  }
+  goApp(1);
+  document.getElementById('as1').classList.add('active');
+  document.getElementById('scoreRing').style.setProperty('--pct',0);
+}
+
+</script>
+</body></html>

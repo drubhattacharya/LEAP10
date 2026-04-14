@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>CLEAR Module 4 - Discharge and Comprehension</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#1E3448;--primary2:#243D56;
+  --accent:#C4571B;--accent2:#E07B45;
+  --amber:#C9922A;--amber2:#F0B84A;
+  --green:#2A7A58;--red:#B83232;
+  --slate:#4A5E72;--silver:#7E9AAD;
+  --ice:#EAF2F7;--fog:#F4F6F8;--white:#FFFFFF;
+  --bd:rgba(30,52,72,.10);--bd2:rgba(30,52,72,.18);
+  --sh:0 2px 16px rgba(30,52,72,.08);--r:10px;--r2:14px;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --serif:'DM Serif Display','Georgia',serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{height:100%;-webkit-font-smoothing:antialiased;}
+body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-size:14px;line-height:1.65;min-height:100vh;}
+.mod-hdr{background:linear-gradient(135deg,var(--primary) 0%,var(--primary2) 100%);padding:0;border-bottom:2px solid rgba(196,87,27,.3);}
+.mod-hdr-inner{max-width:960px;margin:0 auto;padding:24px 32px;}
+.mod-back{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:rgba(255,255,255,.4);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px;cursor:pointer;background:none;border:none;font-family:var(--sans);}
+.mod-back:hover{color:rgba(255,255,255,.7);}
+.mod-eyebrow{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:8px;}
+.mod-title{font-family:var(--serif);font-size:clamp(22px,3vw,32px);font-style:italic;color:#fff;line-height:1.15;margin-bottom:8px;}
+.mod-subtitle{font-size:14px;color:rgba(255,255,255,.55);line-height:1.6;max-width:680px;margin-bottom:18px;}
+.mod-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.mod-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:6px;font-size:10.5px;font-weight:700;letter-spacing:.04em;}
+.badge-phase{background:rgba(196,87,27,.2);color:var(--accent2);}
+.badge-step{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);}
+.badge-domain{background:rgba(201,146,42,.15);color:var(--amber2);}
+.tab-bar{background:var(--primary);border-bottom:1px solid rgba(255,255,255,.07);}
+.tab-bar-inner{max-width:960px;margin:0 auto;padding:0 32px;display:flex;gap:0;}
+.tab-btn{padding:12px 20px;font-size:12px;font-weight:700;color:rgba(255,255,255,.38);background:none;border:none;cursor:pointer;font-family:var(--sans);letter-spacing:.04em;text-transform:uppercase;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;}
+.tab-btn:hover{color:rgba(255,255,255,.7);}
+.tab-btn.active{color:var(--accent2);border-bottom-color:var(--accent);}
+.phase-score{margin-left:auto;padding:12px 0;display:flex;align-items:center;gap:8px;}
+.phase-score-label{font-size:10px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.08em;}
+.phase-score-val{font-size:13px;font-weight:800;color:var(--accent2);}
+.content-area{max-width:960px;margin:0 auto;padding:28px 32px;}
+.phase-pane{display:none;}
+.phase-pane.active{display:block;}
+.f-screen{display:none;}
+.f-screen.active{display:block;animation:fadeUp .25s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.f-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.f-nav-label{font-size:11px;font-weight:700;color:var(--silver);text-transform:uppercase;letter-spacing:.08em;}
+.f-dots{display:flex;gap:6px;}
+.f-dot{width:8px;height:8px;border-radius:50%;background:var(--bd2);transition:all .2s;cursor:pointer;}
+.f-dot.active{background:var(--accent);transform:scale(1.3);}
+.f-dot.done{background:rgba(196,87,27,.4);}
+.f-screen-title{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.f-principle{font-family:var(--serif);font-size:clamp(20px,2.5vw,27px);font-style:italic;color:var(--primary);line-height:1.25;margin-bottom:20px;}
+.f-body{font-size:13.5px;color:var(--slate);line-height:1.8;margin-bottom:16px;}
+.f-body strong{color:var(--primary);font-weight:700;}
+.callout{border-left:3px solid;border-radius:var(--r);padding:14px 18px;margin:14px 0;}
+.callout.accent{border-color:var(--accent);background:rgba(196,87,27,.05);}
+.callout.amber{border-color:var(--amber);background:rgba(201,146,42,.05);}
+.callout.red{border-color:var(--red);background:rgba(184,50,50,.05);}
+.callout.navy{border-color:var(--primary);background:rgba(30,52,72,.04);}
+.callout-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;}
+.callout-body{font-size:13px;color:#334155;line-height:1.7;}
+.stat-row{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;}
+.stat-card{background:#fff;border:1px solid var(--bd2);border-radius:var(--r);padding:14px 16px;min-width:140px;flex:1;}
+.stat-val{font-family:var(--serif);font-size:clamp(22px,3vw,30px);font-style:italic;color:var(--primary);line-height:1;margin-bottom:4px;}
+.stat-val.sig{color:var(--accent);}
+.stat-val.crit{color:var(--red);}
+.stat-val.warn{color:var(--amber);}
+.stat-val.ns{color:var(--slate);}
+.stat-lbl{font-size:11px;color:var(--silver);line-height:1.4;}
+.cite{color:var(--accent);font-size:11px;font-weight:800;vertical-align:super;cursor:pointer;margin-left:1px;text-decoration:none;}
+.cite:hover{text-decoration:underline;}
+.cite-overlay{position:fixed;inset:0;background:rgba(30,52,72,.55);z-index:800;display:none;align-items:center;justify-content:center;padding:24px;}
+.cite-overlay.open{display:flex;}
+.cite-panel{background:#fff;border-radius:var(--r2);max-width:560px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden;}
+.cp-hdr{background:var(--primary);padding:16px 20px;display:flex;align-items:flex-start;gap:12px;}
+.cp-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.cp-title{font-size:13.5px;font-weight:700;color:#fff;flex:1;line-height:1.35;}
+.cp-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:20px;cursor:pointer;padding:0;margin-left:8px;line-height:1;}
+.cp-close:hover{color:#fff;}
+.cp-body{padding:18px 20px;}
+.cp-meta{font-size:11px;color:var(--silver);margin-bottom:10px;font-style:italic;}
+.cp-text{font-size:13px;color:var(--slate);line-height:1.75;}
+.cp-relevance{margin-top:12px;padding:10px 14px;background:var(--fog);border-radius:8px;border-left:3px solid var(--accent);}
+.cp-relevance-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);margin-bottom:4px;}
+.cp-relevance-text{font-size:12px;color:var(--slate);line-height:1.65;}
+.chain{display:flex;flex-direction:column;gap:0;margin:16px 0;}
+.chain-item{display:flex;gap:0;cursor:pointer;}
+.chain-node{display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;}
+.chain-dot{width:28px;height:28px;border-radius:50%;background:var(--bd2);border:2px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--silver);transition:all .2s;z-index:1;}
+.chain-item.confirmed .chain-dot{background:var(--accent);border-color:var(--accent);color:#fff;}
+.chain-line{flex:1;width:2px;background:var(--bd2);margin:0 auto;}
+.chain-item.confirmed .chain-line{background:var(--accent);}
+.chain-item:last-child .chain-line{display:none;}
+.chain-content{flex:1;padding:0 0 18px 14px;}
+.chain-title{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:4px;}
+.chain-detail{font-size:12px;color:var(--slate);line-height:1.6;display:none;}
+.chain-item.confirmed .chain-detail{display:block;}
+.chain-confirm-btn{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 12px;background:rgba(196,87,27,.1);border:1px solid rgba(196,87,27,.3);border-radius:6px;font-size:11px;font-weight:700;color:var(--accent);cursor:pointer;transition:all .15s;font-family:var(--sans);}
+.chain-confirm-btn:hover{background:rgba(196,87,27,.2);}
+.chain-confirm-btn.done{pointer-events:none;}
+.chain-progress{margin:12px 0;background:rgba(196,87,27,.08);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;}
+.chain-progress-bar{flex:1;height:6px;background:var(--bd2);border-radius:3px;overflow:hidden;}
+.chain-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width .4s ease;}
+.chain-progress-label{font-size:11px;font-weight:700;color:var(--accent);white-space:nowrap;}
+.formative{background:#fff;border:1.5px solid var(--bd2);border-radius:var(--r2);padding:20px;margin:20px 0;}
+.formative-label{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--silver);margin-bottom:10px;}
+.formative-q{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:16px;line-height:1.4;}
+.choice-grid{display:flex;flex-direction:column;gap:8px;}
+.choice-btn{width:100%;text-align:left;padding:12px 14px;border:1.5px solid var(--bd2);border-radius:var(--r);background:#fff;cursor:pointer;font-family:var(--sans);font-size:13px;color:var(--primary);line-height:1.5;transition:all .15s;display:flex;align-items:flex-start;gap:10px;}
+.choice-btn:hover:not(:disabled){border-color:var(--accent);background:rgba(196,87,27,.03);}
+.choice-btn:disabled{cursor:default;}
+.choice-letter{width:22px;height:22px;border-radius:50%;background:var(--fog);border:1.5px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;margin-top:1px;transition:all .15s;}
+.choice-btn.reveal-correct{border-color:var(--green);background:rgba(42,122,88,.04);}
+.choice-btn.reveal-correct .choice-letter{background:var(--green);border-color:var(--green);color:#fff;}
+.choice-btn.selected-wrong{border-color:var(--red);background:rgba(184,50,50,.04);}
+.choice-btn.selected-wrong .choice-letter{background:var(--red);border-color:var(--red);color:#fff;}
+.choice-btn.selected-correct{border-color:var(--green);background:rgba(42,122,88,.06);}
+.choice-btn.selected-correct .choice-letter{background:var(--green);border-color:var(--green);color:#fff;}
+.choice-btn.dimmed{opacity:.45;}
+.feedback-box{display:none;margin-top:12px;padding:14px 16px;border-radius:var(--r);border-left:3px solid;}
+.feedback-box.correct{border-color:var(--green);background:rgba(42,122,88,.05);}
+.feedback-box.wrong{border-color:var(--red);background:rgba(184,50,50,.04);}
+.feedback-box h4{font-size:13px;font-weight:800;margin-bottom:6px;}
+.feedback-box.correct h4{color:var(--green);}
+.feedback-box.wrong h4{color:var(--red);}
+.feedback-box p{font-size:12.5px;color:var(--slate);line-height:1.7;}
+.gateway{background:#fff;border:1.5px solid var(--bd2);border-radius:var(--r2);padding:22px;margin:20px 0;}
+.gateway-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--slate);margin-bottom:14px;}
+.gateway-q{margin-bottom:16px;}
+.gateway-q-text{font-size:13.5px;font-weight:600;color:var(--primary);margin-bottom:10px;}
+.gw-choices{display:flex;flex-direction:column;gap:6px;}
+.gw-choice{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--bd);border-radius:8px;cursor:pointer;font-size:13px;color:var(--slate);transition:all .15s;}
+.gw-choice:hover{border-color:var(--accent);background:rgba(196,87,27,.03);}
+.gw-choice input{accent-color:var(--accent);}
+.gw-answer{display:none;margin-top:8px;padding:10px 14px;border-radius:8px;font-size:12.5px;line-height:1.65;}
+.gw-answer.correct{background:rgba(42,122,88,.06);border-left:3px solid var(--green);color:var(--slate);}
+.gw-answer.incorrect{background:rgba(184,50,50,.04);border-left:3px solid var(--red);color:var(--slate);}
+.app-screen{display:none;}
+.app-screen.active{display:block;animation:fadeUp .25s ease;}
+.scenario-hdr{background:linear-gradient(135deg,var(--primary),var(--primary2));border-radius:var(--r2);padding:20px 24px;margin-bottom:20px;color:#fff;}
+.scenario-eyebrow{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px;}
+.scenario-title{font-family:var(--serif);font-size:clamp(17px,2.5vw,22px);font-style:italic;color:#fff;line-height:1.2;margin-bottom:8px;}
+.scenario-role{font-size:13px;color:rgba(255,255,255,.55);line-height:1.6;}
+.scenario-body{background:#fff;border:1.5px solid var(--bd2);border-radius:var(--r2);padding:20px;margin-bottom:18px;}
+.scenario-body-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--slate);margin-bottom:12px;}
+.scenario-facts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.scenario-fact{display:flex;gap:10px;font-size:13px;line-height:1.5;}
+.scenario-fact-key{font-weight:700;color:var(--primary);min-width:180px;flex-shrink:0;}
+.scenario-fact-val{color:var(--slate);}
+.scenario-prompt{font-size:14px;font-weight:700;color:var(--primary);padding:14px 16px;background:var(--fog);border-radius:var(--r);border-left:3px solid var(--accent);line-height:1.55;margin-bottom:16px;}
+.screen-nav{display:flex;align-items:center;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid var(--bd);}
+.btn-prev{background:#fff;border:1.5px solid var(--bd2);border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;color:var(--slate);font-family:var(--sans);transition:all .15s;}
+.btn-prev:hover{border-color:var(--accent);color:var(--accent);}
+.btn-next{background:linear-gradient(135deg,var(--accent),#9A3D10);color:#fff;border:none;border-radius:10px;padding:11px 26px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--sans);box-shadow:0 4px 14px rgba(196,87,27,.3);transition:transform .1s;}
+.btn-next:hover{transform:translateY(-1px);}
+.btn-next:disabled{opacity:.4;cursor:default;transform:none;}
+.enter-sim-btn{background:linear-gradient(135deg,var(--amber),#8A6010);color:#fff;border:none;border-radius:10px;padding:13px 30px;font-size:14.5px;font-weight:800;cursor:pointer;font-family:var(--sans);box-shadow:0 4px 16px rgba(201,146,42,.35);transition:transform .1s;}
+.enter-sim-btn:hover{transform:translateY(-1px);}
+.enter-sim-btn:disabled{opacity:.4;cursor:default;transform:none;}
+.debrief{display:none;}
+.debrief.show{display:block;animation:fadeUp .3s ease;}
+.score-ring-wrap{display:flex;flex-direction:column;align-items:center;margin:24px 0;}
+.score-ring{width:120px;height:120px;border-radius:50%;background:conic-gradient(var(--accent) calc(var(--pct,0)*1%),var(--bd2) 0);display:flex;align-items:center;justify-content:center;position:relative;}
+.score-ring::before{content:'';position:absolute;inset:12px;border-radius:50%;background:#fff;}
+.score-ring-inner{position:relative;text-align:center;}
+.score-ring-num{font-family:var(--serif);font-size:28px;font-style:italic;color:var(--primary);}
+.score-ring-denom{font-size:12px;color:var(--silver);}
+.score-ring-label{margin-top:10px;font-size:13px;font-weight:700;color:var(--slate);}
+.debrief-verdict{font-size:14px;color:var(--slate);line-height:1.75;text-align:center;max-width:580px;margin:0 auto 24px;}
+.debrief-cards{display:flex;flex-direction:column;gap:12px;}
+.debrief-card{border:1px solid var(--bd2);border-radius:var(--r);padding:16px;}
+.debrief-card-q{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--silver);margin-bottom:6px;}
+.debrief-card-verdict{font-size:13px;font-weight:800;margin-bottom:6px;}
+.debrief-card-verdict.correct{color:var(--green);}
+.debrief-card-verdict.wrong{color:var(--red);}
+.debrief-expert{font-size:12.5px;color:var(--slate);line-height:1.7;}
+.debrief-ctas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px;}
+.btn-return{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:linear-gradient(135deg,var(--accent),#9A3D10);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--sans);}
+.btn-retry{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#fff;color:var(--slate);border:1.5px solid var(--bd2);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--sans);}
+@media(max-width:680px){
+  .content-area,.mod-hdr-inner,.tab-bar-inner{padding-left:16px;padding-right:16px;}
+  .stat-row{flex-direction:column;}
+  .scenario-fact{flex-direction:column;}
+  .scenario-fact-key{min-width:auto;}
+}
+</style>
+</head>
+<body>
+<div class="cite-overlay" id="cite-overlay" onclick="if(event.target===this)closeCite()">
+  <div class="cite-panel">
+    <div class="cp-hdr"><div class="cp-num" id="cp-num">1</div><div class="cp-title" id="cp-title">Loading...</div><button class="cp-close" onclick="closeCite()">x</button></div>
+    <div class="cp-body"><div class="cp-meta" id="cp-meta"></div><div class="cp-text" id="cp-text"></div>
+      <div class="cp-relevance"><div class="cp-relevance-label">Relevance to Module 4</div><div class="cp-relevance-text" id="cp-relevance"></div></div>
+    </div>
+  </div>
+</div>
+<div class="mod-hdr">
+  <div class="mod-hdr-inner">
+    <button class="mod-back" onclick="window.close()">Return to Training Platform</button>
+    <div class="mod-eyebrow">CLEAR Executive Language Access Certificate Program - Module 4 of 7</div>
+    <h1 class="mod-title">Discharge and Comprehension</h1>
+    <p class="mod-subtitle">98.3% of LEP encounters reach discharge without verified comprehension. That is not a gap. That is the baseline from which all improvement is measured.</p>
+    <div class="mod-meta">
+      <span class="mod-badge badge-phase">Phase 1 - Foundation</span>
+      <span class="mod-badge badge-phase" id="phase2-badge" style="display:none;">Phase 2 - Application</span>
+      <span class="mod-badge badge-step">Training Platform Step 5</span>
+      <span class="mod-badge badge-domain">Patient Engagement - Outcomes - Financial Stewardship</span>
+    </div>
+  </div>
+</div>
+<div class="tab-bar">
+  <div class="tab-bar-inner">
+    <button class="tab-btn active" id="tab-foundation" onclick="switchTab('foundation')">Phase 1 - Foundation</button>
+    <button class="tab-btn" id="tab-application" onclick="switchTab('application')">Phase 2 - Application</button>
+    <div class="phase-score"><span class="phase-score-label">Foundation</span><span class="phase-score-val" id="f-score-display">0 / 3</span></div>
+  </div>
+</div>
+<div class="content-area">
+
+<div class="phase-pane active" id="phase-foundation">
+  <div class="f-nav"><div class="f-nav-label" id="f-screen-label">Foundation 1 of 5</div><div class="f-dots" id="f-dots"><div class="f-dot active" onclick="goF(1)"></div><div class="f-dot" onclick="goF(2)"></div><div class="f-dot" onclick="goF(3)"></div><div class="f-dot" onclick="goF(4)"></div><div class="f-dot" onclick="goF(5)"></div></div></div>
+
+  <div class="f-screen active" id="fs1">
+    <div class="f-screen-title">Foundation 1 of 5 - Design Principle</div>
+    <div class="f-principle">98.3% of LEP encounters reach discharge without verified comprehension. That is not a gap. That is the baseline.</div>
+    <p class="f-body">The gap analysis in Exercise 4.2 is the most operationally concentrated finding in the module series. Teach-back performed: 3.3%. Teach-back documented: 1.7%. Neither performed nor documented: 98.3%. High patient satisfaction scores coexist with near-zero verified comprehension at the transition point with the highest clinical and financial consequence.</p>
+    <div class="callout navy">
+      <div class="callout-title" style="color:var(--primary)">Why 98.3% Is Actionable</div>
+      <div class="callout-body">A 98.3% gap does not mean 98.3% of clinicians are failing. It means 98.3% of encounters do not have a workflow trigger that requires verified comprehension before discharge proceeds. This is a system design finding. The correct intervention is a non-bypassable EHR field at the discharge step, not a staff accountability initiative. When the workflow requires the action, the rate changes.</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-val crit">98.3%</div><div class="stat-lbl">Neither performed nor documented teach-back at discharge.</div></div>
+      <div class="stat-card"><div class="stat-val warn">3.3%</div><div class="stat-lbl">Teach-back performed. 1.7% documented.</div></div>
+      <div class="stat-card"><div class="stat-val sig">HR 0.77</div><div class="stat-lbl">Hong et al. 2019: 23% lower condition-related readmission with teach-back.</div></div>
+    </div>
+    <p class="f-body">Hong et al. (2019) demonstrated HR 0.77 in condition-related 30-day readmission with teach-back methodology — a 23% lower rate. The financial model prices this as a 12-month trajectory: provider adoption grows linearly while automation (EHR-embedded prompts, automated post-discharge calls) follows an S-curve. Both trajectories show net savings. Combined, they substantially exceed provider-only implementation.<a class="cite" onclick="showCite(1)">[1]</a></p>
+    <div class="screen-nav"><div></div><button class="btn-next" onclick="goF(2)">Foundation 2: The Dual Adoption Model</button></div>
+  </div>
+
+  <div class="f-screen" id="fs2">
+    <div class="f-screen-title">Foundation 2 of 5 - The Dual Adoption Model</div>
+    <div class="f-principle">Provider adoption and automation adoption follow different curves. Understanding both is required for a credible 12-month projection.</div>
+    <p class="f-body">Provider adoption of teach-back grows linearly over 12 months, limited by clinical behavior change timelines, training cycles, and workflow integration. A provider who is newly trained in teach-back methodology reaches 50% adoption by month 6 and approaches peak adoption by month 12 under normal implementation conditions.</p>
+    <p class="f-body">Automation adoption follows an S-curve. The first 90 days show slow uptake as EHR fields are deployed and staff adjust to the workflow. Months 3 through 9 show rapid acceleration as the trigger becomes embedded in routine discharge processes. Months 9 through 12 approach capacity plateau. Net savings from automation exceed provider-only implementation in the back half of the year — making the automation infrastructure investment the higher-priority financial decision.</p>
+    <div class="callout amber">
+      <div class="callout-title" style="color:var(--amber)">The Malevanchik Connection</div>
+      <div class="callout-body">Malevanchik et al. (2021) found that even with an active care transitions program reaching patients post-discharge, LEP patients reported significantly more difficulty with all measured domains: understanding discharge instructions (11.3% vs 6.5%), obtaining prescriptions (8.3% vs 5.5%), and managing medications. The program reached them — but it could not compensate for comprehension failures that occurred during the inpatient stay. Prevention at discharge is fundamentally more efficient than post-discharge compensation.</div>
+    </div>
+    <div class="screen-nav"><button class="btn-prev" onclick="goF(1)">Back</button><button class="btn-next" onclick="goF(3)">Foundation 3: The Billing Defensibility Connection</button></div>
+  </div>
+
+  <div class="f-screen" id="fs3">
+    <div class="f-screen-title">Foundation 3 of 5 - Billing Defensibility</div>
+    <div class="f-principle">The same documentation failure that drives readmissions also undermines billing defensibility. The CFO and CMO are looking at the same gap.</div>
+    <p class="f-body">Exercise 4.3 tests whether avoidable LOS and missed reimbursement are correlated. The result is non-significant (p = 0.490). The interpretation: both are uniformly high regardless of patient subgroup. This is not a risk-stratification problem. It is a systemic billing documentation failure distributed across all discharge encounters.<a class="cite" onclick="showCite(2)">[2]</a></p>
+    <p class="f-body">Three billing risks concentrate at the discharge touchpoint. First, avoidable LOS days that are not coded as communication-attributable — leaving the organization with the cost and without the clinical context that would support an appeal. Second, missed T1013 interpreter service billing in states with Medicaid reimbursement — a recoverable revenue stream that requires interpreter documentation linked to specific encounter events. Third, teach-back documentation gaps that undermine audit defensibility for patient education coding in post-acute billing claims.</p>
+    <div class="screen-nav"><button class="btn-prev" onclick="goF(2)">Back</button><button class="btn-next" onclick="goF(4)">Foundation 4: What Language-Concordant Discharge Tells You</button></div>
+  </div>
+
+  <div class="f-screen" id="fs4">
+    <div class="f-screen-title">Foundation 4 of 5 - Concordance Is Necessary But Not Sufficient</div>
+    <div class="f-principle">Language-concordant discharge instructions are necessary. They are not the same as verified comprehension.</div>
+    <p class="f-body">Exercise 4.1 tests whether language-concordant discharge is associated with lower 30-day readmission. The result is non-significant (p = 0.782). This is a confounding result, not a clinical finding. Patients receiving concordant discharge instructions differ systematically from those who do not — by case complexity, by care team, and by service line — making cross-sectional comparison unreliable.</p>
+    <div class="callout accent">
+      <div class="callout-title" style="color:var(--accent)">The Concordance-to-Comprehension Distinction</div>
+      <div class="callout-body">A discharge instruction document in the preferred language increases the probability that the patient can read it. It does not verify that they understood it, can recall it, or can execute its instructions under the conditions they will face at home. Concordance addresses information access. Teach-back verifies information processing. Both are necessary; neither substitutes for the other. The null result here tells you that concordance alone, without teach-back, does not close the readmission gap.</div>
+    </div>
+    <div class="screen-nav"><button class="btn-prev" onclick="goF(3)">Back</button><button class="btn-next" onclick="goF(5)">Foundation 5: Gateway Check</button></div>
+  </div>
+
+  <div class="f-screen" id="fs5">
+    <div class="f-screen-title">Foundation 5 of 5 - Gateway Check</div>
+    <div class="f-principle">Two formative questions before the application begins.</div>
+    <div class="gateway">
+      <div class="gateway-title">Formative Questions</div>
+      <div class="gateway-q">
+        <div class="gateway-q-text">Exercise 4.1 finds no significant association between language-concordant discharge and 30-day readmission. What is the most defensible interpretation?</div>
+        <div class="gw-choices">
+          <label class="gw-choice"><input type="radio" name="gq1" value="a" onchange="gwAnswer(1,'a')"> Language-concordant discharge materials do not reduce readmissions and should be deprioritized</label>
+          <label class="gw-choice"><input type="radio" name="gq1" value="b" onchange="gwAnswer(1,'b')"> Concordance is necessary but not sufficient — confounding prevents detection of a real effect in this cross-sectional dataset, and concordance without verified comprehension does not close the readmission gap</label>
+          <label class="gw-choice"><input type="radio" name="gq1" value="c" onchange="gwAnswer(1,'c')"> The sample is too small to detect a real effect</label>
+          <label class="gw-choice"><input type="radio" name="gq1" value="d" onchange="gwAnswer(1,'d')"> Readmissions are not driven by discharge communication — they reflect clinical severity differences between groups</label>
+        </div>
+        <div class="gw-answer correct" id="gwa1-b">Correct. Confounding by case complexity explains the null. More importantly, concordance addresses information delivery, not comprehension verification. Teach-back is the intervention that tests whether understanding occurred — and it produces the readmission effect that concordance alone cannot demonstrate.</div>
+        <div class="gw-answer incorrect" id="gwa1-a">Deprioritization based on a confounded null result would reduce a federally required and clinically necessary standard. The result tells you concordance is insufficient as a standalone intervention; it does not tell you it is unnecessary.</div>
+        <div class="gw-answer incorrect" id="gwa1-c">Sample size contributes, but the more important issue is confounding. Even a larger sample with the same confounding structure would be unlikely to isolate the concordance effect cleanly.</div>
+        <div class="gw-answer incorrect" id="gwa1-d">This interpretation would support reducing all discharge communication investments, which conflicts with the direct evidence from Hong et al. and Karliner et al. on teach-back and interpreter-assisted discharge outcomes.</div>
+      </div>
+    </div>
+    <div class="screen-nav"><button class="btn-prev" onclick="goF(4)">Back</button><button class="enter-sim-btn" onclick="enterApplication()">Enter Phase 2: Application Scenarios</button></div>
+  </div>
+</div>
+
+<div class="phase-pane" id="phase-application">
+  <div class="f-nav"><div class="f-nav-label" id="app-screen-label">Application 1 of 3</div><div class="f-dots" id="app-dots"><div class="f-dot active" id="adot1"></div><div class="f-dot" id="adot2"></div><div class="f-dot" id="adot3"></div></div></div>
+
+  <div class="app-screen active" id="as1">
+    <div class="scenario-hdr">
+      <div class="scenario-eyebrow">Application 1 of 3 - The 98.3% Response</div>
+      <div class="scenario-title">The Quality Committee Urgent Action</div>
+      <div class="scenario-role">You are the CNO. Your Quality Committee has reviewed the 98.3% teach-back gap. The committee chair proposes immediate action: "We need to hold nurse managers accountable. This level of non-compliance is unacceptable and reflects a failure of leadership in the discharge workflow."</div>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-body-title">Discharge Quality Data</div>
+      <div class="scenario-facts">
+        <div class="scenario-fact"><div class="scenario-fact-key">Teach-back documented</div><div class="scenario-fact-val">1.7% of LEP discharge encounters</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Nurse manager tenure</div><div class="scenario-fact-val">Average 8.3 years at this institution</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Current discharge EHR workflow</div><div class="scenario-fact-val">Patient education field: optional. Teach-back field: absent. Preferred language confirmation: absent.</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Similar organizations</div><div class="scenario-fact-val">Peer-reviewed data: teach-back documentation rates under 5% are common across health systems without embedded workflow triggers.</div></div>
+      </div>
+      <div class="scenario-prompt">How do you respond to the committee chair?</div>
+    </div>
+    <div class="formative">
+      <div class="formative-label">Scored Decision</div>
+      <div class="formative-q">Which response correctly identifies the root cause and the appropriate intervention?</div>
+      <div class="choice-grid" id="q1choices">
+        <button class="choice-btn" onclick="answer(1,'a')"><span class="choice-letter">A</span><span>The committee chair is right. A 1.7% documentation rate represents a leadership failure. Issue performance improvement plans for nurse managers in the lowest-performing units and require monthly reporting to the Quality Committee.</span></button>
+        <button class="choice-btn" onclick="answer(1,'b')"><span class="choice-letter">B</span><span>A 1.7% documentation rate at this institution is consistent with peer organizations operating without embedded workflow triggers for teach-back. This is a system design finding, not a leadership failure. Nurse managers cannot produce documentation that a field does not exist to capture. The intervention is an EHR change — a required teach-back field that cannot be bypassed before discharge orders are signed — not a performance management action. Performance accountability becomes appropriate after the system is designed to enable the behavior.</span></button>
+        <button class="choice-btn" onclick="answer(1,'c')"><span class="choice-letter">C</span><span>Launch a teach-back training program for all nursing staff. Once trained, nurses will be accountable for documentation and the rate will improve.</span></button>
+        <button class="choice-btn" onclick="answer(1,'d')"><span class="choice-letter">D</span><span>Set a 30-day target of 25% documentation and escalate to performance management for any unit below 15% after 60 days.</span></button>
+      </div>
+      <div class="feedback-box" id="q1fb"></div>
+    </div>
+    <div class="screen-nav"><div></div><button class="btn-next" id="as1-next" onclick="goApp(2)" disabled>Next Scenario</button></div>
+  </div>
+
+  <div class="app-screen" id="as2">
+    <div class="scenario-hdr">
+      <div class="scenario-eyebrow">Application 2 of 3 - The Readmission Attribution</div>
+      <div class="scenario-title">The CFO Readmission Analysis</div>
+      <div class="scenario-role">You are the CMO. Your CFO asks you to quantify the readmission financial exposure from the teach-back gap. She wants a number she can present to the board: "What is the annual cost of not doing teach-back for LEP patients?"</div>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-body-title">Financial Modeling Context</div>
+      <div class="scenario-facts">
+        <div class="scenario-fact"><div class="scenario-fact-key">Hong et al. (2019)</div><div class="scenario-fact-val">HR 0.77 — 23% lower condition-related readmission with teach-back</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Current teach-back coverage</div><div class="scenario-fact-val">3.3% of LEP discharge encounters (performed)</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Annual LEP discharges</div><div class="scenario-fact-val">1,800 (organizational estimate)</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Current LEP 30-day readmission rate</div><div class="scenario-fact-val">14.2% (not stratified by condition)</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Average readmission cost</div><div class="scenario-fact-val">$14,500 per readmission (system average)</div></div>
+      </div>
+      <div class="scenario-prompt">How should you construct this financial argument?</div>
+    </div>
+    <div class="formative">
+      <div class="formative-label">Scored Decision</div>
+      <div class="formative-q">Which approach produces the most defensible financial figure?</div>
+      <div class="choice-grid" id="q2choices">
+        <button class="choice-btn" onclick="answer(2,'a')"><span class="choice-letter">A</span><span>Apply the 23% reduction to all 1,800 LEP discharges at the 14.2% readmission rate. Annual avoidable readmissions: 1,800 x 14.2% x 23% = 59 readmissions x $14,500 = $855,000 per year.</span></button>
+        <button class="choice-btn" onclick="answer(2,'b')"><span class="choice-letter">B</span><span>Apply the 23% reduction only to condition-related readmissions — which are a subset of total readmissions — and apply a conservative attribution percentage accounting for the fact that not all readmissions are prevented by teach-back even when performed. The Hong et al. effect is condition-specific. Applying it to the total readmission rate overstates the attributable benefit and will not hold under CFO scrutiny from anyone familiar with the study.</span></button>
+        <button class="choice-btn" onclick="answer(2,'c')"><span class="choice-letter">C</span><span>Use the upper end of published readmission reduction estimates (30-35%) to produce the largest defensible figure for the board presentation.</span></button>
+        <button class="choice-btn" onclick="answer(2,'d')"><span class="choice-letter">D</span><span>Do not present a specific dollar figure. Readmission attribution to a single intervention is too uncertain for financial modeling. Present the Hong et al. HR 0.77 as a clinical outcome only.</span></button>
+      </div>
+      <div class="feedback-box" id="q2fb"></div>
+    </div>
+    <div class="screen-nav"><button class="btn-prev" onclick="goApp(1)">Back</button><button class="btn-next" id="as2-next" onclick="goApp(3)" disabled>Next Scenario</button></div>
+  </div>
+
+  <div class="app-screen" id="as3">
+    <div class="scenario-hdr">
+      <div class="scenario-eyebrow">Application 3 of 3 - Automation vs. Provider Investment</div>
+      <div class="scenario-title">The IT Prioritization Decision</div>
+      <div class="scenario-role">You are the COO. Your IT department has capacity for one major discharge workflow change in the next quarter. Your CMO wants an EHR hard-stop requiring teach-back documentation. Your Director of Language Services wants an automated 72-hour post-discharge phone call system in the preferred language. You must choose one for Q3 deployment.</div>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-body-title">Implementation Options</div>
+      <div class="scenario-facts">
+        <div class="scenario-fact"><div class="scenario-fact-key">Option A: EHR teach-back hard-stop</div><div class="scenario-fact-val">Non-bypassable field at discharge. Requires preferred language confirmation and teach-back response documentation. Implementation: 6 weeks. No ongoing per-encounter cost.</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Option B: Automated 72-hour call system</div><div class="scenario-fact-val">Language-routed outbound call with structured questions. Captures post-discharge concerns before readmission. Implementation: 8 weeks. Ongoing cost: $4.20 per encounter.</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Malevanchik et al. (2021)</div><div class="scenario-fact-val">Post-discharge follow-up reaches LEP patients but cannot compensate for comprehension failures during inpatient stay.</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Hong et al. (2019)</div><div class="scenario-fact-val">Teach-back at discharge: HR 0.77, 23% lower condition-related readmission.</div></div>
+      </div>
+      <div class="scenario-prompt">Which investment do you prioritize for Q3 — and what is your reasoning?</div>
+    </div>
+    <div class="formative">
+      <div class="formative-label">Scored Decision</div>
+      <div class="formative-q">Which decision is most supported by the evidence?</div>
+      <div class="choice-grid" id="q3choices">
+        <button class="choice-btn" onclick="answer(3,'a')"><span class="choice-letter">A</span><span>Option B (automated calls). The Malevanchik finding shows LEP patients have significantly more post-discharge difficulty even with care transitions programs. Automated calls in the preferred language address the gap directly and reach patients who may have left the hospital without adequate comprehension.</span></button>
+        <button class="choice-btn" onclick="answer(3,'b')"><span class="choice-letter">B</span><span>Option A (EHR teach-back hard-stop). Prevention at discharge is more efficient than compensation post-discharge. The EHR change operates on every future encounter at no marginal cost, produces the verified comprehension that Option B cannot create retrospectively, and is directly supported by the Hong et al. HR 0.77 evidence. Option B is the right Q4 investment once Option A has been deployed and comprehension at discharge has improved. Both are needed; the sequence matters.</span></button>
+        <button class="choice-btn" onclick="answer(3,'c')"><span class="choice-letter">C</span><span>Delay both implementations until a formal return on investment analysis is complete for each option using the organization own data.</span></button>
+        <button class="choice-btn" onclick="answer(3,'d')"><span class="choice-letter">D</span><span>Option B is lower-risk because it does not disrupt the discharge workflow. The teach-back hard-stop will generate nursing resistance that could undermine the quality improvement initiative.</span></button>
+      </div>
+      <div class="feedback-box" id="q3fb"></div>
+    </div>
+    <div class="screen-nav"><button class="btn-prev" onclick="goApp(2)">Back</button><button class="btn-next" id="as3-next" onclick="showDebrief()" disabled>Complete Module</button></div>
+  </div>
+
+  <div class="debrief" id="debrief">
+    <div class="score-ring-wrap">
+      <div class="score-ring" id="scoreRing" style="--pct:0;"><div class="score-ring-inner"><div class="score-ring-num"><span id="debriefNum">0</span>/3</div></div></div>
+      <div class="score-ring-label" id="debrief-label">Module 4 Complete</div>
+    </div>
+    <div class="debrief-verdict" id="debrief-verdict"></div>
+    <div class="debrief-cards" id="debrief-cards"></div>
+    <div class="debrief-ctas">
+      <button class="btn-return" onclick="window.close()">Return to Training Platform - Complete Step 5 CAP</button>
+      <button class="btn-retry" onclick="retryModule()">Retry Application</button>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+var F_TOTAL=5,APP_TOTAL=3,TOTAL_Q=3;
+CHAIN_TOTAL=0;
+var CITES={
+  1:{title:"Hong et al. (2019) - Teach-Back and 30-Day Readmission",
+     meta:"Hong E et al. Patient Education and Counseling, 2019",
+     text:"Teach-back methodology associated with HR 0.77 in condition-related 30-day readmission — a 23% lower rate. Prospective study design with clinical severity controls, overcoming the confounding limitations of cross-sectional administrative data.",
+     relevance:"Primary clinical evidence for the teach-back ROI module. HR 0.77 applied to condition-related readmissions only — not total readmissions. Conservative application is required."},
+  2:{title:"Chi-Square: Avoidable LOS vs. Missed Reimbursement",
+     meta:"Exercise 4.3 - CLEAR LAI Q1 2026 Sample Dataset",
+     text:"Chi-square test: p = 0.490. Non-significant. Avoidable LOS and missed reimbursement are not correlated with any patient subgroup — both are uniformly high across all encounter types. This confirms a systemic billing documentation failure, not a risk-stratification problem.",
+     relevance:"Establishes that billing defensibility gaps at discharge are not concentrated in high-risk patients — they are distributed across all encounters. The intervention must be structural and universal, not targeted."}
+};
+var GW_CORRECT={1:"b"};
+var Q_LABELS=["Scenario 1: The 98.3% Response","Scenario 2: Readmission Attribution","Scenario 3: Automation vs. Provider Investment"];
+var Q={
+  1:{correct:"b",feedback:{
+    a:{ok:false,title:"Performance management before system design creates accountability without capability",
+       body:"Nurse managers cannot document teach-back in a field that does not exist. Issuing performance improvement plans before deploying the EHR trigger holds people accountable for a system failure. When the EHR hard-stop is deployed and the rate remains below target, performance accountability becomes appropriate. The sequence matters."},
+    b:{ok:true,title:"Correct - system design precedes performance accountability",
+       body:"The peer context (sub-5% rates are common without embedded triggers) and the EHR gap analysis (no teach-back field exists) both support a system design diagnosis. The intervention is an EHR change. The correct sequence is: design the system to enable the behavior, then hold people accountable for executing within that system."},
+    c:{ok:false,title:"Training the Module 3 lesson: training without structural change does not move workflow metrics",
+       body:"The same Module 3 finding applies here. Training communicates knowledge. It does not change the workflow trigger. In a busy discharge environment, trained behavior that requires extra steps will be skipped under time pressure. The EHR hard-stop makes the behavior required regardless of time pressure."},
+    d:{ok:false,title:"Arbitrary percentage targets without structural changes produce documentation gaming",
+       body:"Setting a 25% target without changing the workflow creates pressure to document teach-back regardless of whether it occurred. Documentation gaming — recording teach-back as completed without performing it — is worse than non-documentation because it creates false assurance of compliance while producing no clinical benefit."}
+  }},
+  2:{correct:"b",feedback:{
+    a:{ok:false,title:"Applying condition-specific HR to total readmissions overstates the attributable benefit",
+       body:"Hong et al. (2019) measured condition-related readmissions specifically — not all-cause 30-day readmissions. Applying the 23% reduction to the total readmission rate would include readmissions for unrelated causes that teach-back would not prevent. A finance-literate CFO who reviews the Hong et al. study will immediately identify this error."},
+    b:{ok:true,title:"Correct - attribution scope matches evidence scope",
+       body:"The financially defensible approach applies the Hong et al. effect only to condition-related readmissions (a subset of total readmissions) and applies a conservative attribution percentage reflecting that teach-back prevents some but not all condition-related readmissions. This produces a smaller number that holds under scrutiny rather than a larger number that collapses when challenged."},
+    c:{ok:false,title:"Using upper-bound estimates to maximize the board figure is the credibility trap",
+       body:"Upper-bound estimates are selected to impress, not to defend. A CFO who asks where the 30-35% figure comes from and finds it is the optimistic end of a range will discount the entire analysis. Conservative anchoring produces figures that hold; optimistic anchoring produces figures that erode."},
+    d:{ok:false,title:"Financial modeling under uncertainty is a governance requirement, not an option",
+       body:"A CFO asking for a dollar figure is asking for a defensible projection, not a certainty. Refusing to provide one leaves the board without a financial anchor for the investment decision. The correct approach is to provide a range using conservative and base-case assumptions, with explicit description of the key uncertainties."}
+  }},
+  3:{correct:"b",feedback:{
+    a:{ok:false,title:"Post-discharge compensation cannot substitute for inpatient prevention",
+       body:"Malevanchik et al. explicitly found that post-discharge follow-up reached LEP patients but could not compensate for comprehension failures during the inpatient stay. Option B addresses the downstream consequence of Option A not being done. Installing the downstream fix first does not address the root cause."},
+    b:{ok:true,title:"Correct - prevention before compensation, sequence both investments",
+       body:"Option A operates at the point of clinical consequence — discharge — with zero marginal cost per encounter and direct support from Hong et al. Option B is a valuable complement that should follow Option A. The sequencing reflects the evidence hierarchy: verified comprehension at discharge reduces the post-discharge burden that Option B was designed to address."},
+    c:{ok:false,title:"Delaying both implementations while awaiting internal ROI analysis is an avoidable opportunity cost",
+       body:"The published evidence is sufficient to support Option A deployment. An internal ROI analysis using this organization data would take 6 to 12 months and produce a figure within the same range as the conservative model already built. The opportunity cost of delay — avoidable readmissions during that period — exceeds the value of the additional precision."},
+    d:{ok:false,title:"Clinical resistance is managed through framing, not by avoiding the intervention",
+       body:"Nursing resistance to a discharge hard-stop is predictable and manageable with the right framing: this is a patient safety intervention that protects both patients and nurses from the documentation liability of incomplete discharge processes. Choosing Option B because Option A will meet resistance accepts clinical inertia as a governance constraint, which is not the executive role."}
+  }}
+};
+
+/* ── CITATION PANEL ─────────────────────────────────────────────────── */
+function showCite(n){
+  var c=CITES[n]; if(!c) return;
+  document.getElementById('cp-num').textContent=n;
+  document.getElementById('cp-title').textContent=c.title;
+  document.getElementById('cp-meta').textContent=c.meta;
+  document.getElementById('cp-text').textContent=c.text;
+  document.getElementById('cp-relevance').textContent=c.relevance;
+  document.getElementById('cite-overlay').classList.add('open');
+}
+function closeCite(){document.getElementById('cite-overlay').classList.remove('open');}
+
+/* ── FOUNDATION NAVIGATION ──────────────────────────────────────────── */
+var _fScreen=1;
+function goF(n){
+  document.getElementById('fs'+_fScreen).classList.remove('active');
+  document.getElementById('fs'+n).classList.add('active');
+  document.getElementById('f-screen-label').textContent='Foundation '+n+' of '+F_TOTAL;
+  var dots=document.querySelectorAll('#f-dots .f-dot');
+  dots.forEach(function(d,i){
+    d.classList.remove('active','done');
+    if(i+1<n) d.classList.add('done');
+    else if(i+1===n) d.classList.add('active');
+  });
+  _fScreen=n;
+}
+
+/* ── EVIDENCE CHAIN ─────────────────────────────────────────────────── */
+var _chainConfirmed=0, CHAIN_TOTAL=0;
+function confirmChain(id){
+  var item=document.getElementById('chain-'+id);
+  var btn=document.getElementById('cbtn-'+id);
+  if(!item||item.classList.contains('confirmed')) return;
+  item.classList.add('confirmed');
+  btn.textContent='Confirmed';
+  btn.classList.add('done');
+  _chainConfirmed++;
+  var pct=(_chainConfirmed/CHAIN_TOTAL)*100;
+  document.getElementById('chain-fill').style.width=pct+'%';
+  document.getElementById('chain-label').textContent=_chainConfirmed+' / '+CHAIN_TOTAL;
+}
+
+/* ── GATEWAY ────────────────────────────────────────────────────────── */
+function gwAnswer(q,choice){
+  var correct=GW_CORRECT[q];
+  ['a','b','c','d'].forEach(function(l){
+    var el=document.getElementById('gwa'+q+'-'+l);
+    if(el) el.style.display='none';
+  });
+  var el=document.getElementById('gwa'+q+'-'+choice);
+  if(el) el.style.display='block';
+  document.querySelectorAll('input[name="gq'+q+'"]').forEach(function(r){r.disabled=true;});
+}
+
+/* ── TAB SWITCHING ──────────────────────────────────────────────────── */
+function switchTab(tab){
+  ['foundation','application'].forEach(function(t){
+    document.getElementById('tab-'+t).classList.remove('active');
+    document.getElementById('phase-'+t).classList.remove('active');
+  });
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.getElementById('phase-'+tab).classList.add('active');
+}
+function enterApplication(){
+  switchTab('application');
+  var b=document.getElementById('phase2-badge');
+  if(b) b.style.display='inline-flex';
+  goApp(1);
+}
+
+/* ── APPLICATION NAVIGATION ─────────────────────────────────────────── */
+var _appScreen=1;
+function goApp(n){
+  document.getElementById('as'+_appScreen).classList.remove('active');
+  var next=document.getElementById('as'+n);
+  if(!next) return;
+  next.classList.add('active');
+  document.getElementById('app-screen-label').textContent='Application '+n+' of '+APP_TOTAL;
+  var dots=document.querySelectorAll('#app-dots .f-dot');
+  dots.forEach(function(d,i){
+    d.classList.remove('active','done');
+    if(i+1<n) d.classList.add('done');
+    else if(i+1===n) d.classList.add('active');
+  });
+  _appScreen=n;
+}
+
+/* ── SCORING ────────────────────────────────────────────────────────── */
+var score=0, answers={};
+function answer(q,choice){
+  if(answers['q'+q]!==undefined) return;
+  var qd=Q[q];
+  var fd=qd.feedback[choice]||{ok:false,title:'No feedback',body:''};
+  answers['q'+q]=fd.ok;
+  if(fd.ok) score++;
+  document.getElementById('f-score-display').textContent=score+' / '+TOTAL_Q;
+  var container=document.getElementById('q'+q+'choices');
+  container.querySelectorAll('.choice-btn').forEach(function(btn,i){
+    var l='abcd'[i]; btn.disabled=true;
+    if(l===qd.correct) btn.classList.add('reveal-correct');
+    else if(l===choice&&!fd.ok) btn.classList.add('selected-wrong');
+    else if(l===choice&&fd.ok) btn.classList.add('selected-correct');
+    else btn.classList.add('dimmed');
+  });
+  var fb=document.getElementById('q'+q+'fb');
+  fb.className='feedback-box '+(fd.ok?'correct':'wrong');
+  fb.style.display='block';
+  fb.innerHTML='<h4>'+fd.title+'<\/h4><p>'+fd.body+'<\/p>';
+  var nb=document.getElementById('as'+q+'-next');
+  if(nb) nb.disabled=false;
+}
+
+/* ── DEBRIEF ────────────────────────────────────────────────────────── */
+function showDebrief(){
+  document.getElementById('as'+TOTAL_Q).classList.remove('active');
+  var debrief=document.getElementById('debrief');
+  debrief.classList.add('show');
+  var pct=Math.round((score/TOTAL_Q)*100);
+  setTimeout(function(){document.getElementById('scoreRing').style.setProperty('--pct',pct);},100);
+  document.getElementById('debriefNum').textContent=score;
+  var msgs=[
+    'Review each scenario carefully. The errors reflect real governance mistakes with clinical and financial consequences. Return to Foundation screens to reinforce the framework before retrying.',
+    'Good progress. One scenario reflects a nuanced judgment call. Review the expert feedback — the reasoning cited is the standard of practice.',
+    'Excellent. You applied the module framework correctly across all three decision scenarios. These competencies directly inform your CAP contribution for this step.'
+  ];
+  var labels=['Review Foundation','Good Progress','Ready for Next Step'];
+  document.getElementById('debrief-verdict').textContent=msgs[Math.min(score,2)];
+  document.getElementById('debrief-label').textContent=labels[Math.min(score,2)];
+  var cc=document.getElementById('debrief-cards');
+  cc.innerHTML='';
+  for(var n=1;n<=TOTAL_Q;n++){
+    var wasCorrect=answers['q'+n];
+    var cf=Q[n].feedback[Q[n].correct];
+    var card=document.createElement('div');
+    card.className='debrief-card';
+    card.innerHTML='<div class="debrief-card-q">'+Q_LABELS[n-1]+'<\/div>'+
+      '<div class="debrief-card-verdict '+(wasCorrect?'correct':'wrong')+'">'+(wasCorrect?'Correct':'Needs review')+'<\/div>'+
+      '<div class="debrief-expert">'+cf.body+'<\/div>';
+    cc.appendChild(card);
+  }
+}
+function retryModule(){
+  score=0; answers={};
+  document.getElementById('f-score-display').textContent='0 / '+TOTAL_Q;
+  document.getElementById('debrief').classList.remove('show');
+  for(var n=1;n<=TOTAL_Q;n++){
+    var c=document.getElementById('q'+n+'choices');
+    if(c){
+      c.querySelectorAll('.choice-btn').forEach(function(b){
+        b.disabled=false;
+        b.classList.remove('reveal-correct','selected-wrong','selected-correct','dimmed');
+      });
+      var fb=document.getElementById('q'+n+'fb');
+      if(fb) fb.style.display='none';
+      var nb=document.getElementById('as'+n+'-next');
+      if(nb) nb.disabled=true;
+    }
+  }
+  goApp(1);
+  document.getElementById('as1').classList.add('active');
+  document.getElementById('scoreRing').style.setProperty('--pct',0);
+}
+
+</script>
+</body></html>

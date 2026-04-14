@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>CLEAR Module 6 - Governance and System-Level Accountability</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#1E3448;--primary2:#243D56;
+  --accent:#C4571B;--accent2:#E07B45;
+  --amber:#C9922A;--amber2:#F0B84A;
+  --green:#2A7A58;--red:#B83232;
+  --slate:#4A5E72;--silver:#7E9AAD;
+  --ice:#EAF2F7;--fog:#F4F6F8;--white:#FFFFFF;
+  --bd:rgba(30,52,72,.10);--bd2:rgba(30,52,72,.18);
+  --sh:0 2px 16px rgba(30,52,72,.08);--r:10px;--r2:14px;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --serif:'DM Serif Display','Georgia',serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{height:100%;-webkit-font-smoothing:antialiased;}
+body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-size:14px;line-height:1.65;min-height:100vh;}
+.mod-hdr{background:linear-gradient(135deg,var(--primary) 0%,var(--primary2) 100%);padding:0;border-bottom:2px solid rgba(196,87,27,.3);}
+.mod-hdr-inner{max-width:960px;margin:0 auto;padding:24px 32px;}
+.mod-back{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:rgba(255,255,255,.4);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px;cursor:pointer;background:none;border:none;font-family:var(--sans);}
+.mod-back:hover{color:rgba(255,255,255,.7);}
+.mod-eyebrow{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:8px;}
+.mod-title{font-family:var(--serif);font-size:clamp(22px,3vw,32px);font-style:italic;color:#fff;line-height:1.15;margin-bottom:8px;}
+.mod-subtitle{font-size:14px;color:rgba(255,255,255,.55);line-height:1.6;max-width:680px;margin-bottom:18px;}
+.mod-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.mod-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:6px;font-size:10.5px;font-weight:700;letter-spacing:.04em;}
+.badge-phase{background:rgba(196,87,27,.2);color:var(--accent2);}
+.badge-step{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);}
+.badge-domain{background:rgba(201,146,42,.15);color:var(--amber2);}
+.tab-bar{background:var(--primary);border-bottom:1px solid rgba(255,255,255,.07);}
+.tab-bar-inner{max-width:960px;margin:0 auto;padding:0 32px;display:flex;gap:0;}
+.tab-btn{padding:12px 20px;font-size:12px;font-weight:700;color:rgba(255,255,255,.38);background:none;border:none;cursor:pointer;font-family:var(--sans);letter-spacing:.04em;text-transform:uppercase;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;}
+.tab-btn:hover{color:rgba(255,255,255,.7);}
+.tab-btn.active{color:var(--accent2);border-bottom-color:var(--accent);}
+.phase-score{margin-left:auto;padding:12px 0;display:flex;align-items:center;gap:8px;}
+.phase-score-label{font-size:10px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.08em;}
+.phase-score-val{font-size:13px;font-weight:800;color:var(--accent2);}
+.content-area{max-width:960px;margin:0 auto;padding:28px 32px;}
+.phase-pane{display:none;}
+.phase-pane.active{display:block;}
+.f-screen{display:none;}
+.f-screen.active{display:block;animation:fadeUp .25s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.f-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.f-nav-label{font-size:11px;font-weight:700;color:var(--silver);text-transform:uppercase;letter-spacing:.08em;}
+.f-dots{display:flex;gap:6px;}
+.f-dot{width:8px;height:8px;border-radius:50%;background:var(--bd2);transition:all .2s;cursor:pointer;}
+.f-dot.active{background:var(--accent);transform:scale(1.3);}
+.f-dot.done{background:rgba(196,87,27,.4);}
+.f-screen-title{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.f-principle{font-family:var(--serif);font-size:clamp(20px,2.5vw,27px);font-style:italic;color:var(--primary);line-height:1.25;margin-bottom:20px;}
+.f-body{font-size:13.5px;color:var(--slate);line-height:1.8;margin-bottom:16px;}
+.f-body strong{color:var(--primary);font-weight:700;}
+.callout{border-left:3px solid;border-radius:var(--r);padding:14px 18px;margin:14px 0;}
+.callout.accent{border-color:var(--accent);background:rgba(196,87,27,.05);}
+.callout.amber{border-color:var(--amber);background:rgba(201,146,42,.05);}
+.callout.red{border-color:var(--red);background:rgba(184,50,50,.05);}
+.callout.navy{border-color:var(--primary);background:rgba(30,52,72,.04);}
+.callout-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;}
+.callout-body{font-size:13px;color:#334155;line-height:1.7;}
+.stat-row{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;}
+.stat-card{background:#fff;border:1px solid var(--bd2);border-radius:var(--r);padding:14px 16px;min-width:140px;flex:1;}
+.stat-val{font-family:var(--serif);font-size:clamp(22px,3vw,30px);font-style:italic;color:var(--primary);line-height:1;margin-bottom:4px;}
+.stat-val.sig{color:var(--accent);}
+.stat-val.crit{color:var(--red);}
+.stat-val.warn{color:var(--amber);}
+.stat-val.ns{color:var(--slate);}
+.stat-lbl{font-size:11px;color:var(--silver);line-height:1.4;}
+.cite{color:var(--accent);font-size:11px;font-weight:800;vertical-align:super;cursor:pointer;margin-left:1px;text-decoration:none;}
+.cite:hover{text-decoration:underline;}
+.cite-overlay{position:fixed;inset:0;background:rgba(30,52,72,.55);z-index:800;display:none;align-items:center;justify-content:center;padding:24px;}
+.cite-overlay.open{display:flex;}
+.cite-panel{background:#fff;border-radius:var(--r2);max-width:560px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden;}
+.cp-hdr{background:var(--primary);padding:16px 20px;display:flex;align-items:flex-start;gap:12px;}
+.cp-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.cp-title{font-size:13.5px;font-weight:700;color:#fff;flex:1;line-height:1.35;}
+.cp-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:20px;cursor:pointer;padding:0;margin-left:8px;line-height:1;}
+.cp-close:hover{color:#fff;}
+.cp-body{padding:18px 20px;}
+.cp-meta{font-size:11px;color:var(--silver);margin-bottom:10px;font-style:italic;}
+.cp-text{font-size:13px;color:var(--slate);line-height:1.75;}
+.cp-relevance{margin-top:12px;padding:10px 14px;background:var(--fog);border-radius:8px;border-left:3px solid var(--accent);}
+.cp-relevance-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);margin-bottom:4px;}
+.cp-relevance-text{font-size:12px;color:var(--slate);line-height:1.65;}
+.chain{display:flex;flex-direction:column;gap:0;margin:16px 0;}
+.chain-item{display:flex;gap:0;cursor:pointer;}
+.chain-node{display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;}
+.chain-dot{width:28px;height:28px;border-radius:50%;background:var(--bd2);border:2px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--silver);transition:all .2s;z-index:1;}
+.chain-item.confirmed .chain-dot{background:var(--accent);border-color:var(--accent);color:#fff;}
+.chain-line{flex:1;width:2px;background:var(--bd2);margin:0 auto;}
+.chain-item.confirmed .chain-line{background:var(--accent);}
+.chain-item:last-child .chain-line{display:none;}
+.chain-content{flex:1;padding:0 0 18px 14px;}
+.chain-title{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:4px;}
+.chain-detail{font-size:12px;color:var(--slate);line-height:1.6;display:none;}
+.chain-item.confirmed .chain-detail{display:block;}
+.chain-confirm-btn{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 12px;background:rgba(196,87,27,.1);border:1px solid rgba(196,87,27,.3);border-radius:6px;font-size:11px;font-weight:700;color:var(--accent);cursor:pointer;transition:all .15s;font-family:var(--sans);}
+.chain-confirm-btn:hover{background:rgba(196,87,27,.2);}
+.chain-confirm-btn.done{pointer-events:none;}
+.chain-progress{margin:12px 0;background:rgba(196,87,27,.08);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;}
+.chain-progress-bar{flex:1;height:6px;background:var(--bd2);border-radius:3px;overflow:hidden;}
+.chain-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width .4s ease;}
+.chain-progress-label{font-size:11px;font-weight:700;color:var(--accent);white-space:nowrap;}
+.formative{background:#fff;border:1.5px solid var(--bd2);border-radius:var(--r2);padding:20px;margin:20px 0;}
+.formative-label{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--silver);margin-bottom:10px;}
+.formative-q{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:16px;line-height:1.4;}
+.choice-grid{display:flex;flex-direction:column;gap:8px;}
+.choice-btn{width:100%;text-align:left;padding:12px 14px;border:1.5px solid var(--bd2);border-radius:var(--r);background:#fff;cursor:pointer;font-family:var(--sans);font-size:13px;color:var(--primary);line-height:1.5;transition:all .15s;display:flex;align-items:flex-start;gap:10px;}
+.choice-btn:hover:not(:disabled){border-color:var(--accent);background:rgba(196,87,27,.03);}
+.choice-btn:disabled{cursor:default;}
+.choice-letter{width:22px;height:22px;border-radius:50%;background:var(--fog);border:1.5px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;margin-top:1px;transition:all .15s;}
+.choice-btn.reveal-correct{border-color:var(--green);background:rgba(42,122,88,.04);}
+.choice-btn.reveal-correct .choice-letter{background:var(--green);border-color:var(--green);color:#fff;}
+.choice-btn.selected-wrong{border-color:var(--red);background:rgba(184,50,50,.04);}
+.choice-btn.selected-wrong .choice-letter{background:var(--red);border-color:var(--red);color:#fff;}
+.choice-btn.selected-correct{border-color:var(--green);background:rgba(42,122,88,.06);}
+.choice-btn.selected-correct .choice-letter{background:var(--green);border-color:var(--green);color:#fff;}
+.choice-btn.dimmed{opacity:.45;}
+.feedback-box{display:none;margin-top:12px;padding:14px 16px;border-radius:var(--r);border-left:3px solid;}
+.feedback-box.correct{border-color:var(--green);background:rgba(42,122,88,.05);}
+.feedback-box.wrong{border-color:var(--red);background:rgba(184,50,50,.04);}
+.feedback-box h4{font-size:13px;font-weight:800;margin-bottom:6px;}
+.feedback-box.correct h4{color:var(--green);}
+.feedback-box.wrong h4{color:var(--red);}
+.feedback-box p{font-size:12.5px;color:var(--slate);line-height:1.7;}
+.gateway{background:#fff;border:1.5px solid var(--bd2);border-radius:var(--r2);padding:22px;margin:20px 0;}
+.gateway-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--slate);margin-bottom:14px;}
+.gateway-q{margin-bottom:16px;}
+.gateway-q-text{font-size:13.5px;font-weight:600;color:var(--primary);margin-bottom:10px;}
+.gw-choices{display:flex;flex-direction:column;gap:6px;}
+.gw-choice{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--bd);border-radius:8px;cursor:pointer;font-size:13px;color:var(--slate);transition:all .15s;}
+.gw-choice:hover{border-color:var(--accent);background:rgba(196,87,27,.03);}
+.gw-choice input{accent-color:var(--accent);}
+.gw-answer{display:none;margin-top:8px;padding:10px 14px;border-radius:8px;font-size:12.5px;line-height:1.65;}
+.gw-answer.correct{background:rgba(42,122,88,.06);border-left:3px solid var(--green);color:var(--slate);}
+.gw-answer.incorrect{background:rgba(184,50,50,.04);border-left:3px solid var(--red);color:var(--slate);}
+.app-screen{display:none;}
+.app-screen.active{display:block;animation:fadeUp .25s ease;}
+.scenario-hdr{background:linear-gradient(135deg,var(--primary),var(--primary2));border-radius:var(--r2);padding:20px 24px;margin-bottom:20px;color:#fff;}
+.scenario-eyebrow{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px;}
+.scenario-title{font-family:var(--serif);font-size:clamp(17px,2.5vw,22px);font-style:italic;color:#fff;line-height:1.2;margin-bottom:8px;}
+.scenario-role{font-size:13px;color:rgba(255,255,255,.55);line-height:1.6;}
+.scenario-body{background:#fff;border:1.5px solid var(--bd2);border-radius:var(--r2);padding:20px;margin-bottom:18px;}
+.scenario-body-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--slate);margin-bottom:12px;}
+.scenario-facts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.scenario-fact{display:flex;gap:10px;font-size:13px;line-height:1.5;}
+.scenario-fact-key{font-weight:700;color:var(--primary);min-width:180px;flex-shrink:0;}
+.scenario-fact-val{color:var(--slate);}
+.scenario-prompt{font-size:14px;font-weight:700;color:var(--primary);padding:14px 16px;background:var(--fog);border-radius:var(--r);border-left:3px solid var(--accent);line-height:1.55;margin-bottom:16px;}
+.screen-nav{display:flex;align-items:center;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid var(--bd);}
+.btn-prev{background:#fff;border:1.5px solid var(--bd2);border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;color:var(--slate);font-family:var(--sans);transition:all .15s;}
+.btn-prev:hover{border-color:var(--accent);color:var(--accent);}
+.btn-next{background:linear-gradient(135deg,var(--accent),#9A3D10);color:#fff;border:none;border-radius:10px;padding:11px 26px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--sans);box-shadow:0 4px 14px rgba(196,87,27,.3);transition:transform .1s;}
+.btn-next:hover{transform:translateY(-1px);}
+.btn-next:disabled{opacity:.4;cursor:default;transform:none;}
+.enter-sim-btn{background:linear-gradient(135deg,var(--amber),#8A6010);color:#fff;border:none;border-radius:10px;padding:13px 30px;font-size:14.5px;font-weight:800;cursor:pointer;font-family:var(--sans);box-shadow:0 4px 16px rgba(201,146,42,.35);transition:transform .1s;}
+.enter-sim-btn:hover{transform:translateY(-1px);}
+.enter-sim-btn:disabled{opacity:.4;cursor:default;transform:none;}
+.debrief{display:none;}
+.debrief.show{display:block;animation:fadeUp .3s ease;}
+.score-ring-wrap{display:flex;flex-direction:column;align-items:center;margin:24px 0;}
+.score-ring{width:120px;height:120px;border-radius:50%;background:conic-gradient(var(--accent) calc(var(--pct,0)*1%),var(--bd2) 0);display:flex;align-items:center;justify-content:center;position:relative;}
+.score-ring::before{content:'';position:absolute;inset:12px;border-radius:50%;background:#fff;}
+.score-ring-inner{position:relative;text-align:center;}
+.score-ring-num{font-family:var(--serif);font-size:28px;font-style:italic;color:var(--primary);}
+.score-ring-denom{font-size:12px;color:var(--silver);}
+.score-ring-label{margin-top:10px;font-size:13px;font-weight:700;color:var(--slate);}
+.debrief-verdict{font-size:14px;color:var(--slate);line-height:1.75;text-align:center;max-width:580px;margin:0 auto 24px;}
+.debrief-cards{display:flex;flex-direction:column;gap:12px;}
+.debrief-card{border:1px solid var(--bd2);border-radius:var(--r);padding:16px;}
+.debrief-card-q{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--silver);margin-bottom:6px;}
+.debrief-card-verdict{font-size:13px;font-weight:800;margin-bottom:6px;}
+.debrief-card-verdict.correct{color:var(--green);}
+.debrief-card-verdict.wrong{color:var(--red);}
+.debrief-expert{font-size:12.5px;color:var(--slate);line-height:1.7;}
+.debrief-ctas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px;}
+.btn-return{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:linear-gradient(135deg,var(--accent),#9A3D10);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--sans);}
+.btn-retry{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#fff;color:var(--slate);border:1.5px solid var(--bd2);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--sans);}
+@media(max-width:680px){
+  .content-area,.mod-hdr-inner,.tab-bar-inner{padding-left:16px;padding-right:16px;}
+  .stat-row{flex-direction:column;}
+  .scenario-fact{flex-direction:column;}
+  .scenario-fact-key{min-width:auto;}
+}
+</style></head><body>
+<div class="cite-overlay" id="cite-overlay" onclick="if(event.target===this)closeCite()">
+  <div class="cite-panel"><div class="cp-hdr"><div class="cp-num" id="cp-num">1</div><div class="cp-title" id="cp-title">Loading...</div><button class="cp-close" onclick="closeCite()">x</button></div>
+  <div class="cp-body"><div class="cp-meta" id="cp-meta"></div><div class="cp-text" id="cp-text"></div>
+  <div class="cp-relevance"><div class="cp-relevance-label">Relevance to Module 6</div><div class="cp-relevance-text" id="cp-relevance"></div></div></div></div>
+</div>
+<div class="mod-hdr"><div class="mod-hdr-inner">
+  <button class="mod-back" onclick="window.close()">Return to Training Platform</button>
+  <div class="mod-eyebrow">CLEAR Executive Language Access Certificate Program - Module 6 of 7</div>
+  <h1 class="mod-title">Governance and System-Level Accountability</h1><p class="mod-subtitle">2.3% all-complete. 28% audit-ready. 18-point execution variance. Every number points to the same diagnosis: this is a governance structure problem, not a resource problem.</p>
+  <div class="mod-meta"><span class="mod-badge badge-phase">Phase 1 - Foundation</span>
+  <span class="mod-badge badge-phase" id="phase2-badge" style="display:none;">Phase 2 - Application</span>
+  <span class="mod-badge badge-step">Training Platform Step 7</span>
+  <span class="mod-badge badge-domain">Compliance - Workflow Optimization - Patient Experience</span></div>
+</div></div>
+<div class="tab-bar"><div class="tab-bar-inner">
+  <button class="tab-btn active" id="tab-foundation" onclick="switchTab('foundation')">Phase 1 - Foundation</button>
+  <button class="tab-btn" id="tab-application" onclick="switchTab('application')">Phase 2 - Application</button>
+  <div class="phase-score"><span class="phase-score-label">Application</span><span class="phase-score-val" id="f-score-display">0 / 3</span></div>
+</div></div>
+<div class="content-area">
+<div class="phase-pane active" id="phase-foundation">
+  <div class="f-nav"><div class="f-nav-label" id="f-screen-label">Foundation 1 of 5</div><div class="f-dots" id="f-dots"><div class="f-dot active" onclick="goF(1)"></div><div class="f-dot" onclick="goF(2)"></div><div class="f-dot" onclick="goF(3)"></div><div class="f-dot" onclick="goF(4)"></div><div class="f-dot" onclick="goF(5)"></div></div></div>
+
+  <div class="f-screen active" id="fs1">
+    <div class="f-screen-title">Foundation 1 of 5 - Design Principle</div>
+    <div class="f-principle">2.3% of LEP encounters have all seven touchpoints documented. 28% are audit-ready. The 69.7-point gap between them is a governance execution problem, not a policy problem.</div>
+    <p class="f-body">Exercise 5.1 finds that only 2.3% of LEP inpatient encounters have all seven required touchpoints (T1 through T7) documented with qualified interpreter or QBS contact. A further 28% meet the minimum audit-readiness standard — documented interpreter access at the highest-risk touchpoints, with at least partial coverage across the encounter. 69.7% of encounters fall below audit-readiness.</p>
+    <div class="callout navy">
+      <div class="callout-title" style="color:var(--primary)">The All-Seven Standard</div>
+      <div class="callout-body">The 7-touchpoint standard is not aspirational — it is the operational definition of meaningful access delivery across the care continuum. T1 (Pre-arrival identification), T2 (Triage and admission), T3 (History and physical), T4 (Inpatient rounding), T5 (Discharge planning), T6 (Discharge instruction), T7 (Post-discharge follow-up). Each touchpoint represents a clinical decision point where a communication failure can independently generate clinical harm or legal exposure. 2.3% all-complete means 97.7% of encounters have at least one uncovered decision point.</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-val crit">2.3%</div><div class="stat-lbl">All 7 touchpoints documented. Exercise 5.1.</div></div>
+      <div class="stat-card"><div class="stat-val warn">28%</div><div class="stat-lbl">Audit-ready (minimum standard met). 70% below audit-readiness.</div></div>
+      <div class="stat-card"><div class="stat-val crit">18pp</div><div class="stat-lbl">Execution variance between highest and lowest service lines. Statistically significant.</div></div>
+    </div>
+    <p class="f-body">The 18-percentage-point execution variance between the highest and lowest service lines is the governance signal that matters most. If the problem were systemic — inadequate infrastructure, insufficient interpreter capacity — all service lines would underperform equally. The fact that some service lines significantly outperform others confirms that the infrastructure is sufficient and the failure is in execution, specifically in leadership-dependent workflow triggers.<a class="cite" onclick="showCite(1)">[1]</a></p>
+    <div class="screen-nav"><div></div><button class="btn-next" onclick="goF(2)">Foundation 2: The Execution Variance</button></div>
+  </div>
+
+  <div class="f-screen" id="fs2">
+    <div class="f-screen-title">Foundation 2 of 5 - Leadership Dependency</div>
+    <div class="f-principle">When execution varies by service line, the constraint is leadership accountability, not system capacity.</div>
+    <p class="f-body">Exercise 5.2 tests whether there is a significant association between service line and T1-T7 completion rates. The result is significant. The 18pp variance is not random variation — it is structured variation that tracks service line leadership. The service lines with the highest completion rates have nurse managers who have embedded interpreter documentation into the pre-rounding checklist. The service lines with the lowest rates have not.</p>
+    <div class="callout amber">
+      <div class="callout-title" style="color:var(--amber)">The Infrastructure vs. Accountability Distinction</div>
+      <div class="callout-body">Organizations frequently respond to low completion rates by investing in infrastructure — more interpreters, better VRI equipment, more CLAS training. When execution varies by service line with the same infrastructure, the infrastructure is not the constraint. The constraint is that the documentation requirement is not embedded as a non-negotiable accountability item in the service line leadership performance framework. The solution is governance structure, not resource allocation.</div>
+    </div>
+    <p class="f-body">The practical intervention is structural: add T1-T7 completion rate to the service line performance dashboard, report it quarterly alongside other quality metrics, and include it in nurse manager performance reviews. The service lines currently achieving 35-40% all-complete rates are doing so without additional resources — they are doing it because their leaders have made it a non-negotiable operational priority. The 2.3% system-wide rate reflects that most service lines have not.<a class="cite" onclick="showCite(2)">[2]</a></p>
+    <div class="screen-nav"><button class="btn-prev" onclick="goF(1)">Back</button><button class="btn-next" onclick="goF(3)">Foundation 3: Audit Readiness vs. Compliance</button></div>
+  </div>
+
+  <div class="f-screen" id="fs3">
+    <div class="f-screen-title">Foundation 3 of 5 - Audit Readiness Is Not Compliance</div>
+    <div class="f-principle">28% audit-ready means 72% cannot demonstrate compliance under scrutiny — even if care was delivered.</div>
+    <p class="f-body">The distinction between audit-readiness and compliance is operationally critical. An encounter where a qualified interpreter was present but the presence was not documented is clinically compliant but legally vulnerable. During a Joint Commission survey or an HHS Office for Civil Rights investigation, undocumented interpreter use is indistinguishable from interpreter non-use. The organization bears the burden of proof.</p>
+    <p class="f-body">Exercise 5.3 finds that audit-readiness rates are significantly lower in service lines with high LEP patient volume — the inverse of what should be true. The service lines with the most LEP encounters have the weakest documentation, likely because the sheer volume creates documentation pressure that staff resolve by skipping documentation rather than by redesigning the workflow to accommodate volume.<a class="cite" onclick="showCite(3)">[3]</a></p>
+    <div class="callout red">
+      <div class="callout-title" style="color:var(--red)">The Documentation Burden Trap</div>
+      <div class="callout-body">High-volume service lines that skip documentation under pressure create the highest legal exposure precisely because they have the most encounters. Each undocumented encounter is a potential audit finding. The correct response to documentation pressure is workflow automation — EHR fields that autopopulate from interpreter service records, reducing manual documentation burden to near zero while producing complete audit trails. The service lines with the worst documentation are the best candidates for automation investment.</div>
+    </div>
+    <div class="screen-nav"><button class="btn-prev" onclick="goF(2)">Back</button><button class="btn-next" onclick="goF(4)">Foundation 4: The Governance Scorecard</button></div>
+  </div>
+
+  <div class="f-screen" id="fs4">
+    <div class="f-screen-title">Foundation 4 of 5 - Building the Governance Scorecard</div>
+    <div class="f-principle">A governance scorecard that does not include LEP-stratified quality metrics is a governance scorecard with a structural blind spot.</div>
+    <div class="chain" id="chain6">
+      <div class="chain-item" id="chain-g1">
+        <div class="chain-node"><div class="chain-dot" id="cdot-g1">1</div><div class="chain-line"></div></div>
+        <div class="chain-content">
+          <div class="chain-title">The four minimum metrics for a board-level language access scorecard</div>
+          <div class="chain-detail">T1-T7 all-complete rate (target: trajectory toward 80%+); audit-readiness rate by service line (target: 90%+); LEP vs. non-LEP HCAHPS gap on communication domains (target: less than 5pp); and 30-day readmission rate differential (target: less than 2pp). These four metrics provide the board with outcome visibility, process reliability, patient experience equity, and safety equity in a single reporting dashboard.</div>
+          <button class="chain-confirm-btn" id="cbtn-g1" onclick="confirmChain('g1')">Confirm metrics</button>
+        </div>
+      </div>
+      <div class="chain-item" id="chain-g2">
+        <div class="chain-node"><div class="chain-dot" id="cdot-g2">2</div><div class="chain-line"></div></div>
+        <div class="chain-content">
+          <div class="chain-title">The accountability structure that makes metrics actionable</div>
+          <div class="chain-detail">Metrics without accountability structures produce reporting without change. The governance minimum is: service line leaders own their T1-T7 and audit-readiness rates; the CNO owns the system-level trajectory; the CMO owns the clinical outcome gaps; and the board Quality Committee reviews all four metrics quarterly with explicit improvement targets and consequence if targets are not met within the agreed timeline.</div>
+          <button class="chain-confirm-btn" id="cbtn-g2" onclick="confirmChain('g2')">Confirm structure</button>
+        </div>
+      </div>
+      <div class="chain-item" id="chain-g3">
+        <div class="chain-node"><div class="chain-dot" id="cdot-g3">3</div></div>
+        <div class="chain-content">
+          <div class="chain-title">The CAP as the governance commitment artifact</div>
+          <div class="chain-detail">The Corrective Action Plan (CAP) produced in Module 7 is not a training completion artifact. It is the formal governance commitment that translates module findings into organization-specific improvement targets with named owners, timelines, and accountability mechanisms. The CAP is the deliverable that makes the CLEAR program clinically and financially material — it converts evidence into operational accountability.</div>
+          <button class="chain-confirm-btn" id="cbtn-g3" onclick="confirmChain('g3')">Confirm artifact</button>
+        </div>
+      </div>
+    </div>
+    <div class="chain-progress" id="chain-prog">
+      <span style="font-size:11px;font-weight:700;color:var(--slate);">Confirm all three:</span>
+      <div class="chain-progress-bar"><div class="chain-progress-fill" id="chain-fill" style="width:0%"></div></div>
+      <span class="chain-progress-label" id="chain-label">0 / 3</span>
+    </div>
+    <div class="screen-nav"><button class="btn-prev" onclick="goF(3)">Back</button><button class="btn-next" onclick="goF(5)">Foundation 5: Gateway Check</button></div>
+  </div>
+
+  <div class="f-screen" id="fs5">
+    <div class="f-screen-title">Foundation 5 of 5 - Gateway Check</div>
+    <div class="f-principle">Two formative questions before the application begins.</div>
+    <div class="gateway">
+      <div class="gateway-title">Formative Questions</div>
+      <div class="gateway-q">
+        <div class="gateway-q-text">An organization has T1-T7 all-complete rates of 38% in OB, 35% in ICU, and 4% in General Medicine. What is the most accurate governance diagnosis?</div>
+        <div class="gw-choices">
+          <label class="gw-choice"><input type="radio" name="gq1" value="a" onchange="gwAnswer(1,'a')"> General Medicine has inadequate interpreter staffing</label>
+          <label class="gw-choice"><input type="radio" name="gq1" value="b" onchange="gwAnswer(1,'b')"> The infrastructure is sufficient (OB and ICU demonstrate what is achievable) — General Medicine has a leadership accountability gap, not a resource gap</label>
+          <label class="gw-choice"><input type="radio" name="gq1" value="c" onchange="gwAnswer(1,'c')"> The system-wide average needs improvement before service-line-specific interventions make sense</label>
+          <label class="gw-choice"><input type="radio" name="gq1" value="d" onchange="gwAnswer(1,'d')"> The variance reflects acuity differences — OB and ICU patients require more interpreter contact by clinical necessity</label>
+        </div>
+        <div class="gw-answer correct" id="gwa1-b">Correct. When high-performing service lines and low-performing service lines operate under the same infrastructure, the constraint is leadership accountability, not resources. The intervention for General Medicine is governance structure, not additional staffing.</div>
+        <div class="gw-answer incorrect" id="gwa1-a">If interpreter staffing were the constraint, OB and ICU would also underperform. The fact that two service lines achieve 35-38% with the same staffing resources rules out staffing as the diagnosis.</div>
+        <div class="gw-answer incorrect" id="gwa1-c">Waiting for system-wide average improvement before addressing known service-line-specific gaps delays intervention in the unit with the worst performance. Service-line-specific action is faster and more targeted than system-level campaigns.</div>
+        <div class="gw-answer incorrect" id="gwa1-d">Higher acuity typically generates more interpreter contact, which would produce higher documentation rates, not lower. The acuity argument runs in the wrong direction for this variance pattern.</div>
+      </div>
+      <div class="gateway-q" style="margin-top:16px;">
+        <div class="gateway-q-text">What is the difference between audit-readiness and compliance, and why does it matter for governance?</div>
+        <div class="gw-choices">
+          <label class="gw-choice"><input type="radio" name="gq2" value="a" onchange="gwAnswer(2,'a')"> They are the same thing — compliant encounters are by definition audit-ready</label>
+          <label class="gw-choice"><input type="radio" name="gq2" value="b" onchange="gwAnswer(2,'b')"> An encounter can be clinically compliant (care delivered appropriately) but audit-deficient (documentation does not demonstrate compliance). During an investigation, undocumented care is legally indistinguishable from non-delivered care.</label>
+          <label class="gw-choice"><input type="radio" name="gq2" value="c" onchange="gwAnswer(2,'c')"> Audit-readiness is a higher standard than compliance — organizations should focus on compliance first</label>
+          <label class="gw-choice"><input type="radio" name="gq2" value="d" onchange="gwAnswer(2,'d')"> The distinction only matters during active enforcement investigations</label>
+        </div>
+        <div class="gw-answer correct" id="gwa2-b">Correct. The organization bears the burden of proof in an audit or investigation. Care that was delivered but not documented cannot be demonstrated. For governance purposes, audit-readiness is the operative standard because it is what determines legal defensibility.</div>
+        <div class="gw-answer incorrect" id="gwa2-a">Clinically compliant encounters that lack documentation are not audit-ready. The distinction is precisely that compliance (clinical delivery) and audit-readiness (documented delivery) are not the same standard.</div>
+        <div class="gw-answer incorrect" id="gwa2-c">Audit-readiness is not higher than compliance — it is the documentation that proves compliance occurred. Compliance without documentation is legally undefended.</div>
+        <div class="gw-answer incorrect" id="gwa2-d">The distinction matters continuously: in routine accreditation surveys, OCR complaint investigations, malpractice discovery, and CMS audits. Organizations that treat audit-readiness as relevant only during active enforcement will be unprepared when enforcement arrives.</div>
+      </div>
+    </div>
+    <div class="screen-nav"><button class="btn-prev" onclick="goF(4)">Back</button><button class="enter-sim-btn" onclick="enterApplication()">Enter Phase 2: Application Scenarios</button></div>
+  </div>
+</div>
+
+<div class="phase-pane" id="phase-application">
+  <div class="f-nav"><div class="f-nav-label" id="app-screen-label">Application 1 of 3</div><div class="f-dots" id="app-dots"><div class="f-dot active" id="adot1"></div><div class="f-dot" id="adot2"></div><div class="f-dot" id="adot3"></div></div></div>
+
+  <div class="app-screen active" id="as1">
+    <div class="scenario-hdr">
+      <div class="scenario-eyebrow">Application 1 of 3 - Execution Variance Response</div>
+      <div class="scenario-title">The CNO Service Line Accountability Meeting</div>
+      <div class="scenario-role">You are the CNO. Your quarterly data review shows T1-T7 all-complete rates: OB 38%, ICU 33%, ED 24%, General Medicine 4%. You are meeting with the General Medicine Nurse Manager, who says: "We see the highest LEP patient volume in the system. We do not have capacity to document seven touchpoints per encounter."</div>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-body-title">Service Line Comparison</div>
+      <div class="scenario-facts">
+        <div class="scenario-fact"><div class="scenario-fact-key">General Medicine T1-T7 rate</div><div class="scenario-fact-val">4% all-complete — lowest in system</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">General Medicine LEP volume</div><div class="scenario-fact-val">Highest in system — 340 LEP encounters per quarter</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">OB T1-T7 rate</div><div class="scenario-fact-val">38% all-complete — same interpreter infrastructure as General Medicine</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">OB LEP volume</div><div class="scenario-fact-val">180 LEP encounters per quarter</div></div>
+      </div>
+      <div class="scenario-prompt">How do you respond to the Nurse Manager?</div>
+    </div>
+    <div class="formative">
+      <div class="formative-label">Scored Decision</div>
+      <div class="formative-q">Which response correctly diagnoses the problem and sets the right accountability expectation?</div>
+      <div class="choice-grid" id="q1choices">
+        <button class="choice-btn" onclick="answer(1,'a')"><span class="choice-letter">A</span><span>The Nurse Manager has a valid capacity argument. Allocate additional interpreter staff specifically to General Medicine and revisit the T1-T7 target after staffing improves.</span></button>
+        <button class="choice-btn" onclick="answer(1,'b')"><span class="choice-letter">B</span><span>OB achieves 38% all-complete with the same interpreter infrastructure and fewer encounters. The capacity constraint is the same for both units. The difference is workflow design: OB has embedded interpreter documentation into the pre-rounding checklist as a non-negotiable step. General Medicine has not. The intervention is not more staff — it is embedding the documentation trigger into the existing workflow. The target is a 90-day trajectory toward 20% all-complete, with a workflow redesign plan submitted in 30 days.</span></button>
+        <button class="choice-btn" onclick="answer(1,'c')"><span class="choice-letter">C</span><span>Reduce the T1-T7 requirement for high-volume units to T1, T3, and T6 — the three highest-risk touchpoints — and accept lower completion rates for T2, T4, T5, and T7.</span></button>
+        <button class="choice-btn" onclick="answer(1,'d')"><span class="choice-letter">D</span><span>Issue a performance improvement plan for the General Medicine Nurse Manager immediately, given the 34-point gap between OB and General Medicine performance.</span></button>
+      </div>
+      <div class="feedback-box" id="q1fb"></div>
+    </div>
+    <div class="screen-nav"><div></div><button class="btn-next" id="as1-next" onclick="goApp(2)" disabled>Next Scenario</button></div>
+  </div>
+
+  <div class="app-screen" id="as2">
+    <div class="scenario-hdr">
+      <div class="scenario-eyebrow">Application 2 of 3 - Board Scorecard Design</div>
+      <div class="scenario-title">The Quality Committee Metric Proposal</div>
+      <div class="scenario-role">You are the CMO. The Board Quality Committee chair asks you to propose a language access scorecard for board-level quarterly reporting. The Chief Compliance Officer argues for a compliance-only scorecard: T1-T7 completion rate and audit-readiness rate. The Chief Quality Officer argues for an outcomes-only scorecard: HCAHPS communication gap and 30-day readmission differential. You must make the recommendation.</div>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-body-title">Scorecard Design Options</div>
+      <div class="scenario-facts">
+        <div class="scenario-fact"><div class="scenario-fact-key">Compliance-only (CCO proposal)</div><div class="scenario-fact-val">T1-T7 all-complete rate + audit-readiness rate. Measures whether care was delivered and documented.</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Outcomes-only (CQO proposal)</div><div class="scenario-fact-val">HCAHPS communication gap + 30-day readmission differential. Measures whether care produced equity.</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Board reporting cadence</div><div class="scenario-fact-val">Quarterly. Maximum 4-6 metrics for board-level review.</div></div>
+      </div>
+      <div class="scenario-prompt">What is your recommendation?</div>
+    </div>
+    <div class="formative">
+      <div class="formative-label">Scored Decision</div>
+      <div class="formative-q">Which scorecard design best serves board-level governance?</div>
+      <div class="choice-grid" id="q2choices">
+        <button class="choice-btn" onclick="answer(2,'a')"><span class="choice-letter">A</span><span>The CCO proposal. Compliance metrics are directly actionable and legally material. Outcome metrics lag too much to support quarterly governance decisions.</span></button>
+        <button class="choice-btn" onclick="answer(2,'b')"><span class="choice-letter">B</span><span>Both sets together — all four metrics. Compliance metrics tell the board whether the system is operating as designed. Outcome metrics tell the board whether operating as designed is producing equity. Neither is sufficient alone: high compliance with poor outcomes means the protocol is wrong; good outcomes with poor compliance means the system is working by accident, not by design. The board needs both perspectives to govern the program rather than just monitor it.</span></button>
+        <button class="choice-btn" onclick="answer(2,'c')"><span class="choice-letter">C</span><span>The CQO proposal. Outcomes are what the board is ultimately accountable for. Compliance metrics are an operational concern that belongs in the management reporting layer, not the board layer.</span></button>
+        <button class="choice-btn" onclick="answer(2,'d')"><span class="choice-letter">D</span><span>Add a fifth metric: the LAI composite score. A single number provides the simplest board-level summary and avoids the compliance vs. outcomes debate entirely.</span></button>
+      </div>
+      <div class="feedback-box" id="q2fb"></div>
+    </div>
+    <div class="screen-nav"><button class="btn-prev" onclick="goApp(1)">Back</button><button class="btn-next" id="as2-next" onclick="goApp(3)" disabled>Next Scenario</button></div>
+  </div>
+
+  <div class="app-screen" id="as3">
+    <div class="scenario-hdr">
+      <div class="scenario-eyebrow">Application 3 of 3 - Automation vs. Accountability</div>
+      <div class="scenario-title">The COO Audit-Readiness Investment</div>
+      <div class="scenario-role">You are the COO. Your Compliance Officer flags that 72% of encounters are below audit-readiness — and that General Medicine, the highest-volume LEP unit, has the worst documentation rate. She proposes two options: Option A, a mandatory documentation audit with weekly reporting to unit managers; or Option B, an EHR integration connecting interpreter service records directly to encounter documentation, eliminating manual documentation for 80% of interpreter contacts.</div>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-body-title">Investment Options</div>
+      <div class="scenario-facts">
+        <div class="scenario-fact"><div class="scenario-fact-key">Option A: Documentation audit</div><div class="scenario-fact-val">Cost: $12,000 (staff time). Timeline: immediate. Mechanism: management pressure. Expected result: temporary improvement during audit period, reversion after audit ends.</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Option B: EHR integration</div><div class="scenario-fact-val">Cost: $95,000 (IT implementation). Timeline: 10 weeks. Mechanism: automation. Expected result: 80% of documentation burden eliminated; audit-readiness improves to 85-90% from deployment date forward.</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Current audit exposure</div><div class="scenario-fact-val">72% of encounters below audit-readiness. Joint Commission survey scheduled in 6 months.</div></div>
+      </div>
+      <div class="scenario-prompt">Which option do you recommend — and why?</div>
+    </div>
+    <div class="formative">
+      <div class="formative-label">Scored Decision</div>
+      <div class="formative-q">Which investment recommendation is most defensible?</div>
+      <div class="choice-grid" id="q3choices">
+        <button class="choice-btn" onclick="answer(3,'a')"><span class="choice-letter">A</span><span>Option A. The Joint Commission survey is in 6 months and Option B takes 10 weeks to implement. Option A produces immediate improvement and can run alongside Option B. Start with Option A now and add Option B after the survey.</span></button>
+        <button class="choice-btn" onclick="answer(3,'b')"><span class="choice-letter">B</span><span>Option B, deployed immediately. Option B completes in 10 weeks — inside the 6-month survey window — and produces durable improvement that will still be in place during the survey and every audit afterward. Option A produces temporary improvement that will revert. Spending $12,000 on a temporary fix before a $95,000 permanent solution doubles the implementation disruption and produces the worse outcome for the survey. Run both in parallel for the first 10 weeks, then decommission Option A when Option B is live.</span></button>
+        <button class="choice-btn" onclick="answer(3,'c')"><span class="choice-letter">C</span><span>Option A only. $95,000 for EHR integration is not justified when management pressure can produce the same result at lower cost.</span></button>
+        <button class="choice-btn" onclick="answer(3,'d')"><span class="choice-letter">D</span><span>Neither option addresses the root cause — the T1-T7 all-complete rate. Fix the workflow trigger first, then address documentation infrastructure.</span></button>
+      </div>
+      <div class="feedback-box" id="q3fb"></div>
+    </div>
+    <div class="screen-nav"><button class="btn-prev" onclick="goApp(2)">Back</button><button class="btn-next" id="as3-next" onclick="showDebrief()" disabled>Complete Module</button></div>
+  </div>
+
+  <div class="debrief" id="debrief">
+    <div class="score-ring-wrap">
+      <div class="score-ring" id="scoreRing" style="--pct:0;"><div class="score-ring-inner"><div class="score-ring-num"><span id="debriefNum">0</span>/3</div></div></div>
+      <div class="score-ring-label" id="debrief-label">Module 6 Complete</div>
+    </div>
+    <div class="debrief-verdict" id="debrief-verdict"></div>
+    <div class="debrief-cards" id="debrief-cards"></div>
+    <div class="debrief-ctas">
+      <button class="btn-return" onclick="window.close()">Return to Training Platform - Complete Step 7 CAP</button>
+      <button class="btn-retry" onclick="retryModule()">Retry Application</button>
+    </div>
+  </div>
+</div>
+</div>
+<script>var F_TOTAL=5,APP_TOTAL=3,TOTAL_Q=3;CHAIN_TOTAL=3;var CITES={
+  1:{title:"Exercise 5.1 - T1-T7 All-Complete Rate and Audit-Readiness",
+     meta:"Exercise 5.1 - CLEAR LAI Q1 2026 Sample Dataset",
+     text:"2.3% of LEP inpatient encounters have all 7 required touchpoints documented. 28% meet audit-readiness minimum standard. 18pp execution variance between highest and lowest performing service lines. Variance is statistically significant.",
+     relevance:"Primary governance finding for Module 6. The 2.3% all-complete rate establishes the baseline; the 18pp variance establishes that the problem is leadership accountability, not infrastructure."},
+  2:{title:"Exercise 5.2 - Service Line and T1-T7 Completion Rate Association",
+     meta:"Exercise 5.2 - CLEAR LAI Q1 2026 Sample Dataset",
+     text:"Significant association between service line and T1-T7 completion rate. High-performing service lines have embedded documentation into pre-rounding checklists. Low-performing service lines treat documentation as a secondary workflow step that gets skipped under volume pressure.",
+     relevance:"Establishes the leadership dependency diagnosis. When execution varies by service line with identical infrastructure, the constraint is governance accountability, not resources."},
+  3:{title:"Section 1557 Final Rule (2024) - Documentation and Audit Defensibility",
+     meta:"45 CFR Part 92 - HHS Office for Civil Rights - 2024 Final Rule",
+     text:"Organizations bear the burden of demonstrating meaningful access delivery under Section 1557. Undocumented interpreter use is legally indistinguishable from non-use during HHS OCR investigations, Joint Commission surveys, and malpractice discovery. The 2024 Final Rule increases documentation specificity requirements.",
+     relevance:"Establishes the audit-readiness standard as the operative governance target. Compliance without documentation is legally undefended under 1557."}
+};var GW_CORRECT={1:"b",2:"b"};var Q_LABELS=["Scenario 1: Execution Variance Response","Scenario 2: Board Scorecard Design","Scenario 3: Automation vs. Accountability"];var Q={
+  1:{correct:"b",feedback:{
+    a:{ok:false,title:"Adding staff to a workflow design problem does not solve the workflow design problem",
+       body:"OB achieves 38% with fewer encounters and the same staff. The constraint is not interpreter availability — it is whether the documentation trigger is embedded in the workflow. Adding staff to General Medicine without redesigning the workflow will produce the same 4% rate with more resources."},
+    b:{ok:true,title:"Correct - peer comparison establishes infrastructure sufficiency, accountability follows",
+       body:"The OB comparison directly refutes the capacity argument. The intervention is workflow redesign and embedded accountability, not resource allocation. Setting a 90-day trajectory with a workflow plan submission requirement establishes accountability while providing a path to improvement."},
+    c:{ok:false,title:"Reducing the touchpoint standard creates permanent compliance gaps",
+       body:"T2 (triage), T4 (rounding), T5 (discharge planning), and T7 (post-discharge) each represent independent clinical decision points. Accepting lower completion for any touchpoint accepts a structural compliance gap. The solution is automating documentation, not reducing the standard."},
+    d:{ok:false,title:"Performance improvement plans before root cause diagnosis and workflow support are counterproductive",
+       body:"A PIP issued before the workflow redesign is deployed holds the Nurse Manager accountable for a system they have not been given the tools to fix. Accountability follows system design change — as established in the Module 4 CNO scenario. The correct sequence: provide the workflow tool, set the trajectory target, then escalate if the target is missed."}
+  }},
+  2:{correct:"b",feedback:{
+    a:{ok:false,title:"Compliance metrics alone cannot tell the board whether the program is working",
+       body:"High T1-T7 completion and high audit-readiness with persistent HCAHPS gaps and readmission differentials means the protocol is being executed but not producing equity. The board needs both sets to distinguish between a design problem and an execution problem."},
+    b:{ok:true,title:"Correct - four-metric scorecard captures both execution and outcome",
+       body:"The response correctly identifies the governance limitation of each single-set approach and articulates the distinction that makes both necessary: compliance metrics measure whether the system is operating as designed; outcome metrics measure whether the design is achieving equity. A board that only sees compliance metrics can be fooled by good process with bad outcomes. A board that only sees outcome metrics cannot govern the levers that produce those outcomes."},
+    c:{ok:false,title:"Compliance metrics belong at the board level when compliance exposure is material",
+       body:"Under Section 1557 with a 2024 Final Rule that increases enforcement scrutiny, T1-T7 completion rates and audit-readiness are board-level governance metrics — they directly affect regulatory standing, malpractice exposure, and accreditation status. Relegating them to management reporting removes board visibility into material risk."},
+    d:{ok:false,title:"The LAI composite alone loses the diagnostic granularity that makes governance actionable",
+       body:"A single composite score tells the board the overall posture but not which domain is driving underperformance or whether the issue is compliance, outcomes, or both. The four-metric scorecard is the minimum set for actionable board-level governance. The LAI composite is appropriate for executive summary context but should accompany, not replace, domain-specific metrics."}
+  }},
+  3:{correct:"b",feedback:{
+    a:{ok:false,title:"Running Option A before Option B wastes implementation effort on a temporary fix",
+       body:"Option A produces management-pressure-driven improvement that reverts when pressure is removed. Deploying it before Option B means two disruptions (A rollout, then B rollout) for a worse outcome (temporary improvement, then permanent). Option B deployed immediately produces durable improvement within the survey window."},
+    b:{ok:true,title:"Correct - durable fix within survey window, parallel operation during transition",
+       body:"10-week deployment window is inside the 6-month survey window. Parallel operation during the transition maintains improvement pressure while Option B builds. Decommissioning Option A when Option B is live avoids double burden. This is the sequence that produces the best survey outcome and the best long-term cost profile."},
+    c:{ok:false,title:"Management pressure does not produce the same result as automation at equivalent cost",
+       body:"Option A produces temporary improvement that reverts. Option B produces permanent improvement with no marginal cost per documentation event. The $95,000 is a one-time implementation cost; the $12,000 in Option A staff time recurs annually if the audit pressure is maintained. Over 3 years, Option A costs more and produces worse outcomes."},
+    d:{ok:false,title:"Documentation and workflow are complementary, not sequential",
+       body:"Fixing the workflow trigger (T1-T7 completion) and fixing documentation (audit-readiness) address different gaps that can be worked in parallel. The documentation automation in Option B also reduces the time burden on staff executing T1-T7 — it supports completion rate improvement, not a separate initiative."}
+  }}
+};
+/* ── CITATION PANEL ─────────────────────────────────────────────────── */
+function showCite(n){
+  var c=CITES[n]; if(!c) return;
+  document.getElementById('cp-num').textContent=n;
+  document.getElementById('cp-title').textContent=c.title;
+  document.getElementById('cp-meta').textContent=c.meta;
+  document.getElementById('cp-text').textContent=c.text;
+  document.getElementById('cp-relevance').textContent=c.relevance;
+  document.getElementById('cite-overlay').classList.add('open');
+}
+function closeCite(){document.getElementById('cite-overlay').classList.remove('open');}
+
+/* ── FOUNDATION NAVIGATION ──────────────────────────────────────────── */
+var _fScreen=1;
+function goF(n){
+  document.getElementById('fs'+_fScreen).classList.remove('active');
+  document.getElementById('fs'+n).classList.add('active');
+  document.getElementById('f-screen-label').textContent='Foundation '+n+' of '+F_TOTAL;
+  var dots=document.querySelectorAll('#f-dots .f-dot');
+  dots.forEach(function(d,i){
+    d.classList.remove('active','done');
+    if(i+1<n) d.classList.add('done');
+    else if(i+1===n) d.classList.add('active');
+  });
+  _fScreen=n;
+}
+
+/* ── EVIDENCE CHAIN ─────────────────────────────────────────────────── */
+var _chainConfirmed=0, CHAIN_TOTAL=0;
+function confirmChain(id){
+  var item=document.getElementById('chain-'+id);
+  var btn=document.getElementById('cbtn-'+id);
+  if(!item||item.classList.contains('confirmed')) return;
+  item.classList.add('confirmed');
+  btn.textContent='Confirmed';
+  btn.classList.add('done');
+  _chainConfirmed++;
+  var pct=(_chainConfirmed/CHAIN_TOTAL)*100;
+  document.getElementById('chain-fill').style.width=pct+'%';
+  document.getElementById('chain-label').textContent=_chainConfirmed+' / '+CHAIN_TOTAL;
+}
+
+/* ── GATEWAY ────────────────────────────────────────────────────────── */
+function gwAnswer(q,choice){
+  var correct=GW_CORRECT[q];
+  ['a','b','c','d'].forEach(function(l){
+    var el=document.getElementById('gwa'+q+'-'+l);
+    if(el) el.style.display='none';
+  });
+  var el=document.getElementById('gwa'+q+'-'+choice);
+  if(el) el.style.display='block';
+  document.querySelectorAll('input[name="gq'+q+'"]').forEach(function(r){r.disabled=true;});
+}
+
+/* ── TAB SWITCHING ──────────────────────────────────────────────────── */
+function switchTab(tab){
+  ['foundation','application'].forEach(function(t){
+    document.getElementById('tab-'+t).classList.remove('active');
+    document.getElementById('phase-'+t).classList.remove('active');
+  });
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.getElementById('phase-'+tab).classList.add('active');
+}
+function enterApplication(){
+  switchTab('application');
+  var b=document.getElementById('phase2-badge');
+  if(b) b.style.display='inline-flex';
+  goApp(1);
+}
+
+/* ── APPLICATION NAVIGATION ─────────────────────────────────────────── */
+var _appScreen=1;
+function goApp(n){
+  document.getElementById('as'+_appScreen).classList.remove('active');
+  var next=document.getElementById('as'+n);
+  if(!next) return;
+  next.classList.add('active');
+  document.getElementById('app-screen-label').textContent='Application '+n+' of '+APP_TOTAL;
+  var dots=document.querySelectorAll('#app-dots .f-dot');
+  dots.forEach(function(d,i){
+    d.classList.remove('active','done');
+    if(i+1<n) d.classList.add('done');
+    else if(i+1===n) d.classList.add('active');
+  });
+  _appScreen=n;
+}
+
+/* ── SCORING ────────────────────────────────────────────────────────── */
+var score=0, answers={};
+function answer(q,choice){
+  if(answers['q'+q]!==undefined) return;
+  var qd=Q[q];
+  var fd=qd.feedback[choice]||{ok:false,title:'No feedback',body:''};
+  answers['q'+q]=fd.ok;
+  if(fd.ok) score++;
+  document.getElementById('f-score-display').textContent=score+' / '+TOTAL_Q;
+  var container=document.getElementById('q'+q+'choices');
+  container.querySelectorAll('.choice-btn').forEach(function(btn,i){
+    var l='abcd'[i]; btn.disabled=true;
+    if(l===qd.correct) btn.classList.add('reveal-correct');
+    else if(l===choice&&!fd.ok) btn.classList.add('selected-wrong');
+    else if(l===choice&&fd.ok) btn.classList.add('selected-correct');
+    else btn.classList.add('dimmed');
+  });
+  var fb=document.getElementById('q'+q+'fb');
+  fb.className='feedback-box '+(fd.ok?'correct':'wrong');
+  fb.style.display='block';
+  fb.innerHTML='<h4>'+fd.title+'<\/h4><p>'+fd.body+'<\/p>';
+  var nb=document.getElementById('as'+q+'-next');
+  if(nb) nb.disabled=false;
+}
+
+/* ── DEBRIEF ────────────────────────────────────────────────────────── */
+function showDebrief(){
+  document.getElementById('as'+TOTAL_Q).classList.remove('active');
+  var debrief=document.getElementById('debrief');
+  debrief.classList.add('show');
+  var pct=Math.round((score/TOTAL_Q)*100);
+  setTimeout(function(){document.getElementById('scoreRing').style.setProperty('--pct',pct);},100);
+  document.getElementById('debriefNum').textContent=score;
+  var msgs=[
+    'Review each scenario carefully. The errors reflect real governance mistakes with clinical and financial consequences. Return to Foundation screens to reinforce the framework before retrying.',
+    'Good progress. One scenario reflects a nuanced judgment call. Review the expert feedback — the reasoning cited is the standard of practice.',
+    'Excellent. You applied the module framework correctly across all three decision scenarios. These competencies directly inform your CAP contribution for this step.'
+  ];
+  var labels=['Review Foundation','Good Progress','Ready for Next Step'];
+  document.getElementById('debrief-verdict').textContent=msgs[Math.min(score,2)];
+  document.getElementById('debrief-label').textContent=labels[Math.min(score,2)];
+  var cc=document.getElementById('debrief-cards');
+  cc.innerHTML='';
+  for(var n=1;n<=TOTAL_Q;n++){
+    var wasCorrect=answers['q'+n];
+    var cf=Q[n].feedback[Q[n].correct];
+    var card=document.createElement('div');
+    card.className='debrief-card';
+    card.innerHTML='<div class="debrief-card-q">'+Q_LABELS[n-1]+'<\/div>'+
+      '<div class="debrief-card-verdict '+(wasCorrect?'correct':'wrong')+'">'+(wasCorrect?'Correct':'Needs review')+'<\/div>'+
+      '<div class="debrief-expert">'+cf.body+'<\/div>';
+    cc.appendChild(card);
+  }
+}
+function retryModule(){
+  score=0; answers={};
+  document.getElementById('f-score-display').textContent='0 / '+TOTAL_Q;
+  document.getElementById('debrief').classList.remove('show');
+  for(var n=1;n<=TOTAL_Q;n++){
+    var c=document.getElementById('q'+n+'choices');
+    if(c){
+      c.querySelectorAll('.choice-btn').forEach(function(b){
+        b.disabled=false;
+        b.classList.remove('reveal-correct','selected-wrong','selected-correct','dimmed');
+      });
+      var fb=document.getElementById('q'+n+'fb');
+      if(fb) fb.style.display='none';
+      var nb=document.getElementById('as'+n+'-next');
+      if(nb) nb.disabled=true;
+    }
+  }
+  goApp(1);
+  document.getElementById('as1').classList.add('active');
+  document.getElementById('scoreRing').style.setProperty('--pct',0);
+}
+</script>
+</body></html>

@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>CLEAR Module 3 - Inpatient Reliability and Rework</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#1E3448;--primary2:#243D56;
+  --accent:#C4571B;--accent2:#E07B45;
+  --amber:#C9922A;--amber2:#F0B84A;
+  --green:#2A7A58;--red:#B83232;
+  --slate:#4A5E72;--silver:#7E9AAD;
+  --ice:#EAF2F7;--fog:#F4F6F8;--white:#FFFFFF;
+  --bd:rgba(30,52,72,.10);--bd2:rgba(30,52,72,.18);
+  --sh:0 2px 16px rgba(30,52,72,.08);--r:10px;--r2:14px;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --serif:'DM Serif Display','Georgia',serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{height:100%;-webkit-font-smoothing:antialiased;}
+body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-size:14px;line-height:1.65;min-height:100vh;}
+.mod-hdr{background:linear-gradient(135deg,var(--primary) 0%,var(--primary2) 100%);padding:0;border-bottom:2px solid rgba(196,87,27,.3);}
+.mod-hdr-inner{max-width:960px;margin:0 auto;padding:24px 32px;}
+.mod-back{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:rgba(255,255,255,.4);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px;cursor:pointer;background:none;border:none;font-family:var(--sans);}
+.mod-back:hover{color:rgba(255,255,255,.7);}
+.mod-eyebrow{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:8px;}
+.mod-title{font-family:var(--serif);font-size:clamp(22px,3vw,32px);font-style:italic;color:#fff;line-height:1.15;margin-bottom:8px;}
+.mod-subtitle{font-size:14px;color:rgba(255,255,255,.55);line-height:1.6;max-width:680px;margin-bottom:18px;}
+.mod-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.mod-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:6px;font-size:10.5px;font-weight:700;letter-spacing:.04em;}
+.badge-phase{background:rgba(196,87,27,.2);color:var(--accent2);}
+.badge-step{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);}
+.badge-domain{background:rgba(201,146,42,.15);color:var(--amber2);}
+.tab-bar{background:var(--primary);border-bottom:1px solid rgba(255,255,255,.07);}
+.tab-bar-inner{max-width:960px;margin:0 auto;padding:0 32px;display:flex;gap:0;}
+.tab-btn{padding:12px 20px;font-size:12px;font-weight:700;color:rgba(255,255,255,.38);background:none;border:none;cursor:pointer;font-family:var(--sans);letter-spacing:.04em;text-transform:uppercase;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;}
+.tab-btn:hover{color:rgba(255,255,255,.7);}
+.tab-btn.active{color:var(--accent2);border-bottom-color:var(--accent);}
+.phase-score{margin-left:auto;padding:12px 0;display:flex;align-items:center;gap:8px;}
+.phase-score-label{font-size:10px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.08em;}
+.phase-score-val{font-size:13px;font-weight:800;color:var(--accent2);}
+.content-area{max-width:960px;margin:0 auto;padding:28px 32px;}
+.phase-pane{display:none;}
+.phase-pane.active{display:block;}
+.f-screen{display:none;}
+.f-screen.active{display:block;animation:fadeUp .25s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.f-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.f-nav-label{font-size:11px;font-weight:700;color:var(--silver);text-transform:uppercase;letter-spacing:.08em;}
+.f-dots{display:flex;gap:6px;}
+.f-dot{width:8px;height:8px;border-radius:50%;background:var(--bd2);transition:all .2s;cursor:pointer;}
+.f-dot.active{background:var(--accent);transform:scale(1.3);}
+.f-dot.done{background:rgba(196,87,27,.4);}
+.f-screen-title{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.f-principle{font-family:var(--serif);font-size:clamp(20px,2.5vw,27px);font-style:italic;color:var(--primary);line-height:1.25;margin-bottom:20px;}
+.f-body{font-size:13.5px;color:var(--slate);line-height:1.8;margin-bottom:16px;}
+.f-body strong{color:var(--primary);font-weight:700;}
+.callout{border-left:3px solid;border-radius:var(--r);padding:14px 18px;margin:14px 0;}
+.callout.accent{border-color:var(--accent);background:rgba(196,87,27,.05);}
+.callout.amber{border-color:var(--amber);background:rgba(201,146,42,.05);}
+.callout.red{border-color:var(--red);background:rgba(184,50,50,.05);}
+.callout.navy{border-color:var(--primary);background:rgba(30,52,72,.04);}
+.callout-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;}
+.callout-body{font-size:13px;color:#334155;line-height:1.7;}
+.stat-row{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;}
+.stat-card{background:#fff;border:1px solid var(--bd2);border-radius:var(--r);padding:14px 16px;min-width:140px;flex:1;}
+.stat-val{font-family:var(--serif);font-size:clamp(22px,3vw,30px);font-style:italic;color:var(--primary);line-height:1;margin-bottom:4px;}
+.stat-val.sig{color:var(--accent);}
+.stat-val.crit{color:var(--red);}
+.stat-val.warn{color:var(--amber);}
+.stat-val.ns{color:var(--slate);}
+.stat-lbl{font-size:11px;color:var(--silver);line-height:1.4;}
+.cite{color:var(--accent);font-size:11px;font-weight:800;vertical-align:super;cursor:pointer;margin-left:1px;text-decoration:none;}
+.cite:hover{text-decoration:underline;}
+.cite-overlay{position:fixed;inset:0;background:rgba(30,52,72,.55);z-index:800;display:none;align-items:center;justify-content:center;padding:24px;}
+.cite-overlay.open{display:flex;}
+.cite-panel{background:#fff;border-radius:var(--r2);max-width:560px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden;}
+.cp-hdr{background:var(--primary);padding:16px 20px;display:flex;align-items:flex-start;gap:12px;}
+.cp-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.cp-title{font-size:13.5px;font-weight:700;color:#fff;flex:1;line-height:1.35;}
+.cp-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:20px;cursor:pointer;padding:0;margin-left:8px;line-height:1;}
+.cp-close:hover{color:#fff;}
+.cp-body{padding:18px 20px;}
+.cp-meta{font-size:11px;color:var(--silver);margin-bottom:10px;font-style:italic;}
+.cp-text{font-size:13px;color:var(--slate);line-height:1.75;}
+.cp-relevance{margin-top:12px;padding:10px 14px;background:var(--fog);border-radius:8px;border-left:3px solid var(--accent);}
+.cp-relevance-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);margin-bottom:4px;}
+.cp-relevance-text{font-size:12px;color:var(--slate);line-height:1.65;}
+.chain{display:flex;flex-direction:column;gap:0;margin:16px 0;}
+.chain-item{display:flex;gap:0;cursor:pointer;}
+.chain-node{display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;}
+.chain-dot{width:28px;height:28px;border-radius:50%;background:var(--bd2);border:2px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--silver);transition:all .2s;z-index:1;}
+.chain-item.confirmed .chain-dot{background:var(--accent);border-color:var(--accent);color:#fff;}
+.chain-line{flex:1;width:2px;background:var(--bd2);margin:0 auto;}
+.chain-item.confirmed .chain-line{background:var(--accent);}
+.chain-item:last-child .chain-line{display:none;}
+.chain-content{flex:1;padding:0 0 18px 14px;}
+.chain-title{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:4px;}
+.chain-detail{font-size:12px;color:var(--slate);line-height:1.6;display:none;}
+.chain-item.confirmed .chain-detail{display:block;}
+.chain-confirm-btn{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 12px;background:rgba(196,87,27,.1);border:1px solid rgba(196,87,27,.3);border-radius:6px;font-size:11px;font-weight:700;color:var(--accent);cursor:pointer;transition:all .15s;font-family:var(--sans);}
+.chain-confirm-btn:hover{background:rgba(196,87,27,.2);}
+.chain-confirm-btn.done{pointer-events:none;}
+.chain-progress{margin:12px 0;background:rgba(196,87,27,.08);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;}
+.chain-progress-bar{flex:1;height:6px;background:var(--bd2);border-radius:3px;overflow:hidden;}
+.chain-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width .4s ease;}
+.chain-progress-label{font-size:11px;font-weight:700;color:var(--accent);white-space:nowrap;}
+.formative{background:#fff;border:1.5px solid var(--bd2);border-radius:var(--r2);padding:20px;margin:20px 0;}
+.formative-label{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--silver);margin-bottom:10px;}
+.formative-q{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:16px;line-height:1.4;}
+.choice-grid{display:flex;flex-direction:column;gap:8px;}
+.choice-btn{width:100%;text-align:left;padding:12px 14px;border:1.5px solid var(--bd2);border-radius:var(--r);background:#fff;cursor:pointer;font-family:var(--sans);font-size:13px;color:var(--primary);line-height:1.5;transition:all .15s;display:flex;align-items:flex-start;gap:10px;}
+.choice-btn:hover:not(:disabled){border-color:var(--accent);background:rgba(196,87,27,.03);}
+.choice-btn:disabled{cursor:default;}
+.choice-letter{width:22px;height:22px;border-radius:50%;background:var(--fog);border:1.5px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;margin-top:1px;transition:all .15s;}
+.choice-btn.reveal-correct{border-color:var(--green);background:rgba(42,122,88,.04);}
+.choice-btn.reveal-correct .choice-letter{background:var(--green);border-color:var(--green);color:#fff;}
+.choice-btn.selected-wrong{border-color:var(--red);background:rgba(184,50,50,.04);}
+.choice-btn.selected-wrong .choice-letter{background:var(--red);border-color:var(--red);color:#fff;}
+.choice-btn.selected-correct{border-color:var(--green);background:rgba(42,122,88,.06);}
+.choice-btn.selected-correct .choice-letter{background:var(--green);border-color:var(--green);color:#fff;}
+.choice-btn.dimmed{opacity:.45;}
+.feedback-box{display:none;margin-top:12px;padding:14px 16px;border-radius:var(--r);border-left:3px solid;}
+.feedback-box.correct{border-color:var(--green);background:rgba(42,122,88,.05);}
+.feedback-box.wrong{border-color:var(--red);background:rgba(184,50,50,.04);}
+.feedback-box h4{font-size:13px;font-weight:800;margin-bottom:6px;}
+.feedback-box.correct h4{color:var(--green);}
+.feedback-box.wrong h4{color:var(--red);}
+.feedback-box p{font-size:12.5px;color:var(--slate);line-height:1.7;}
+.gateway{background:#fff;border:1.5px solid var(--bd2);border-radius:var(--r2);padding:22px;margin:20px 0;}
+.gateway-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--slate);margin-bottom:14px;}
+.gateway-q{margin-bottom:16px;}
+.gateway-q-text{font-size:13.5px;font-weight:600;color:var(--primary);margin-bottom:10px;}
+.gw-choices{display:flex;flex-direction:column;gap:6px;}
+.gw-choice{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--bd);border-radius:8px;cursor:pointer;font-size:13px;color:var(--slate);transition:all .15s;}
+.gw-choice:hover{border-color:var(--accent);background:rgba(196,87,27,.03);}
+.gw-choice input{accent-color:var(--accent);}
+.gw-answer{display:none;margin-top:8px;padding:10px 14px;border-radius:8px;font-size:12.5px;line-height:1.65;}
+.gw-answer.correct{background:rgba(42,122,88,.06);border-left:3px solid var(--green);color:var(--slate);}
+.gw-answer.incorrect{background:rgba(184,50,50,.04);border-left:3px solid var(--red);color:var(--slate);}
+.app-screen{display:none;}
+.app-screen.active{display:block;animation:fadeUp .25s ease;}
+.scenario-hdr{background:linear-gradient(135deg,var(--primary),var(--primary2));border-radius:var(--r2);padding:20px 24px;margin-bottom:20px;color:#fff;}
+.scenario-eyebrow{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px;}
+.scenario-title{font-family:var(--serif);font-size:clamp(17px,2.5vw,22px);font-style:italic;color:#fff;line-height:1.2;margin-bottom:8px;}
+.scenario-role{font-size:13px;color:rgba(255,255,255,.55);line-height:1.6;}
+.scenario-body{background:#fff;border:1.5px solid var(--bd2);border-radius:var(--r2);padding:20px;margin-bottom:18px;}
+.scenario-body-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--slate);margin-bottom:12px;}
+.scenario-facts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.scenario-fact{display:flex;gap:10px;font-size:13px;line-height:1.5;}
+.scenario-fact-key{font-weight:700;color:var(--primary);min-width:180px;flex-shrink:0;}
+.scenario-fact-val{color:var(--slate);}
+.scenario-prompt{font-size:14px;font-weight:700;color:var(--primary);padding:14px 16px;background:var(--fog);border-radius:var(--r);border-left:3px solid var(--accent);line-height:1.55;margin-bottom:16px;}
+.screen-nav{display:flex;align-items:center;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid var(--bd);}
+.btn-prev{background:#fff;border:1.5px solid var(--bd2);border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;color:var(--slate);font-family:var(--sans);transition:all .15s;}
+.btn-prev:hover{border-color:var(--accent);color:var(--accent);}
+.btn-next{background:linear-gradient(135deg,var(--accent),#9A3D10);color:#fff;border:none;border-radius:10px;padding:11px 26px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--sans);box-shadow:0 4px 14px rgba(196,87,27,.3);transition:transform .1s;}
+.btn-next:hover{transform:translateY(-1px);}
+.btn-next:disabled{opacity:.4;cursor:default;transform:none;}
+.enter-sim-btn{background:linear-gradient(135deg,var(--amber),#8A6010);color:#fff;border:none;border-radius:10px;padding:13px 30px;font-size:14.5px;font-weight:800;cursor:pointer;font-family:var(--sans);box-shadow:0 4px 16px rgba(201,146,42,.35);transition:transform .1s;}
+.enter-sim-btn:hover{transform:translateY(-1px);}
+.enter-sim-btn:disabled{opacity:.4;cursor:default;transform:none;}
+.debrief{display:none;}
+.debrief.show{display:block;animation:fadeUp .3s ease;}
+.score-ring-wrap{display:flex;flex-direction:column;align-items:center;margin:24px 0;}
+.score-ring{width:120px;height:120px;border-radius:50%;background:conic-gradient(var(--accent) calc(var(--pct,0)*1%),var(--bd2) 0);display:flex;align-items:center;justify-content:center;position:relative;}
+.score-ring::before{content:'';position:absolute;inset:12px;border-radius:50%;background:#fff;}
+.score-ring-inner{position:relative;text-align:center;}
+.score-ring-num{font-family:var(--serif);font-size:28px;font-style:italic;color:var(--primary);}
+.score-ring-denom{font-size:12px;color:var(--silver);}
+.score-ring-label{margin-top:10px;font-size:13px;font-weight:700;color:var(--slate);}
+.debrief-verdict{font-size:14px;color:var(--slate);line-height:1.75;text-align:center;max-width:580px;margin:0 auto 24px;}
+.debrief-cards{display:flex;flex-direction:column;gap:12px;}
+.debrief-card{border:1px solid var(--bd2);border-radius:var(--r);padding:16px;}
+.debrief-card-q{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--silver);margin-bottom:6px;}
+.debrief-card-verdict{font-size:13px;font-weight:800;margin-bottom:6px;}
+.debrief-card-verdict.correct{color:var(--green);}
+.debrief-card-verdict.wrong{color:var(--red);}
+.debrief-expert{font-size:12.5px;color:var(--slate);line-height:1.7;}
+.debrief-ctas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px;}
+.btn-return{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:linear-gradient(135deg,var(--accent),#9A3D10);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--sans);}
+.btn-retry{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:#fff;color:var(--slate);border:1.5px solid var(--bd2);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--sans);}
+@media(max-width:680px){
+  .content-area,.mod-hdr-inner,.tab-bar-inner{padding-left:16px;padding-right:16px;}
+  .stat-row{flex-direction:column;}
+  .scenario-fact{flex-direction:column;}
+  .scenario-fact-key{min-width:auto;}
+}
+</style>
+</head>
+<body>
+<div class="cite-overlay" id="cite-overlay" onclick="if(event.target===this)closeCite()">
+  <div class="cite-panel">
+    <div class="cp-hdr"><div class="cp-num" id="cp-num">1</div><div class="cp-title" id="cp-title">Loading...</div><button class="cp-close" onclick="closeCite()">x</button></div>
+    <div class="cp-body"><div class="cp-meta" id="cp-meta"></div><div class="cp-text" id="cp-text"></div>
+      <div class="cp-relevance"><div class="cp-relevance-label">Relevance to Module 3</div><div class="cp-relevance-text" id="cp-relevance"></div></div>
+    </div>
+  </div>
+</div>
+<div class="mod-hdr">
+  <div class="mod-hdr-inner">
+    <button class="mod-back" onclick="window.close()">Return to Training Platform</button>
+    <div class="mod-eyebrow">CLEAR Executive Language Access Certificate Program - Module 3 of 7</div>
+    <h1 class="mod-title">Inpatient Reliability and Rework</h1>
+    <p class="mod-subtitle">OB leads the system in interpreter delay, in rework burden, and in training currency. The pattern is not coincidental. It is structural.</p>
+    <div class="mod-meta">
+      <span class="mod-badge badge-phase">Phase 1 - Foundation</span>
+      <span class="mod-badge badge-phase" id="phase2-badge" style="display:none;">Phase 2 - Application</span>
+      <span class="mod-badge badge-step">Training Platform Step 4</span>
+      <span class="mod-badge badge-domain">Workflow Optimization - Workforce Development - Financial Stewardship</span>
+    </div>
+  </div>
+</div>
+<div class="tab-bar">
+  <div class="tab-bar-inner">
+    <button class="tab-btn active" id="tab-foundation" onclick="switchTab('foundation')">Phase 1 - Foundation</button>
+    <button class="tab-btn" id="tab-application" onclick="switchTab('application')">Phase 2 - Application</button>
+    <div class="phase-score"><span class="phase-score-label">Foundation</span><span class="phase-score-val" id="f-score-display">0 / 3</span></div>
+  </div>
+</div>
+<div class="content-area">
+<div class="phase-pane active" id="phase-foundation">
+  <div class="f-nav"><div class="f-nav-label" id="f-screen-label">Foundation 1 of 5</div><div class="f-dots" id="f-dots"><div class="f-dot active" onclick="goF(1)"></div><div class="f-dot" onclick="goF(2)"></div><div class="f-dot" onclick="goF(3)"></div><div class="f-dot" onclick="goF(4)"></div><div class="f-dot" onclick="goF(5)"></div></div></div>
+  
+<div class="f-screen active" id="fs1">
+  <div class="f-screen-title">Foundation 1 of 5 - Design Principle</div>
+  <div class="f-principle">Rework is not random. It concentrates exactly where communication failures concentrate — and it compounds across the stay.</div>
+  <p class="f-body">Attendant tasks are the downstream tasks generated when clinical work is not completed correctly the first time. Coder queries because the history was incomplete. Physician callbacks because the medication reconciliation contained errors. Documentation addenda because the initial note did not reflect what the patient actually said. Each of these is a communication failure made visible as an operational cost.</p>
+  <div class="callout navy">
+    <div class="callout-title" style="color:var(--primary)">The Rework Concentration Signal</div>
+    <div class="callout-body">Exercise 3.1 finds OB at 13.0 attendant tasks per encounter — the highest in the dataset and the largest H-statistic of any exercise. OB is also the service line with the longest interpreter delay (Module 1). The pattern is not coincidental. The same structural workflow failure that produces delay at triage produces rework at rounds. The mechanism is consistent; only the measurement changes.</div>
+  </div>
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-val crit">13.0</div><div class="stat-lbl">OB median attendant rework tasks per encounter. Highest service line.</div></div>
+    <div class="stat-card"><div class="stat-val sig">H = 71.7</div><div class="stat-lbl">Kruskal-Wallis H-statistic, p &lt; 0.0001. Largest in dataset.</div></div>
+    <div class="stat-card"><div class="stat-val ns">p = 0.382</div><div class="stat-lbl">CLAS training currency vs. rework reduction. Non-significant.</div></div>
+  </div>
+  <p class="f-body">The practical implication is that training-based interventions will not close the rework gap. Training communicates knowledge about what should happen. It does not change the workflow trigger that determines whether it does happen. Structural EHR prompts, hard-stops, and required fields at the point-of-care are the only interventions that reliably reduce rework at the rounding touchpoint.<a class="cite" onclick="showCite(1)">[1]</a></p>
+  <div class="screen-nav"><div></div><button class="btn-next" onclick="goF(2)">Foundation 2: The LOS Evidence</button></div>
+</div>
+
+<div class="f-screen" id="fs2">
+  <div class="f-screen-title">Foundation 2 of 5 - LOS Evidence</div>
+  <div class="f-principle">Length of stay is the financial face of rework. Every communication failure at rounds is a potential extra inpatient day.</div>
+  <p class="f-body">Exercise 3.2 tests whether interpreter use at the inpatient rounding touchpoint is associated with shorter length of stay. The Mann-Whitney U result is non-significant (p = 0.172) but directionally important: the effect is in the expected direction with an 11.9-hour difference. The test is underpowered given the available sample — this is a near-miss, not a true null.</p>
+  <div class="callout amber">
+    <div class="callout-title" style="color:var(--amber)">The Lindholm Anchor</div>
+    <div class="callout-body">Lindholm et al. (2012) established through a retrospective cohort study that LEP patients without professional interpretation at admission and discharge had 0.75 to 1.47 additional inpatient days. This is the financial model default. The ROI Dashboard uses 1.0 day as the conservative midpoint. The exercise result is directionally consistent with this evidence; the sample dataset is simply too small to confirm it independently.</div>
+  </div>
+  <p class="f-body">The two-component LOS model prices the inpatient communication improvement opportunity. Component 1 is the baseline: systematic interpreter integration at admission and discharge touchpoints, applied to all LEP inpatient encounters. Component 2 is the QBS uplift: for advanced maternal, behavioral health, and high-acuity encounters, QBS-qualified providers can deliver an additional 0.5-day reduction by eliminating handoff delays and rework cycles that persist even when remote interpretation is available.<a class="cite" onclick="showCite(2)">[2]</a></p>
+  <div class="screen-nav"><button class="btn-prev" onclick="goF(1)">Back</button><button class="btn-next" onclick="goF(3)">Foundation 3: The Training Trap</button></div>
+</div>
+
+<div class="f-screen" id="fs3">
+  <div class="f-screen-title">Foundation 3 of 5 - The Training Trap</div>
+  <div class="f-principle">Training is not the intervention. Training is the announcement that an intervention is expected.</div>
+  <p class="f-body">Exercise 3.3 finds that CLAS training currency is not significantly associated with reduced rework burden (p = 0.382). This result is consistent with Exercise 1.3 (technology without workflow) and Exercise 2.1 (documentation without delivery). The pattern across three modules is now clear: investments that operate at the awareness or documentation layer do not produce outcomes at the execution layer without a structural workflow change.</p>
+  <div class="callout red">
+    <div class="callout-title" style="color:var(--red)">Why Training Fails to Move Operational Metrics</div>
+    <div class="callout-body">Clinical staff with CLAS training know that they should request an interpreter at rounds. When time pressure, staffing shortages, or workflow friction make that request inconvenient, training-based knowledge does not override the practical constraint. A hard-stop in the rounding note — requiring interpreter confirmation before the clinical note can be signed — converts the intervention from a voluntary behavior change into a required workflow step. These are categorically different interventions producing categorically different outcomes.</div>
+  </div>
+  <p class="f-body">The governance implication is specific: before approving any language access training initiative, ask what happens when the trained behavior is inconvenient. If the answer is that the trained behavior will be skipped, the training is insufficient as the sole intervention. Identify the structural prompt that makes the behavior required regardless of convenience, and invest in that prompt alongside the training.<a class="cite" onclick="showCite(3)">[3]</a></p>
+  <div class="screen-nav"><button class="btn-prev" onclick="goF(2)">Back</button><button class="btn-next" onclick="goF(4)">Foundation 4: The QBS Uplift</button></div>
+</div>
+
+<div class="f-screen" id="fs4">
+  <div class="f-screen-title">Foundation 4 of 5 - The QBS Standard</div>
+  <div class="f-principle">A bilingual employee is not a qualified bilingual provider. The distinction is the difference between communication and assessed clinical communication competency.</div>
+  <p class="f-body">Qualified Bilingual Staff (QBS) are providers and staff whose bilingual clinical language proficiency has been assessed using a validated instrument. QBS are not interpreters and are not interchangeable with remote interpretation. They are providers who can conduct clinical encounters in the patient preferred language without requiring a third party to mediate the exchange. This changes the communication dynamic in ways that neither remote interpretation nor untested bilingual staff use can replicate.</p>
+  <div class="chain" id="chain3">
+    <div class="chain-item" id="chain-q1">
+      <div class="chain-node"><div class="chain-dot" id="cdot-q1">1</div><div class="chain-line"></div></div>
+      <div class="chain-content">
+        <div class="chain-title">The Amobi (2024) Standard</div>
+        <div class="chain-detail">Amobi et al. (2024, JAMA): "Would you bet someone's life on it?" as the QBS deployment standard. Bilingual staff who have not been assessed may have conversational fluency without clinical vocabulary, or clinical vocabulary in one specialty without fluency across the range of encounters they are expected to conduct. The JAMA framing establishes the standard: if the assessment has not been completed, the clinical communication competency cannot be assumed.</div>
+        <button class="chain-confirm-btn" id="cbtn-q1" onclick="confirmChain('q1')">Confirm standard</button>
+      </div>
+    </div>
+    <div class="chain-item" id="chain-q2">
+      <div class="chain-node"><div class="chain-dot" id="cdot-q2">2</div><div class="chain-line"></div></div>
+      <div class="chain-content">
+        <div class="chain-title">Dataset benchmark: 6.8% QBS coverage</div>
+        <div class="chain-detail">The LAI Q1 2026 sample dataset shows 6.8% of providers with QBS qualification. The LAI KPI 2 scoring band reaches 100/100 at 20% QBS coverage — indicating that 6.8% places most organizations in the lowest performance band. The investment case for QBS enrollment is precisely the gap between current coverage and the level required to serve LEP patient volume without systematic delay.</div>
+        <button class="chain-confirm-btn" id="cbtn-q2" onclick="confirmChain('q2')">Confirm benchmark</button>
+      </div>
+    </div>
+    <div class="chain-item" id="chain-q3">
+      <div class="chain-node"><div class="chain-dot" id="cdot-q3">3</div></div>
+      <div class="chain-content">
+        <div class="chain-title">Priority service lines for QBS investment</div>
+        <div class="chain-detail">OB, Behavioral Health, and high-acuity inpatient units produce the highest rework burden and the longest interpreter delay. These are the priority service lines for QBS enrollment — not because QBS should replace interpretation in other settings, but because these settings produce the most clinical and financial benefit from same-language provider encounters at the rounding touchpoint specifically.</div>
+        <button class="chain-confirm-btn" id="cbtn-q3" onclick="confirmChain('q3')">Confirm priority</button>
+      </div>
+    </div>
+  </div>
+  <div class="chain-progress" id="chain-prog">
+    <span style="font-size:11px;font-weight:700;color:var(--slate);">Confirm all three:</span>
+    <div class="chain-progress-bar"><div class="chain-progress-fill" id="chain-fill" style="width:0%"></div></div>
+    <span class="chain-progress-label" id="chain-label">0 / 3</span>
+  </div>
+  <div class="screen-nav"><button class="btn-prev" onclick="goF(3)">Back</button><button class="btn-next" onclick="goF(5)">Foundation 5: Gateway Check</button></div>
+</div>
+
+<div class="f-screen" id="fs5">
+  <div class="f-screen-title">Foundation 5 of 5 - Gateway Check</div>
+  <div class="f-principle">Three formative questions before the application begins.</div>
+  <p class="f-body">These are unscored. They confirm the Module 3 framework is loaded before the decision scenarios begin.</p>
+  <div class="gateway">
+    <div class="gateway-title">Formative Questions</div>
+    <div class="gateway-q">
+      <div class="gateway-q-text">Exercise 3.3 finds no significant association between CLAS training currency and rework reduction. What is the most defensible governance conclusion?</div>
+      <div class="gw-choices">
+        <label class="gw-choice"><input type="radio" name="gq1" value="a" onchange="gwAnswer(1,'a')"> Cancel CLAS training investment and redirect to EHR workflow changes</label>
+        <label class="gw-choice"><input type="radio" name="gq1" value="b" onchange="gwAnswer(1,'b')"> Training communicates knowledge but does not change workflow. Structural hard-stops and required EHR fields must accompany training to move operational metrics.</label>
+        <label class="gw-choice"><input type="radio" name="gq1" value="c" onchange="gwAnswer(1,'c')"> The result is underpowered. More training investment will eventually produce statistical significance.</label>
+        <label class="gw-choice"><input type="radio" name="gq1" value="d" onchange="gwAnswer(1,'d')"> CLAS training should be replaced with QBS credentialing for all clinical staff.</label>
+      </div>
+      <div class="gw-answer correct" id="gwa1-b">Correct. Training and structural workflow changes are complementary, not interchangeable. The null result tells you training alone is insufficient; it does not tell you training is worthless.</div>
+      <div class="gw-answer incorrect" id="gwa1-a">Cancellation misreads the finding. CLAS training has value as a knowledge foundation and a compliance requirement. The null result indicates it is insufficient as a standalone intervention, not that it should be eliminated.</div>
+      <div class="gw-answer incorrect" id="gwa1-c">The p-value of 0.382 is not near the significance threshold. Additional investment in training would not change the mechanism — training changes knowledge, not workflow execution.</div>
+      <div class="gw-answer incorrect" id="gwa1-d">QBS credentialing serves a different function from CLAS training. QBS qualifies providers for language-concordant clinical care. CLAS training addresses all staff awareness of language access obligations. Both serve distinct purposes.</div>
+    </div>
+    <div class="gateway-q" style="margin-top:16px;">
+      <div class="gateway-q-text">The Lindholm et al. (2012) finding is that LEP patients without interpretation had 0.75 to 1.47 additional inpatient days. The ROI model defaults to 1.0 day. Why is the conservative midpoint the correct default?</div>
+      <div class="gw-choices">
+        <label class="gw-choice"><input type="radio" name="gq2" value="a" onchange="gwAnswer(2,'a')"> Using the upper bound (1.47 days) would produce a larger ROI and is more persuasive to a finance committee</label>
+        <label class="gw-choice"><input type="radio" name="gq2" value="b" onchange="gwAnswer(2,'b')"> A conservative projection that holds under CFO scrutiny is worth more than an optimistic projection that collapses when challenged. Using the midpoint builds credibility for the overall financial case.</label>
+        <label class="gw-choice"><input type="radio" name="gq2" value="c" onchange="gwAnswer(2,'c')"> The midpoint is required by federal guidelines for language access ROI modeling</label>
+        <label class="gw-choice"><input type="radio" name="gq2" value="d" onchange="gwAnswer(2,'d')"> 1.0 day is easier to calculate than 1.47 days</label>
+      </div>
+      <div class="gw-answer correct" id="gwa2-b">Correct. The credibility of the financial case depends on the assumptions holding under scrutiny. A CFO who challenges the 1.47-day assumption and finds you used the upper bound will discount the entire analysis. A CFO who challenges the 1.0-day assumption and finds you used the conservative midpoint will increase confidence in the remaining figures.</div>
+      <div class="gw-answer incorrect" id="gwa2-a">A larger ROI figure that cannot be defended under scrutiny actively damages the credibility of the financial case. Finance committees remember when projections are challenged and collapse.</div>
+      <div class="gw-answer incorrect" id="gwa2-c">No federal guideline specifies the LOS reduction figure for language access ROI modeling. The choice of conservative anchor is a governance decision, not a regulatory requirement.</div>
+      <div class="gw-answer incorrect" id="gwa2-d">Simplicity of calculation is not a basis for evidence selection in a financial model that will be presented to a board finance committee.</div>
+    </div>
+  </div>
+  <div class="screen-nav"><button class="btn-prev" onclick="goF(4)">Back</button><button class="enter-sim-btn" onclick="enterApplication()">Enter Phase 2: Application Scenarios</button></div>
+</div>
+
+</div>
+<div class="phase-pane" id="phase-application">
+  <div class="f-nav"><div class="f-nav-label" id="app-screen-label">Application 1 of 3</div><div class="f-dots" id="app-dots"><div class="f-dot active" id="adot1"></div><div class="f-dot" id="adot2"></div><div class="f-dot" id="adot3"></div></div></div>
+  
+<div class="app-screen active" id="as1">
+  <div class="scenario-hdr">
+    <div class="scenario-eyebrow">Application 1 of 3 - Rework Concentration</div>
+    <div class="scenario-title">The COO Operational Review</div>
+    <div class="scenario-role">You are the COO. Your operations team presents rework data showing OB at 13.0 attendant tasks per encounter, significantly higher than all other service lines. Your OB Medical Director argues: "OB is more complex. Higher acuity naturally generates more tasks. This is expected variance, not a communication problem."</div>
+  </div>
+  <div class="scenario-body">
+    <div class="scenario-body-title">Rework Data</div>
+    <div class="scenario-facts">
+      <div class="scenario-fact"><div class="scenario-fact-key">OB median attendant tasks</div><div class="scenario-fact-val">13.0 per encounter — highest service line</div></div>
+      <div class="scenario-fact"><div class="scenario-fact-key">Kruskal-Wallis result</div><div class="scenario-fact-val">H = 71.7, p &lt; 0.0001 — statistically significant across service lines</div></div>
+      <div class="scenario-fact"><div class="scenario-fact-key">OB interpreter delay (Module 1)</div><div class="scenario-fact-val">35.6 minutes median — also highest service line</div></div>
+      <div class="scenario-fact"><div class="scenario-fact-key">OB CLAS training currency</div><div class="scenario-fact-val">72% — higher than ED (58%) and Behavioral Health (61%)</div></div>
+    </div>
+    <div class="scenario-prompt">How do you respond to the OB Medical Director?</div>
+  </div>
+  <div class="formative">
+    <div class="formative-label">Scored Decision</div>
+    <div class="formative-q">Which response most accurately interprets the data and identifies the correct intervention?</div>
+    <div class="choice-grid" id="q1choices">
+      <button class="choice-btn" onclick="answer(1,'a')"><span class="choice-letter">A</span><span>The OB Medical Director has a valid point. OB case complexity is higher than other service lines, and higher acuity generates more documentation requirements. Adjust the rework benchmarks to be acuity-stratified before drawing conclusions about communication workflow design.</span></button>
+      <button class="choice-btn" onclick="answer(1,'b')"><span class="choice-letter">B</span><span>Acuity differences are real — but they do not explain why OB leads both on rework AND on interpreter delay. If rework were driven purely by clinical complexity, we would expect high rework with short delay (complex cases managed effectively) or low rework with long delay (simple cases with communication barriers). OB shows high rework with long delay — which is the signature of a structural communication workflow failure, not acuity-driven task volume. OB also has the highest CLAS training currency, ruling out knowledge gaps as the explanation. The intervention is a workflow audit, not a benchmark adjustment.</span></button>
+      <button class="choice-btn" onclick="answer(1,'c')"><span class="choice-letter">C</span><span>The statistical finding is significant but we need qualitative data from OB nursing staff before drawing conclusions. Commission a structured interview study with OB RNs to understand the sources of rework before recommending an intervention.</span></button>
+      <button class="choice-btn" onclick="answer(1,'d')"><span class="choice-letter">D</span><span>The data supports increasing OB interpreter staffing. Higher case complexity requires more interpreter time, which would reduce both delay and rework simultaneously.</span></button>
+    </div>
+    <div class="feedback-box" id="q1fb"></div>
+  </div>
+  <div class="screen-nav"><div></div><button class="btn-next" id="as1-next" onclick="goApp(2)" disabled>Next Scenario</button></div>
+</div>
+
+<div class="app-screen" id="as2">
+  <div class="scenario-hdr">
+    <div class="scenario-eyebrow">Application 2 of 3 - LOS Budget Argument</div>
+    <div class="scenario-title">The CFO LOS Presentation</div>
+    <div class="scenario-role">You are the CMO presenting the LOS reduction module to your CFO. She asks: "The exercise result is non-significant at p = 0.172. How can you present an ROI model based on evidence the data does not support?"</div>
+  </div>
+  <div class="scenario-body">
+    <div class="scenario-body-title">Evidence Context</div>
+    <div class="scenario-facts">
+      <div class="scenario-fact"><div class="scenario-fact-key">Exercise 3.2 result</div><div class="scenario-fact-val">Mann-Whitney U: p = 0.172. Directional difference: 11.9 hours. Non-significant.</div></div>
+      <div class="scenario-fact"><div class="scenario-fact-key">Lindholm et al. (2012)</div><div class="scenario-fact-val">Retrospective cohort: 0.75 to 1.47 additional inpatient days for LEP patients without professional interpretation.</div></div>
+      <div class="scenario-fact"><div class="scenario-fact-key">ROI model default</div><div class="scenario-fact-val">1.0 day LOS reduction — conservative midpoint of Lindholm range</div></div>
+      <div class="scenario-fact"><div class="scenario-fact-key">Dataset limitation</div><div class="scenario-fact-val">1,000 encounters. Inpatient subset is smaller. Test is underpowered for LOS effect size.</div></div>
+    </div>
+    <div class="scenario-prompt">How do you respond to the CFO?</div>
+  </div>
+  <div class="formative">
+    <div class="formative-label">Scored Decision</div>
+    <div class="formative-q">Which response best defends the financial model while maintaining analytical honesty?</div>
+    <div class="choice-grid" id="q2choices">
+      <button class="choice-btn" onclick="answer(2,'a')"><span class="choice-letter">A</span><span>Remove the LOS module from the ROI presentation. A non-significant exercise result means we cannot present LOS reduction as a financial benefit until we have larger-scale data from our own system.</span></button>
+      <button class="choice-btn" onclick="answer(2,'b')"><span class="choice-letter">B</span><span>The exercise result is directionally consistent with the published evidence but underpowered in this dataset. The financial model is anchored to Lindholm et al. (2012) — a peer-reviewed retrospective cohort study, not the exercise dataset. The exercise cannot confirm the finding at this sample size; it cannot refute the published literature either. We are using the conservative lower bound of the Lindholm range (1.0 day) precisely because the sample data is inconclusive. The model is defensible because its anchor is the external evidence, and we are being conservative about its application.</span></button>
+      <button class="choice-btn" onclick="answer(2,'c')"><span class="choice-letter">C</span><span>The p-value of 0.172 is close enough to 0.05 to treat as marginally significant for financial modeling purposes. We can present the LOS module as supported by our internal data.</span></button>
+      <button class="choice-btn" onclick="answer(2,'d')"><span class="choice-letter">D</span><span>The exercise result at p = 0.172 actually strengthens the case — it shows we are approaching significance in a small sample, which means a larger study would confirm the effect. Present this as preliminary internal evidence supporting the published findings.</span></button>
+    </div>
+    <div class="feedback-box" id="q2fb"></div>
+  </div>
+  <div class="screen-nav"><button class="btn-prev" onclick="goApp(1)">Back</button><button class="btn-next" id="as2-next" onclick="goApp(3)" disabled>Next Scenario</button></div>
+</div>
+
+<div class="app-screen" id="as3">
+  <div class="scenario-hdr">
+    <div class="scenario-eyebrow">Application 3 of 3 - QBS Investment Decision</div>
+    <div class="scenario-title">The Human Resources QBS Proposal</div>
+    <div class="scenario-role">You are the CNO. Your VP of Human Resources proposes a QBS credentialing pilot. Your OB charge nurse argues: "We already have four bilingual nurses on staff. We use them all the time. We do not need a credentialing program — we just need to formalize what we are already doing."</div>
+  </div>
+  <div class="scenario-body">
+    <div class="scenario-body-title">QBS Pilot Context</div>
+    <div class="scenario-facts">
+      <div class="scenario-fact"><div class="scenario-fact-key">Current OB bilingual staff</div><div class="scenario-fact-val">4 nurses with self-reported Spanish fluency. No assessed clinical language proficiency.</div></div>
+      <div class="scenario-fact"><div class="scenario-fact-key">Current QBS coverage (system)</div><div class="scenario-fact-val">6.8% of providers (dataset benchmark)</div></div>
+      <div class="scenario-fact"><div class="scenario-fact-key">QBS ROI uplift</div><div class="scenario-fact-val">Additional 0.5-day LOS reduction for high-acuity encounters when QBS-qualified provider is present</div></div>
+      <div class="scenario-fact"><div class="scenario-fact-key">OB rework at current bilingual practice</div><div class="scenario-fact-val">13.0 attendant tasks per encounter — highest service line despite existing bilingual staff use</div></div>
+    </div>
+    <div class="scenario-prompt">How do you respond to the OB charge nurse?</div>
+  </div>
+  <div class="formative">
+    <div class="formative-label">Scored Decision</div>
+    <div class="formative-q">Which response correctly applies the QBS standard and addresses the charge nurse?</div>
+    <div class="choice-grid" id="q3choices">
+      <button class="choice-btn" onclick="answer(3,'a')"><span class="choice-letter">A</span><span>The charge nurse makes a practical point. Formalizing existing bilingual practice is a reasonable starting point. Create a registry of self-identified bilingual staff and allow them to serve as language resources pending formal credentialing.</span></button>
+      <button class="choice-btn" onclick="answer(3,'b')"><span class="choice-letter">B</span><span>The charge nurse describes exactly what the data shows: bilingual staff are being used without assessed clinical language proficiency, and OB still has the highest rework burden in the system. The current practice is not equivalent to QBS. The assessment matters because conversational fluency does not guarantee clinical vocabulary, and clinical vocabulary in labor and delivery does not guarantee proficiency across the full range of OB encounters. QBS credentialing does not replace what the bilingual nurses are doing — it validates it and makes it documentable, legally defensible, and auditable.</span></button>
+      <button class="choice-btn" onclick="answer(3,'c')"><span class="choice-letter">C</span><span>The four bilingual nurses should be credentialed immediately without formal assessment. Their years of clinical experience are sufficient evidence of language proficiency.</span></button>
+      <button class="choice-btn" onclick="answer(3,'d')"><span class="choice-letter">D</span><span>The QBS pilot should be paused until OB rework rates decline. High rework indicates systemic workflow problems that would undermine any credentialing program before it can demonstrate value.</span></button>
+    </div>
+    <div class="feedback-box" id="q3fb"></div>
+  </div>
+  <div class="screen-nav"><button class="btn-prev" onclick="goApp(2)">Back</button><button class="btn-next" id="as3-next" onclick="showDebrief()" disabled>Complete Module</button></div>
+</div>
+
+  <div class="debrief" id="debrief">
+    <div class="score-ring-wrap">
+      <div class="score-ring" id="scoreRing" style="--pct:0;"><div class="score-ring-inner"><div class="score-ring-num"><span id="debriefNum">0</span>/3</div></div></div>
+      <div class="score-ring-label" id="debrief-label">Module 3 Complete</div>
+    </div>
+    <div class="debrief-verdict" id="debrief-verdict"></div>
+    <div class="debrief-cards" id="debrief-cards"></div>
+    <div class="debrief-ctas">
+      <button class="btn-return" onclick="window.close()">Return to Training Platform - Complete Step 4 CAP</button>
+      <button class="btn-retry" onclick="retryModule()">Retry Application</button>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+var F_TOTAL=5,APP_TOTAL=3,TOTAL_Q=3,CHAIN_TOTAL=3;
+var CITES = {
+  1:{title:"Kruskal-Wallis: Rework Burden by Service Line",
+     meta:"Exercise 3.1 - CLEAR LAI Q1 2026 Sample Dataset",
+     text:"H = 71.7, p < 0.0001. OB median: 13.0 attendant tasks per encounter. The largest H-statistic of any exercise in the module series. Rework concentrates in the same service line as interpreter delay (Module 1), confirming a structural pattern.",
+     relevance:"Establishes that rework is not random variance — it is structurally concentrated in OB. Used to counter the acuity-driven explanation by noting OB also leads on interpreter delay."},
+  2:{title:"Lindholm et al. (2012) - LEP Inpatient LOS Without Professional Interpretation",
+     meta:"Lindholm M et al. Journal of General Internal Medicine, 2012",
+     text:"Retrospective cohort study. LEP patients without professional interpretation at admission and discharge had 0.75 to 1.47 additional inpatient days compared to English-proficient patients and LEP patients with interpretation. The mechanism is unresolved clinical communication at key handoff points generating extended stay.",
+     relevance:"Primary evidence anchor for the Engagement and LOS Reduction ROI module. The 1.0-day default is the conservative midpoint. When Exercise 3.2 is underpowered, Lindholm is the appropriate external evidence anchor."},
+  3:{title:"Mann-Whitney U: Training Currency vs. Rework Reduction",
+     meta:"Exercise 3.3 - CLEAR LAI Q1 2026 Sample Dataset",
+     text:"Mann-Whitney U: p = 0.382. Non-significant. CLAS training currency is not associated with reduced rework burden in this dataset. Consistent with the broader pattern across Exercises 1.3, 2.1, and 3.3: awareness-layer interventions do not move execution-layer metrics without structural workflow changes.",
+     relevance:"Establishes the training trap principle. Used to support the argument that structural EHR hard-stops must accompany training initiatives to produce operational metric improvement."}
+};
+var GW_CORRECT = {1:"b", 2:"b"};
+var Q_LABELS = ["Scenario 1: Rework Concentration Interpretation","Scenario 2: LOS Evidence Defense","Scenario 3: QBS Investment Decision"];
+var Q={
+  1:{correct:"b",feedback:{
+    a:{ok:false,title:"Acuity stratification defers the structural question without answering it",
+       body:"Adjusting benchmarks to account for acuity does not test whether communication workflow failure is contributing to rework. If acuity-stratified benchmarks still showed OB above peer service lines, the question would remain unanswered. More importantly, OB has higher CLAS training currency than ED and Behavioral Health — which rules out knowledge gaps as the driver. The data pattern (high rework AND high delay AND high training) points to structural workflow design, not acuity."},
+    b:{ok:true,title:"Correct - cross-module pattern analysis applied",
+       body:"The response correctly identifies the diagnostic signature: OB leads on both rework and delay, has the highest training currency, and shows the pattern consistent with structural workflow failure rather than acuity-driven task volume. Framing the intervention as a workflow audit rather than a benchmark adjustment or a staffing change addresses the correct root cause."},
+    c:{ok:false,title:"Qualitative data is useful context but not required before a governance decision",
+       body:"The quantitative pattern is already clear enough to support a workflow audit. Commissioning an interview study before any intervention delays the governance response by months and does not change the probability that the root cause is structural. A workflow audit can be conducted in parallel with qualitative interviews if stakeholder input is desired."},
+    d:{ok:false,title:"Staffing increase does not address a workflow trigger problem",
+       body:"OB is fully staffed with interpreters — interpreter availability is not the constraint. The constraint is the workflow trigger: when and how the interpreter request is initiated in OB rounding. Adding more interpreters to a system where the trigger is unreliable does not change the delay or the rework."}
+  }},
+  2:{correct:"b",feedback:{
+    a:{ok:false,title:"Removing the LOS module conflates exercise power with published evidence quality",
+       body:"The exercise dataset has 1,000 encounters; the inpatient subset is smaller. A non-significant result from an underpowered dataset does not refute the Lindholm et al. retrospective cohort. Removing a financially material module based on a power limitation in a small sample would produce a CFO presentation that significantly underestimates the financial case."},
+    b:{ok:true,title:"Correct - evidence hierarchy properly applied and conservative anchor used",
+       body:"The response distinguishes between the exercise dataset (underpowered, directionally consistent) and the published evidence anchor (peer-reviewed, larger cohort, appropriate study design). The use of the conservative lower bound is correctly framed as a credibility choice, not a concession. This is the technically and governmentally correct response."},
+    c:{ok:false,title:"p = 0.172 is not near the threshold and cannot be treated as marginally significant",
+       body:"A p-value of 0.172 is not marginal — it is well above the conventional 0.05 threshold. Presenting a non-significant result as support for a financial model exposes the CMO to immediate credibility loss when a finance-literate board member checks the analysis."},
+    d:{ok:false,title:"Underpowered results approaching significance cannot be presented as preliminary internal confirmation",
+       body:"The reasoning that a near-significant result in a small sample predicts significance in a larger sample is not statistically sound — the direction of an underpowered result does not guarantee the direction of a powered result. Presenting p = 0.172 as preliminary evidence supporting Lindholm would be challenged by any statistician on the finance committee."}
+  }},
+  3:{correct:"b",feedback:{
+    a:{ok:false,title:"A self-identified bilingual registry creates unassessed clinical communication risk",
+       body:"Formalizing existing unassessed bilingual practice does not address the clinical risk — it institutionalizes it. Conversational fluency in Spanish does not guarantee clinical vocabulary in obstetrics, pain assessment, or medication counseling. A registry of self-identified bilingual staff used as language resources without assessment is not a credentialing program; it is documentation of an uncontrolled practice."},
+    b:{ok:true,title:"Correct - data-anchored response that validates practice while establishing the standard",
+       body:"The response uses OB rework data directly: if unassessed bilingual practice were equivalent to QBS, OB rework rates would not be the highest in the system despite having bilingual nurses on staff. The response validates the charge nurse perspective — the nurses are doing valuable work — while establishing that assessment is what makes the practice auditable, legally defensible, and clinically reliable. This is the framing that produces buy-in from clinical staff."},
+    c:{ok:false,title:"Years of clinical experience do not demonstrate clinical language proficiency",
+       body:"Clinical experience demonstrates clinical competency in English. It does not establish that the same competency exists in the second language across all clinical contexts. The Amobi (2024) standard applies regardless of tenure: the question is not whether the provider has experience, but whether the clinical language proficiency has been assessed."},
+    d:{ok:false,title:"QBS credentialing is the structural intervention for rework reduction, not a reward for achieving it",
+       body:"Pausing credentialing until rework declines inverts the causal model. QBS credentialing is part of the intervention that is expected to reduce rework — specifically through the LOS uplift component for high-acuity encounters. Waiting for outcomes before implementing the intervention that produces those outcomes means the outcomes will not occur."}
+  }}
+};
+CHAIN_TOTAL=3;
+
+/* ── CITATION PANEL ─────────────────────────────────────────────────── */
+function showCite(n){
+  var c=CITES[n]; if(!c) return;
+  document.getElementById('cp-num').textContent=n;
+  document.getElementById('cp-title').textContent=c.title;
+  document.getElementById('cp-meta').textContent=c.meta;
+  document.getElementById('cp-text').textContent=c.text;
+  document.getElementById('cp-relevance').textContent=c.relevance;
+  document.getElementById('cite-overlay').classList.add('open');
+}
+function closeCite(){document.getElementById('cite-overlay').classList.remove('open');}
+
+/* ── FOUNDATION NAVIGATION ──────────────────────────────────────────── */
+var _fScreen=1;
+function goF(n){
+  document.getElementById('fs'+_fScreen).classList.remove('active');
+  document.getElementById('fs'+n).classList.add('active');
+  document.getElementById('f-screen-label').textContent='Foundation '+n+' of '+F_TOTAL;
+  var dots=document.querySelectorAll('#f-dots .f-dot');
+  dots.forEach(function(d,i){
+    d.classList.remove('active','done');
+    if(i+1<n) d.classList.add('done');
+    else if(i+1===n) d.classList.add('active');
+  });
+  _fScreen=n;
+}
+
+/* ── EVIDENCE CHAIN ─────────────────────────────────────────────────── */
+var _chainConfirmed=0, CHAIN_TOTAL=0;
+function confirmChain(id){
+  var item=document.getElementById('chain-'+id);
+  var btn=document.getElementById('cbtn-'+id);
+  if(!item||item.classList.contains('confirmed')) return;
+  item.classList.add('confirmed');
+  btn.textContent='Confirmed';
+  btn.classList.add('done');
+  _chainConfirmed++;
+  var pct=(_chainConfirmed/CHAIN_TOTAL)*100;
+  document.getElementById('chain-fill').style.width=pct+'%';
+  document.getElementById('chain-label').textContent=_chainConfirmed+' / '+CHAIN_TOTAL;
+}
+
+/* ── GATEWAY ────────────────────────────────────────────────────────── */
+function gwAnswer(q,choice){
+  var correct=GW_CORRECT[q];
+  ['a','b','c','d'].forEach(function(l){
+    var el=document.getElementById('gwa'+q+'-'+l);
+    if(el) el.style.display='none';
+  });
+  var el=document.getElementById('gwa'+q+'-'+choice);
+  if(el) el.style.display='block';
+  document.querySelectorAll('input[name="gq'+q+'"]').forEach(function(r){r.disabled=true;});
+}
+
+/* ── TAB SWITCHING ──────────────────────────────────────────────────── */
+function switchTab(tab){
+  ['foundation','application'].forEach(function(t){
+    document.getElementById('tab-'+t).classList.remove('active');
+    document.getElementById('phase-'+t).classList.remove('active');
+  });
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.getElementById('phase-'+tab).classList.add('active');
+}
+function enterApplication(){
+  switchTab('application');
+  var b=document.getElementById('phase2-badge');
+  if(b) b.style.display='inline-flex';
+  goApp(1);
+}
+
+/* ── APPLICATION NAVIGATION ─────────────────────────────────────────── */
+var _appScreen=1;
+function goApp(n){
+  document.getElementById('as'+_appScreen).classList.remove('active');
+  var next=document.getElementById('as'+n);
+  if(!next) return;
+  next.classList.add('active');
+  document.getElementById('app-screen-label').textContent='Application '+n+' of '+APP_TOTAL;
+  var dots=document.querySelectorAll('#app-dots .f-dot');
+  dots.forEach(function(d,i){
+    d.classList.remove('active','done');
+    if(i+1<n) d.classList.add('done');
+    else if(i+1===n) d.classList.add('active');
+  });
+  _appScreen=n;
+}
+
+/* ── SCORING ────────────────────────────────────────────────────────── */
+var score=0, answers={};
+function answer(q,choice){
+  if(answers['q'+q]!==undefined) return;
+  var qd=Q[q];
+  var fd=qd.feedback[choice]||{ok:false,title:'No feedback',body:''};
+  answers['q'+q]=fd.ok;
+  if(fd.ok) score++;
+  document.getElementById('f-score-display').textContent=score+' / '+TOTAL_Q;
+  var container=document.getElementById('q'+q+'choices');
+  container.querySelectorAll('.choice-btn').forEach(function(btn,i){
+    var l='abcd'[i]; btn.disabled=true;
+    if(l===qd.correct) btn.classList.add('reveal-correct');
+    else if(l===choice&&!fd.ok) btn.classList.add('selected-wrong');
+    else if(l===choice&&fd.ok) btn.classList.add('selected-correct');
+    else btn.classList.add('dimmed');
+  });
+  var fb=document.getElementById('q'+q+'fb');
+  fb.className='feedback-box '+(fd.ok?'correct':'wrong');
+  fb.style.display='block';
+  fb.innerHTML='<h4>'+fd.title+'<\/h4><p>'+fd.body+'<\/p>';
+  var nb=document.getElementById('as'+q+'-next');
+  if(nb) nb.disabled=false;
+}
+
+/* ── DEBRIEF ────────────────────────────────────────────────────────── */
+function showDebrief(){
+  document.getElementById('as'+TOTAL_Q).classList.remove('active');
+  var debrief=document.getElementById('debrief');
+  debrief.classList.add('show');
+  var pct=Math.round((score/TOTAL_Q)*100);
+  setTimeout(function(){document.getElementById('scoreRing').style.setProperty('--pct',pct);},100);
+  document.getElementById('debriefNum').textContent=score;
+  var msgs=[
+    'Review each scenario carefully. The errors reflect real governance mistakes with clinical and financial consequences. Return to Foundation screens to reinforce the framework before retrying.',
+    'Good progress. One scenario reflects a nuanced judgment call. Review the expert feedback — the reasoning cited is the standard of practice.',
+    'Excellent. You applied the module framework correctly across all three decision scenarios. These competencies directly inform your CAP contribution for this step.'
+  ];
+  var labels=['Review Foundation','Good Progress','Ready for Next Step'];
+  document.getElementById('debrief-verdict').textContent=msgs[Math.min(score,2)];
+  document.getElementById('debrief-label').textContent=labels[Math.min(score,2)];
+  var cc=document.getElementById('debrief-cards');
+  cc.innerHTML='';
+  for(var n=1;n<=TOTAL_Q;n++){
+    var wasCorrect=answers['q'+n];
+    var cf=Q[n].feedback[Q[n].correct];
+    var card=document.createElement('div');
+    card.className='debrief-card';
+    card.innerHTML='<div class="debrief-card-q">'+Q_LABELS[n-1]+'<\/div>'+
+      '<div class="debrief-card-verdict '+(wasCorrect?'correct':'wrong')+'">'+(wasCorrect?'Correct':'Needs review')+'<\/div>'+
+      '<div class="debrief-expert">'+cf.body+'<\/div>';
+    cc.appendChild(card);
+  }
+}
+function retryModule(){
+  score=0; answers={};
+  document.getElementById('f-score-display').textContent='0 / '+TOTAL_Q;
+  document.getElementById('debrief').classList.remove('show');
+  for(var n=1;n<=TOTAL_Q;n++){
+    var c=document.getElementById('q'+n+'choices');
+    if(c){
+      c.querySelectorAll('.choice-btn').forEach(function(b){
+        b.disabled=false;
+        b.classList.remove('reveal-correct','selected-wrong','selected-correct','dimmed');
+      });
+      var fb=document.getElementById('q'+n+'fb');
+      if(fb) fb.style.display='none';
+      var nb=document.getElementById('as'+n+'-next');
+      if(nb) nb.disabled=true;
+    }
+  }
+  goApp(1);
+  document.getElementById('as1').classList.add('active');
+  document.getElementById('scoreRing').style.setProperty('--pct',0);
+}
+
+</script>
+</body></html>
