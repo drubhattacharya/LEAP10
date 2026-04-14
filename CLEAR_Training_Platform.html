@@ -129,6 +129,8 @@ body{font-family:var(--sans);background:var(--fog);color:var(--navy);font-size:1
 .tool-btn-row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 2px;}
 .tool-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border:none;border-radius:10px;font-family:var(--sans);font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;}
 .tool-btn-lai{background:rgba(14,158,140,.15);color:var(--teal2);border:1.5px solid rgba(14,158,140,.35);}
+.tool-btn-module{background:rgba(196,87,27,.15);color:#C4571B;border:1.5px solid rgba(196,87,27,.40);font-weight:800;}
+.tool-btn-module:hover{background:rgba(196,87,27,.25);}
 .tool-btn-lai:hover{background:rgba(14,158,140,.25);transform:translateY(-1px);}
 .tool-btn-roi{background:rgba(212,142,26,.12);color:var(--amber2);border:1.5px solid rgba(212,142,26,.3);}
 .tool-btn-roi:hover{background:rgba(212,142,26,.22);transform:translateY(-1px);}
@@ -507,6 +509,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--navy);font-size:1
       <div class="eq-chips"><span class="eq-chip risk">Q1 · Where exposed?</span><span class="eq-chip risk">Q2 · Which populations?</span><span class="eq-chip reliability">Q4 · Workflow vs documentation?</span></div>
       <div class="tool-btn-row">
         <button class="tool-btn tool-btn-lai" onclick="openTool('lai','ex')"><span>🔬</span>Open LAI Platform → Exercises → Module 1 (Ex 1.1–1.3)</button>
+<button class="tool-btn tool-btn-module" onclick="openModule(1)"><span>📖</span>Open CLEAR Module 1 — Pre-Arrival &amp; Triage →</button>
         <button class="tool-btn tool-btn-roi" onclick="openTool('roi','#modp_ed')"><span>💰</span>Open ROI Dashboard → ED Language Access &amp; Stroke</button>
       </div>
     </div>
@@ -550,6 +553,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--navy);font-size:1
       <div class="eq-chips"><span class="eq-chip reliability">Q4 · Workflow vs documentation?</span><span class="eq-chip value">Q5 · Where losing revenue?</span></div>
       <div class="tool-btn-row">
         <button class="tool-btn tool-btn-lai" onclick="openTool('lai','ex')"><span>🔬</span>Open LAI Platform → Exercises → Module 2 (Ex 2.1–2.3)</button>
+<button class="tool-btn tool-btn-module" onclick="openModule(2)"><span>📖</span>Open CLEAR Module 2 — Clinical Evaluation →</button>
         <button class="tool-btn tool-btn-roi" onclick="openTool('roi','')"><span>💰</span>Open ROI Dashboard → Workflow Simulation Lab</button>
       </div>
     </div>
@@ -592,6 +596,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--navy);font-size:1
       <div class="eq-chips"><span class="eq-chip reliability">Q4 · Workflow vs documentation?</span><span class="eq-chip value">Q6 · Which service lines perform better?</span></div>
       <div class="tool-btn-row">
         <button class="tool-btn tool-btn-lai" onclick="openTool('lai','ex')"><span>🔬</span>Open LAI Platform → Exercises → Module 3 (Ex 3.1–3.3)</button>
+<button class="tool-btn tool-btn-module" onclick="openModule(3)"><span>📖</span>Open CLEAR Module 3 — Inpatient Reliability →</button>
         <button class="tool-btn tool-btn-roi" onclick="openTool('roi','#modp_eng')"><span>💰</span>Open ROI Dashboard → Engagement &amp; LOS Reduction</button>
       </div>
     </div>
@@ -634,6 +639,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--navy);font-size:1
       <div class="eq-chips"><span class="eq-chip value">Q5 · Where losing revenue?</span><span class="eq-chip action">Q7 · One thing in 30 days?</span></div>
       <div class="tool-btn-row">
         <button class="tool-btn tool-btn-lai" onclick="openTool('lai','ex')"><span>🔬</span>Open LAI Platform → Exercises → Module 4 (Ex 4.1–4.3)</button>
+<button class="tool-btn tool-btn-module" onclick="openModule(4)"><span>📖</span>Open CLEAR Module 4 — Discharge &amp; Comprehension →</button>
         <button class="tool-btn tool-btn-roi" onclick="openTool('roi','#modp_tb')"><span>💰</span>Open ROI Dashboard → Teach-Back (Dual: Provider + Automation)</button>
       </div>
     </div>
@@ -676,6 +682,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--navy);font-size:1
       <div class="eq-chips"><span class="eq-chip risk">Q1 · Where exposed?</span><span class="eq-chip value">Q5 · Where losing revenue?</span></div>
       <div class="tool-btn-row">
         <button class="tool-btn tool-btn-lai" onclick="openTool('lai','ex')"><span>🔬</span>Open LAI Platform → Exercises → Module 6 (Ex 6.1–6.3)</button>
+<button class="tool-btn tool-btn-module" onclick="openModule(6)"><span>📖</span>Open CLEAR Module 6 — Governance →</button>
         <button class="tool-btn tool-btn-roi" onclick="openTool('roi','#modp_mal')"><span>💰</span>Open ROI Dashboard → Malpractice Cost-Avoidance + State Reimbursement</button>
       </div>
     </div>
@@ -718,6 +725,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--navy);font-size:1
       <div class="eq-chips"><span class="eq-chip reliability">Q3 · What constrains maturity?</span><span class="eq-chip action">Q7 · One thing in 30 days?</span><span class="eq-chip action">Q10 · What do we commit to?</span></div>
       <div class="tool-btn-row">
         <button class="tool-btn tool-btn-lai" onclick="openTool('lai','ex')"><span>🔬</span>Open LAI Platform → Exercises → Module 5 (Ex 5.1–5.3)</button>
+<button class="tool-btn tool-btn-module" onclick="openModule(5)"><span>📖</span>Open CLEAR Module 5 — Post-Discharge Safety →</button>
         <button class="tool-btn tool-btn-roi" onclick="openTool('roi','#modp_vbp')"><span>💰</span>Open ROI Dashboard → Value-Based Care (VBP)</button>
       </div>
     </div>
@@ -807,7 +815,10 @@ body{font-family:var(--sans);background:var(--fog);color:var(--navy);font-size:1
     </div>
   </div>
   <div class="step-body">
-    <div class="callout teal"><div class="callout-title" style="color:var(--teal)">The Five-Element Standard</div><div class="callout-body">Every CAP row must have: (1) <strong>Specific finding</strong> — a named number, rate, or service line. (2) <strong>Named intervention</strong> — something that can be physically initiated on Tuesday. (3) <strong>Accountable owner</strong> — one person, one role. (4) <strong>90-day metric</strong> — measurable without ambiguity. (5) <strong>Financial connection</strong> — traceable to your calibrated dashboard figure.</div></div>
+    <div class="tool-btn-row">
+<button class="tool-btn tool-btn-module" onclick="openModule(7)"><span>&#128218;</span>Open CLEAR Module 7 &#8212; CAP Capstone &amp; Board Argument &#x2192;</button>
+</div>
+<div class="callout teal"><div class="callout-title" style="color:var(--teal)">The Five-Element Standard</div><div class="callout-body">Every CAP row must have: (1) <strong>Specific finding</strong> — a named number, rate, or service line. (2) <strong>Named intervention</strong> — something that can be physically initiated on Tuesday. (3) <strong>Accountable owner</strong> — one person, one role. (4) <strong>90-day metric</strong> — measurable without ambiguity. (5) <strong>Financial connection</strong> — traceable to your calibrated dashboard figure.</div></div>
     <div class="sec-title">Full 8-Module CAP — Review &amp; Finalize</div>
     <div class="cap-table">
       <div class="cap-row"><div class="cap-row-lbl"><div class="cap-row-mod">Module 0</div><div class="cap-row-name">Orientation</div></div><textarea class="cap-row-input" id="cap0" placeholder="Your two most urgent executive questions — and where your organization is most exposed."></textarea></div>
@@ -1056,6 +1067,10 @@ function openTool(tool, anchor) {
   const base = tool === 'lai' ? LAI_URL : ROI_URL;
   const url  = anchor ? base + anchor : base;
   window.open(url, '_blank');
+}
+
+function openModule(n) {
+  window.open('modules/CLEAR_Module' + n + '.html', '_blank');
 }
 
 /* ── ROI TOTAL CALCULATOR ───────────────────────────────────────────── */
