@@ -112,6 +112,11 @@ body { font-family:'DM Sans',sans-serif; background:var(--fog); color:var(--navy
 .opp-list { margin-top:12px; display:flex; flex-direction:column; gap:5px; }
 .opp-item { display:flex; align-items:center; gap:10px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09); border-radius:7px; padding:8px 11px; }
 .opp-rank { font-size:10.5px; font-weight:800; color:var(--teal2); width:20px; flex-shrink:0; }
+.opp-flag { font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-top:2px; }
+.opp-flag.bad { color:#e07070; }
+.opp-flag.warn { color:#f0b84a; }
+.opp-flag.good { color:#0cc5ad; }
+.opp-info { flex:1; display:flex; flex-direction:column; }
 .opp-name { font-size:12.5px; font-weight:600; color:rgba(255,255,255,.82); flex:1; }
 .opp-score { font-size:12px; font-weight:700; }
 .opp-score.bad { color:#e07070; }
@@ -487,11 +492,36 @@ table.dtbl td.delta.neg { color:var(--red); font-weight:700; }
   <section id="view_t1" class="view active">
     <div class="t1-layout">
 
+      <!-- ── STRATEGIC CONTEXT INTRO ── -->
+      <div style="background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);border-radius:12px;padding:22px 28px;margin-bottom:18px;border:1px solid rgba(14,158,140,.15);">
+        <div style="display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:260px;">
+            <div style="font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--teal2);margin-bottom:8px;">Step 1 of 10 · Strategic Baseline Assessment</div>
+            <div style="font-family:'DM Serif Display',serif;font-size:clamp(18px,2.5vw,24px);font-style:italic;color:#fff;line-height:1.2;margin-bottom:10px;">Establish where you are before you build where you are going.</div>
+            <div style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;margin-bottom:0;">This 10-domain assessment establishes your organization's current language access capability baseline. Your score drives the financial projections, clinical exercise findings, and implementation roadmap throughout the program. Adjust each slider to reflect your best estimate — you will return here at program completion to measure your improvement.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;min-width:200px;">
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 14px;">
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.35);margin-bottom:4px;">Regulatory Pressure</div>
+              <div style="font-size:12px;color:rgba(255,255,255,.65);line-height:1.5;">Section 1557 Final Rule (2024) expands enforcement scope. Non-compliance creates dual-track legal exposure.</div>
+            </div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 14px;">
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.35);margin-bottom:4px;">Financial Exposure</div>
+              <div style="font-size:12px;color:rgba(255,255,255,.65);line-height:1.5;">Language barriers drive excess LOS, avoidable readmissions, malpractice risk, and HCAHPS-linked VBP penalties.</div>
+            </div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 14px;">
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.35);margin-bottom:4px;">Market Demand</div>
+              <div style="font-size:12px;color:rgba(255,255,255,.65);line-height:1.5;">LEP populations are the fastest-growing patient segment in most U.S. markets. Language access is now a competitive differentiator.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- ── FULL-WIDTH GAUGE BANNER ── -->
       <div class="odo-hero">
         <!-- Left: gauge -->
         <div class="odo-hero-gauge">
-          <div class="odo-label">LAI Preparedness Pulse</div>
+          <div class="odo-label">Language Access Readiness Score</div>
           <div class="odo-gauge-wrap">
             <canvas id="odo_canvas" width="300" height="178"></canvas>
             <div class="odo-center">
@@ -500,9 +530,9 @@ table.dtbl td.delta.neg { color:var(--red); font-weight:700; }
             </div>
           </div>
           <div class="odo-zone-labels" style="width:300px;">
-            <span class="oz-label oz-red">Critical</span>
-            <span class="oz-label oz-amber">Developing</span>
-            <span class="oz-label oz-green">Strong</span>
+            <span class="oz-label oz-red">Unstable</span>
+            <span class="oz-label oz-amber">Established</span>
+            <span class="oz-label oz-green">Leading</span>
           </div>
         </div>
 
@@ -512,7 +542,7 @@ table.dtbl td.delta.neg { color:var(--red); font-weight:700; }
           <div class="odo-stats">
             <div class="odo-stat">
               <div class="odo-stat-n" id="t1_risk_n">—</div>
-              <div class="odo-stat-l">Risk signal</div>
+              <div class="odo-stat-l">Readiness band</div>
             </div>
             <div class="odo-stat-div"></div>
             <div class="odo-stat">
@@ -582,7 +612,17 @@ table.dtbl td.delta.neg { color:var(--red); font-weight:700; }
       </div>
 
     </div>
-  </section>
+  
+      <!-- ── RETURN TO TRAINING PLATFORM ── -->
+      <div style="margin:24px 28px 8px;padding:18px 24px;background:linear-gradient(135deg,rgba(14,158,140,.08),rgba(14,158,140,.03));border:1px solid rgba(14,158,140,.2);border-radius:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:3px;">Ready to continue your program?</div>
+          <div style="font-size:12px;color:var(--slate);">Your baseline score is set. Return to the Training Platform to begin Step 2 — the clinical evidence.</div>
+        </div>
+        <a href="CLEAR_Training_Platform.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:linear-gradient(135deg,var(--teal),#0a7a6d);color:#fff;border-radius:9px;text-decoration:none;font-size:13px;font-weight:700;white-space:nowrap;">&#8592; Return to Training Platform</a>
+      </div>
+
+</section>
 
   <!-- ══════════════════════ TIER 2 ══════════════════════ -->
   <section id="view_t2" class="view">
@@ -2210,6 +2250,10 @@ table.dtbl td.delta.neg { color:var(--red); font-weight:700; }
 // ─────────────────────────────────────────────────────────────────────────────
 // HELPERS
 // ─────────────────────────────────────────────────────────────────────────────
+function hexToRgb(hex){
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return r+","+g+","+b;
+}
 function slugify(s){ return String(s).toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]+/g,"_").replace(/^_+|_+$/g,""); }
 function clamp(x,lo=0,hi=100){ return Math.max(lo,Math.min(hi,x)); }
 function normKey(k){ return String(k||"").trim().toLowerCase(); }
@@ -2368,7 +2412,7 @@ function animateOdometer(target) {
 // ─────────────────────────────────────────────────────────────────────────────
 // DATA SCHEMA
 // ─────────────────────────────────────────────────────────────────────────────
-const PILLAR_ORDER = ["Access","Patient Experience","Outcomes","Compliance","Patient Engagement","Financial Stewardship","Quality and Safety","Workforce Development","Workflow Optimization","Technology Innovation"];
+const PILLAR_ORDER = ["Access","Patient Experience","Outcomes","Quality and Safety","Compliance","Patient Engagement","Workflow Optimization","Financial Stewardship","Workforce Development","Technology Innovation"];
 
 const METRICS = {
   "Access":{
@@ -3558,8 +3602,25 @@ function readinessBand(lai){
 function buildPillars(){
   const wrap=document.getElementById("pillars_t1");
   wrap.innerHTML="";
-  PILLAR_ORDER.forEach((pillar,idx)=>{
+  // Arc groupings
+const ARC_HEADERS = {
+  "Access": {label:"Clinical Quality Arc", desc:"Patient-facing outcomes — where language gaps produce measurable clinical and safety harm", color:"#0E9E8C"},
+  "Compliance": {label:"Operations &amp; Compliance Arc", desc:"Workflow execution and regulatory adherence across the clinical continuum", color:"#1867B8"},
+  "Financial Stewardship": {label:"Strategic Infrastructure Arc", desc:"Financial accountability, workforce capability, and technology enablement", color:"#7B3FA8"}
+};
+
+PILLAR_ORDER.forEach((pillar,idx)=>{
     const m=METRICS[pillar];
+
+    // Insert arc header if this pillar starts a new arc
+    if(ARC_HEADERS[pillar]){
+      const arcHdr=document.createElement("div");
+      arcHdr.style.cssText="margin:"+(idx===0?"4px":"18px")+" 0 8px;padding:10px 14px;background:rgba("+hexToRgb(ARC_HEADERS[pillar].color)+",.08);border-left:3px solid "+ARC_HEADERS[pillar].color+";border-radius:0 6px 6px 0;";
+      arcHdr.innerHTML="<div style=\"font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:"+ARC_HEADERS[pillar].color+";margin-bottom:3px;\">"+ARC_HEADERS[pillar].label+"<\/div><div style=\"font-size:11.5px;color:var(--slate);\">"+ARC_HEADERS[pillar].desc+"<\/div>";
+      const wrap=document.getElementById("pillars_t1");
+      wrap.appendChild(arcHdr);
+    }
+
     const div=document.createElement("div");
     div.className="pillar"+(idx===0?" open":"");
     div.id=`pillar_wrap_${slugify(pillar)}`;
@@ -3658,12 +3719,15 @@ function updateAll(){
   // Top 3 opps
   const sorted=Object.entries(pillarScores).sort((a,b)=>a[1]-b[1]).slice(0,3);
   const ol=document.getElementById("t1_opps");
-  if(ol) ol.innerHTML=sorted.map(([p,s],i)=>`
-    <div class="opp-item">
+  if(ol) ol.innerHTML=sorted.map(([p,s],i)=>{
+    const flag=s<35?"Critical — Immediate Action":s<65?"Needs Development":"Performing Well";
+    const fcls=s<35?"bad":s<65?"warn":"good";
+    return`<div class="opp-item">
       <div class="opp-rank">#${i+1}</div>
-      <div class="opp-name">${p}</div>
-      <div class="opp-score ${s<60?"bad":"warn"}">${s.toFixed(0)}</div>
-    </div>`).join("");
+      <div class="opp-info"><div class="opp-name">${p}<\/div><div class="opp-flag ${fcls}">${flag}<\/div><\/div>
+      <div class="opp-score ${fcls}">${s.toFixed(0)}<\/div>
+    <\/div>`;
+  }).join("");
 
   // Stage ladder
   const stagesDiv=document.getElementById("t1_stages");
