@@ -472,7 +472,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
         <div class="gw-answer incorrect" id="gwa1-d">H-statistic magnitude is a function of the actual distribution difference, not a property of the test that can be maximized by test selection.</div>
       </div>
       <div class="gateway-q" style="margin-top:16px;">
-        <div class="gateway-q-text">The Stroke Sub-Model is described as sitting "inside Track 1 conceptually." What does this mean for how you present it to a board finance committee?</div>
+        <div class="gateway-q-text">The Stroke Sub-Model is described as sitting "inside Track 1 conceptually." What does this mean for how you present it to a senior finance leadership?</div>
         <div class="gw-choices">
           <label class="gw-choice"><input type="radio" name="gq2" value="a" onchange="gwAnswer(2,'a')"> Present it as an additional revenue track on top of Track 1 and Track 2</label>
           <label class="gw-choice"><input type="radio" name="gq2" value="b" onchange="gwAnswer(2,'b')"> The stroke sub-model is a detailed example of the Track 1 admission avoidance mechanism — present it to illustrate the mechanism, not as incremental revenue beyond Track 1</label>
@@ -833,7 +833,7 @@ const Q = {
            body: 'A 10-minute universal standard for all LEP encounters is a laudable goal but addresses the wrong problem at the wrong time. The immediate governance question is how to protect the patients with the confirmed risk premium — advanced maternal cases with +11.7-minute delays. Universal standards address population-level equity; tiered protocols address acuity-specific risk. Both have a place; the tiered protocol is the immediate clinical governance response to the statistical finding.' },
       b: { ok: true,
            title: '✓ Correct — triage by acuity is the foundation of all clinical protocol design',
-           body: 'The ED Medical Director's equity framing misreads the principle. All patients deserve care appropriate to their clinical risk — which is why every triage system is tiered by acuity. Language access protocols should follow the same logic. Advanced maternal cases have a statistically confirmed delay premium, meaning they are not currently receiving equivalent access. A tiered protocol corrects this disparity. The EHR flag for advanced maternal cases is the mechanism that makes the protocol reliable rather than dependent on staff recognition.' },
+           body: 'The ED Medical Director\'s equity framing misreads the principle. All patients deserve care appropriate to their clinical risk — which is why every triage system is tiered by acuity. Language access protocols should follow the same logic. Advanced maternal cases have a statistically confirmed delay premium, meaning they are not currently receiving equivalent access. A tiered protocol corrects this disparity. The EHR flag for advanced maternal cases is the mechanism that makes the protocol reliable rather than dependent on staff recognition.' },
       c: { ok: false,
            title: '✗ 18% is not a small subgroup — and a pilot introduces its own risks',
            body: 'If 18% of OB LEP encounters are advanced maternal cases, and OB has 35-minute delays, restricting the protocol to one unit means the majority of affected patients remain unprotected during the pilot period. The statistical evidence is sufficient to support system-wide implementation. A pilot is appropriate for novel interventions with uncertain effects — not for protocol changes supported by highly significant data.' },
@@ -850,13 +850,13 @@ const Q = {
            body: 'Exercise 1.3 shows that technology alone — without workflow redesign — does not reduce delay. That is an argument about mechanism, not about technology value. Redirecting to staffing assumes the problem is interpreter availability, which the data contradicts — the organization is fully staffed. Cancelling technology investment based on a misread of a non-significant result would remove a genuine clinical tool while leaving the actual constraint (unreliable workflow triggers) unchanged.' },
       b: { ok: true,
            title: '✓ Correct — the technology is necessary but not sufficient without workflow change',
-           body: 'This response correctly applies the Exercise 1.3 finding: technology without workflow redesign doesn't move the delay metric, but technology with workflow redesign can. The solution is not to cancel the carts — it is to ensure the budget funds the complete intervention: hardware plus EHR trigger modification plus protocol training. The CFO's concern is legitimate; the response addresses it directly by restructuring the investment rather than abandoning it. This is the mark of an executive who understands mechanism, not just association.' },
+           body: 'This response correctly applies the Exercise 1.3 finding: technology without workflow redesign doesn\'t move the delay metric, but technology with workflow redesign can. The solution is not to cancel the carts — it is to ensure the budget funds the complete intervention: hardware plus EHR trigger modification plus protocol training. The CFO\'s concern is legitimate; the response addresses it directly by restructuring the investment rather than abandoning it. This is the mark of an executive who understands mechanism, not just association.' },
       c: { ok: false,
            title: '✗ A p-value of 0.098 is not significant by the conventional standard',
            body: 'Dismissing a non-significant result because p=0.098 is "close" is a common error in practical settings. The conventional threshold is 0.05 for good reason — it limits the false positive rate. Treating borderline results as significant, especially when defending a capital budget line, exposes the recommendation to credible challenge from any finance or compliance audience. The correct response acknowledges the finding and explains why the investment is still justified — without misrepresenting the statistics.' },
       d: { ok: false,
-           title: '✗ Compliance framing evades the CFO's legitimate question',
-           body: 'Reframing a performance investment as a compliance obligation is a common avoidance strategy that often backfires with CFOs. It doesn't answer the question of whether the investment will produce the stated benefit; it shifts the question to one the CFO is less equipped to challenge. A CFO who later learns the compliance framing was used to bypass ROI scrutiny will be less likely to trust future language access budget requests. The correct response engages the question directly.' }
+           title: '✗ Compliance framing evades the CFO\'s legitimate question',
+           body: 'Reframing a performance investment as a compliance obligation is a common avoidance strategy that often backfires with CFOs. It doesn\'t answer the question of whether the investment will produce the stated benefit; it shifts the question to one the CFO is less equipped to challenge. A CFO who later learns the compliance framing was used to bypass ROI scrutiny will be less likely to trust future language access budget requests. The correct response engages the question directly.' }
     }
   }
 };
@@ -886,7 +886,7 @@ function answer(q, choice) {
   const fb = document.getElementById('q' + q + 'fb');
   fb.className = 'feedback-box ' + (fd.ok ? 'correct' : 'wrong');
   fb.style.display = 'block';
-  fb.innerHTML = '<h4>' + fd.title + '</h4><p>' + fd.body + '</p>';
+  fb.innerHTML = '<h4>' + fd.title + '<\/h4><p>' + fd.body + '<\/p>';
 
   // Enable next button
   const nextBtn = document.getElementById('as' + q + '-next');
@@ -924,9 +924,10 @@ function showDebrief() {
     const correctFeedback = Q[n].feedback[correctChoice];
     const card = document.createElement('div');
     card.className = 'debrief-card';
-    card.innerHTML = \`<div class="debrief-card-q">\${qLabels[n-1]}</div>
-      <div class="debrief-card-verdict \${wasCorrect ? 'correct' : 'wrong'}">\${wasCorrect ? '✓ Correct' : '✗ Needs review'}</div>
-      <div class="debrief-expert">\${correctFeedback.body}</div>\`;
+    card.innerHTML = '<div class="debrief-card-q">' + qLabels[n-1] + '<\/div>' +
+      '<div class="debrief-card-verdict ' + (wasCorrect ? 'correct' : 'wrong') + '">' +
+      (wasCorrect ? '✓ Correct' : '✗ Needs review') + '<\/div>' +
+      '<div class="debrief-expert">' + correctFeedback.body + '<\/div>';
     cardContainer.appendChild(card);
   });
 }

@@ -259,7 +259,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
       <div class="chain-item" id="chain-g1">
         <div class="chain-node"><div class="chain-dot" id="cdot-g1">1</div><div class="chain-line"></div></div>
         <div class="chain-content">
-          <div class="chain-title">The four minimum metrics for a board-level language access scorecard</div>
+          <div class="chain-title">The four minimum metrics for a executive-level language access scorecard</div>
           <div class="chain-detail">T1-T7 all-complete rate (target: trajectory toward 80%+); audit-readiness rate by service line (target: 90%+); LEP vs. non-LEP HCAHPS gap on communication domains (target: less than 5pp); and 30-day readmission rate differential (target: less than 2pp). These four metrics provide the board with outcome visibility, process reliability, patient experience equity, and safety equity in a single reporting dashboard.</div>
           <button class="chain-confirm-btn" id="cbtn-g1" onclick="confirmChain('g1')">Confirm metrics</button>
         </div>
@@ -362,25 +362,25 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
     <div class="scenario-hdr">
       <div class="scenario-eyebrow">Application 2 of 3 - Board Scorecard Design</div>
       <div class="scenario-title">The Quality Committee Metric Proposal</div>
-      <div class="scenario-role">You are the CMO. The Board Quality Committee chair asks you to propose a language access scorecard for board-level quarterly reporting. The Chief Compliance Officer argues for a compliance-only scorecard: T1-T7 completion rate and audit-readiness rate. The Chief Quality Officer argues for an outcomes-only scorecard: HCAHPS communication gap and 30-day readmission differential. You must make the recommendation.</div>
+      <div class="scenario-role">You are the CMO. The Senior Quality Leadership chair asks you to propose a language access scorecard for executive-level quarterly reporting. The Chief Compliance Officer argues for a compliance-only scorecard: T1-T7 completion rate and audit-readiness rate. The Chief Quality Officer argues for an outcomes-only scorecard: HCAHPS communication gap and 30-day readmission differential. You must make the recommendation.</div>
     </div>
     <div class="scenario-body">
       <div class="scenario-body-title">Scorecard Design Options</div>
       <div class="scenario-facts">
         <div class="scenario-fact"><div class="scenario-fact-key">Compliance-only (CCO proposal)</div><div class="scenario-fact-val">T1-T7 all-complete rate + audit-readiness rate. Measures whether care was delivered and documented.</div></div>
         <div class="scenario-fact"><div class="scenario-fact-key">Outcomes-only (CQO proposal)</div><div class="scenario-fact-val">HCAHPS communication gap + 30-day readmission differential. Measures whether care produced equity.</div></div>
-        <div class="scenario-fact"><div class="scenario-fact-key">Board reporting cadence</div><div class="scenario-fact-val">Quarterly. Maximum 4-6 metrics for board-level review.</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Board reporting cadence</div><div class="scenario-fact-val">Quarterly. Maximum 4-6 metrics for executive-level review.</div></div>
       </div>
       <div class="scenario-prompt">What is your recommendation?</div>
     </div>
     <div class="formative">
       <div class="formative-label">Scored Decision</div>
-      <div class="formative-q">Which scorecard design best serves board-level governance?</div>
+      <div class="formative-q">Which scorecard design best serves executive-level governance?</div>
       <div class="choice-grid" id="q2choices">
         <button class="choice-btn" onclick="answer(2,'a')"><span class="choice-letter">A</span><span>The CCO proposal. Compliance metrics are directly actionable and legally material. Outcome metrics lag too much to support quarterly governance decisions.</span></button>
-        <button class="choice-btn" onclick="answer(2,'b')"><span class="choice-letter">B</span><span>Both sets together — all four metrics. Compliance metrics tell the board whether the system is operating as designed. Outcome metrics tell the board whether operating as designed is producing equity. Neither is sufficient alone: high compliance with poor outcomes means the protocol is wrong; good outcomes with poor compliance means the system is working by accident, not by design. The board needs both perspectives to govern the program rather than just monitor it.</span></button>
-        <button class="choice-btn" onclick="answer(2,'c')"><span class="choice-letter">C</span><span>The CQO proposal. Outcomes are what the board is ultimately accountable for. Compliance metrics are an operational concern that belongs in the management reporting layer, not the board layer.</span></button>
-        <button class="choice-btn" onclick="answer(2,'d')"><span class="choice-letter">D</span><span>Add a fifth metric: the LAI composite score. A single number provides the simplest board-level summary and avoids the compliance vs. outcomes debate entirely.</span></button>
+        <button class="choice-btn" onclick="answer(2,'b')"><span class="choice-letter">B</span><span>Both sets together — all four metrics. Compliance metrics tell senior leadership whether the system is operating as designed. Outcome metrics tell senior leadership whether operating as designed is producing equity. Neither is sufficient alone: high compliance with poor outcomes means the protocol is wrong; good outcomes with poor compliance means the system is working by accident, not by design. Senior leadership needs both perspectives to govern the program rather than just monitor it.</span></button>
+        <button class="choice-btn" onclick="answer(2,'c')"><span class="choice-letter">C</span><span>The CQO proposal. Outcomes are what senior leadership is ultimately accountable for. Compliance metrics are an operational concern that belongs in the management reporting layer, not the executive governance layer.</span></button>
+        <button class="choice-btn" onclick="answer(2,'d')"><span class="choice-letter">D</span><span>Add a fifth metric: the LAI composite score. A single number provides the simplest executive-level summary and avoids the compliance vs. outcomes debate entirely.</span></button>
       </div>
       <div class="feedback-box" id="q2fb"></div>
     </div>
@@ -456,13 +456,13 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
   }},
   2:{correct:"b",feedback:{
     a:{ok:false,title:"Compliance metrics alone cannot tell the board whether the program is working",
-       body:"High T1-T7 completion and high audit-readiness with persistent HCAHPS gaps and readmission differentials means the protocol is being executed but not producing equity. The board needs both sets to distinguish between a design problem and an execution problem."},
+       body:"High T1-T7 completion and high audit-readiness with persistent HCAHPS gaps and readmission differentials means the protocol is being executed but not producing equity. Senior leadership needs both sets to distinguish between a design problem and an execution problem."},
     b:{ok:true,title:"Correct - four-metric scorecard captures both execution and outcome",
-       body:"The response correctly identifies the governance limitation of each single-set approach and articulates the distinction that makes both necessary: compliance metrics measure whether the system is operating as designed; outcome metrics measure whether the design is achieving equity. A board that only sees compliance metrics can be fooled by good process with bad outcomes. A board that only sees outcome metrics cannot govern the levers that produce those outcomes."},
-    c:{ok:false,title:"Compliance metrics belong at the board level when compliance exposure is material",
-       body:"Under Section 1557 with a 2024 Final Rule that increases enforcement scrutiny, T1-T7 completion rates and audit-readiness are board-level governance metrics — they directly affect regulatory standing, malpractice exposure, and accreditation status. Relegating them to management reporting removes board visibility into material risk."},
+       body:"The response correctly identifies the governance limitation of each single-set approach and articulates the distinction that makes both necessary: compliance metrics measure whether the system is operating as designed; outcome metrics measure whether the design is achieving equity. Leaders who only see compliance metrics can be fooled by good process with bad outcomes. Leaders who only see outcome metrics cannot govern the levers that produce those outcomes."},
+    c:{ok:false,title:"Compliance metrics belong at the executive leadership level when compliance exposure is material",
+       body:"Under Section 1557 with a 2024 Final Rule that increases enforcement scrutiny, T1-T7 completion rates and audit-readiness are executive-level governance metrics — they directly affect regulatory standing, malpractice exposure, and accreditation status. Relegating them to operational reporting removes senior leadership visibility into material risk."},
     d:{ok:false,title:"The LAI composite alone loses the diagnostic granularity that makes governance actionable",
-       body:"A single composite score tells the board the overall posture but not which domain is driving underperformance or whether the issue is compliance, outcomes, or both. The four-metric scorecard is the minimum set for actionable board-level governance. The LAI composite is appropriate for executive summary context but should accompany, not replace, domain-specific metrics."}
+       body:"A single composite score tells the board the overall posture but not which domain is driving underperformance or whether the issue is compliance, outcomes, or both. The four-metric scorecard is the minimum set for actionable executive-level governance. The LAI composite is appropriate for executive summary context but should accompany, not replace, domain-specific metrics."}
   }},
   3:{correct:"b",feedback:{
     a:{ok:false,title:"Running Option A before Option B wastes implementation effort on a temporary fix",

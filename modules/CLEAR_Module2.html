@@ -353,8 +353,8 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
 <div class="app-screen active" id="as1">
   <div class="scenario-hdr">
     <div class="scenario-eyebrow">Application 1 of 3 - Null Result Interpretation</div>
-    <div class="scenario-title">The Board Quality Committee Question</div>
-    <div class="scenario-role">You are the Chief Medical Officer presenting Module 2 findings to the Board Quality Committee. A board member asks: "If interpreter use is not associated with lower readmissions, why are we spending $2.3 million a year on interpreter services?"</div>
+    <div class="scenario-title">The Senior Quality Leadership Question</div>
+    <div class="scenario-role">You are the Chief Medical Officer presenting Module 2 findings to the Senior Quality Leadership. A committee member asks: "If interpreter use is not associated with lower readmissions, why are we spending $2.3 million a year on interpreter services?"</div>
   </div>
   <div class="scenario-body">
     <div class="scenario-body-title">Context</div>
@@ -364,7 +364,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
       <div class="scenario-fact"><div class="scenario-fact-key">Known confounder</div><div class="scenario-fact-val">Sicker patients (higher severity) generate both more interpreter requests and higher readmission rates</div></div>
       <div class="scenario-fact"><div class="scenario-fact-key">Published evidence</div><div class="scenario-fact-val">Karliner et al. (2017): bedside interpreter access reduced LEP readmissions from 17.8% to 13.4%</div></div>
     </div>
-    <div class="scenario-prompt">How do you respond to the board member?</div>
+    <div class="scenario-prompt">How do you respond to the committee member?</div>
   </div>
   <div class="formative">
     <div class="formative-label">Scored Decision</div>
@@ -373,7 +373,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
       <button class="choice-btn" onclick="answer(1,'a')"><span class="choice-letter">A</span><span>The data shows interpreter use does not reduce readmissions. We should commission an independent review of our interpreter services budget before the next fiscal year.</span></button>
       <button class="choice-btn" onclick="answer(1,'b')"><span class="choice-letter">B</span><span>The cross-sectional result reflects a known statistical limitation: sicker patients use more interpreters and have higher readmissions regardless of interpretation quality. When clinical severity is controlled — as in the Karliner et al. propensity-matched study — professional interpretation reduced readmissions by 4.4 percentage points. The $2.3M is not only clinically justified; it is financially necessary to avoid the regulatory and malpractice exposure that Section 1557 non-compliance creates.</span></button>
       <button class="choice-btn" onclick="answer(1,'c')"><span class="choice-letter">C</span><span>The study was underpowered. With a larger sample size, the result would likely be significant. We should not draw conclusions from this dataset.</span></button>
-      <button class="choice-btn" onclick="answer(1,'d')"><span class="choice-letter">D</span><span>The interpreter services budget is a compliance obligation, not a clinical investment. The board should evaluate it under the legal risk budget, not the clinical quality budget.</span></button>
+      <button class="choice-btn" onclick="answer(1,'d')"><span class="choice-letter">D</span><span>The interpreter services budget is a compliance obligation, not a clinical investment. Finance leadership should evaluate it under the legal risk budget, not the clinical quality budget.</span></button>
     </div>
     <div class="feedback-box" id="q1fb"></div>
   </div>
@@ -481,7 +481,7 @@ var Q = {
     a:{ok:false, title:"This recommendation misreads the statistical result",
        body:"The p = 0.933 result reflects severity confounding in cross-sectional data, not a finding about interpreter effectiveness. Recommending a budget review based on a confounded null result would expose the organization to both malpractice risk and 1557 enforcement action, while potentially appearing to a regulator as evidence that the organization is considering reducing legally mandated services."},
     b:{ok:true, title:"Correct - confounding structure explained, evidence anchored",
-       body:"This response correctly identifies the severity confounding mechanism, cites the appropriate evidence (Karliner et al. propensity-matched study), and connects the investment to both clinical and legal justification. The board member receives an explanation that demonstrates analytical sophistication and organizational accountability."},
+       body:"This response correctly identifies the severity confounding mechanism, cites the appropriate evidence (Karliner et al. propensity-matched study), and connects the investment to both clinical and legal justification. The committee member receives an explanation that demonstrates analytical sophistication and organizational accountability."},
     c:{ok:false, title:"A p-value of 0.933 cannot be explained by underpowering",
        body:"Underpowering produces p-values near but above the significance threshold. A p-value of 0.933 is not near the threshold - it indicates the effect size observed is near zero in this dataset. The explanation is not underpowering; it is confounding by clinical severity."},
     d:{ok:false, title:"Framing interpreter services as compliance-only undersells the financial case",

@@ -334,7 +334,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
     <div class="scenario-hdr">
       <div class="scenario-eyebrow">Application 2 of 3 - The Readmission Attribution</div>
       <div class="scenario-title">The CFO Readmission Analysis</div>
-      <div class="scenario-role">You are the CMO. Your CFO asks you to quantify the readmission financial exposure from the teach-back gap. She wants a number she can present to the board: "What is the annual cost of not doing teach-back for LEP patients?"</div>
+      <div class="scenario-role">You are the CMO. Your CFO asks you to quantify the readmission financial exposure from the teach-back gap. She wants a number she can present to senior leadership: "What is the annual cost of not doing teach-back for LEP patients?"</div>
     </div>
     <div class="scenario-body">
       <div class="scenario-body-title">Financial Modeling Context</div>
@@ -353,7 +353,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
       <div class="choice-grid" id="q2choices">
         <button class="choice-btn" onclick="answer(2,'a')"><span class="choice-letter">A</span><span>Apply the 23% reduction to all 1,800 LEP discharges at the 14.2% readmission rate. Annual avoidable readmissions: 1,800 x 14.2% x 23% = 59 readmissions x $14,500 = $855,000 per year.</span></button>
         <button class="choice-btn" onclick="answer(2,'b')"><span class="choice-letter">B</span><span>Apply the 23% reduction only to condition-related readmissions — which are a subset of total readmissions — and apply a conservative attribution percentage accounting for the fact that not all readmissions are prevented by teach-back even when performed. The Hong et al. effect is condition-specific. Applying it to the total readmission rate overstates the attributable benefit and will not hold under CFO scrutiny from anyone familiar with the study.</span></button>
-        <button class="choice-btn" onclick="answer(2,'c')"><span class="choice-letter">C</span><span>Use the upper end of published readmission reduction estimates (30-35%) to produce the largest defensible figure for the board presentation.</span></button>
+        <button class="choice-btn" onclick="answer(2,'c')"><span class="choice-letter">C</span><span>Use the upper end of published readmission reduction estimates (30-35%) to produce the largest defensible figure for senior leadership presentation.</span></button>
         <button class="choice-btn" onclick="answer(2,'d')"><span class="choice-letter">D</span><span>Do not present a specific dollar figure. Readmission attribution to a single intervention is too uncertain for financial modeling. Present the Hong et al. HR 0.77 as a clinical outcome only.</span></button>
       </div>
       <div class="feedback-box" id="q2fb"></div>
@@ -440,7 +440,7 @@ var Q={
     c:{ok:false,title:"Using upper-bound estimates to maximize the board figure is the credibility trap",
        body:"Upper-bound estimates are selected to impress, not to defend. A CFO who asks where the 30-35% figure comes from and finds it is the optimistic end of a range will discount the entire analysis. Conservative anchoring produces figures that hold; optimistic anchoring produces figures that erode."},
     d:{ok:false,title:"Financial modeling under uncertainty is a governance requirement, not an option",
-       body:"A CFO asking for a dollar figure is asking for a defensible projection, not a certainty. Refusing to provide one leaves the board without a financial anchor for the investment decision. The correct approach is to provide a range using conservative and base-case assumptions, with explicit description of the key uncertainties."}
+       body:"A CFO asking for a dollar figure is asking for a defensible projection, not a certainty. Refusing to provide one leaves senior leadership without a financial anchor for the investment decision. The correct approach is to provide a range using conservative and base-case assumptions, with explicit description of the key uncertainties."}
   }},
   3:{correct:"b",feedback:{
     a:{ok:false,title:"Post-discharge compensation cannot substitute for inpatient prevention",
