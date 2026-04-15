@@ -458,20 +458,223 @@ body{font-family:var(--sans);background:var(--fog);color:var(--navy);font-size:1
     </div>
 
     <div class="sec-divider"></div>
-    <div class="sec-title">Initial LAI Self-Assessment</div>
-    <div class="sec-sub">Record your instinctive first-pass score for each domain before reviewing any data. These represent your current perception — the baseline against which the evidence will be measured.</div>
-    <div class="callout amber"><div class="callout-title" style="color:var(--amber)">What Not to Do Yet</div><div class="callout-body">Do not judge whether scores are good or bad. At this stage, Tier 1 is a mirror of perception, not a verdict. You will return to these scores after each module and compare your intuition to the evidence.</div></div>
-    <div class="form-grid">
-      <div class="field-group"><label class="field-label">Access — Interpreter wait time · workforce alignment</label><div class="range-row"><input type="range" class="field-range" min="0" max="100" value="50" id="d1" oninput="rv('d1v',this.value)"><span class="range-val" id="d1v">50</span></div></div>
-      <div class="field-group"><label class="field-label">Patient Experience — HCAHPS communication equity</label><div class="range-row"><input type="range" class="field-range" min="0" max="100" value="50" id="d2" oninput="rv('d2v',this.value)"><span class="range-val" id="d2v">50</span></div></div>
-      <div class="field-group"><label class="field-label">Outcomes — Preventive services · prescriptions filled</label><div class="range-row"><input type="range" class="field-range" min="0" max="100" value="50" id="d3" oninput="rv('d3v',this.value)"><span class="range-val" id="d3v">50</span></div></div>
-      <div class="field-group"><label class="field-label">Compliance — 1557 documentation · touchpoint completeness</label><div class="range-row"><input type="range" class="field-range" min="0" max="100" value="50" id="d4" oninput="rv('d4v',this.value)"><span class="range-val" id="d4v">50</span></div></div>
-      <div class="field-group"><label class="field-label">Patient Engagement — Teach-back · 3-day follow-up</label><div class="range-row"><input type="range" class="field-range" min="0" max="100" value="50" id="d5" oninput="rv('d5v',this.value)"><span class="range-val" id="d5v">50</span></div></div>
-      <div class="field-group"><label class="field-label">Financial Stewardship — Cost exposure tracked · LOS benchmarked</label><div class="range-row"><input type="range" class="field-range" min="0" max="100" value="50" id="d6" oninput="rv('d6v',this.value)"><span class="range-val" id="d6v">50</span></div></div>
-      <div class="field-group"><label class="field-label">Quality &amp; Safety — 30-day readmission · adverse event harm</label><div class="range-row"><input type="range" class="field-range" min="0" max="100" value="50" id="d7" oninput="rv('d7v',this.value)"><span class="range-val" id="d7v">50</span></div></div>
-      <div class="field-group"><label class="field-label">Workforce Development — Training currency · QBS qualification</label><div class="range-row"><input type="range" class="field-range" min="0" max="100" value="50" id="d8" oninput="rv('d8v',this.value)"><span class="range-val" id="d8v">50</span></div></div>
-      <div class="field-group"><label class="field-label">Workflow Optimization — 7-touchpoint coverage · rework burden</label><div class="range-row"><input type="range" class="field-range" min="0" max="100" value="50" id="d9" oninput="rv('d9v',this.value)"><span class="range-val" id="d9v">50</span></div></div>
-      <div class="field-group"><label class="field-label">Technology Innovation — VRI coverage · EHR automation</label><div class="range-row"><input type="range" class="field-range" min="0" max="100" value="50" id="d10" oninput="rv('d10v',this.value)"><span class="range-val" id="d10v">50</span></div></div>
+    <div class="sec-title">Initial LAI Self-Assessment — 20 KPIs Across 10 Domains</div>
+    <div class="sec-sub">Enter your best current estimate for each KPI. These establish your organizational baseline — the scores that drive financial projections, gap analysis, and your implementation roadmap throughout the program. You will recalibrate at program completion to measure improvement.</div>
+
+    <div class="callout amber"><div class="callout-title" style="color:var(--amber)">How to Read This Assessment</div><div class="callout-body">Percent KPIs: enter the rate directly (0–100%). Gap KPIs: enter the absolute percentage-point difference between your LEP and non-LEP patients — lower gap = better score. Financial Stewardship KPI 1: count how many of the 4 cost exposure streams your organization actively tracks and reports to financial leadership. Default values represent a median-performing U.S. health system.</div></div>
+
+    <div id="lai-sa-wrap" style="display:flex;flex-direction:column;gap:0;">
+
+      <!-- ── ARC 1: CLINICAL QUALITY ── -->
+      <div style="margin:16px 0 8px;padding:10px 16px;background:rgba(14,158,140,.06);border-left:3px solid var(--teal);border-radius:0 8px 8px 0;">
+        <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);margin-bottom:2px;">Clinical Quality Arc</div>
+        <div style="font-size:12px;color:var(--slate);">Patient-facing outcomes — where language gaps produce measurable clinical and safety harm</div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 24px;">
+
+        <!-- D01 ACCESS -->
+        <div style="padding:14px 0;border-bottom:1px solid var(--bd);">
+          <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--navy);margin-bottom:10px;">01 · Access <span style="font-weight:400;color:var(--silver);text-transform:none;letter-spacing:0;">(weights: 60/40)</span></div>
+          <div style="margin-bottom:10px;">
+            <label style="font-size:11.5px;font-weight:600;color:var(--slate);display:block;margin-bottom:4px;">KPI 1 (60%) — % LEP patients with interpreter/QBS contact within 10 min in the ED</label>
+            <div style="display:flex;align-items:center;gap:8px;"><input type="range" class="field-range" min="0" max="100" step="5" value="50" id="kpi_01_1" oninput="updateLAI()"><span class="range-val" id="kpi_01_1v">50%</span></div>
+            <div style="font-size:10.5px;color:var(--silver);margin-top:2px;">Target ≥90% · Valderrama et al. (2021)</div>
+          </div>
+          <div>
+            <label style="font-size:11.5px;font-weight:600;color:var(--slate);display:block;margin-bottom:4px;">KPI 2 (40%) — % physician language alignment with LEP population in service area</label>
+            <div style="display:flex;align-items:center;gap:8px;"><input type="range" class="field-range" min="0" max="100" step="5" value="50" id="kpi_01_2" oninput="updateLAI()"><span class="range-val" id="kpi_01_2v">50%</span></div>
+            <div style="font-size:10.5px;color:var(--silver);margin-top:2px;">Diamond et al. (2020): geographic mismatch</div>
+          </div>
+          <div style="margin-top:8px;font-size:11px;font-weight:700;color:var(--teal);">Domain score: <span id="ds_01">50</span>/100</div>
+        </div>
+
+        <!-- D02 PATIENT EXPERIENCE -->
+        <div style="padding:14px 0;border-bottom:1px solid var(--bd);">
+          <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--navy);margin-bottom:10px;">02 · Patient Experience <span style="font-weight:400;color:var(--silver);text-transform:none;letter-spacing:0;">(equal weights · gap measures — lower = better)</span></div>
+          <div style="margin-bottom:10px;">
+            <label style="font-size:11.5px;font-weight:600;color:var(--slate);display:block;margin-bottom:4px;">KPI 1 (50%) — HCAHPS gap: providers explained clearly (LEP vs. non-LEP, pp)</label>
+            <div style="display:flex;align-items:center;gap:8px;"><input type="range" class="field-range" min="0" max="30" step="1" value="8" id="kpi_02_1" oninput="updateLAI()"><span class="range-val" id="kpi_02_1v">8pp gap</span></div>
+            <div style="font-size:10.5px;color:var(--silver);margin-top:2px;">Target ≤2pp gap · Torresdey et al. (2024)</div>
+          </div>
+          <div>
+            <label style="font-size:11.5px;font-weight:600;color:var(--slate);display:block;margin-bottom:4px;">KPI 2 (50%) — HCAHPS gap: understanding treatment regimen (LEP vs. non-LEP, pp)</label>
+            <div style="display:flex;align-items:center;gap:8px;"><input type="range" class="field-range" min="0" max="30" step="1" value="8" id="kpi_02_2" oninput="updateLAI()"><span class="range-val" id="kpi_02_2v">8pp gap</span></div>
+            <div style="font-size:10.5px;color:var(--silver);margin-top:2px;">Target ≤2pp gap · Malevanchik et al. (2021)</div>
+          </div>
+          <div style="margin-top:8px;font-size:11px;font-weight:700;color:var(--teal);">Domain score: <span id="ds_02">60</span>/100</div>
+        </div>
+
+        <!-- D03 OUTCOMES -->
+        <div style="padding:14px 0;border-bottom:1px solid var(--bd);">
+          <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--navy);margin-bottom:10px;">03 · Clinical Performance Outcomes <span style="font-weight:400;color:var(--silver);text-transform:none;letter-spacing:0;">(equal weights)</span></div>
+          <div style="margin-bottom:10px;">
+            <label style="font-size:11.5px;font-weight:600;color:var(--slate);display:block;margin-bottom:4px;">KPI 1 (50%) — % LEP patients with prescriptions both written AND filled</label>
+            <div style="display:flex;align-items:center;gap:8px;"><input type="range" class="field-range" min="0" max="100" step="5" value="50" id="kpi_03_1" oninput="updateLAI()"><span class="range-val" id="kpi_03_1v">50%</span></div>
+            <div style="font-size:10.5px;color:var(--silver);margin-top:2px;">Malevanchik et al. (2021): medication adherence gaps</div>
+          </div>
+          <div>
+            <label style="font-size:11.5px;font-weight:600;color:var(--slate);display:block;margin-bottom:4px;">KPI 2 (50%) — % LEP patients receiving recommended preventive services</label>
+            <div style="display:flex;align-items:center;gap:8px;"><input type="range" class="field-range" min="0" max="100" step="5" value="50" id="kpi_03_2" oninput="updateLAI()"><span class="range-val" id="kpi_03_2v">50%</span></div>
+            <div style="font-size:10.5px;color:var(--silver);margin-top:2px;">Ramirez et al. (2022); Jacobs et al. (2006)</div>
+          </div>
+          <div style="margin-top:8px;font-size:11px;font-weight:700;color:var(--teal);">Domain score: <span id="ds_03">50</span>/100</div>
+        </div>
+
+        <!-- D07 QUALITY & SAFETY -->
+        <div style="padding:14px 0;border-bottom:1px solid var(--bd);">
+          <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--navy);margin-bottom:10px;">07 · Quality &amp; Safety <span style="font-weight:400;color:var(--silver);text-transform:none;letter-spacing:0;">(equal weights · gap measures — lower = better)</span></div>
+          <div style="margin-bottom:10px;">
+            <label style="font-size:11.5px;font-weight:600;color:var(--slate);display:block;margin-bottom:4px;">KPI 1 (50%) — 30-day readmission rate gap: LEP vs. non-LEP patients (pp differential)</label>
+            <div style="display:flex;align-items:center;gap:8px;"><input type="range" class="field-range" min="0" max="30" step="1" value="8" id="kpi_07_1" oninput="updateLAI()"><span class="range-val" id="kpi_07_1v">8pp gap</span></div>
+            <div style="font-size:10.5px;color:var(--silver);margin-top:2px;">Target ≤2pp gap · Karliner et al. (2020)</div>
+          </div>
+          <div>
+            <label style="font-size:11.5px;font-weight:600;color:var(--slate);display:block;margin-bottom:4px;">KPI 2 (50%) — Adverse event physical harm rate gap: LEP vs. non-LEP patients (pp differential)</label>
+            <div style="display:flex;align-items:center;gap:8px;"><input type="range" class="field-range" min="0" max="30" step="1" value="8" id="kpi_07_2" oninput="updateLAI()"><span class="range-val" id="kpi_07_2v">8pp gap</span></div>
+            <div style="font-size:10.5px;color:var(--silver);margin-top:2px;">Target ≤2pp gap · Divi et al. (2007)</div>
+          </div>
+          <div style="margin-top:8px;font-size:11px;font-weight:700;color:var(--teal);">Domain score: <span id="ds_07">60</span>/100</div>
+        </div>
+
+      </div><!-- end arc 1 grid -->
+
+      <!-- ── ARC 2: OPERATIONS & COMPLIANCE ── -->
+      <div style="margin:16px 0 8px;padding:10px 16px;background:rgba(24,103,184,.06);border-left:3px solid #1867B8;border-radius:0 8px 8px 0;">
+        <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#1867B8;margin-bottom:2px;">Operations &amp; Compliance Arc</div>
+        <div style="font-size:12px;color:var(--slate);">Workflow execution and regulatory adherence across the clinical continuum</div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 24px;">
+
+        <!-- D04 COMPLIANCE -->
+        <div style="padding:14px 0;border-bottom:1px solid var(--bd);">
+          <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--navy);margin-bottom:10px;">04 · Compliance <span style="font-weight:400;color:var(--silver);text-transform:none;letter-spacing:0;">(equal weights)</span></div>
+          <div style="margin-bottom:10px;">
+            <label style="font-size:11.5px;font-weight:600;color:var(--slate);display:block;margin-bottom:4px;">KPI 1 (50%) — % LEP patients with interpreter/QBS access at all required touchpoints (T1–T7)</label>
+            <div style="display:flex;align-items:center;gap:8px;"><input type="range" class="field-range" min="0" max="100" step="5" value="50" id="kpi_04_1" oninput="updateLAI()"><span class="range-val" id="kpi_04_1v">50%</span></div>
+            <div style="font-size:10.5px;color:var(--silver);margin-top:2px;">Section 1557 Final Rule (2024); 45 C.F.R. §92.201</div>
+          </div>
+          <div>
+            <label style="font-size:11.5px;font-weight:600;color:var(--slate);display:block;margin-bottom:4px;">KPI 2 (50%) — % LEP encounters with documented interpreter or QBS use (excl. valid waivers)</label>
+            <div style="display:flex;align-items:center;gap:8px;"><input type="range" class="field-range" min="0" max="100" step="5" value="50" id="kpi_04_2" oninput="updateLAI()"><span class="range-val" id="kpi_04_2v">50%</span></div>
+            <div style="font-size:10.5px;color:var(--silver);margin-top:2px;">Berkeley/NHeLP (2010): documentation gaps = malpractice exposure</div>
+          </div>
+          <div style="margin-top:8px;font-size:11px;font-weight:700;color:var(--teal);">Domain score: <span id="ds_04">50</span>/100</div>
+        </div>
+
+        <!-- D05 PATIENT ENGAGEMENT -->
+        <div style="padding:14px 0;border-bottom:1px solid var(--bd);">
+          <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--navy);margin-bottom:10px;">05 · Patient Engagement <span style="font-weight:400;color:var(--silver);text-transform:none;letter-spacing:0;">(equal weights)</span></div>
+          <div style="margin-bottom:10px;">
+            <label style="font-size:11.5px;font-weight:600;color:var(--slate);display:block;margin-bottom:4px;">KPI 1 (50%) — % LEP patients who engaged in teach-back through qualified interpreter in preferred language</label>
+            <div style="display:flex;align-items:center;gap:8px;"><input type="range" class="field-range" min="0" max="100" step="5" value="50" id="kpi_05_1" oninput="updateLAI()"><span class="range-val" id="kpi_05_1v">50%</span></div>
+            <div style="font-size:10.5px;color:var(--silver);margin-top:2px;">Hong et al. (2019): HR 0.77 — 23% lower condition-related readmission</div>
+          </div>
+          <div>
+            <label style="font-size:11.5px;font-weight:600;color:var(--slate);display:block;margin-bottom:4px;">KPI 2 (50%) — % LEP patients reached with follow-up within 3 days post-discharge</label>
+            <div style="display:flex;align-items:center;gap:8px;"><input type="range" class="field-range" min="0" max="100" step="5" value="50" id="kpi_05_2" oninput="updateLAI()"><span class="range-val" id="kpi_05_2v">50%</span></div>
+            <div style="font-size:10.5px;color:var(--silver);margin-top:2px;">Malevanchik et al. (2021): 72-hour follow-up protocol</div>
+          </div>
+          <div style="margin-top:8px;font-size:11px;font-weight:700;color:var(--teal);">Domain score: <span id="ds_05">50</span>/100</div>
+        </div>
+
+        <!-- D09 WORKFLOW OPTIMIZATION -->
+        <div style="padding:14px 0;border-bottom:1px solid var(--bd);">
+          <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--navy);margin-bottom:10px;">09 · Workflow Optimization <span style="font-weight:400;color:var(--silver);text-transform:none;letter-spacing:0;">(equal weights)</span></div>
+          <div style="margin-bottom:10px;">
+            <label style="font-size:11.5px;font-weight:600;color:var(--slate);display:block;margin-bottom:4px;">KPI 1 (50%) — % LEP workflow touchpoints (T1–T7) with documented interpreter or QBS use</label>
+            <div style="display:flex;align-items:center;gap:8px;"><input type="range" class="field-range" min="0" max="100" step="5" value="50" id="kpi_09_1" oninput="updateLAI()"><span class="range-val" id="kpi_09_1v">50%</span></div>
+            <div style="font-size:10.5px;color:var(--silver);margin-top:2px;">Khedr et al. (2020): language discordance doubles encounter time</div>
+          </div>
+          <div>
+            <label style="font-size:11.5px;font-weight:600;color:var(--slate);display:block;margin-bottom:4px;">KPI 2 (50%) — % departments with staff trained in SBAR, CUS, Check-Back for language access workflows</label>
+            <div style="display:flex;align-items:center;gap:8px;"><input type="range" class="field-range" min="0" max="100" step="5" value="50" id="kpi_09_2" oninput="updateLAI()"><span class="range-val" id="kpi_09_2v">50%</span></div>
+            <div style="font-size:10.5px;color:var(--silver);margin-top:2px;">TeamSTEPPS framework; stakeholder interview consensus</div>
+          </div>
+          <div style="margin-top:8px;font-size:11px;font-weight:700;color:var(--teal);">Domain score: <span id="ds_09">50</span>/100</div>
+        </div>
+
+        <div></div><!-- spacer -->
+
+      </div><!-- end arc 2 grid -->
+
+      <!-- ── ARC 3: STRATEGIC INFRASTRUCTURE ── -->
+      <div style="margin:16px 0 8px;padding:10px 16px;background:rgba(123,63,168,.06);border-left:3px solid #7B3FA8;border-radius:0 8px 8px 0;">
+        <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7B3FA8;margin-bottom:2px;">Strategic Infrastructure Arc</div>
+        <div style="font-size:12px;color:var(--slate);">Financial accountability, workforce capability, and technology enablement</div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 24px;">
+
+        <!-- D06 FINANCIAL STEWARDSHIP -->
+        <div style="padding:14px 0;border-bottom:1px solid var(--bd);">
+          <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--navy);margin-bottom:10px;">06 · Financial Stewardship <span style="font-weight:400;color:var(--silver);text-transform:none;letter-spacing:0;">(weights: 55/45)</span></div>
+          <div style="margin-bottom:10px;">
+            <label style="font-size:11.5px;font-weight:600;color:var(--slate);display:block;margin-bottom:4px;">KPI 1 (55%) — Cost exposure streams actively tracked and reported to financial leadership</label>
+            <div style="font-size:11px;color:var(--slate);margin-bottom:6px;line-height:1.5;">Count: readmission penalties · LOS differential · malpractice risk · VBP impact</div>
+            <div style="display:flex;align-items:center;gap:8px;"><input type="range" class="field-range" min="0" max="4" step="1" value="2" id="kpi_06_1" oninput="updateLAI()"><span class="range-val" id="kpi_06_1v">2 of 4 streams</span></div>
+            <div style="font-size:10.5px;color:var(--silver);margin-top:2px;">Each stream = 25 pts. Score = count × 25. Karliner et al. (2020); Lindholm et al. (2012)</div>
+          </div>
+          <div>
+            <label style="font-size:11.5px;font-weight:600;color:var(--slate);display:block;margin-bottom:4px;">KPI 2 (45%) — % LEP inpatient encounters with LOS tracked by preferred language and benchmarked</label>
+            <div style="display:flex;align-items:center;gap:8px;"><input type="range" class="field-range" min="0" max="100" step="5" value="50" id="kpi_06_2" oninput="updateLAI()"><span class="range-val" id="kpi_06_2v">50%</span></div>
+            <div style="font-size:10.5px;color:var(--silver);margin-top:2px;">Lindholm et al. (2012): LOS differences with professional interpretation</div>
+          </div>
+          <div style="margin-top:8px;font-size:11px;font-weight:700;color:var(--teal);">Domain score: <span id="ds_06">50</span>/100</div>
+        </div>
+
+        <!-- D08 WORKFORCE DEVELOPMENT -->
+        <div style="padding:14px 0;border-bottom:1px solid var(--bd);">
+          <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--navy);margin-bottom:10px;">08 · Workforce Development <span style="font-weight:400;color:var(--silver);text-transform:none;letter-spacing:0;">(equal weights)</span></div>
+          <div style="margin-bottom:10px;">
+            <label style="font-size:11.5px;font-weight:600;color:var(--slate);display:block;margin-bottom:4px;">KPI 1 (50%) — % staff trained in language access policy, preferred modality use, and documentation standards</label>
+            <div style="display:flex;align-items:center;gap:8px;"><input type="range" class="field-range" min="0" max="100" step="5" value="50" id="kpi_08_1" oninput="updateLAI()"><span class="range-val" id="kpi_08_1v">50%</span></div>
+            <div style="font-size:10.5px;color:var(--silver);margin-top:2px;">Diamond et al. (2019): untrained staff underuse interpreters</div>
+          </div>
+          <div>
+            <label style="font-size:11.5px;font-weight:600;color:var(--slate);display:block;margin-bottom:4px;">KPI 2 (50%) — % providers who are Qualified Bilingual Staff (QBS) or enrolled in QBS testing program</label>
+            <div style="display:flex;align-items:center;gap:8px;"><input type="range" class="field-range" min="0" max="100" step="5" value="50" id="kpi_08_2" oninput="updateLAI()"><span class="range-val" id="kpi_08_2v">50%</span></div>
+            <div style="font-size:10.5px;color:var(--silver);margin-top:2px;">Amobi et al. (2024, JAMA): QBS standard. Dataset benchmark: 6.8% coverage.</div>
+          </div>
+          <div style="margin-top:8px;font-size:11px;font-weight:700;color:var(--teal);">Domain score: <span id="ds_08">50</span>/100</div>
+        </div>
+
+        <!-- D10 TECHNOLOGY INNOVATION -->
+        <div style="padding:14px 0;border-bottom:1px solid var(--bd);">
+          <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--navy);margin-bottom:10px;">10 · Technology Innovation <span style="font-weight:400;color:var(--silver);text-transform:none;letter-spacing:0;">(equal weights)</span></div>
+          <div style="margin-bottom:10px;">
+            <label style="font-size:11.5px;font-weight:600;color:var(--slate);display:block;margin-bottom:4px;">KPI 1 (50%) — % departments with tablets or carts equipped with both VRI and audio interpretation capabilities</label>
+            <div style="display:flex;align-items:center;gap:8px;"><input type="range" class="field-range" min="0" max="100" step="5" value="50" id="kpi_10_1" oninput="updateLAI()"><span class="range-val" id="kpi_10_1v">50%</span></div>
+            <div style="font-size:10.5px;color:var(--silver);margin-top:2px;">Barwise et al. (2024): AI-assisted interpreter prioritization. Both VRI and audio required.</div>
+          </div>
+          <div>
+            <label style="font-size:11.5px;font-weight:600;color:var(--slate);display:block;margin-bottom:4px;">KPI 2 (50%) — % departments using technology-enabled patient engagement (auto EHR documentation, automated teach-back)</label>
+            <div style="display:flex;align-items:center;gap:8px;"><input type="range" class="field-range" min="0" max="100" step="5" value="50" id="kpi_10_2" oninput="updateLAI()"><span class="range-val" id="kpi_10_2v">50%</span></div>
+            <div style="font-size:10.5px;color:var(--silver);margin-top:2px;">Barwise et al. (2024); Malevanchik et al. (2021): automated follow-up systems</div>
+          </div>
+          <div style="margin-top:8px;font-size:11px;font-weight:700;color:var(--teal);">Domain score: <span id="ds_10">50</span>/100</div>
+        </div>
+
+        <div></div><!-- spacer -->
+
+      </div><!-- end arc 3 grid -->
+    </div><!-- end lai-sa-wrap -->
+
+    <!-- ── COMPOSITE SCORE PANEL ── -->
+    <div id="lai-composite-panel" style="margin:20px 0 4px;padding:20px 24px;background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:12px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+      <div style="text-align:center;min-width:100px;">
+        <div style="font-size:38px;font-family:'DM Serif Display',serif;font-style:italic;color:#fff;line-height:1;" id="lai_comp_score">50</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.4);margin-top:2px;">/ 100</div>
+      </div>
+      <div style="flex:1;min-width:160px;">
+        <div style="font-size:13px;font-weight:800;color:var(--teal2);margin-bottom:4px;" id="lai_comp_band">Established</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.55);line-height:1.55;" id="lai_comp_desc">Foundational processes in place. Key touchpoints documented. Close gaps in Patient Engagement and Quality &amp; Safety — these have the highest leverage at this band.</div>
+      </div>
+      <div style="min-width:140px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.35);margin-bottom:6px;">Priority Gap</div>
+        <div style="font-size:12px;font-weight:700;color:var(--amber2);" id="lai_comp_gap">—</div>
+      </div>
     </div>
 
     <div class="sec-divider"></div>
@@ -991,6 +1194,139 @@ function rv(id, val) {
   const el = document.getElementById(id);
   if (el) el.textContent = val;
 }
+
+/* ── LAI Self-Assessment 20-KPI Scoring ─────────────────────────────── */
+function gapBandScore(v) {
+  var g = Math.abs(Number(v) || 0);
+  if (g <= 2)  return 100;
+  if (g <= 5)  return 80;
+  if (g <= 10) return 60;
+  if (g <= 15) return 40;
+  return 20;
+}
+function updateLAI() {
+  // KPI raw values
+  var k01_1 = Number(document.getElementById('kpi_01_1') ? document.getElementById('kpi_01_1').value : 50);
+  var k01_2 = Number(document.getElementById('kpi_01_2') ? document.getElementById('kpi_01_2').value : 50);
+  var k02_1 = Number(document.getElementById('kpi_02_1') ? document.getElementById('kpi_02_1').value : 8);
+  var k02_2 = Number(document.getElementById('kpi_02_2') ? document.getElementById('kpi_02_2').value : 8);
+  var k03_1 = Number(document.getElementById('kpi_03_1') ? document.getElementById('kpi_03_1').value : 50);
+  var k03_2 = Number(document.getElementById('kpi_03_2') ? document.getElementById('kpi_03_2').value : 50);
+  var k04_1 = Number(document.getElementById('kpi_04_1') ? document.getElementById('kpi_04_1').value : 50);
+  var k04_2 = Number(document.getElementById('kpi_04_2') ? document.getElementById('kpi_04_2').value : 50);
+  var k05_1 = Number(document.getElementById('kpi_05_1') ? document.getElementById('kpi_05_1').value : 50);
+  var k05_2 = Number(document.getElementById('kpi_05_2') ? document.getElementById('kpi_05_2').value : 50);
+  var k06_1 = Number(document.getElementById('kpi_06_1') ? document.getElementById('kpi_06_1').value : 2);
+  var k06_2 = Number(document.getElementById('kpi_06_2') ? document.getElementById('kpi_06_2').value : 50);
+  var k07_1 = Number(document.getElementById('kpi_07_1') ? document.getElementById('kpi_07_1').value : 8);
+  var k07_2 = Number(document.getElementById('kpi_07_2') ? document.getElementById('kpi_07_2').value : 8);
+  var k08_1 = Number(document.getElementById('kpi_08_1') ? document.getElementById('kpi_08_1').value : 50);
+  var k08_2 = Number(document.getElementById('kpi_08_2') ? document.getElementById('kpi_08_2').value : 50);
+  var k09_1 = Number(document.getElementById('kpi_09_1') ? document.getElementById('kpi_09_1').value : 50);
+  var k09_2 = Number(document.getElementById('kpi_09_2') ? document.getElementById('kpi_09_2').value : 50);
+  var k10_1 = Number(document.getElementById('kpi_10_1') ? document.getElementById('kpi_10_1').value : 50);
+  var k10_2 = Number(document.getElementById('kpi_10_2') ? document.getElementById('kpi_10_2').value : 50);
+
+  // KPI scores
+  var s01_1 = Math.min(100, Math.max(0, k01_1));
+  var s01_2 = Math.min(100, Math.max(0, k01_2));
+  var s02_1 = gapBandScore(k02_1);
+  var s02_2 = gapBandScore(k02_2);
+  var s03_1 = Math.min(100, Math.max(0, k03_1));
+  var s03_2 = Math.min(100, Math.max(0, k03_2));
+  var s04_1 = Math.min(100, Math.max(0, k04_1));
+  var s04_2 = Math.min(100, Math.max(0, k04_2));
+  var s05_1 = Math.min(100, Math.max(0, k05_1));
+  var s05_2 = Math.min(100, Math.max(0, k05_2));
+  var s06_1 = Math.min(100, Math.max(0, k06_1 * 25));
+  var s06_2 = Math.min(100, Math.max(0, k06_2));
+  var s07_1 = gapBandScore(k07_1);
+  var s07_2 = gapBandScore(k07_2);
+  var s08_1 = Math.min(100, Math.max(0, k08_1));
+  var s08_2 = Math.min(100, Math.max(0, k08_2));
+  var s09_1 = Math.min(100, Math.max(0, k09_1));
+  var s09_2 = Math.min(100, Math.max(0, k09_2));
+  var s10_1 = Math.min(100, Math.max(0, k10_1));
+  var s10_2 = Math.min(100, Math.max(0, k10_2));
+
+  // Domain scores (weighted average)
+  var d01 = 0.60*s01_1 + 0.40*s01_2;
+  var d02 = 0.50*s02_1 + 0.50*s02_2;
+  var d03 = 0.50*s03_1 + 0.50*s03_2;
+  var d04 = 0.50*s04_1 + 0.50*s04_2;
+  var d05 = 0.50*s05_1 + 0.50*s05_2;
+  var d06 = 0.55*s06_1 + 0.45*s06_2;
+  var d07 = 0.50*s07_1 + 0.50*s07_2;
+  var d08 = 0.50*s08_1 + 0.50*s08_2;
+  var d09 = 0.50*s09_1 + 0.50*s09_2;
+  var d10 = 0.50*s10_1 + 0.50*s10_2;
+  var composite = (d01+d02+d03+d04+d05+d06+d07+d08+d09+d10) / 10;
+
+  // Update domain score displays
+  var domScores = {ds_01:d01,ds_02:d02,ds_03:d03,ds_04:d04,ds_05:d05,ds_06:d06,ds_07:d07,ds_08:d08,ds_09:d09,ds_10:d10};
+  Object.keys(domScores).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = Math.round(domScores[id]);
+  });
+
+  // Update readout labels
+  function setRv(id, val, type) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (type === 'gap') el.textContent = Math.round(val) + 'pp gap';
+    else if (type === 'checklist4') el.textContent = Math.round(val) + ' of 4 streams';
+    else el.textContent = Math.round(val) + '%';
+  }
+  setRv('kpi_01_1v', k01_1, 'pct'); setRv('kpi_01_2v', k01_2, 'pct');
+  setRv('kpi_02_1v', k02_1, 'gap'); setRv('kpi_02_2v', k02_2, 'gap');
+  setRv('kpi_03_1v', k03_1, 'pct'); setRv('kpi_03_2v', k03_2, 'pct');
+  setRv('kpi_04_1v', k04_1, 'pct'); setRv('kpi_04_2v', k04_2, 'pct');
+  setRv('kpi_05_1v', k05_1, 'pct'); setRv('kpi_05_2v', k05_2, 'pct');
+  setRv('kpi_06_1v', k06_1, 'checklist4'); setRv('kpi_06_2v', k06_2, 'pct');
+  setRv('kpi_07_1v', k07_1, 'gap'); setRv('kpi_07_2v', k07_2, 'gap');
+  setRv('kpi_08_1v', k08_1, 'pct'); setRv('kpi_08_2v', k08_2, 'pct');
+  setRv('kpi_09_1v', k09_1, 'pct'); setRv('kpi_09_2v', k09_2, 'pct');
+  setRv('kpi_10_1v', k10_1, 'pct'); setRv('kpi_10_2v', k10_2, 'pct');
+
+  // Update composite panel
+  var scoreEl = document.getElementById('lai_comp_score');
+  var bandEl  = document.getElementById('lai_comp_band');
+  var descEl  = document.getElementById('lai_comp_desc');
+  var gapEl   = document.getElementById('lai_comp_gap');
+  if (scoreEl) scoreEl.textContent = Math.round(composite);
+
+  var band, desc, color;
+  if (composite >= 80) {
+    band = 'Leading (Stage 4)'; color = '#0CC5AD';
+    desc = 'All domains at or above 80. System-level reliability demonstrated. Communication is engineered into workflows.';
+  } else if (composite >= 60) {
+    band = 'Optimizing (Stage 3)'; color = '#0CC5AD';
+    desc = 'Most KPIs meeting evidence-based thresholds. Focus remaining gaps in Financial Stewardship and Technology Innovation.';
+  } else if (composite >= 40) {
+    band = 'Established (Stage 2)'; color = '#F5C842';
+    desc = 'Foundational processes in place. Highest-leverage gaps: Patient Engagement (teach-back) and Quality & Safety (readmission stratification).';
+  } else if (composite >= 20) {
+    band = 'Developing (Stage 1)'; color = '#f0b84a';
+    desc = 'Awareness exists but execution is inconsistent. Focus first on Compliance and Workflow Optimization — policy amendment is the fastest lever.';
+  } else {
+    band = 'Unstable (Stage 0)'; color = '#e07070';
+    desc = 'Reactive. No reliable language access system. Immediate cross-functional intervention required. Establish interpreter policy and documentation standard first.';
+  }
+  if (bandEl) { bandEl.textContent = band; bandEl.style.color = color; }
+  if (descEl) descEl.textContent = desc;
+
+  // Lowest domain for priority gap
+  var lowestName = '', lowestScore = 999;
+  var domNames = {ds_01:'Access',ds_02:'Patient Experience',ds_03:'Clinical Outcomes',ds_04:'Compliance',
+    ds_05:'Patient Engagement',ds_06:'Financial Stewardship',ds_07:'Quality & Safety',
+    ds_08:'Workforce Development',ds_09:'Workflow Optimization',ds_10:'Technology Innovation'};
+  var domScoreArr = [[d01,'Access'],[d02,'Patient Experience'],[d03,'Clinical Outcomes'],
+    [d04,'Compliance'],[d05,'Patient Engagement'],[d06,'Financial Stewardship'],
+    [d07,'Quality & Safety'],[d08,'Workforce Development'],[d09,'Workflow Optimization'],[d10,'Technology Innovation']];
+  domScoreArr.forEach(function(pair) { if (pair[0] < lowestScore) { lowestScore = pair[0]; lowestName = pair[1]; } });
+  if (gapEl) gapEl.textContent = lowestName + ' (' + Math.round(lowestScore) + '/100)';
+}
+
 
 /* ── LANDING ────────────────────────────────────────────────────────── */
 function startProgram() {
