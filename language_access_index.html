@@ -458,11 +458,27 @@ table.dtbl td.delta.neg { color:var(--red); font-weight:700; }
 </style>
 </head>
 <body>
-
+<script>
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var ret = params.get('return');
+  if (ret) {
+    document.addEventListener('DOMContentLoaded', function() {
+      var wrap = document.getElementById('return_btn_wrap');
+      var btn  = document.getElementById('return_btn');
+      if (wrap) wrap.style.display = 'block';
+      if (btn)  btn.href = ret;
+    });
+  }
+})();
+</script>
 <!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
 <header class="hdr">
   <div class="hdr-inner">
     <div class="hdr-brand">CLEAR <span>LAI Navigation Platform · CLEAR Executive Language Access Certificate Program</span></div>
+    <div id="return_btn_wrap" style="display:none;margin-left:auto;">
+      <a id="return_btn" href="CLEAR_Training_Platform.html" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:rgba(10,191,163,.15);color:#0ABFA3;border:1px solid rgba(10,191,163,.3);border-radius:7px;text-decoration:none;font-size:12px;font-weight:700;">&#8592; Return to CLEAR Platform</a>
+    </div>
     <div class="hdr-tabs">
       <button class="htab active" id="tab_t1" data-view="t1">
         <span class="tier-num">TIER 1</span>Self-Assessment
