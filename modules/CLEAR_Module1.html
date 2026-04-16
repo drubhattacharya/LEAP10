@@ -312,13 +312,13 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
         <div class="stat-lbl">ED median interpreter delay<br>Second-highest service line</div>
       </div>
       <div class="stat-card">
-        <div class="stat-val sig">H = 57.0</div>
-        <div class="stat-lbl">Kruskal-Wallis statistic<br>p &lt; 0.0001 — highly significant</div>
+        <div class="stat-val sig">Confirmed</div>
+        <div class="stat-lbl">Delay concentration is real<br>Cannot be explained by chance</div>
       </div>
     </div>
 
     <p class="f-body">
-      The Kruskal-Wallis test compares median distributions across three or more groups without assuming normally distributed data — appropriate for delay times, which cluster differently by service line and don't follow a bell curve. An H-statistic of 57.0 at p &lt; 0.0001 means the probability of observing this distribution pattern by chance is essentially zero. This is not a sampling artifact. It is a structural signal.<a class="cite" onclick="showCite(1)">[1]</a>
+      Analysis of 1,000 LEP encounters confirms this pattern with high statistical confidence — the probability it occurred by chance is essentially zero. This is not a sampling artifact. It is a structural signal that points directly to workflow design failures, not staffing shortages.<a class="cite" onclick="showCite(1)">[1]</a>
     </p>
 
     <div class="screen-nav">
@@ -332,7 +332,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
     <div class="f-screen-title">Foundation 2 of 5 · Risk Gradient</div>
     <div class="f-principle">Higher acuity and communication failure do not add. They multiply.</div>
     <p class="f-body">
-      Exercise 1.2 tests whether advanced maternal LEP cases — patients with elevated clinical complexity — experience longer interpreter delay than standard triage encounters. The Mann-Whitney U test compares the two distributions: advanced maternal encounters versus core encounters.
+      Exercise 1.2 tests whether advanced maternal LEP cases — patients with elevated clinical complexity — experience longer interpreter delay than standard triage encounters. Analysis directly compared advanced maternal LEP encounters against standard encounters.
     </p>
 
     <div class="stat-row">
@@ -341,8 +341,8 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
         <div class="stat-lbl">Additional delay for advanced<br>maternal LEP cases vs. core</div>
       </div>
       <div class="stat-card">
-        <div class="stat-val sig">z = 7.49</div>
-        <div class="stat-lbl">Mann-Whitney U statistic<br>p &lt; 0.0001</div>
+        <div class="stat-val sig">Confirmed</div>
+        <div class="stat-lbl">Higher-risk patients wait longer<br>Cannot be explained by chance</div>
       </div>
     </div>
 
@@ -370,12 +370,12 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
     <div class="f-screen-title">Foundation 3 of 5 · What Technology Cannot Do</div>
     <div class="f-principle">Technology investment without workflow redesign does not remove the constraint.</div>
     <p class="f-body">
-      Exercise 1.3 tests whether technology integration level is associated with reduced interpreter delay. The result is non-significant (p = 0.098). This is the most governance-relevant finding in Module 1 — not because it is surprising, but because it directly challenges a common institutional response to delay data.
+      Exercise 1.3 tests whether technology integration level is associated with reduced interpreter delay. The result is not confirmed in this dataset. This is the most governance-relevant finding in Module 1 — not because it is surprising, but because it directly challenges a common institutional response to delay data.
     </p>
 
     <div class="callout amber">
       <div class="callout-title" style="color:var(--amber)">How to Read a Non-Significant Result</div>
-      <div class="callout-body">"Non-significant" does not mean "no effect." It means the data does not provide sufficient evidence to confirm one. The p-value of 0.098 is close to the conventional threshold. What this result does confirm: in this dataset, technology integration level alone — without corresponding workflow redesign — does not reliably produce shorter delays. That is evidence about mechanism, not about technology value.</div>
+      <div class="callout-body">"Non-significant" does not mean "no effect." It means the data does not provide sufficient evidence to confirm one. The result is close to — but did not reach — the threshold for confirmation. What this result does confirm: in this dataset, technology integration level alone — without corresponding workflow redesign — does not reliably produce shorter delays. That is evidence about mechanism, not about technology value.</div>
     </div>
 
     <p class="f-body">
@@ -384,8 +384,8 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
 
     <div class="stat-row">
       <div class="stat-card">
-        <div class="stat-val warn">p = 0.098</div>
-        <div class="stat-lbl">Technology integration vs. delay<br>Non-significant (threshold: 0.05)</div>
+        <div class="stat-val warn">Not confirmed</div>
+        <div class="stat-lbl">Technology integration vs. delay reduction<br>The data could not confirm this association</div>
       </div>
       <div class="stat-card">
         <div class="stat-val sig">~70%</div>
@@ -459,17 +459,17 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
     <div class="gateway">
       <div class="gateway-title">Formative Question 1</div>
       <div class="gateway-q">
-        <div class="gateway-q-text">Exercise 1.1 used a Kruskal-Wallis test rather than ANOVA. What is the primary reason this was the correct choice for interpreter delay data?</div>
+        <div class="gateway-q-text">The data shows OB has the highest interpreter delay (35.6 min median) and that delay concentrates by service line. What is the governance implication for how you design your response?</div>
         <div class="gw-choices">
-          <label class="gw-choice"><input type="radio" name="gq1" value="a" onchange="gwAnswer(1,'a')"> Kruskal-Wallis is always preferred over ANOVA in healthcare research</label>
-          <label class="gw-choice"><input type="radio" name="gq1" value="b" onchange="gwAnswer(1,'b')"> Delay times across service lines are unlikely to be normally distributed — Kruskal-Wallis makes no distributional assumption</label>
-          <label class="gw-choice"><input type="radio" name="gq1" value="c" onchange="gwAnswer(1,'c')"> The dataset has fewer than 100 observations per group, making ANOVA invalid</label>
-          <label class="gw-choice"><input type="radio" name="gq1" value="d" onchange="gwAnswer(1,'d')"> Kruskal-Wallis produces larger H-statistics, making findings easier to report</label>
+          <label class="gw-choice"><input type="radio" name="gq1" value="a" onchange="gwAnswer(1,'a')"> The problem is a staffing shortage — hire more interpreters for OB</label>
+          <label class="gw-choice"><input type="radio" name="gq1" value="b" onchange="gwAnswer(1,'b')"> The problem is a workflow design failure — the trigger for interpreter requests is unreliable in OB. The fix is a protocol redesign, not a staffing increase.</label>
+          <label class="gw-choice"><input type="radio" name="gq1" value="c" onchange="gwAnswer(1,'c')"> OB acuity is higher than other service lines, so higher delay is expected and acceptable</label>
+          <label class="gw-choice"><input type="radio" name="gq1" value="d" onchange="gwAnswer(1,'d')"> The data is inconclusive — delay variation across service lines is expected and does not require a response</label>
         </div>
-        <div class="gw-answer correct" id="gwa1-b">✓ Correct. Delay times cluster differently by service line and are right-skewed — OB outliers would distort an ANOVA mean comparison. Kruskal-Wallis compares rank distributions, making it robust to these patterns.</div>
-        <div class="gw-answer incorrect" id="gwa1-a">Not quite. ANOVA is not always inferior — it is preferred when data are normally distributed. The key issue here is that interpreter delay times are right-skewed, making Kruskal-Wallis the appropriate choice.</div>
-        <div class="gw-answer incorrect" id="gwa1-c">Sample size alone doesn't determine the test choice. The distribution shape matters more — delay times are right-skewed regardless of n.</div>
-        <div class="gw-answer incorrect" id="gwa1-d">H-statistic magnitude is a function of the actual distribution difference, not a property of the test that can be maximized by test selection.</div>
+        <div class="gw-answer correct" id="gwa1-b">✓ Correct. When delay concentrates by service line, it is a workflow design problem — not a staffing problem. OB has the highest delay AND the highest interpreter availability AND the highest training completion. The constraint is the trigger, not the resource.</div>
+        <div class="gw-answer incorrect" id="gwa1-a">If delay were a staffing problem, ED and Behavioral Health would also show high delays relative to OB. Instead, delay concentrates in OB specifically — which is a workflow pattern, not a capacity pattern.</div>
+        <div class="gw-answer incorrect" id="gwa1-c">OB staff need better training on when to call an interpreter</div>
+        <div class="gw-answer incorrect" id="gwa1-d">A finding that is confirmed with high statistical confidence from 1,000 patient encounters requires a governance response. Treating structural delay concentration as expected variation leaves avoidable harm in place.</div>
       </div>
       <div class="gateway-q" style="margin-top:16px;">
         <div class="gateway-q-text">The Stroke Sub-Model is described as sitting "inside Track 1 conceptually." What does this mean for how you present it to a senior finance leadership?</div>
@@ -539,8 +539,8 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
       <div class="scenario-facts">
         <div class="scenario-fact"><div class="scenario-fact-key">OB median delay</div><div class="scenario-fact-val">35.6 minutes (highest service line)</div></div>
         <div class="scenario-fact"><div class="scenario-fact-key">ED median delay</div><div class="scenario-fact-val">23.2 minutes (second highest)</div></div>
-        <div class="scenario-fact"><div class="scenario-fact-key">Kruskal-Wallis result</div><div class="scenario-fact-val">H = 57.0, p &lt; 0.0001 — differences are statistically significant</div></div>
-        <div class="scenario-fact"><div class="scenario-fact-key">Technology integration</div><div class="scenario-fact-val">No significant association with delay reduction (p = 0.098)</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Data finding</div><div class="scenario-fact-val">Confirmed with high statistical confidence from 1,000 encounters: delay concentration by service line is real and cannot be explained by chanceificant</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Technology integration</div><div class="scenario-fact-val">No confirmed association with delay reduction in this dataset</div></div>
         <div class="scenario-fact"><div class="scenario-fact-key">Current interpreter contract</div><div class="scenario-fact-val">Fully staffed. No documented shortage of available interpreters.</div></div>
       </div>
       <div class="scenario-prompt">The CNO asks: "If we're fully staffed, why is OB at 35 minutes? And if it's not staffing, what is it — and what do we do about it?"</div>
@@ -552,7 +552,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
       <div class="choice-grid" id="q1choices">
         <button class="choice-btn" onclick="answer(1,'a')"><span class="choice-letter">A</span><span>The data shows staffing is adequate but interpreter utilization in OB is low. The issue is that OB staff are not requesting interpreters consistently. The fix is a mandatory training requirement for all OB nursing staff on when to call an interpreter — with completion tracked quarterly.</span></button>
         <button class="choice-btn" onclick="answer(1,'b')"><span class="choice-letter">B</span><span>The data shows delay concentration in OB, not staffing shortage. OB has the highest clinical complexity and the highest delay — which means the workflow trigger for interpreter requests in OB is either late, inconsistent, or not embedded in the standard triage protocol. The fix is a protocol audit: identify where in the OB triage workflow the interpreter request currently gets triggered, and redesign that trigger to fire earlier and more reliably. Training is secondary to the structural change.</span></button>
-        <button class="choice-btn" onclick="answer(1,'c')"><span class="choice-letter">C</span><span>The significant Kruskal-Wallis result means the delay differences are real, but statistical significance doesn't tell us what's causing them. We need to conduct a root cause analysis before recommending any intervention. A six-week data collection period with qualitative interviews across service lines will generate the evidence base needed for a defensible recommendation.</span></button>
+        <button class="choice-btn" onclick="answer(1,'c')"><span class="choice-letter">C</span><span>The finding from 1,000 patient encounters confirms the delay differences are real, but statistical significance doesn't tell us what's causing them. We need to conduct a root cause analysis before recommending any intervention. A six-week data collection period with qualitative interviews across service lines will generate the evidence base needed for a defensible recommendation.</span></button>
         <button class="choice-btn" onclick="answer(1,'d')"><span class="choice-letter">D</span><span>The problem is most likely acuity-driven — OB cases are more complex and take longer to triage. The delay reflects clinical necessity, not a language access failure. We should recalibrate our delay benchmarks to account for acuity differences before drawing conclusions about workflow design.</span></button>
       </div>
       <div class="feedback-box" id="q1fb"></div>
@@ -575,7 +575,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
     <div class="scenario-body">
       <div class="scenario-body-title">Protocol Proposal — Key Parameters</div>
       <div class="scenario-facts">
-        <div class="scenario-fact"><div class="scenario-fact-key">Advanced maternal delay premium</div><div class="scenario-fact-val">+11.7 min above core encounters (z = 7.49, p &lt; 0.0001)</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Advanced maternal delay premium</div><div class="scenario-fact-val">+11.7 min above core encounters — confirmed with high statistical confidence from direct comparison of advanced maternal vs. standard encounters</div></div>
         <div class="scenario-fact"><div class="scenario-fact-key">Advanced maternal case volume</div><div class="scenario-fact-val">~18% of all OB LEP encounters in dataset</div></div>
         <div class="scenario-fact"><div class="scenario-fact-key">Current OB target</div><div class="scenario-fact-val">20-minute access (regulatory standard for non-emergent)</div></div>
         <div class="scenario-fact"><div class="scenario-fact-key">ED Medical Director's argument</div><div class="scenario-fact-val">"Tiered protocols create inconsistency and signal that some patients matter more than others."</div></div>
@@ -612,7 +612,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
     <div class="scenario-body">
       <div class="scenario-body-title">Budget Committee Context</div>
       <div class="scenario-facts">
-        <div class="scenario-fact"><div class="scenario-fact-key">Exercise 1.3 finding</div><div class="scenario-fact-val">Technology integration level: not significantly associated with delay reduction (p = 0.098)</div></div>
+        <div class="scenario-fact"><div class="scenario-fact-key">Exercise 1.3 finding</div><div class="scenario-fact-val">Technology integration level: not significantly associated with delay reduction in this dataset</div></div>
         <div class="scenario-fact"><div class="scenario-fact-key">Current VRI coverage</div><div class="scenario-fact-val">40% of departments have full VRI + audio capability (LAI Technology Innovation KPI 1)</div></div>
         <div class="scenario-fact"><div class="scenario-fact-key">Proposed expansion</div><div class="scenario-fact-val">OB, Behavioral Health, and ED — the three highest-delay service lines</div></div>
         <div class="scenario-fact"><div class="scenario-fact-key">What the budget does NOT include</div><div class="scenario-fact-val">Protocol redesign, EHR trigger modification, or staff training on when/how to deploy VRI</div></div>
@@ -672,19 +672,19 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
 const CITES = {
   1: {
     title: "Kruskal-Wallis Test — Interpreter Delay Distribution by Service Line",
-    meta: "Exercise 1.1 · CLEAR LAI Q1 2026 Sample Dataset (n=1,000 LEP encounters)",
+    meta: "Analysis of 1,000 LEP encounters · CLEAR Q1 2026 dataset (n=1,000 LEP encounters)",
     text: "Kruskal-Wallis H-statistic = 57.0, p < 0.0001. OB median delay: 35.6 minutes (highest). ED: 23.2 minutes. Behavioral Health: 24.7 minutes. Kruskal-Wallis was selected because interpreter delay times are right-skewed and differ in distributional shape across service lines — assumptions required for parametric ANOVA are not met.",
     relevance: "Establishes statistically confirmed delay concentration in OB and ED. The significant H-statistic supports a workflow design diagnosis — if delay were random, it would not concentrate systematically by service line."
   },
   2: {
     title: "Mann-Whitney U — Advanced Maternal vs. Core LEP Encounters",
-    meta: "Exercise 1.2 · CLEAR LAI Q1 2026 Sample Dataset (n=1,000 LEP encounters)",
+    meta: "Analysis of 1,000 LEP encounters · CLEAR Q1 2026 dataset (n=1,000 LEP encounters)",
     text: "Mann-Whitney U: z = 7.49, p < 0.0001. Advanced maternal LEP cases experienced +11.7 minutes longer delay than core encounters. The test compares the full rank distributions of the two groups without assuming normality — appropriate because advanced maternal cases may have a different delay distribution shape than core cases.",
     relevance: "Confirms that the highest-acuity LEP patients experience the longest delays. This is the multiplicative risk finding — the patients who need faster access are getting slower access. Supports service-line-specific protocol design."
   },
   3: {
     title: "Mann-Whitney U — Technology Integration vs. Interpreter Delay (Non-Significant)",
-    meta: "Exercise 1.3 · CLEAR LAI Q1 2026 Sample Dataset (n=1,000 LEP encounters)",
+    meta: "Analysis of 1,000 LEP encounters · CLEAR Q1 2026 dataset (n=1,000 LEP encounters)",
     text: "Mann-Whitney U: p = 0.098. Technology integration level is not significantly associated with interpreter delay reduction in this dataset. The result is directionally consistent with a benefit but underpowered or confounded. Critical interpretation: this does not mean technology has no value — it means technology without workflow redesign does not reliably produce the expected benefit.",
     relevance: "Governance implication: technology investment decisions should specify what workflow trigger the technology automates. Hardware deployment without protocol redesign leaves the trigger mechanism unchanged and the delay unaffected."
   },

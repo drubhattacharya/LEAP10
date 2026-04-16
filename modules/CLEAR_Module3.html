@@ -231,12 +231,12 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
   <p class="f-body">Attendant tasks are the downstream tasks generated when clinical work is not completed correctly the first time. Coder queries because the history was incomplete. Physician callbacks because the medication reconciliation contained errors. Documentation addenda because the initial note did not reflect what the patient actually said. Each of these is a communication failure made visible as an operational cost.</p>
   <div class="callout navy">
     <div class="callout-title" style="color:var(--primary)">The Rework Concentration Signal</div>
-    <div class="callout-body">Exercise 3.1 finds OB at 13.0 attendant tasks per encounter — the highest in the dataset and the largest H-statistic of any exercise. OB is also the service line with the longest interpreter delay (Module 1). The pattern is not coincidental. The same structural workflow failure that produces delay at triage produces rework at rounds. The mechanism is consistent; only the measurement changes.</div>
+    <div class="callout-body">Exercise 3.1 finds OB at 13.0 attendant tasks per encounter — the highest in the dataset, confirmed with the strongest statistical confidence of any finding in the program. OB is also the service line with the longest interpreter delay (Module 1). The pattern is not coincidental. The same structural workflow failure that produces delay at triage produces rework at rounds. The mechanism is consistent; only the measurement changes.</div>
   </div>
   <div class="stat-row">
     <div class="stat-card"><div class="stat-val crit">13.0</div><div class="stat-lbl">OB median attendant rework tasks per encounter. Highest service line.</div></div>
-    <div class="stat-card"><div class="stat-val sig">H = 71.7</div><div class="stat-lbl">Kruskal-Wallis H-statistic, p &lt; 0.0001. Largest in dataset.</div></div>
-    <div class="stat-card"><div class="stat-val ns">p = 0.382</div><div class="stat-lbl">CLAS training currency vs. rework reduction. Non-significant.</div></div>
+    <div class="stat-card"><div class="stat-val sig">Confirmed</div><div class="stat-lbl">Rework concentration confirmed — largest finding in the program dataset</div></div>
+    <div class="stat-card"><div class="stat-val ns">Not confirmed</div><div class="stat-lbl">CLAS training currency vs. rework reduction. Non-significant.</div></div>
   </div>
   <p class="f-body">The practical implication is that training-based interventions will not close the rework gap. Training communicates knowledge about what should happen. It does not change the workflow trigger that determines whether it does happen. Structural EHR prompts, hard-stops, and required fields at the point-of-care are the only interventions that reliably reduce rework at the rounding touchpoint.<a class="cite" onclick="showCite(1)">[1]</a></p>
   <div class="screen-nav"><div></div><button class="btn-next" onclick="goF(2)">Foundation 2: The LOS Evidence</button></div>
@@ -245,7 +245,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
 <div class="f-screen" id="fs2">
   <div class="f-screen-title">Foundation 2 of 5 - LOS Evidence</div>
   <div class="f-principle">Length of stay is the financial face of rework. Every communication failure at rounds is a potential extra inpatient day.</div>
-  <p class="f-body">Exercise 3.2 tests whether interpreter use at the inpatient rounding touchpoint is associated with shorter length of stay. The Mann-Whitney U result is non-significant (p = 0.172) but directionally important: the effect is in the expected direction with an 11.9-hour difference. The test is underpowered given the available sample — this is a near-miss, not a true null.</p>
+  <p class="f-body">Exercise 3.2 tests whether interpreter use at the inpatient rounding touchpoint is associated with shorter length of stay. The data showed a directional difference — 11.9 hours — but could not confirm this with high statistical confidence given the sample size. The finding is: the effect is in the expected direction with an 11.9-hour difference. The test is underpowered given the available sample — this is a near-miss, not a true null.</p>
   <div class="callout amber">
     <div class="callout-title" style="color:var(--amber)">The Lindholm Anchor</div>
     <div class="callout-body">Lindholm et al. (2012) established through a retrospective cohort study that LEP patients without professional interpretation at admission and discharge had 0.75 to 1.47 additional inpatient days. This is the financial model default. The ROI Dashboard uses 1.0 day as the conservative midpoint. The exercise result is directionally consistent with this evidence; the sample dataset is simply too small to confirm it independently.</div>
@@ -354,7 +354,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
     <div class="scenario-body-title">Rework Data</div>
     <div class="scenario-facts">
       <div class="scenario-fact"><div class="scenario-fact-key">OB median attendant tasks</div><div class="scenario-fact-val">13.0 per encounter — highest service line</div></div>
-      <div class="scenario-fact"><div class="scenario-fact-key">Kruskal-Wallis result</div><div class="scenario-fact-val">H = 71.7, p &lt; 0.0001 — statistically significant across service lines</div></div>
+      <div class="scenario-fact"><div class="scenario-fact-key">Data finding</div><div class="scenario-fact-val">Confirmed from 1,000 encounters: rework concentration by service line is real and cannot be explained by chance</div></div>
       <div class="scenario-fact"><div class="scenario-fact-key">OB interpreter delay (Module 1)</div><div class="scenario-fact-val">35.6 minutes median — also highest service line</div></div>
       <div class="scenario-fact"><div class="scenario-fact-key">OB CLAS training currency</div><div class="scenario-fact-val">72% — higher than ED (58%) and Behavioral Health (61%)</div></div>
     </div>
@@ -378,12 +378,12 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
   <div class="scenario-hdr">
     <div class="scenario-eyebrow">Application 2 of 3 - LOS Budget Argument</div>
     <div class="scenario-title">The CFO LOS Presentation</div>
-    <div class="scenario-role">You are the CMO presenting the LOS reduction module to your CFO. She asks: "The exercise result is non-significant at p = 0.172. How can you present an ROI model based on evidence the data does not support?"</div>
+    <div class="scenario-role">You are the CMO presenting the LOS reduction module to your CFO. She asks: "The exercise result is not confirmed in this sample. How can you present an ROI model based on evidence the data does not support?"</div>
   </div>
   <div class="scenario-body">
     <div class="scenario-body-title">Evidence Context</div>
     <div class="scenario-facts">
-      <div class="scenario-fact"><div class="scenario-fact-key">Exercise 3.2 result</div><div class="scenario-fact-val">Mann-Whitney U: p = 0.172. Directional difference: 11.9 hours. Non-significant.</div></div>
+      <div class="scenario-fact"><div class="scenario-fact-key">Exercise 3.2 result</div><div class="scenario-fact-val">Data finding: 11.9-hour directional LOS difference, not confirmed with high confidence in this sample. Lindholm (2012) provides the stronger external anchor.</div></div>
       <div class="scenario-fact"><div class="scenario-fact-key">Lindholm et al. (2012)</div><div class="scenario-fact-val">Retrospective cohort: 0.75 to 1.47 additional inpatient days for LEP patients without professional interpretation.</div></div>
       <div class="scenario-fact"><div class="scenario-fact-key">ROI model default</div><div class="scenario-fact-val">1.0 day LOS reduction — conservative midpoint of Lindholm range</div></div>
       <div class="scenario-fact"><div class="scenario-fact-key">Dataset limitation</div><div class="scenario-fact-val">1,000 encounters. Inpatient subset is smaller. Test is underpowered for LOS effect size.</div></div>
@@ -397,7 +397,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
       <button class="choice-btn" onclick="answer(2,'a')"><span class="choice-letter">A</span><span>Remove the LOS module from the ROI presentation. A non-significant exercise result means we cannot present LOS reduction as a financial benefit until we have larger-scale data from our own system.</span></button>
       <button class="choice-btn" onclick="answer(2,'b')"><span class="choice-letter">B</span><span>The exercise result is directionally consistent with the published evidence but underpowered in this dataset. The financial model is anchored to Lindholm et al. (2012) — a peer-reviewed retrospective cohort study, not the exercise dataset. The exercise cannot confirm the finding at this sample size; it cannot refute the published literature either. We are using the conservative lower bound of the Lindholm range (1.0 day) precisely because the sample data is inconclusive. The model is defensible because its anchor is the external evidence, and we are being conservative about its application.</span></button>
       <button class="choice-btn" onclick="answer(2,'c')"><span class="choice-letter">C</span><span>The p-value of 0.172 is close enough to 0.05 to treat as marginally significant for financial modeling purposes. We can present the LOS module as supported by our internal data.</span></button>
-      <button class="choice-btn" onclick="answer(2,'d')"><span class="choice-letter">D</span><span>The exercise result at p = 0.172 actually strengthens the case — it shows we are approaching significance in a small sample, which means a larger study would confirm the effect. Present this as preliminary internal evidence supporting the published findings.</span></button>
+      <button class="choice-btn" onclick="answer(2,'d')"><span class="choice-letter">D</span><span>The directional result actually strengthens the case — it shows we are in the right directionnificance in a small sample, which means a larger study would confirm the effect. Present this as preliminary internal evidence supporting the published findings.</span></button>
     </div>
     <div class="feedback-box" id="q2fb"></div>
   </div>
@@ -461,7 +461,7 @@ var CITES = {
      relevance:"Primary evidence anchor for the Engagement and LOS Reduction ROI module. The 1.0-day default is the conservative midpoint. When Exercise 3.2 is underpowered, Lindholm is the appropriate external evidence anchor."},
   3:{title:"Mann-Whitney U: Training Currency vs. Rework Reduction",
      meta:"Exercise 3.3 - CLEAR LAI Q1 2026 Sample Dataset",
-     text:"Mann-Whitney U: p = 0.382. Non-significant. CLAS training currency is not associated with reduced rework burden in this dataset. Consistent with the broader pattern across Exercises 1.3, 2.1, and 3.3: awareness-layer interventions do not move execution-layer metrics without structural workflow changes.",
+     text:"Data finding: Training completion rate was not confirmed as associated with reduced rework burden in this dataset. Consistent with the broader pattern across Exercises 1.3, 2.1, and 3.3: awareness-layer interventions do not move execution-layer metrics without structural workflow changes.",
      relevance:"Establishes the training trap principle. Used to support the argument that structural EHR hard-stops must accompany training initiatives to produce operational metric improvement."}
 };
 var GW_CORRECT = {1:"b", 2:"b"};

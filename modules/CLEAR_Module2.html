@@ -237,8 +237,8 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
     <div class="callout-body">Two null results in a single module is not discouraging evidence. It is a diagnostic signal: the investment is concentrated in the wrong layer. Compliance documentation reduces regulatory risk. Interpreter availability reduces access barriers. Neither ensures that communication actually occurred in a way that changed a clinical decision or patient understanding. The layer that produces outcomes is workflow execution — and Module 2 shows it is dramatically underdeveloped.</div>
   </div>
   <div class="stat-row">
-    <div class="stat-card"><div class="stat-val ns">p = 0.642</div><div class="stat-lbl">1557 documentation vs. adverse event reduction. Non-significant.</div></div>
-    <div class="stat-card"><div class="stat-val ns">p = 0.933</div><div class="stat-lbl">Interpreter use vs. 30-day readmission. Non-significant.</div></div>
+    <div class="stat-card"><div class="stat-val ns">Not confirmed</div><div class="stat-lbl">1557 documentation vs. adverse event reduction. Non-significant.</div></div>
+    <div class="stat-card"><div class="stat-val ns">Not confirmed</div><div class="stat-lbl">Interpreter use vs. 30-day readmission. Non-significant.</div></div>
     <div class="stat-card"><div class="stat-val crit">1.7%</div><div class="stat-lbl">Teach-back documented at discharge. 95% of patients felt respected.</div></div>
   </div>
   <p class="f-body">This pattern — high satisfaction, high documentation, low verified comprehension — is the central operational problem of Module 2. An organization can satisfy every regulatory compliance indicator and still leave a patient unable to describe their discharge instructions. The 1557 field was completed. The interpreter was present. The patient felt heard. The teach-back never happened.<a class="cite" onclick="showCite(1)">[1]</a></p>
@@ -248,7 +248,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
 <div class="f-screen" id="fs2">
   <div class="f-screen-title">Foundation 2 of 5 - The Engagement Collapse</div>
   <div class="f-principle">High satisfaction scores and near-zero verified comprehension can coexist in the same encounter.</div>
-  <p class="f-body">Exercise 2.3 is the most clinically concentrated finding in Module 2. The Kruskal-Wallis test compares engagement indicators across care stages and reveals a cascade: 95% of LEP patients reported feeling respected. Approximately 72% reported that providers explained things clearly. Teach-back was documented in 1.7% of encounters. Neither performed nor documented: 98.3%.<a class="cite" onclick="showCite(2)">[2]</a></p>
+  <p class="f-body">Exercise 2.3 is the most clinically concentrated finding in Module 2. Analysis of engagement indicators across care stages reveals a cascade: 95% of LEP patients reported feeling respected. Approximately 72% reported that providers explained things clearly. Teach-back was documented in 1.7% of encounters. Neither performed nor documented: 98.3%.<a class="cite" onclick="showCite(2)">[2]</a></p>
   <div class="callout red">
     <div class="callout-title" style="color:var(--red)">What the Cascade Means</div>
     <div class="callout-body">Feeling respected is not comprehension. Being told something is not understanding it. Understanding it is not being able to demonstrate it. Teach-back — the verified demonstration of understanding through a qualified interpreter in the patient preferred language — is the only point in this cascade that tests whether communication actually succeeded. Every number above 1.7% is a proxy for a process. Only teach-back tests the outcome.</div>
@@ -272,7 +272,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
 <div class="f-screen" id="fs4">
   <div class="f-screen-title">Foundation 4 of 5 - Reading Confounded Results</div>
   <div class="f-principle">A null result from a confounded study design is not evidence that an intervention does not work. It is evidence about what that design cannot confirm.</div>
-  <p class="f-body">Exercise 2.2 tests whether interpreter use at the diagnostic stage is associated with lower 30-day readmission. The result is non-significant (p = 0.933). Before any governance conclusion can be drawn, the confounding structure of this result must be understood.</p>
+  <p class="f-body">Exercise 2.2 tests whether interpreter use at the diagnostic stage is associated with lower 30-day readmission. The result is not confirmed in this dataset — due to a study design limitation, not because interpreters are ineffective. Before any governance conclusion can be drawn, the confounding structure of this result must be understood.</p>
   <div class="chain" id="chain2">
     <div class="chain-item" id="chain-c1">
       <div class="chain-node"><div class="chain-dot" id="cdot-c1">1</div><div class="chain-line"></div></div>
@@ -286,7 +286,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
       <div class="chain-node"><div class="chain-dot" id="cdot-c2">2</div><div class="chain-line"></div></div>
       <div class="chain-content">
         <div class="chain-title">What the null result does and does not tell you</div>
-        <div class="chain-detail">The p = 0.933 result tells you that cross-sectional administrative data cannot isolate interpreter use as an independent predictor of readmission when clinical severity is not controlled. It does not tell you that interpreter use has no effect. The randomized evidence and the propensity-matched evidence consistently show that professional interpretation reduces adverse outcomes. The null result here is a methodology finding, not a clinical finding.</div>
+        <div class="chain-detail">The non-confirmed result tells you that administrative data cannot isolate interpreter use as an independent predictor of readmission when clinical severity is not controlled. It does not tell you that interpreter use has no effect. The randomized evidence and the propensity-matched evidence consistently show that professional interpretation reduces adverse outcomes. The null result here is a methodology finding, not a clinical finding.</div>
         <button class="chain-confirm-btn" id="cbtn-c2" onclick="confirmChain('c2')">Confirm distinction</button>
       </div>
     </div>
@@ -314,7 +314,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
   <div class="gateway">
     <div class="gateway-title">Formative Questions</div>
     <div class="gateway-q">
-      <div class="gateway-q-text">What is the most accurate interpretation of the p = 0.642 result from Exercise 2.1?</div>
+      <div class="gateway-q-text">The data found no association between 1557 documentation compliance and adverse event reduction. What is the most accurate interpretation of this finding?</div>
       <div class="gw-choices">
         <label class="gw-choice"><input type="radio" name="gq1" value="a" onchange="gwAnswer(1,'a')"> Section 1557 documentation has no effect on adverse events in any study design</label>
         <label class="gw-choice"><input type="radio" name="gq1" value="b" onchange="gwAnswer(1,'b')"> Documentation compliance reduces regulatory risk but does not ensure communication delivery — the null result reflects that distinction</label>
@@ -323,7 +323,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
       </div>
       <div class="gw-answer correct" id="gwa1-b">Correct. Documentation compliance is a regulatory obligation that reduces legal risk. It does not guarantee that communication was delivered effectively. The null result confirms the distinction, not the irrelevance of documentation.</div>
       <div class="gw-answer incorrect" id="gwa1-a">Not quite. A single cross-sectional dataset cannot support a conclusion about all study designs. The finding is about what this design cannot confirm.</div>
-      <div class="gw-answer incorrect" id="gwa1-c">Sample size affects power, but the p-value of 0.642 is very far from significance — underpowering cannot explain a result this far from the threshold.</div>
+      <div class="gw-answer incorrect" id="gwa1-c">The finding is very clear: the data found essentially no association. Underpowering would produce a result close to the threshold — not this far from it. The interpretation is about what documentation measures and what it does not.</div>
       <div class="gw-answer incorrect" id="gwa1-d">A null result in a cross-sectional study with known confounders is not grounds for reconsidering a federal civil rights requirement.</div>
     </div>
     <div class="gateway-q" style="margin-top:16px;">
@@ -359,7 +359,7 @@ body{font-family:var(--sans);background:var(--fog);color:var(--primary);font-siz
   <div class="scenario-body">
     <div class="scenario-body-title">Context</div>
     <div class="scenario-facts">
-      <div class="scenario-fact"><div class="scenario-fact-key">Exercise 2.2 result</div><div class="scenario-fact-val">Chi-square test: p = 0.933. Interpreter use not significantly associated with 30-day readmission in this dataset.</div></div>
+      <div class="scenario-fact"><div class="scenario-fact-key">Data finding</div><div class="scenario-fact-val">In this dataset, interpreter use was not confirmed as independently associated with lower 30-day readmission — because sicker patients use both more interpreters and have higher readmission rates. The finding is about study design limitations, not about interpreter effectiveness.</div></div>
       <div class="scenario-fact"><div class="scenario-fact-key">Annual interpreter spend</div><div class="scenario-fact-val">$2.3M across the health system</div></div>
       <div class="scenario-fact"><div class="scenario-fact-key">Known confounder</div><div class="scenario-fact-val">Sicker patients (higher severity) generate both more interpreter requests and higher readmission rates</div></div>
       <div class="scenario-fact"><div class="scenario-fact-key">Published evidence</div><div class="scenario-fact-val">Karliner et al. (2017): bedside interpreter access reduced LEP readmissions from 17.8% to 13.4%</div></div>
@@ -459,7 +459,7 @@ var F_TOTAL=5, APP_TOTAL=3, TOTAL_Q=3, CHAIN_TOTAL=3;
 var CITES = {
   1: { title: "Chi-Square Test: 1557 Documentation vs. Adverse Events",
        meta: "Exercise 2.1 - CLEAR LAI Q1 2026 Sample Dataset",
-       text: "Chi-square test: chi-squared = 0.223, p = 0.642. Non-significant. Section 1557 documentation completeness is not associated with adverse event reduction in this dataset. Documentation compliance is a regulatory obligation; it does not ensure that communication was delivered in a way that changed a clinical decision.",
+       text: "Data finding: No confirmed association between 1557 documentation rate and adverse event reduction in this dataset. Section 1557 documentation completeness is not associated with adverse event reduction in this dataset. Documentation compliance is a regulatory obligation; it does not ensure that communication was delivered in a way that changed a clinical decision.",
        relevance: "Establishes the documentation vs. delivery distinction. Used to support the argument that investing in documentation compliance without investing in workflow execution will not move clinical outcome metrics." },
   2: { title: "Kruskal-Wallis: Engagement Collapse Across Care Stages",
        meta: "Exercise 2.3 - CLEAR LAI Q1 2026 Sample Dataset",
