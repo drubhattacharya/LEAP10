@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>CLEAR — Language Access Strategy &amp; Implementation Roadmap</title>
+<script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js" onerror="loadDocxFb()"></script>
@@ -417,6 +418,88 @@ body{font-family:var(--body);background:var(--fog);color:var(--ink);font-size:14
 .pdot.done{background:var(--teal);}
 .pdot.active{background:#fff;}
 
+
+/* ── GAUGE & VISUAL PANEL ──────────────────────────────────────── */
+.score-hero{
+  background:linear-gradient(155deg,#071626 0%,#0d2140 55%,#0a1d38 100%);
+  border-radius:var(--r2);padding:24px 28px 20px;
+  position:relative;overflow:hidden;
+  display:grid;grid-template-columns:auto 1fr auto;
+  gap:0 24px;align-items:start;margin-bottom:20px;
+}
+.score-hero::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 50% at 50% -10%,rgba(12,197,173,.15) 0%,transparent 65%);
+  pointer-events:none;}
+.sh-gauge{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+.sh-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;
+  color:rgba(255,255,255,.3);margin-bottom:2px;text-align:center;}
+.sh-gauge-wrap{position:relative;display:flex;justify-content:center;height:186px;}
+.sh-gauge-wrap canvas{display:block;}
+.sh-center{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);
+  text-align:center;pointer-events:none;}
+.sh-score{font-family:'Cormorant Garamond','Georgia',serif;font-size:52px;font-weight:700;
+  line-height:1;letter-spacing:-2px;transition:color .5s;color:#fff;}
+.sh-sub{font-size:11px;font-weight:600;color:rgba(255,255,255,.4);margin-top:2px;
+  white-space:nowrap;letter-spacing:.2px;}
+.sh-zone-labels{display:flex;justify-content:space-between;padding:0 14px;margin-top:-4px;}
+.sh-zone-label{font-size:9.5px;font-weight:700;letter-spacing:.5px;
+  text-transform:uppercase;opacity:.5;color:#fff;}
+.sh-mid{display:flex;flex-direction:column;justify-content:center;gap:10px;padding-top:8px;}
+.sh-band{border-radius:8px;padding:9px 12px;font-size:12.5px;line-height:1.55;}
+.sh-band.good{background:rgba(24,167,111,.12);color:#0cc5ad;}
+.sh-band.warn{background:rgba(212,142,26,.12);color:#f5c020;}
+.sh-band.alert{background:rgba(201,64,64,.12);color:#e06060;}
+.sh-stats{display:flex;gap:14px;}
+.sh-stat{display:flex;flex-direction:column;align-items:center;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+  border-radius:8px;padding:10px 14px;min-width:70px;}
+.sh-stat-n{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;
+  color:rgba(255,255,255,.9);line-height:1;}
+.sh-stat-l{font-size:9.5px;color:rgba(255,255,255,.3);text-align:center;margin-top:3px;
+  line-height:1.3;}
+.sh-opps{display:flex;flex-direction:column;gap:6px;margin-top:4px;}
+.sh-opp{display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  border-radius:7px;padding:7px 10px;}
+.sh-opp-rank{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+  color:rgba(255,255,255,.35);flex-shrink:0;width:16px;}
+.sh-opp-info{flex:1;}
+.sh-opp-name{font-size:12px;font-weight:700;color:rgba(255,255,255,.75);line-height:1.2;}
+.sh-opp-flag{font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.05em;margin-top:2px;}
+.sh-opp-flag.bad{color:#e07070;}
+.sh-opp-flag.warn{color:#f0b84a;}
+.sh-opp-flag.good{color:#0cc5ad;}
+.sh-opp-score{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;flex-shrink:0;}
+.sh-opp-score.bad{color:#e07070;}
+.sh-opp-score.warn{color:#f0b84a;}
+.sh-opp-score.good{color:#0cc5ad;}
+.sh-right{display:flex;flex-direction:column;gap:10px;padding-top:8px;min-width:200px;}
+.sh-chart-label{font-size:9.5px;font-weight:700;text-transform:uppercase;
+  letter-spacing:1px;color:rgba(255,255,255,.28);margin-bottom:4px;}
+.sh-stage-block{margin-top:8px;}
+.sh-stage-row{display:flex;align-items:center;gap:8px;padding:4px 0;
+  border-bottom:1px solid rgba(255,255,255,.05);}
+.sh-stage-row:last-child{border-bottom:none;}
+.sh-stage-row.current .sh-stage-name{color:var(--teal);}
+.sh-stage-row.current .sh-stage-dot{background:var(--teal);
+  box-shadow:0 0 6px rgba(10,191,163,.5);}
+.sh-stage-row.met .sh-stage-dot{background:rgba(24,167,111,.4);}
+.sh-stage-num{font-family:'JetBrains Mono',monospace;font-size:9.5px;
+  font-weight:600;color:rgba(255,255,255,.3);width:48px;flex-shrink:0;}
+.sh-stage-name{font-size:11.5px;color:rgba(255,255,255,.45);flex:1;}
+.sh-stage-dot{width:8px;height:8px;border-radius:50%;
+  background:rgba(255,255,255,.1);flex-shrink:0;transition:all .3s;}
+.sh-lai-link{display:inline-flex;align-items:center;gap:6px;
+  padding:7px 12px;background:rgba(10,191,163,.12);
+  color:var(--teal);border:1px solid rgba(10,191,163,.25);
+  border-radius:7px;font-size:11.5px;font-weight:700;
+  text-decoration:none;transition:all .15s;margin-top:6px;cursor:pointer;}
+.sh-lai-link:hover{background:rgba(10,191,163,.22);}
+@media(max-width:900px){
+  .score-hero{grid-template-columns:1fr;}
+  .sh-right{display:none;}
+}
 @media(max-width:768px){
   .ld-left{padding:40px 28px;max-width:none;}
   .ld-right{display:none;}
@@ -569,18 +652,60 @@ body{font-family:var(--body);background:var(--fog);color:var(--ink);font-size:14
           <div class="callout-body"><strong>Percent KPIs</strong>: enter the rate directly (0–100%). &nbsp;<strong>Gap KPIs</strong> (marked ↓ lower = better): enter the absolute pp difference between LEP and non-LEP patients. &nbsp;<strong>Financial KPI 1</strong>: count how many of 4 cost streams your organization actively tracks. &nbsp;Default values represent a median-performing U.S. health system — adjust to your context.</div>
         </div>
 
-        <!-- Composite banner (live) -->
-        <div class="composite-banner">
-          <div class="cb-score" id="cb_score">50</div>
-          <div class="cb-label">
-            <div class="cb-band" id="cb_band" style="color:var(--amber2);">Established (Stage 2)</div>
-            <div class="cb-desc" id="cb_desc">Foundational processes in place. Highest-leverage gaps: Patient Engagement and Quality &amp; Safety.</div>
+        <!-- ── LIVE SCORE HERO ──────────────────────────────────────────── -->
+        <div class="score-hero">
+
+          <!-- Left: gauge -->
+          <div class="sh-gauge">
+            <div class="sh-label">Language Access Readiness</div>
+            <div class="sh-gauge-wrap">
+              <canvas id="sh_canvas" width="340" height="200"></canvas>
+              <div class="sh-center">
+                <div class="sh-score" id="cb_score">50</div>
+                <div class="sh-sub" id="sh_tier">Established</div>
+              </div>
+            </div>
+            <div class="sh-zone-labels" style="width:340px;">
+              <span class="sh-zone-label">Unstable</span>
+              <span class="sh-zone-label">Established</span>
+              <span class="sh-zone-label">Leading</span>
+            </div>
           </div>
-          <div class="cb-gap">
-            <div class="cb-gap-label">Priority gap</div>
-            <div class="cb-gap-val" id="cb_gap">—</div>
+
+          <!-- Middle: band + priority gaps -->
+          <div class="sh-mid">
+            <div class="sh-band alert" id="sh_band">—</div>
+            <div class="sh-stats">
+              <div class="sh-stat">
+                <div class="sh-stat-n" id="sh_below60">—</div>
+                <div class="sh-stat-l">Domains<br>below 60</div>
+              </div>
+              <div class="sh-stat">
+                <div class="sh-stat-n" id="sh_stage_n">—</div>
+                <div class="sh-stat-l">Current<br>stage</div>
+              </div>
+            </div>
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.28);margin-bottom:4px;margin-top:4px;">Priority gaps</div>
+            <div class="sh-opps" id="sh_opps"></div>
+            <button class="sh-lai-link" onclick="openLAI()" style="margin-top:10px;">
+              Open full LAI platform for deep-dive ↗
+            </button>
           </div>
-        </div>
+
+          <!-- Right: pillar bar chart + stage ladder -->
+          <div class="sh-right">
+            <div class="sh-chart-label">Domain Scores</div>
+            <div id="sh_bar_chart" style="width:100%;min-height:200px;"></div>
+            <div class="sh-stage-block">
+              <div class="sh-chart-label" style="margin-top:8px;">Maturity Ladder</div>
+              <div id="sh_stages"></div>
+            </div>
+          </div>
+
+        </div><!-- score-hero -->
+        <!-- hidden compat IDs for populatePhase4 -->
+        <span id="cb_band" style="display:none;"></span>
+        <span id="cb_gap"  style="display:none;"></span>
 
         <!-- ARC 1 -->
         <div class="kpi-arc">
@@ -820,7 +945,7 @@ body{font-family:var(--body);background:var(--fog);color:var(--ink);font-size:14
               <button class="mc-open" onclick="openModule(1);markMod(1)">Open Module 1 ↗</button>
               <span class="mc-done" id="md1" style="display:none;">✓ Complete</span>
             </div>
-            <div id="ins_wrap_1" style="display:none;">
+            <div id="ins_wrap_1">
               <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-bottom:5px;">Your organizational implication</div>
               <textarea class="form-ta" id="ins_1" style="min-height:56px;font-size:12px;" placeholder="e.g., Our OB service line has the highest delay — the trigger for interpreter requests is not embedded in our triage protocol. Structural fix: add a required interpreter field to the OB triage EHR workflow." oninput="syncInsight(1)"></textarea>
             </div>
@@ -835,7 +960,7 @@ body{font-family:var(--body);background:var(--fog);color:var(--ink);font-size:14
               <button class="mc-open" onclick="openModule(2);markMod(2)">Open Module 2 ↗</button>
               <span class="mc-done" id="md2" style="display:none;">✓ Complete</span>
             </div>
-            <div id="ins_wrap_2" style="display:none;">
+            <div id="ins_wrap_2">
               <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-bottom:5px;">Your organizational implication</div>
               <textarea class="form-ta" id="ins_2" style="min-height:56px;font-size:12px;" placeholder="e.g., Our 1557 documentation rate is high but teach-back is near zero. We are documenting compliance without verifying comprehension. Fix: add a non-bypassable teach-back EHR field at discharge." oninput="syncInsight(2)"></textarea>
             </div>
@@ -850,7 +975,7 @@ body{font-family:var(--body);background:var(--fog);color:var(--ink);font-size:14
               <button class="mc-open" onclick="openModule(3);markMod(3)">Open Module 3 ↗</button>
               <span class="mc-done" id="md3" style="display:none;">✓ Complete</span>
             </div>
-            <div id="ins_wrap_3" style="display:none;">
+            <div id="ins_wrap_3">
               <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-bottom:5px;">Your organizational implication</div>
               <textarea class="form-ta" id="ins_3" style="min-height:56px;font-size:12px;" placeholder="e.g., Our OB rework rate is highest in the system. The Lindholm evidence (1.0-day LOS default) applies directly — we will use this as the conservative anchor in our ROI model for the CFO." oninput="syncInsight(3)"></textarea>
             </div>
@@ -865,7 +990,7 @@ body{font-family:var(--body);background:var(--fog);color:var(--ink);font-size:14
               <button class="mc-open" onclick="openModule(4);markMod(4)">Open Module 4 ↗</button>
               <span class="mc-done" id="md4" style="display:none;">✓ Complete</span>
             </div>
-            <div id="ins_wrap_4" style="display:none;">
+            <div id="ins_wrap_4">
               <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-bottom:5px;">Your organizational implication</div>
               <textarea class="form-ta" id="ins_4" style="min-height:56px;font-size:12px;" placeholder="e.g., Our 30-day readmission rate for LEP patients is X% vs Y% for English-proficient patients. Teach-back through a qualified interpreter at discharge is the highest-leverage intervention (HR 0.77, Hong 2019)." oninput="syncInsight(4)"></textarea>
             </div>
@@ -880,7 +1005,7 @@ body{font-family:var(--body);background:var(--fog);color:var(--ink);font-size:14
               <button class="mc-open" onclick="openModule(5);markMod(5)">Open Module 5 ↗</button>
               <span class="mc-done" id="md5" style="display:none;">✓ Complete</span>
             </div>
-            <div id="ins_wrap_5" style="display:none;">
+            <div id="ins_wrap_5">
               <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-bottom:5px;">Your organizational implication</div>
               <textarea class="form-ta" id="ins_5" style="min-height:56px;font-size:12px;" placeholder="e.g., We have reported X LEP adverse events/year. Corrected estimate: X/0.256 = ~Y actual events. Our malpractice reserve is calibrated to reported data only. Action: brief carrier on corrected estimate and dual-track exposure model." oninput="syncInsight(5)"></textarea>
             </div>
@@ -895,7 +1020,7 @@ body{font-family:var(--body);background:var(--fog);color:var(--ink);font-size:14
               <button class="mc-open" onclick="openModule(6);markMod(6)">Open Module 6 ↗</button>
               <span class="mc-done" id="md6" style="display:none;">✓ Complete</span>
             </div>
-            <div id="ins_wrap_6" style="display:none;">
+            <div id="ins_wrap_6">
               <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-bottom:5px;">Your organizational implication</div>
               <textarea class="form-ta" id="ins_6" style="min-height:56px;font-size:12px;" placeholder="e.g., Our T1-T7 all-complete rate is approximately X%. The service line variance in our system points to leadership accountability gaps, not resource gaps. Governance fix: add T1-T7 completion to service line performance dashboards reviewed quarterly." oninput="syncInsight(6)"></textarea>
             </div>
@@ -1070,8 +1195,11 @@ body{font-family:var(--body);background:var(--fog);color:var(--ink);font-size:14
       <div class="phase-hero-inner">
         <div class="ph-left">
           <div class="ph-kicker">Phase 4 of 5 &nbsp;·&nbsp; Implementation Roadmap</div>
-          <h2 class="ph-title">Commitments with<br><em>named owners</em> and deadlines.</h2>
-          <p class="ph-desc">A strategy without a named owner is a wish. Complete the four components of your implementation roadmap — each requires a specific structural intervention, a real person's name, a deadline, and a mechanism that fires if the target is missed.</p>
+          <h2 class="ph-title">Your plan is already<br><em>half-written.</em></h2>
+          <p class="ph-desc">Everything you learned in Phases 1–3 is already here. Each section shows the specific data from your LAI assessment and module insights that should inform it — and a pre-drafted default you can edit directly. The five-element standard is scaffolded into every field so nothing gets left vague.</p>
+        </div>
+        <div class="ph-right">
+          <button class="ph-cta-sec" onclick="populatePhase4()">↺ Re-sync from my data</button>
         </div>
       </div>
     </div>
@@ -1079,88 +1207,231 @@ body{font-family:var(--body);background:var(--fog);color:var(--ink);font-size:14
     <div class="phase-body">
       <div class="phase-body-inner">
 
-        <div class="callout teal">
-          <div class="callout-title">The five-element standard for each action</div>
-          <div class="callout-body">Every action in your roadmap must have: (1) the specific finding it addresses, (2) the structural intervention — not the training, (3) a named individual owner (not a department), (4) a 90-day and 12-month target with a specific metric, and (5) an escalation trigger if the target is missed. Anything missing one of these elements is an aspiration, not a governance commitment.</div>
+        <!-- Data dashboard pulled from Phases 1-3 -->
+        <div id="p4_dashboard" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bd);border-radius:var(--r);overflow:hidden;margin-bottom:24px;">
+          <div style="background:var(--ink);padding:14px 16px;">
+            <div style="font-family:var(--mono);font-size:9.5px;color:rgba(255,255,255,.3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;">Phase 1 · LAI Score</div>
+            <div style="font-family:var(--display);font-size:28px;font-weight:600;color:var(--teal);line-height:1;" id="p4_lai_score">—</div>
+            <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:3px;" id="p4_lai_band">Calculating...</div>
+          </div>
+          <div style="background:var(--ink);padding:14px 16px;">
+            <div style="font-family:var(--mono);font-size:9.5px;color:rgba(255,255,255,.3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;">Phase 1 · Priority Gap</div>
+            <div style="font-size:13px;font-weight:700;color:var(--amber2);line-height:1.2;" id="p4_priority_gap">—</div>
+            <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:3px;">Lowest-scoring domain</div>
+          </div>
+          <div style="background:var(--ink);padding:14px 16px;">
+            <div style="font-family:var(--mono);font-size:9.5px;color:rgba(255,255,255,.3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;">Phase 3 · ROI Total</div>
+            <div style="font-family:var(--display);font-size:28px;font-weight:600;color:var(--green);line-height:1;" id="p4_roi_total">—</div>
+            <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:3px;">Annual conservative estimate</div>
+          </div>
+          <div style="background:var(--ink);padding:14px 16px;">
+            <div style="font-family:var(--mono);font-size:9.5px;color:rgba(255,255,255,.3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;">Phase 2 · Insights</div>
+            <div style="font-family:var(--display);font-size:28px;font-weight:600;color:var(--teal);line-height:1;" id="p4_insights_count">0/6</div>
+            <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:3px;">Module insights captured</div>
+          </div>
         </div>
 
+        <!-- Five-element explainer — collapsed but visible -->
+        <details style="margin-bottom:20px;background:#fff;border:1px solid var(--bd2);border-radius:var(--r);">
+          <summary style="padding:14px 18px;font-size:12.5px;font-weight:700;color:var(--ink);cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;">
+            <span>The five-element standard — what makes an action a governance commitment</span>
+            <span style="font-size:10px;color:var(--silver);font-weight:400;">click to expand</span>
+          </summary>
+          <div style="padding:0 18px 16px;border-top:1px solid var(--bd);">
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:14px;">
+              <div style="text-align:center;padding:10px 6px;">
+                <div style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--teal);margin-bottom:6px;">1</div>
+                <div style="font-size:11.5px;font-weight:700;color:var(--ink);margin-bottom:4px;">Finding</div>
+                <div style="font-size:11px;color:var(--slate);">The specific data point from your LAI, modules, or ROI model that this action addresses</div>
+              </div>
+              <div style="text-align:center;padding:10px 6px;">
+                <div style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--teal);margin-bottom:6px;">2</div>
+                <div style="font-size:11.5px;font-weight:700;color:var(--ink);margin-bottom:4px;">Structural intervention</div>
+                <div style="font-size:11px;color:var(--slate);">An EHR change, protocol redesign, or workflow hard-stop — not training, not a policy document</div>
+              </div>
+              <div style="text-align:center;padding:10px 6px;">
+                <div style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--teal);margin-bottom:6px;">3</div>
+                <div style="font-size:11.5px;font-weight:700;color:var(--ink);margin-bottom:4px;">Named owner</div>
+                <div style="font-size:11px;color:var(--slate);">A person's name and title — not a department, not a committee, not a workgroup</div>
+              </div>
+              <div style="text-align:center;padding:10px 6px;">
+                <div style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--teal);margin-bottom:6px;">4</div>
+                <div style="font-size:11.5px;font-weight:700;color:var(--ink);margin-bottom:4px;">Measurable target</div>
+                <div style="font-size:11px;color:var(--slate);">A specific metric, a baseline, and a 90-day + 12-month number — not "improve" or "increase"</div>
+              </div>
+              <div style="text-align:center;padding:10px 6px;">
+                <div style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--teal);margin-bottom:6px;">5</div>
+                <div style="font-size:11.5px;font-weight:700;color:var(--ink);margin-bottom:4px;">Escalation trigger</div>
+                <div style="font-size:11px;color:var(--slate);">If two consecutive quarters miss the target, what specific meeting gets calendared and who owns it</div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <!-- CAP SECTION 1: CLINICAL SAFETY -->
         <div class="cap-section">
           <div class="cap-section-hd">
             <div class="cap-section-n">1</div>
-            <div class="cap-section-title">Safety &amp; Clinical Quality — Your single most urgent finding</div>
-            <div class="cap-section-hint">2–3 sentences · one specific number · frames patient safety, not equity or compliance</div>
+            <div class="cap-section-title">Clinical Safety — Your highest-stakes finding</div>
+            <div class="cap-section-hint">Anchored in Module findings + LAI Quality &amp; Safety domain</div>
           </div>
           <div class="cap-section-body">
-            <label class="form-label">Describe the highest-stakes communication gap in your organization</label>
-            <textarea id="bp_safety" class="form-ta" style="min-height:80px;" placeholder="In [period], [X]% of LEP patients at [service line] experienced [specific communication gap] at [touchpoint]. Evidence from Modules 1–6 shows these gaps are associated with [specific harm outcome]. The clinical consequence is [specific patient safety risk]."></textarea>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+            <!-- Evidence context panel -->
+            <div style="background:var(--fog);border:1px solid var(--bd);border-radius:8px;padding:12px 14px;margin-bottom:14px;">
+              <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--silver);margin-bottom:8px;">Evidence from your program that informs this section</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+                <div>
+                  <div style="font-size:10px;font-weight:700;color:var(--slate);margin-bottom:2px;">M1 · Access delay</div>
+                  <div style="font-size:12px;color:var(--ink);">OB: 35.6 min median delay (H=57, p&lt;0.001)</div>
+                </div>
+                <div>
+                  <div style="font-size:10px;font-weight:700;color:var(--slate);margin-bottom:2px;">M4 · Comprehension</div>
+                  <div style="font-size:12px;color:var(--ink);">98.3% of encounters: no teach-back. Hong HR 0.77.</div>
+                </div>
+                <div>
+                  <div style="font-size:10px;font-weight:700;color:var(--slate);margin-bottom:2px;">M5 · Safety reporting</div>
+                  <div style="font-size:12px;color:var(--ink);">74.4% of LEP adverse events unreported. Dual-track exposure.</div>
+                </div>
+              </div>
+              <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--bd);">
+                <div style="font-size:10px;font-weight:700;color:var(--slate);margin-bottom:3px;">Your Phase 2 insights (from Modules 2 &amp; 4)</div>
+                <div style="font-size:12px;color:var(--slate);font-style:italic;" id="p4_ins24_display">Complete Modules 2 and 4 to see your insights here.</div>
+              </div>
+            </div>
+            <label class="form-label">Clinical safety narrative — write or edit the pre-draft below</label>
+            <div style="font-size:11px;color:var(--silver);margin-bottom:6px;">This pre-draft is based on national benchmark evidence. Edit every bracketed value to reflect your organization.</div>
+            <textarea id="bp_safety" class="form-ta" style="min-height:100px;"></textarea>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;">
               <div>
-                <label class="form-label">Structural intervention (what changes in the EHR or workflow)</label>
-                <input id="cap_safety_action" class="form-input" placeholder="e.g., Non-bypassable teach-back EHR field at discharge">
+                <label class="form-label">Structural intervention <span style="font-weight:400;color:var(--silver);">(element 2)</span></label>
+                <div style="font-size:11px;color:var(--silver);margin-bottom:5px;">EHR hard-stop, protocol change, or workflow redesign — not training</div>
+                <input id="cap_safety_action" class="form-input" value="Add a non-bypassable teach-back confirmation field to the discharge EHR workflow that requires preferred language of instruction and patient demonstration of understanding before the discharge order can be signed.">
               </div>
               <div>
-                <label class="form-label">Named owner (title + name)</label>
-                <input id="cap_safety_owner" class="form-input" placeholder="e.g., CNO Dr. [Name]">
+                <label class="form-label">Named owner <span style="font-weight:400;color:var(--silver);">(element 3)</span></label>
+                <div style="font-size:11px;color:var(--silver);margin-bottom:5px;">A person's name and title, not a department</div>
+                <input id="cap_safety_owner" class="form-input" placeholder="[CNO name and title]">
               </div>
               <div>
-                <label class="form-label">90-day target metric</label>
-                <input id="cap_safety_90" class="form-input" placeholder="e.g., Teach-back documentation rate ≥20%">
+                <label class="form-label">90-day target <span style="font-weight:400;color:var(--silver);">(element 4a)</span></label>
+                <input id="cap_safety_90" class="form-input" value="Teach-back EHR field deployed and teach-back documentation rate ≥20% in highest-volume LEP service line">
               </div>
               <div>
-                <label class="form-label">12-month target metric</label>
-                <input id="cap_safety_12mo" class="form-input" placeholder="e.g., Teach-back documentation rate ≥60%">
+                <label class="form-label">12-month target <span style="font-weight:400;color:var(--silver);">(element 4b)</span></label>
+                <input id="cap_safety_12mo" class="form-input" value="Teach-back documentation rate ≥60% system-wide; 30-day LEP readmission gap reduced by ≥2pp vs. baseline">
+              </div>
+              <div class="span2" style="grid-column:1/-1;">
+                <label class="form-label">Escalation trigger <span style="font-weight:400;color:var(--silver);">(element 5)</span></label>
+                <input id="cap_safety_escalation" class="form-input" value="If teach-back rate is below target in two consecutive quarterly reviews, an executive quality review is automatically calendared with CMO, CNO, and service line medical director within 14 days.">
               </div>
             </div>
           </div>
         </div>
 
+        <!-- CAP SECTION 2: FINANCIAL CASE -->
         <div class="cap-section">
           <div class="cap-section-hd">
             <div class="cap-section-n">2</div>
-            <div class="cap-section-title">Financial Case — Your system-level investment rationale</div>
-            <div class="cap-section-hint">System-level figure + two biggest levers + payback timeline</div>
+            <div class="cap-section-title">Financial Case — Anchored in your Phase 3 ROI figures</div>
+            <div class="cap-section-hint">Edit the pre-draft with your actual ROI numbers from Phase 3</div>
           </div>
           <div class="cap-section-body">
-            <label class="form-label">State the financial case (for your CFO)</label>
-            <textarea id="bp_financial" class="form-ta" style="min-height:80px;" placeholder="Based on analysis calibrated to our patient volume, systematic language access improvement represents approximately $[X] in annual value. The largest contributors are [Module: mechanism, $Y/yr] and [Module: mechanism, $Z/yr]. Using conservative anchors from Schulson 2018, Lindholm 2012, and Hong 2019, the proposed investment of $[X] generates positive return within [X] months."></textarea>
+            <div style="background:var(--fog);border:1px solid var(--bd);border-radius:8px;padding:12px 14px;margin-bottom:14px;">
+              <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--silver);margin-bottom:8px;">Your Phase 3 figures</div>
+              <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;">
+                <div><div style="font-size:10px;color:var(--slate);">ED Access</div><div style="font-size:13px;font-weight:700;color:var(--ink);" id="p4_roi_ed_disp">—</div></div>
+                <div><div style="font-size:10px;color:var(--slate);">LOS</div><div style="font-size:13px;font-weight:700;color:var(--ink);" id="p4_roi_los_disp">—</div></div>
+                <div><div style="font-size:10px;color:var(--slate);">Readmissions</div><div style="font-size:13px;font-weight:700;color:var(--ink);" id="p4_roi_readmit_disp">—</div></div>
+                <div><div style="font-size:10px;color:var(--slate);">Malpractice</div><div style="font-size:13px;font-weight:700;color:var(--ink);" id="p4_roi_mal_disp">—</div></div>
+                <div><div style="font-size:10px;color:var(--slate);font-weight:700;">Total/yr</div><div style="font-size:13px;font-weight:700;color:var(--green);" id="p4_roi_total_disp">—</div></div>
+              </div>
+              <div style="margin-top:8px;font-size:11px;color:var(--silver);">If these show — , return to Phase 3 and enter or accept benchmark figures first.</div>
+            </div>
+            <label class="form-label">Financial case — write or edit the pre-draft below</label>
+            <div style="font-size:11px;color:var(--silver);margin-bottom:6px;">Bracketed values will be replaced with your Phase 3 data when you click "Re-sync from my data" above.</div>
+            <textarea id="bp_financial" class="form-ta" style="min-height:100px;"></textarea>
           </div>
         </div>
 
+        <!-- CAP SECTION 3: GOVERNANCE -->
         <div class="cap-section">
           <div class="cap-section-hd">
             <div class="cap-section-n">3</div>
-            <div class="cap-section-title">Compliance &amp; Governance — Your accountability structure</div>
-            <div class="cap-section-hint">What gets measured, who reviews it, what triggers escalation</div>
+            <div class="cap-section-title">Governance &amp; Compliance — Anchored in Module 6 findings</div>
+            <div class="cap-section-hint">T1–T7 documentation rate · audit-readiness · execution variance</div>
           </div>
           <div class="cap-section-body">
-            <label class="form-label">Governance commitment (for your executive leadership team)</label>
-            <textarea id="bp_ask" class="form-ta" style="min-height:64px;" placeholder="[Specific structural change] will be implemented by [date], accountable to [named owner + title]. Progress against [T1-T7 completion rate / teach-back rate / readmission gap] will be reported to senior leadership quarterly. Two consecutive quarters below target triggers an executive review calendared for [date]."></textarea>
+            <div style="background:var(--fog);border:1px solid var(--bd);border-radius:8px;padding:12px 14px;margin-bottom:14px;">
+              <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--silver);margin-bottom:8px;">Evidence from your program</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+                <div>
+                  <div style="font-size:10px;font-weight:700;color:var(--slate);margin-bottom:2px;">M6 · Touchpoint coverage</div>
+                  <div style="font-size:12px;color:var(--ink);">2.3% all-7-complete. 28% audit-ready. 70% below minimum standard.</div>
+                </div>
+                <div>
+                  <div style="font-size:10px;font-weight:700;color:var(--slate);margin-bottom:2px;">M6 · Execution variance</div>
+                  <div style="font-size:12px;color:var(--ink);">18pp gap between highest and lowest service lines — leadership accountability, not infrastructure.</div>
+                </div>
+                <div>
+                  <div style="font-size:10px;font-weight:700;color:var(--slate);margin-bottom:2px;">LAI · Compliance domain</div>
+                  <div style="font-size:12px;color:var(--ink);">Your score: <span id="p4_compliance_score" style="font-weight:700;color:var(--ink);">—</span>/100. Target: ≥80.</div>
+                </div>
+              </div>
+              <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--bd);">
+                <div style="font-size:10px;font-weight:700;color:var(--slate);margin-bottom:3px;">Your Phase 2 insights (from Modules 5 &amp; 6)</div>
+                <div style="font-size:12px;color:var(--slate);font-style:italic;" id="p4_ins56_display">Complete Modules 5 and 6 to see your insights here.</div>
+              </div>
+            </div>
+            <label class="form-label">Governance commitment — write or edit the pre-draft below</label>
+            <textarea id="bp_ask" class="form-ta" style="min-height:90px;"></textarea>
           </div>
         </div>
 
+        <!-- CAP SECTION 4: 30-DAY COMMITMENT -->
         <div class="cap-section">
           <div class="cap-section-hd">
             <div class="cap-section-n">4</div>
-            <div class="cap-section-title">30-Day Commitment — The single most important thing you will do next</div>
-            <div class="cap-section-hint">One action · one owner · one deadline · already begun</div>
+            <div class="cap-section-title">30-Day Commitment — The single action that starts before you leave this program</div>
+            <div class="cap-section-hint">One owner · one deadline · one deliverable that is already in motion</div>
           </div>
           <div class="cap-section-body">
-            <label class="form-label">Name the one thing that changes in the next 30 days</label>
-            <textarea id="bp_proof" class="form-ta" style="min-height:64px;" placeholder="[Specific action] has been initiated as of [date] by [name + title]. The measurable output by [30-day date] is [specific deliverable — e.g., EHR change request submitted, QBS pilot launched in OB, active surveillance quarterly review scheduled]."></textarea>
+            <div style="background:var(--fog);border:1px solid var(--bd);border-radius:8px;padding:12px 14px;margin-bottom:14px;">
+              <div style="font-size:11.5px;color:var(--slate);line-height:1.6;">The 30-day commitment is not the biggest item on your roadmap — it is the proof that you have moved from analysis to action. It should be something you can start <em>today</em>: submitting an EHR change request, scheduling a service line accountability meeting, briefing your malpractice carrier on corrected event frequency, or adding T1–T7 completion rate to the next leadership dashboard cycle.</div>
+              <div style="margin-top:10px;padding:10px 12px;background:rgba(10,191,163,.07);border-radius:6px;border-left:3px solid var(--teal);">
+                <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-bottom:4px;">Your lowest LAI domain suggests this 30-day action</div>
+                <div style="font-size:12.5px;color:var(--slate);" id="p4_suggested_action">Complete Phase 1 LAI assessment to see a suggested 30-day action here.</div>
+              </div>
+            </div>
+            <label class="form-label">Your 30-day commitment — write or edit below</label>
+            <textarea id="bp_proof" class="form-ta" style="min-height:80px;"></textarea>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+              <div>
+                <label class="form-label">Named owner</label>
+                <input id="cap_proof_owner" class="form-input" placeholder="[Your name and title]">
+              </div>
+              <div>
+                <label class="form-label">Deadline (specific date)</label>
+                <input id="cap_proof_deadline" class="form-input" type="date">
+              </div>
+            </div>
           </div>
         </div>
 
-        <div style="background:var(--fog);border:1px solid var(--bd2);border-radius:var(--r);padding:16px;margin-top:8px;">
-          <div class="sec-title" style="margin-bottom:8px;">Open Module 7 — Capstone &amp; Strategy Synthesis</div>
-          <div style="font-size:12.5px;color:var(--slate);margin-bottom:12px;line-height:1.6;">Module 7 is the full synthesis: it tests your ability to assemble the evidence, financial case, and governance commitment into a coherent 5-minute argument — and challenges the attribution questions your CFO and CMO will raise.</div>
-          <button class="mc-open" onclick="openModule(7)">Open Module 7 — CAP Capstone ↗</button>
+        <!-- Module 7 bridge -->
+        <div style="background:var(--ink);border-radius:var(--r2);padding:20px 24px;margin-top:8px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:200px;">
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;">Capstone &amp; Synthesis · Module 7</div>
+            <div style="font-size:13.5px;font-weight:700;color:#fff;margin-bottom:4px;">Test your ability to defend the full argument</div>
+            <div style="font-size:12.5px;color:rgba(255,255,255,.45);line-height:1.55;">Module 7 presents three decision scenarios — the board finance challenge on attribution, the CNO accountability question on past plan failure, and the CFO ask to justify the investment. Complete it before generating documents: it surfaces gaps in your argument before your actual leadership presentation does.</div>
+          </div>
+          <button class="ph-cta" onclick="openModule(7);markMod(7)">Open Module 7 ↗</button>
         </div>
 
       </div>
     </div>
 
     <div class="next-phase-bar">
-      <div class="next-phase-label">All four components required before generating documents</div>
+      <div class="next-phase-label">Complete all four components — then generate your three documents</div>
       <button class="next-phase-btn" onclick="goPhase(5)">Phase 5: Generate Your Deliverables &nbsp;→</button>
     </div>
   </div><!-- phase 4 -->
@@ -1290,6 +1561,7 @@ function goPhase(n) {
   if (btn)   btn.classList.add('active');
   _currentPhase = n;
   window.scrollTo(0, 0);
+  if (n === 4) populatePhase4();
   if (n === 5) updateSummary();
 }
 
@@ -1324,12 +1596,14 @@ function markMod(n) {
   if (doneEl) doneEl.style.display = 'inline-flex';
   if (card)   card.classList.add('complete');
   if (insWrap) {
-    insWrap.style.display = 'block';
-    // Scroll the insight field into view after a brief delay
-    setTimeout(function() {
-      var ta = document.getElementById('ins_' + n);
-      if (ta) ta.focus();
-    }, 300);
+    insWrap.style.background = 'rgba(10,191,163,.04)';
+    insWrap.style.borderRadius = '6px';
+    insWrap.style.padding = '8px';
+    var ta = document.getElementById('ins_' + n);
+    if (ta) {
+      ta.style.borderColor = 'var(--teal)';
+      setTimeout(function() { ta.focus(); }, 300);
+    }
   }
   var done = Object.keys(_modsDone).length;
   var label = document.getElementById('mod_progress_label');
@@ -1459,6 +1733,116 @@ function recalcTotal() {
   if (sumRoi && total > 0) sumRoi.textContent = '$' + Math.round(total/1000) + 'K';
 }
 
+/* ── POPULATE PHASE 4 — weave program data into pre-drafts ──────── */
+function populatePhase4() {
+  // Read LAI data
+  var laiEl = document.getElementById('cb_score');
+  var bandEl = document.getElementById('cb_band');
+  var gapEl  = document.getElementById('cb_gap');
+  var lai  = laiEl  ? (laiEl.textContent  || '—') : '—';
+  var band = bandEl ? (bandEl.textContent || '—') : '—';
+  var gap  = gapEl  ? (gapEl.textContent  || '—') : '—';
+
+  // Read org
+  var org  = (document.getElementById('s1_org_main')  || {}).value || '[your organization]';
+  var role = (document.getElementById('s1_role_main') || {}).value || '[your role]';
+
+  // Read ROI figures
+  var fmtD = function(id) {
+    var v = Number((document.getElementById(id) || {}).value) || 0;
+    return v > 0 ? '$' + Math.round(v).toLocaleString() : '—';
+  };
+  var roiEd      = fmtD('roi_ed');
+  var roiLos     = fmtD('roi_los');
+  var roiReadmit = fmtD('roi_readmit');
+  var roiMal     = fmtD('roi_malpractice');
+  var roiVbp     = fmtD('roi_vbp');
+  var roiTotal   = fmtD('roi_total');
+  var roiInvest  = (document.getElementById('roi_investment') || {}).value || '[proposed investment amount]';
+
+  // Read compliance domain score
+  var compScore = (document.getElementById('ds_04') || {}).textContent || '—';
+
+  // Read module insights
+  var ins = {};
+  for (var i=1; i<=6; i++) {
+    var el = document.getElementById('ins_' + i);
+    ins[i] = el && el.value.trim() ? el.value.trim() : '';
+  }
+  var insCount = Object.values(ins).filter(Boolean).length;
+
+  // Update Phase 4 data dashboard
+  var set = function(id, val) { var e=document.getElementById(id); if(e) e.textContent=val; };
+  set('p4_lai_score',    lai);
+  set('p4_lai_band',     band);
+  set('p4_priority_gap', gap);
+  set('p4_roi_total',    roiTotal);
+  set('p4_insights_count', insCount + '/6');
+  set('p4_roi_ed_disp',      roiEd);
+  set('p4_roi_los_disp',     roiLos);
+  set('p4_roi_readmit_disp', roiReadmit);
+  set('p4_roi_mal_disp',     roiMal);
+  set('p4_roi_total_disp',   roiTotal);
+  set('p4_compliance_score', compScore);
+
+  // Module insight display panels
+  var ins24 = [ins[2], ins[4]].filter(Boolean).join(' | ');
+  var ins56 = [ins[5], ins[6]].filter(Boolean).join(' | ');
+  set('p4_ins24_display', ins24 || 'Complete Modules 2 and 4 to see your insights here.');
+  set('p4_ins56_display', ins56 || 'Complete Modules 5 and 6 to see your insights here.');
+
+  // Suggested 30-day action based on lowest domain
+  var domActions = {
+    'Access':                  'Submit an EHR change request to add a required interpreter dispatch field to the ED and OB triage workflow — target deployment within 30 days.',
+    'Patient Experience':      'Schedule a meeting with your HCAHPS vendor to request preferred-language stratification of communication domain scores — establish your baseline within 30 days.',
+    'Clinical Outcomes':       'Initiate a pharmacy data pull: LEP prescription fill rate vs. English-proficient patients — establish baseline metric within 30 days.',
+    'Compliance':              'Launch a T1-T7 documentation audit across your top three LEP-volume service lines and report findings to the CNO within 30 days.',
+    'Patient Engagement':      'Submit an EHR change request to add a teach-back confirmation field to the discharge workflow — cannot be bypassed before discharge order is signed.',
+    'Financial Stewardship':   'Schedule a 60-minute meeting with your CFO and malpractice carrier to review corrected LEP adverse event frequency and dual-track exposure model.',
+    'Quality & Safety':        'Add LEP-stratified 30-day readmission rate to the next Quality Committee agenda and request a quarterly standing reporting line.',
+    'Workforce Development':   'Launch a QBS credentialing pilot in your highest-LEP-volume service line: identify the first 5 providers for assessment enrollment within 30 days.',
+    'Workflow Optimization':   'Add T1-T7 completion rate to service line leader performance dashboards — report at next quarterly operational review.',
+    'Technology Innovation':   'Conduct a VRI equipment audit: which departments lack both VRI and audio capability — submit a capital request for the two highest-acuity gaps within 30 days.',
+  };
+  var suggested = domActions[gap] || 'Identify the single structural change in your lowest-scoring domain (' + gap + ') and submit a project initiation request within 30 days.';
+  set('p4_suggested_action', suggested);
+
+  // Pre-fill textareas only if empty or if they still have old placeholder-like content
+  var safety = document.getElementById('bp_safety');
+  if (safety && (!safety.value || safety.value.indexOf('[') > -1)) {
+    safety.value = 'At ' + org + ', LEP patients face measurable communication gaps at multiple clinical touchpoints. '
+      + 'Our LAI composite score of ' + lai + ' (' + band + ') indicates that foundational processes are in place but critical gaps remain in patient engagement and safety domains. '
+      + 'Most urgently: 98.3% of LEP discharge encounters nationally occur without verified patient comprehension (teach-back), and 74.4% of LEP adverse events go unreported through standard channels — meaning our safety governance is calibrated to a fraction of actual event volume. '
+      + 'These gaps are associated with avoidable readmissions, preventable adverse events, and dual-track malpractice exposure under Section 1557 (2024 Final Rule). '
+      + (ins[2] ? 'From Module 2: ' + ins[2].substring(0,120) + '...' : '');
+  }
+
+  var financial = document.getElementById('bp_financial');
+  if (financial && (!financial.value || financial.value.indexOf('[') > -1)) {
+    financial.value = 'Based on analysis calibrated to our patient volume and anchored to peer-reviewed evidence, systematic language access improvement represents approximately '
+      + roiTotal + ' in annual financial value for ' + org + '. '
+      + 'The largest contributors are LOS reduction (' + roiLos + '/yr — Lindholm 2012: 1.0 day conservative anchor) '
+      + 'and readmission avoidance (' + roiReadmit + '/yr — Hong 2019: HR 0.77 for condition-related readmissions). '
+      + 'Malpractice defense cost avoidance adds ' + roiMal + '/yr, based on corrected adverse event frequency (74.4% underreporting correction) and the Berkeley/NHeLP $118K average defense cost. '
+      + 'The proposed investment of ' + (roiInvest || '[see Phase 3]') + ' generates a positive return within the LOS and readmission tracks alone, using conservative midpoints of published evidence ranges with explicit attribution adjustments for LEP acuity burden.';
+  }
+
+  var governance = document.getElementById('bp_ask');
+  if (governance && (!governance.value || governance.value.indexOf('[') > -1)) {
+    governance.value = 'At ' + org + ', the language access implementation roadmap will be governed through the following structure: '
+      + 'T1-T7 all-touchpoint completion rate, teach-back documentation rate, and 30-day LEP readmission gap will be reported quarterly to senior leadership. '
+      + 'The current T1-T7 all-complete rate nationally is 2.3%; the target for this organization is a trajectory to 40% within 12 months and 80% within 24 months. '
+      + 'Compliance domain score: ' + compScore + '/100 (target: ≥80 within 18 months). '
+      + 'Two consecutive quarters below the 90-day target will trigger an executive quality review, calendared automatically, within 14 days of the second missed quarter.';
+  }
+
+  var proof = document.getElementById('bp_proof');
+  if (proof && (!proof.value || proof.value.indexOf('[') > -1)) {
+    proof.value = 'Within 30 days: ' + suggested + ' This action directly addresses the lowest-scoring domain (' + gap + ', LAI score ' + lai + '/100). '
+      + 'It is the structural precondition for the 90-day and 12-month targets in this roadmap — and the proof of motion that senior leadership can verify.';
+  }
+}
+
 /* ── PHASE 5 SUMMARY ─────────────────────────────────────────────── */
 function updateSummary() {
   var scoreEl = document.getElementById('sum_lai_score');
@@ -1486,6 +1870,95 @@ function capText(id) {
   var el = document.getElementById(id);
   return el ? el.value || '' : '';
 }
+
+/* ── GAUGE ENGINE ─────────────────────────────────────────────────── */
+var _shOdoCurrent = 0, _shOdoRaf = null;
+
+function shDrawGauge(score) {
+  var canvas = document.getElementById('sh_canvas');
+  if (!canvas) return;
+  var dpr = window.devicePixelRatio || 1;
+  var W = 340, H = 200;
+  canvas.width  = W * dpr; canvas.height = H * dpr;
+  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+  var ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, W, H);
+  var cx = W/2, cy = H-26, R = 146;
+  var DEG = Math.PI/180;
+  var ARC_START = 215*DEG, ARC_SPAN = 250*DEG;
+  function sToA(s) { return ARC_START + (s/100)*ARC_SPAN; }
+  var trackW = 17;
+  ctx.beginPath(); ctx.arc(cx,cy,R,ARC_START,ARC_START+ARC_SPAN,false);
+  ctx.strokeStyle='rgba(255,255,255,.06)'; ctx.lineWidth=trackW+4; ctx.lineCap='butt'; ctx.stroke();
+  [{from:0,to:40,c:'#c94040'},{from:40,to:60,c:'#c47a10'},{from:60,to:80,c:'#c4a010'},{from:80,to:100,c:'#18a76f'}].forEach(function(z){
+    ctx.beginPath(); ctx.arc(cx,cy,R,sToA(z.from),sToA(z.to),false);
+    ctx.strokeStyle=z.c; ctx.lineWidth=trackW; ctx.globalAlpha=0.22; ctx.stroke(); ctx.globalAlpha=1;
+  });
+  if (score > 0.2) {
+    var grad = ctx.createLinearGradient(cx-R,cy,cx+R,cy);
+    if (score>=80){ grad.addColorStop(0,'#1a7060'); grad.addColorStop(1,'#0cc5ad'); }
+    else if (score>=60){ grad.addColorStop(0,'#7a5800'); grad.addColorStop(1,'#f5c020'); }
+    else if (score>=40){ grad.addColorStop(0,'#7a3500'); grad.addColorStop(1,'#e07820'); }
+    else { grad.addColorStop(0,'#7a1e1e'); grad.addColorStop(1,'#e05050'); }
+    ctx.beginPath(); ctx.arc(cx,cy,R,ARC_START,sToA(score),false);
+    ctx.strokeStyle=grad; ctx.lineWidth=trackW; ctx.globalAlpha=0.9; ctx.stroke(); ctx.globalAlpha=1;
+    var da = sToA(score);
+    var activeC = score>=80?'#0cc5ad':score>=60?'#f5c020':score>=40?'#e07820':'#e05050';
+    ctx.beginPath(); ctx.arc(cx+R*Math.cos(da),cy+R*Math.sin(da),5.5,0,Math.PI*2);
+    ctx.fillStyle=activeC; ctx.shadowColor=activeC; ctx.shadowBlur=16; ctx.fill(); ctx.shadowBlur=0;
+  }
+  for (var v=0; v<=100; v+=5) {
+    var major = v%20===0;
+    var a = sToA(v);
+    var ri = R-(major?11:5), ro = R+(major?11:5);
+    ctx.beginPath(); ctx.moveTo(cx+ri*Math.cos(a),cy+ri*Math.sin(a));
+    ctx.lineTo(cx+ro*Math.cos(a),cy+ro*Math.sin(a));
+    ctx.strokeStyle=major?'rgba(255,255,255,.48)':'rgba(255,255,255,.16)';
+    ctx.lineWidth=major?1.6:0.8; ctx.lineCap='round'; ctx.stroke();
+    if (major) {
+      ctx.font="600 10px 'DM Sans',sans-serif"; ctx.fillStyle='rgba(255,255,255,.32)';
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      var lr=R+24; ctx.fillText(v,cx+lr*Math.cos(a),cy+lr*Math.sin(a));
+    }
+  }
+  var na = sToA(score), nLen = R-trackW-6;
+  ctx.save(); ctx.translate(cx,cy); ctx.rotate(na);
+  ctx.beginPath(); ctx.moveTo(-6,2); ctx.lineTo(nLen,2);
+  ctx.strokeStyle='rgba(0,0,0,.35)'; ctx.lineWidth=2.5; ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(-6,0); ctx.lineTo(nLen,0);
+  var needleC = score>=80?'#0cc5ad':score>=60?'#f5c020':score>=40?'#e07820':'#e06060';
+  ctx.strokeStyle=needleC; ctx.lineWidth=2.2;
+  ctx.shadowColor=needleC; ctx.shadowBlur=10; ctx.stroke(); ctx.shadowBlur=0;
+  ctx.beginPath(); ctx.moveTo(nLen,0); ctx.lineTo(nLen-13,-3.5); ctx.lineTo(nLen-13,3.5); ctx.closePath();
+  ctx.fillStyle=needleC; ctx.shadowColor=needleC; ctx.shadowBlur=8; ctx.fill(); ctx.shadowBlur=0;
+  ctx.restore();
+  var hg = ctx.createRadialGradient(cx,cy,0,cx,cy,13);
+  hg.addColorStop(0,'#2a4a6a'); hg.addColorStop(1,'#091b30');
+  ctx.beginPath(); ctx.arc(cx,cy,13,0,Math.PI*2); ctx.fillStyle=hg; ctx.fill();
+  var hubC = score>=80?'#0cc5ad':score>=60?'#f5c020':'#e06060';
+  ctx.beginPath(); ctx.arc(cx,cy,5,0,Math.PI*2);
+  ctx.fillStyle=hubC; ctx.shadowColor=hubC; ctx.shadowBlur=12; ctx.fill(); ctx.shadowBlur=0;
+}
+
+function shAnimateGauge(target) {
+  if (_shOdoRaf) cancelAnimationFrame(_shOdoRaf);
+  var from = _shOdoCurrent, diff = target - from;
+  if (Math.abs(diff) < 0.25) { shDrawGauge(target); return; }
+  var t0 = performance.now(), dur = 700;
+  function step(now) {
+    var p = Math.min(1, (now-t0)/dur);
+    var e = 1 - Math.pow(1-p, 3);
+    _shOdoCurrent = from + diff*e;
+    shDrawGauge(_shOdoCurrent);
+    var el = document.getElementById('cb_score');
+    if (el) el.textContent = Math.round(_shOdoCurrent);
+    if (p<1) { _shOdoRaf = requestAnimationFrame(step); }
+    else { _shOdoCurrent = target; shDrawGauge(target); }
+  }
+  _shOdoRaf = requestAnimationFrame(step);
+}
+
 
 function gapBandScore(v) {
   var g = Math.abs(Number(v) || 0);
@@ -1616,6 +2089,106 @@ function updateLAI() {
     [d07,'Quality & Safety'],[d08,'Workforce Development'],[d09,'Workflow Optimization'],[d10,'Technology Innovation']];
   domScoreArr.forEach(function(pair) { if (pair[0] < lowestScore) { lowestScore = pair[0]; lowestName = pair[1]; } });
   if (gapEl) gapEl.textContent = lowestName + ' (' + Math.round(lowestScore) + '/100)';
+
+  // ── Drive gauge, bar chart, stage ladder ───────────────────────
+  shAnimateGauge(composite);
+
+  // Band text
+  var shBand = document.getElementById('sh_band');
+  var shTier = document.getElementById('sh_tier');
+  if (shBand) {
+    shBand.textContent = band + ' — ' + desc;
+    shBand.className = 'sh-band ' + (composite >= 60 ? 'good' : composite >= 40 ? 'warn' : 'alert');
+  }
+  if (shTier) shTier.textContent = band;
+
+  // Stat boxes
+  var domScoreVals = [d01,d02,d03,d04,d05,d06,d07,d08,d09,d10];
+  var below60 = domScoreVals.filter(function(s){return s<60;}).length;
+  var b60El = document.getElementById('sh_below60');
+  if (b60El) b60El.textContent = below60;
+
+  // Stage
+  var shStageN = document.getElementById('sh_stage_n');
+  var shStages = document.getElementById('sh_stages');
+  var stageData = [
+    {name:'S0',label:'Unstable',min:0},
+    {name:'S1',label:'Developing',min:20},
+    {name:'S2',label:'Established',min:40},
+    {name:'S3',label:'Optimizing',min:60},
+    {name:'S4',label:'Leading',min:80}
+  ];
+  var curStage = stageData[0];
+  stageData.forEach(function(s){ if(composite >= s.min) curStage = s; });
+  if (shStageN) shStageN.textContent = curStage.name;
+  if (shStages) {
+    shStages.innerHTML = stageData.map(function(s) {
+      var isCur = s.name === curStage.name;
+      var isMet = composite >= s.min;
+      return '<div class="sh-stage-row' + (isCur?' current':isMet?' met':'') + '">' +
+        '<div class="sh-stage-num">' + s.name + '<\/div>' +
+        '<div class="sh-stage-name">' + s.label + ' <span style="font-size:10px;color:rgba(255,255,255,.25);">≥19<\/span><\/div>' +
+        '<div class="sh-stage-dot"><\/div>' +
+        '<\/div>';
+    }).join('');
+  }
+
+  // Priority gaps (top 3 lowest domains)
+  var domNamesList = ['Access','Patient Experience','Clinical Outcomes','Compliance',
+    'Patient Engagement','Financial Stewardship','Quality & Safety',
+    'Workforce Development','Workflow Optimization','Technology Innovation'];
+  var scorePairs = domScoreVals.map(function(s,i){return [domNamesList[i],s];});
+  scorePairs.sort(function(a,b){return a[1]-b[1];});
+  var shOpps = document.getElementById('sh_opps');
+  if (shOpps) {
+    shOpps.innerHTML = scorePairs.slice(0,3).map(function(pair,i) {
+      var nm = pair[0], sc = pair[1];
+      var flag = sc<35 ? 'Critical — Act Now' : sc<65 ? 'Needs Development' : 'Performing Well';
+      var fcls = sc<35 ? 'bad' : sc<65 ? 'warn' : 'good';
+      return '<div class="sh-opp">' +
+        '<div class="sh-opp-rank">#' + (i+1) + '<\/div>' +
+        '<div class="sh-opp-info">' +
+          '<div class="sh-opp-name">' + nm + '<\/div>' +
+          '<div class="sh-opp-flag ' + fcls + '">' + flag + '<\/div>' +
+        '<\/div>' +
+        '<div class="sh-opp-score ' + fcls + '">' + Math.round(sc) + '<\/div>' +
+        '<\/div>';
+    }).join('');
+  }
+
+  // Update cb_gap for populatePhase4 compat
+  var cgEl = document.getElementById('cb_gap');
+  if (cgEl && scorePairs[0]) cgEl.textContent = scorePairs[0][0] + ' (' + Math.round(scorePairs[0][1]) + '/100)';
+  var cbEl = document.getElementById('cb_band');
+  if (cbEl) cbEl.textContent = band;
+
+  // Bar chart (only if Plotly loaded)
+  if (typeof Plotly !== 'undefined') {
+    var domScores = {};
+    var shortNames = ['Access','Pt. Experience','Outcomes','Compliance','Engagement',
+      'Fin. Stewardship','Quality & Safety','Workforce','Workflow','Technology'];
+    domScoreVals.forEach(function(s,i){domScores[shortNames[i]]=s;});
+    var fills = domScoreVals.map(function(v){
+      return v>=80?'rgba(24,167,111,.75)':v<60?'rgba(201,64,64,.75)':'rgba(212,142,26,.75)';
+    });
+    Plotly.newPlot('sh_bar_chart',
+      [{type:'bar',x:shortNames,y:domScoreVals,marker:{color:fills},
+        text:domScoreVals.map(function(v){return Math.round(v)+''}),
+        textposition:'outside',
+        textfont:{family:"DM Sans,sans-serif",size:10,color:'rgba(255,255,255,.55)'},
+        cliponaxis:false}],
+      {height:200,
+       margin:{l:20,r:8,t:8,b:60},
+       paper_bgcolor:'rgba(0,0,0,0)',
+       plot_bgcolor:'rgba(0,0,0,0)',
+       xaxis:{tickangle:40,tickfont:{family:"DM Sans,sans-serif",size:9,color:'rgba(255,255,255,.38)'},
+              gridcolor:'rgba(255,255,255,.05)'},
+       yaxis:{range:[0,120],
+              tickfont:{size:9,color:'rgba(255,255,255,.3)'},
+              gridcolor:'rgba(255,255,255,.06)'}},
+      {displayModeBar:false,responsive:true}
+    );
+  }
 }
 
 
