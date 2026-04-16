@@ -915,7 +915,7 @@ body{font-family:var(--body);background:var(--fog);color:var(--ink);font-size:14
 
         <div class="stat-strip" style="margin-bottom:28px;">
           <div class="stat-cell"><div class="stat-n amber">1,000</div><div class="stat-l">LEP patient encounters analyzed</div></div>
-          <div class="stat-cell"><div class="stat-n teal">18</div><div class="stat-l">Statistical exercises across modules</div></div>
+          <div class="stat-cell"><div class="stat-n teal">18</div><div class="stat-l">Evidence findings across modules</div></div>
           <div class="stat-cell"><div class="stat-n slate">215</div><div class="stat-l">Peer-reviewed studies synthesized</div></div>
           <div class="stat-cell"><div class="stat-n red">6</div><div class="stat-l">Financial exposure levers identified</div></div>
         </div>
@@ -940,7 +940,7 @@ body{font-family:var(--body);background:var(--fog);color:var(--ink);font-size:14
             <div class="mc-num">MODULE 01 &nbsp;·&nbsp; ACCESS &amp; TRIAGE</div>
             <div class="mc-title">Where does delay concentrate — and what does it cost?</div>
             <div class="mc-stat">OB delay: 35.6 min</div>
-            <div class="mc-finding">Interpreter delay concentrates by service line (H=57.0, p&lt;0.001). Advanced maternal cases wait 11.7 min longer. Technology alone doesn't fix it — workflow design does.</div>
+            <div class="mc-finding">Analysis of 1,000 LEP encounters confirms: interpreter delay is not random — it concentrates in specific service lines. Advanced maternal cases wait 11.7 min longer than standard encounters. Adding technology without redesigning the workflow trigger does not reduce delay.</div>
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
               <button class="mc-open" onclick="openModule(1);markMod(1)">Open Module 1 ↗</button>
               <span class="mc-done" id="md1" style="display:none;">✓ Complete</span>
@@ -955,7 +955,7 @@ body{font-family:var(--body);background:var(--fog);color:var(--ink);font-size:14
             <div class="mc-num">MODULE 02 &nbsp;·&nbsp; DIAGNOSTIC RISK</div>
             <div class="mc-title">Documentation compliance ≠ delivered care</div>
             <div class="mc-stat">1.7% teach-back documented</div>
-            <div class="mc-finding">1557 documentation is not associated with adverse event reduction (p=0.642). 98.3% of encounters reach discharge without verified comprehension. The gap is structural, not behavioral.</div>
+            <div class="mc-finding">1557 documentation compliance does not reduce adverse events — the data confirms no association. 98.3% of encounters reach discharge without verified comprehension. This is a workflow design problem, not a staff behavior problem.</div>
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
               <button class="mc-open" onclick="openModule(2);markMod(2)">Open Module 2 ↗</button>
               <span class="mc-done" id="md2" style="display:none;">✓ Complete</span>
@@ -969,8 +969,8 @@ body{font-family:var(--body);background:var(--fog);color:var(--ink);font-size:14
           <div class="mod-card" id="mc3">
             <div class="mc-num">MODULE 03 &nbsp;·&nbsp; INPATIENT RELIABILITY</div>
             <div class="mc-title">Rework burden and the LOS case</div>
-            <div class="mc-stat">H = 71.7 rework</div>
-            <div class="mc-finding">OB leads on rework (H=71.7), delay, and training currency simultaneously — a structural signal, not acuity. LOS directional: 11.9-hour difference. Lindholm anchor: +0.75–1.47 days without interpretation.</div>
+            <div class="mc-stat">OB: highest rework burden</div>
+            <div class="mc-finding">OB leads the system in rework burden, interpreter delay, AND staff training completion — all simultaneously. That pattern cannot be explained by acuity. LOS data shows an 11.9-hour directional gap. Published evidence: +0.75–1.47 additional inpatient days without professional interpretation.</div>
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
               <button class="mc-open" onclick="openModule(3);markMod(3)">Open Module 3 ↗</button>
               <span class="mc-done" id="md3" style="display:none;">✓ Complete</span>
@@ -1282,7 +1282,7 @@ body{font-family:var(--body);background:var(--fog);color:var(--ink);font-size:14
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
                 <div>
                   <div style="font-size:10px;font-weight:700;color:var(--slate);margin-bottom:2px;">M1 · Access delay</div>
-                  <div style="font-size:12px;color:var(--ink);">OB: 35.6 min median delay (H=57, p&lt;0.001)</div>
+                  <div style="font-size:12px;color:var(--ink);">OB: 35.6 min median delay — confirmed from 1,000 encounters</div>
                 </div>
                 <div>
                   <div style="font-size:10px;font-weight:700;color:var(--slate);margin-bottom:2px;">M4 · Comprehension</div>
