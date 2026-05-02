@@ -2509,6 +2509,132 @@ body[data-active-mod="3"] #brf-cap-3:not(.done){padding-left:14px;border-left:2p
 }
 .cnv-evdrawer-toggle:hover{opacity:1;}
 .cnv-evdrawer-label{font-weight:600;}
+
+
+/* ── MISSION CONTROL TIER ARCHITECTURE (Turn 2.11) ──────────────────
+   Three-tier executive briefing structure: decide / escalate / surveil.
+   Each tier has a banner with an urgency-coded pill, a title, and meta. */
+
+.mc-tier{margin-bottom:20px;}
+.mc-tier-banner{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+  padding:14px 20px;border-radius:10px;margin-bottom:12px;
+  border-left:5px solid;
+}
+.mc-tier-banner-l{display:flex;align-items:center;gap:14px;}
+.mc-tier-banner-r{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;color:#555;letter-spacing:.04em;}
+.mc-tier-banner-r strong{color:#0D1A33;font-weight:800;}
+.mc-tier-pill{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10.5px;font-weight:800;letter-spacing:.10em;
+  padding:6px 11px;border-radius:5px;
+  white-space:nowrap;
+}
+.mc-tier-pill-crit{background:#DC2626;color:#fff;}
+.mc-tier-pill-warn{background:#D97706;color:#fff;}
+.mc-tier-pill-info{background:#1F3864;color:#fff;}
+.mc-tier-banner-crit{background:linear-gradient(90deg,#FEF2F2 0%,#FEF2F2 50%,#fff 100%);border-left-color:#DC2626;}
+.mc-tier-banner-warn{background:linear-gradient(90deg,#FFFBEB 0%,#FFFBEB 50%,#fff 100%);border-left-color:#D97706;}
+.mc-tier-banner-info{background:linear-gradient(90deg,#EBF4FF 0%,#EBF4FF 50%,#fff 100%);border-left-color:#1F3864;}
+.mc-tier-banner-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:#0D1A33;font-style:italic;line-height:1.2;}
+
+/* ── DECIDE TODAY: 3-card grid ──────────────────────────────────── */
+.mc-decide-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+@media (max-width: 1100px){.mc-decide-grid{grid-template-columns:1fr;}}
+
+.mc-decide-card{
+  background:#fff;border:1px solid #E0E0E0;border-radius:10px;
+  border-top:4px solid #DC2626;
+  padding:16px 18px;
+  display:flex;flex-direction:column;
+  box-shadow:0 2px 6px rgba(220,38,38,0.06);
+}
+.mc-decide-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.mc-decide-num{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:9.5px;font-weight:800;letter-spacing:.10em;color:#DC2626;
+  background:#FEF2F2;padding:3px 7px;border-radius:4px;
+}
+.mc-decide-cat{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:9px;font-weight:700;letter-spacing:.08em;color:#888;text-transform:uppercase;
+}
+.mc-decide-title{
+  font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;
+  color:#0D1A33;line-height:1.25;margin-bottom:10px;
+}
+.mc-decide-row{margin-bottom:8px;}
+.mc-decide-row.mc-decide-action{
+  margin-top:4px;padding:9px 11px;background:#FEF2F2;border-radius:6px;
+  border-left:3px solid #DC2626;
+}
+.mc-decide-lbl{
+  display:block;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:8.5px;font-weight:800;letter-spacing:.12em;
+  color:#888;text-transform:uppercase;margin-bottom:3px;
+}
+.mc-decide-action .mc-decide-lbl{color:#991B1B;}
+.mc-decide-text{font-size:12.5px;line-height:1.45;color:#1a1a1a;}
+.mc-decide-text strong{color:#0D1A33;font-weight:700;}
+.mc-decide-foot{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  margin-top:auto;padding-top:12px;border-top:1px dashed #E8EBF0;
+}
+.mc-decide-meta{display:flex;flex-direction:column;gap:2px;}
+.mc-decide-meta span{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:9.5px;color:#555;font-weight:600;letter-spacing:.04em;
+}
+.mc-decide-meta span:first-child{color:#92400E;}
+.mc-decide-btn{
+  background:#0D1A33;color:#fff;border:none;border-radius:6px;
+  padding:8px 14px;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10.5px;font-weight:800;letter-spacing:.08em;
+  cursor:pointer;transition:all .15s;
+  white-space:nowrap;
+}
+.mc-decide-btn:hover{background:#1F3864;transform:translateY(-1px);}
+
+/* ── ESCALATE: 2-card grid (charts side by side) ────────────────── */
+.mc-escalate-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px;}
+@media (max-width: 1100px){
+  .mc-escalate-grid > *{grid-column:span 12 !important;}
+}
+
+/* ── SURVEILLANCE: 2x2 chart grid + full-width synthesis ────────── */
+.mc-surveil-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px;}
+@media (max-width: 1100px){
+  .mc-surveil-grid > *{grid-column:span 12 !important;}
+}
+
+/* ── INSIGHT CALLOUT (under each chart) ─────────────────────────── */
+.mc-insight{
+  margin-top:12px;padding:11px 13px;
+  background:#F5F7FA;border-radius:7px;
+  border-left:3px solid #1F3864;
+}
+.mc-insight-warn{background:#FFFBEB;border-left-color:#D97706;}
+.mc-insight-crit{background:#FEF2F2;border-left-color:#DC2626;}
+.mc-insight-lbl{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:9px;font-weight:800;letter-spacing:.12em;
+  color:#1F3864;margin-bottom:5px;
+}
+.mc-insight-warn .mc-insight-lbl{color:#92400E;}
+.mc-insight-crit .mc-insight-lbl{color:#991B1B;}
+.mc-insight-body{font-size:12px;line-height:1.5;color:#1a1a1a;}
+.mc-insight-body strong{color:#0D1A33;font-weight:700;}
+.mc-insight-body em{font-style:italic;color:#92400E;font-weight:600;}
+
+/* ── SVG CHART CONTAINERS ───────────────────────────────────────── */
+.mc-svg{display:block;width:100%;height:auto;}
+#mc-viz-roi, #mc-viz-svcline, #mc-viz-radar, #mc-viz-trend, #mc-viz-failures, #mc-viz-workforce{
+  margin-top:6px;
+}
+
+
 /* ── BRIEF SIDEBAR REMOVED (Turn 2.10) ────────────────────────────────
    The Living Brief column was an always-on right rail showing LAI 
    composite + domain bars + module-progress dots. Per learner feedback 
@@ -6978,58 +7104,133 @@ body[data-active-mod="3"] #brf-cap-3:not(.done){padding-left:14px;border-left:2p
     </div>
 
     <div class="mc-grid">
-      <!-- 10-domain KPI panel -->
+
+  <!-- ─── TIER 1: DECIDE TODAY ─────────────────────────────────────── -->
+  <div class="mc-tier mc-tier-decide col-12">
+    <div class="mc-tier-banner mc-tier-banner-crit">
+      <div class="mc-tier-banner-l">
+        <div class="mc-tier-pill mc-tier-pill-crit">DECIDE TODAY</div>
+        <div class="mc-tier-banner-title">Three decisions need your sign-off this week</div>
+      </div>
+      <div class="mc-tier-banner-r">
+        <span class="mc-tier-banner-meta">Acknowledged: 0 · Pending: 3 · SLA breach in: <strong>48h</strong></span>
+      </div>
+    </div>
+    <div class="mc-decide-grid" id="mc-decide-grid"></div>
+  </div>
+
+  <!-- ─── TIER 2: ESCALATE THIS QUARTER ─────────────────────────────── -->
+  <div class="mc-tier mc-tier-escalate col-12">
+    <div class="mc-tier-banner mc-tier-banner-warn">
+      <div class="mc-tier-banner-l">
+        <div class="mc-tier-pill mc-tier-pill-warn">ESCALATE THIS QUARTER</div>
+        <div class="mc-tier-banner-title">Two analyses for the operating committee</div>
+      </div>
+      <div class="mc-tier-banner-r">
+        <span class="mc-tier-banner-meta">Capital re-allocation · leader accountability · Q2 review</span>
+      </div>
+    </div>
+    <div class="mc-escalate-grid">
+      <!-- ROI lever analysis -->
       <div class="mc-card col-7">
-        <div class="mc-card-hd"><div class="mc-card-title">Ten-domain KPI panel</div><div class="mc-card-meta">Current vs evidence-based target</div></div>
-        <div class="mc-kpi-grid" id="mc-kpi-grid"></div>
+        <div class="mc-card-hd">
+          <div class="mc-card-title">Six ROI levers · capture rate by lever</div>
+          <div class="mc-card-meta">Annual exposure $759K · captured $223K (29%)</div>
+        </div>
+        <div id="mc-viz-roi"></div>
+        <div class="mc-insight mc-insight-warn">
+          <div class="mc-insight-lbl">EXECUTIVE INSIGHT</div>
+          <div class="mc-insight-body"><strong>Malpractice (35%) and §1557 (80%) are converting.</strong> ED Access (6%), LOS (8%), Readmission (25%) and VBP (18%) are not. The gap isn&rsquo;t the levers — it&rsquo;s the capture chain in M1, M3, M4. <em>Recommend Q2 capital re-shift toward triage script + teach-back tablet deployment.</em></div>
+        </div>
       </div>
 
-      <!-- Rolling event queue -->
+      <!-- Service-line variance -->
       <div class="mc-card col-5">
-        <div class="mc-card-hd"><div class="mc-card-title">Rolling 24-hour signal queue</div><div class="mc-card-meta">14 open &middot; 10 shown</div></div>
-        <div class="mc-signals" id="mc-signals"></div>
-      </div>
-
-      <!-- Encounter timeline -->
-      <div class="mc-card col-6">
-        <div class="mc-card-hd"><div class="mc-card-title">Encounter timeline &middot; T1 through T7 + billing</div><div class="mc-card-meta">Featured: Mendez / Mateo Rivera &middot; ED-2026-01-04-bay4</div></div>
-        <div class="mc-tl" id="mc-tl"></div>
-      </div>
-
-      <!-- ROI levers -->
-      <div class="mc-card col-6">
-        <div class="mc-card-hd"><div class="mc-card-title">Six ROI levers &middot; exposure vs captured</div><div class="mc-card-meta">Calibrated to your volume</div></div>
-        <div class="mc-levers" id="mc-levers"></div>
-      </div>
-
-      <!-- Heatmap -->
-      <div class="mc-card col-7">
-        <div class="mc-card-hd"><div class="mc-card-title">Language-match gap by service line</div><div class="mc-card-meta">Six KPI dimensions &middot; lower is worse</div></div>
-        <div id="mc-heatmap"></div>
-      </div>
-
-      <!-- Section 1557 readiness -->
-      <div class="mc-card col-5">
-        <div class="mc-card-hd"><div class="mc-card-title">Section 1557 spot-review readiness</div><div class="mc-card-meta">Audit-defensibility check</div></div>
-        <div class="mc-readiness" id="mc-readiness"></div>
-      </div>
-
-      <!-- Top failure modes -->
-      <div class="mc-card col-7">
-        <div class="mc-card-hd"><div class="mc-card-title">Top failure modes &middot; encounters not audit-ready</div><div class="mc-card-meta">Last 1,000 encounters</div></div>
-        <div class="mc-failures" id="mc-failures"></div>
-      </div>
-
-      <!-- Governance synthesis -->
-      <div class="mc-card col-5">
-        <div class="mc-card-hd"><div class="mc-card-title">Governance synthesis</div><div class="mc-card-meta">Quarterly executive read-out</div></div>
-        <div class="mc-synthesis">
-          <div class="mc-synthesis-eyebrow">What this quarter says</div>
-          <div class="mc-synthesis-quote">Variance is the governance signal. The bedrock is the same; the multiplier is uneven; <em>leadership accountability is the variable.</em></div>
-          <div class="mc-synthesis-attr">Composite movement: +0.3 LAI quarter-over-quarter &middot; weakest domain Patient Engagement &middot; capital allocation focus locked for Q2</div>
+        <div class="mc-card-hd">
+          <div class="mc-card-title">Service-line LAI · leader accountability</div>
+          <div class="mc-card-meta">Where the multiplier is uneven</div>
+        </div>
+        <div id="mc-viz-svcline"></div>
+        <div class="mc-insight mc-insight-warn">
+          <div class="mc-insight-lbl">EXECUTIVE INSIGHT</div>
+          <div class="mc-insight-body"><strong>OB and ED are 22+ points behind Outpatient</strong> on a shared interpreter pool and shared technology stack. The variance is leadership accountability, not resources. <em>Schedule 1:1s with both service-line VPs before Q2 review.</em></div>
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- ─── TIER 3: SURVEILLANCE ─────────────────────────────────────── -->
+  <div class="mc-tier mc-tier-surveil col-12">
+    <div class="mc-tier-banner mc-tier-banner-info">
+      <div class="mc-tier-banner-l">
+        <div class="mc-tier-pill mc-tier-pill-info">SURVEILLANCE</div>
+        <div class="mc-tier-banner-title">Quarterly trajectory · long-run direction of travel</div>
+      </div>
+      <div class="mc-tier-banner-r">
+        <span class="mc-tier-banner-meta">Q1 2026 read · review at next governance meeting</span>
+      </div>
+    </div>
+    <div class="mc-surveil-grid">
+      <!-- Radar -->
+      <div class="mc-card col-6">
+        <div class="mc-card-hd">
+          <div class="mc-card-title">Ten-domain LAI · current vs target</div>
+          <div class="mc-card-meta">Composite 52 · target 75 · gap by domain</div>
+        </div>
+        <div id="mc-viz-radar"></div>
+        <div class="mc-insight">
+          <div class="mc-insight-lbl">PATTERN</div>
+          <div class="mc-insight-body">Patient Engagement (42%) and Access (17%) are furthest from target. Outcomes is gaining quarter-over-quarter. Compliance is closer than it looks because §1557 lifted post-Final-Rule.</div>
+        </div>
+      </div>
+
+      <!-- Composite trajectory -->
+      <div class="mc-card col-6">
+        <div class="mc-card-hd">
+          <div class="mc-card-title">Composite LAI trajectory</div>
+          <div class="mc-card-meta">5-quarter trend · +11 points since baseline</div>
+        </div>
+        <div id="mc-viz-trend"></div>
+        <div class="mc-insight">
+          <div class="mc-insight-lbl">PATTERN</div>
+          <div class="mc-insight-body">Trajectory is positive (+0.3 LAI Q-over-Q) but <strong>23 points below evidence-based target</strong>. At current pace, target is reached in 19 quarters. <em>Q2 acceleration plan needed if 2027 target is operational commitment.</em></div>
+        </div>
+      </div>
+
+      <!-- Failure modes with rank arrows -->
+      <div class="mc-card col-6">
+        <div class="mc-card-hd">
+          <div class="mc-card-title">Top failure modes · rank stability</div>
+          <div class="mc-card-meta">Last 1,000 encounters · vs prior quarter</div>
+        </div>
+        <div id="mc-viz-failures"></div>
+      </div>
+
+      <!-- Workforce pipeline -->
+      <div class="mc-card col-6">
+        <div class="mc-card-hd">
+          <div class="mc-card-title">Workforce QBS pipeline</div>
+          <div class="mc-card-meta">Bilingual staff certification · trajectory to 95%</div>
+        </div>
+        <div id="mc-viz-workforce"></div>
+        <div class="mc-insight">
+          <div class="mc-insight-lbl">PATTERN</div>
+          <div class="mc-insight-body"><strong>74% certified, 18% in pipeline, 8% identified-but-unstarted.</strong> At current quarterly throughput (~3pp/quarter), 95% target reached Q3 2027. Education capacity is the rate-limiter.</div>
+        </div>
+      </div>
+
+      <!-- Governance synthesis spans full width -->
+      <div class="mc-card col-12">
+        <div class="mc-synthesis">
+          <div class="mc-synthesis-eyebrow">QUARTERLY EXECUTIVE READ-OUT</div>
+          <div class="mc-synthesis-quote">Variance is the governance signal. The bedrock is the same; the multiplier is uneven; <em>leadership accountability is the variable.</em></div>
+          <div class="mc-synthesis-attr">Composite movement: +0.3 LAI Q-over-Q · weakest domain Patient Engagement · Q2 capital allocation focus locked</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
   </div>
 </div>
 
@@ -9372,178 +9573,500 @@ if (typeof goModule === 'function') {
 
 
 
-/* ─── MISSION CONTROL (Turn 2.8b) ──────────────────────────────────────
-   Data + render + lock state for the capstone teaser. */
+/* ─── MISSION CONTROL (Turn 2.11 redesign) ──────────────────────────
+   Three-tier executive briefing: Decide today / Escalate / Surveil.
+   Visualizations are pure SVG (radar, trendline, grouped bars, gauges, etc.) — 
+   no Plotly dependency. Each viz pairs with an "executive insight" callout 
+   that names the action implied by the data. */
 
-window.MC_KPIS = [
-  { n:'01', dom:'Access', label:'LEP patients with interpreter contact \u226410 min in ED', val:'17%', tgt:'\u226590%', status:'crit' },
-  { n:'02', dom:'Patient Experience', label:'Providers explained in a way patient understood (HCAHPS LEP)', val:'31%', tgt:'\u226585%', status:'crit' },
-  { n:'03', dom:'Outcomes', label:'LEP prescriptions written and filled within 7 days', val:'67%', tgt:'\u226590%', status:'warn' },
-  { n:'04', dom:'Compliance', label:'\u00A71557 documented interpreter use at clinical-engagement touchpoints', val:'48%', tgt:'\u226598%', status:'crit' },
-  { n:'05', dom:'Engagement', label:'LEP teach-back via qualified interpreter at discharge', val:'42%', tgt:'\u226585%', status:'warn' },
-  { n:'06', dom:'Financial', label:'Annual LAI-attributable savings vs exposure', val:'$45K / $580K', tgt:'\u226550%', status:'crit' },
-  { n:'07', dom:'Safety', label:'30-day readmission rate, LEP cohort', val:'18.2%', tgt:'\u226414%', status:'warn' },
-  { n:'08', dom:'Workforce', label:'Staff trained in language-access policy + modality use', val:'74%', tgt:'\u226595%', status:'warn' },
-  { n:'09', dom:'Workflow', label:'7-touchpoint workflow with documented interpreter/QBS use', val:'58%', tgt:'\u226590%', status:'warn' },
-  { n:'10', dom:'Technology', label:'Departments with both VRI + audio + auto-doc capability', val:'43%', tgt:'\u226585%', status:'warn' }
+/* ── TIER 1: DECIDE TODAY — three sign-off-required cards ──────────── */
+window.MC_DECIDE = [
+  {
+    n: '01',
+    cat: 'Access',
+    title: 'ED night-shift interpreter coverage gap',
+    diagnosis: '3 consecutive nights with Mandarin/Vietnamese unavailable >15 min at first contact',
+    impact: '12 LEP encounters affected last 7 days \u00B7 2 same-complaint returns within 72 hours',
+    action: 'Authorize add\u2019l VRI license (Mandarin + Vietnamese, 24/7) OR shift one in-person FTE to overnight',
+    cost: '$28K/year',
+    timeline: 'sign-off by Friday',
+    btn: 'Authorize'
+  },
+  {
+    n: '02',
+    cat: 'Compliance',
+    title: 'Inpatient-3 documentation gap trending',
+    diagnosis: '\u00A71557 consent attestation missing on 6 encounters today \u00B7 7th occurrence in 30 days',
+    impact: 'Pattern matches Berkeley malpractice profile \u00B7 carrier reserve disclosure risk',
+    action: 'Open formal case file \u00B7 brief Inpatient-3 medical director \u00B7 update audit log to risk committee',
+    cost: 'Reserve adjustment ~$95K if pattern persists',
+    timeline: 'open case by EOD',
+    btn: 'Open case'
+  },
+  {
+    n: '03',
+    cat: 'Patient Rights',
+    title: '\u00A71557 grievance filed \u00B7 family interpretation at consent',
+    diagnosis: 'ED encounter \u00B7 minor child interpreted parental cancer diagnosis discussion',
+    impact: 'Civil-rights-track exposure (separate from clinical negligence) \u00B7 OCR notification required',
+    action: 'Brief legal counsel \u00B7 issue 1557 Coordinator response within statutory window',
+    cost: 'Legal hours + corrective-action plan',
+    timeline: 'response within 14 days',
+    btn: 'Brief counsel'
+  }
 ];
 
-window.MC_SIGNALS = [
-  { t:'14:21', kind:'crit', cat:'Access', body:'<strong>Interpreter timeout \u00B7 ED-A \u00B7 Bay 7</strong> \u2014 Mandarin VRI unanswered 18 min \u00B7 patient triaged without access', meta:'Enc #4821 \u00B7 Assigned \u2192 ED Charge RN' },
-  { t:'14:07', kind:'warn', cat:'Compliance', body:'<strong>T3 attestation missing</strong> \u00B7 Section 1557 consent not documented at H&amp;P \u00B7 6th occurrence today in Inpatient-3', meta:'Enc #4819 \u00B7 Owner \u2192 Dr. Patel' },
-  { t:'13:48', kind:'crit', cat:'Engagement', body:'<strong>Discharge without teach-back</strong> \u00B7 Vietnamese LEP \u00B7 CHF index admission \u00B7 Hong 2019 protocol not triggered', meta:'Enc #4815 \u00B7 Owner \u2192 Discharge Planner' },
-  { t:'13:30', kind:'warn', cat:'Workflow', body:'<strong>Same-complaint return</strong> \u00B7 Spanish LEP returning at 56 hr post-discharge \u00B7 abdominal pain', meta:'Enc #4810 \u00B7 Owner \u2192 ED MD' },
-  { t:'13:15', kind:'crit', cat:'Safety', body:'<strong>Adverse event flagged</strong> \u00B7 medication reconciliation gap \u00B7 LEP encounter \u00B7 escalated to safety committee', meta:'Enc #4807 \u00B7 Owner \u2192 Safety Committee' },
-  { t:'12:58', kind:'warn', cat:'Workforce', body:'<strong>QBS credentialing expired</strong> \u00B7 3 staff members on Inpatient-2 \u00B7 reassign or recertify', meta:'HR Action \u00B7 Owner \u2192 Education' },
-  { t:'12:42', kind:'warn', cat:'Patient Experience', body:'<strong>HCAHPS comment flag</strong> \u00B7 LEP patient noted "didn\u2019t understand discharge meds"', meta:'Enc #4803 \u00B7 Owner \u2192 Patient Experience' },
-  { t:'12:30', kind:'crit', cat:'Compliance', body:'<strong>Section 1557 grievance filed</strong> \u00B7 family-member interpretation at consent \u00B7 ED encounter', meta:'Grievance #G-2026-014 \u00B7 Owner \u2192 1557 Coordinator' },
-  { t:'12:08', kind:'warn', cat:'Technology', body:'<strong>VRI device offline</strong> \u00B7 Inpatient-4 \u00B7 18 min downtime \u00B7 audio-only fallback active', meta:'IT Ticket \u00B7 Owner \u2192 IT' },
-  { t:'11:55', kind:'warn', cat:'Outcomes', body:'<strong>30-day readmit alert</strong> \u00B7 Vietnamese LEP \u00B7 CHF \u00B7 readmit index 9.4', meta:'Enc #4795 \u00B7 Owner \u2192 Care Mgmt' }
-];
-
-window.MC_TIMELINE = [
-  { t:'09:42', st:'done', name:'T1 \u00B7 Pre-arrival identification', d:'Preferred language flagged as Spanish in registration \u00B7 auto-dispatch to ED triage with CanopySpeak phone' },
-  { t:'09:48', st:'done', name:'T2 \u00B7 Triage (Canopy Navigator tablet)', d:'Vital signs \u00B7 chief-complaint captured bilingually \u00B7 interpreter contact at 9:42 (no delay)' },
-  { t:'10:15', st:'done', name:'T3 \u00B7 Diagnostic communication + consent', d:'Strawberry allergy hypothesis \u00B7 EpiPen consent in Spanish \u00B7 teach-back at consent verified \u00B7 Schenker pattern reversed' },
-  { t:'10:48', st:'warn', name:'T4 \u00B7 Inpatient communication', d:'Vital-sign explanation \u00B7 4-min interpreter-absent moment \u00B7 documentation-gap flag fired \u00B7 corrected by 10:52 \u00B7 near-miss closed' },
-  { t:'15:30', st:'done', name:'T5 \u00B7 Discharge teach-back (CanopyTeachBack)', d:'4-question battery: allergen \u2713 \u00B7 EpiPen technique \u2713 \u00B7 self-management \u2713 \u00B7 escalation \u2713 \u00B7 99238 captured' },
-  { t:'+72h', st:'done', name:'T6 \u00B7 Post-discharge follow-up (TCM)', d:'Automated Spanish call \u00B7 no recurrence \u00B7 EpiPen sealed \u00B7 allergist appointment confirmed \u00B7 99495 fires (~$168)' },
-  { t:'Day 8', st:'pending', name:'T7 \u00B7 Specialty follow-up', d:'Allergist appointment scheduled \u00B7 outcomes pending' },
-  { t:'+90d', st:'pending', name:'Billing reconciliation + 1557 audit', d:'99281-99285 \u00B7 99238 \u00B7 99495 \u00B7 audit packet ready for spot-review' }
-];
-
+/* ── TIER 2: ESCALATE — six-lever ROI + service-line variance ───────── */
 window.MC_LEVERS = [
-  { n:'01', name:'ED Admission + Return Avoidance', anchor:'Schulson 2018 OR 1.09 \u00B7 same-complaint returns', exp:'$82,400/yr', cap:'$5,200/yr', pct:6 },
-  { n:'02', name:'Length-of-Stay Reduction', anchor:'Lindholm 2012 \u00B7 +1.0 day LOS without interpreter', exp:'$148,800/yr', cap:'$11,300/yr', pct:8 },
-  { n:'03', name:'Readmission Reduction (TCM)', anchor:'Hong 2019 HR 0.77 \u00B7 23% lower condition-related', exp:'$112,500/yr', cap:'$28,400/yr', pct:25 },
-  { n:'04', name:'Malpractice Defense Cost-Avoidance', anchor:'Berkeley/NHeLP $118K avg defense cost', exp:'$272,000/yr', cap:'$94,000/yr', pct:35 },
-  { n:'05', name:'VBP Recapture (HCAHPS)', anchor:'CMS HCAHPS communication domain', exp:'$48,200/yr', cap:'$8,600/yr', pct:18 },
-  { n:'06', name:'1557 Penalty Avoidance', anchor:'2024 Final Rule \u00A71557 enforcement', exp:'$95,000/yr', cap:'$76,000/yr', pct:80 }
+  { n:'01', name:'ED Admission + Return Avoidance', source:'M1', exp:82400,  cap:5200,  pct:6,  status:'crit' },
+  { n:'02', name:'Length-of-Stay Reduction',         source:'M3', exp:148800, cap:11300, pct:8,  status:'crit' },
+  { n:'03', name:'Readmission Reduction (TCM)',      source:'M4', exp:112500, cap:28400, pct:25, status:'warn' },
+  { n:'04', name:'Malpractice Defense Avoidance',    source:'M5', exp:272000, cap:94000, pct:35, status:'warn' },
+  { n:'05', name:'VBP Recapture (HCAHPS)',           source:'M6', exp:48200,  cap:8600,  pct:18, status:'warn' },
+  { n:'06', name:'\u00A71557 Penalty Avoidance',     source:'M6', exp:95000,  cap:76000, pct:80, status:'ok'   }
 ];
 
-window.MC_HEATMAP = [
-  { unit:'ED',           access:17, compliance:42, engagement:28, workflow:58, outcomes:62, safety:71 },
-  { unit:'Inpatient',    access:32, compliance:48, engagement:34, workflow:62, outcomes:65, safety:74 },
-  { unit:'OB',           access:14, compliance:38, engagement:24, workflow:54, outcomes:60, safety:68 },
-  { unit:'Behav. Hlth',  access:21, compliance:44, engagement:31, workflow:56, outcomes:58, safety:66 },
-  { unit:'Outpatient',   access:38, compliance:55, engagement:40, workflow:68, outcomes:72, safety:78 }
+window.MC_SVCLINE = [
+  { unit:'Outpatient',  score:64, prior:62, trend:'up',     vp:'M. Chen' },
+  { unit:'Inpatient',   score:54, prior:53, trend:'flat',   vp:'R. Patel' },
+  { unit:'Behavioral',  score:50, prior:51, trend:'down',   vp:'L. Diaz'  },
+  { unit:'OB',          score:43, prior:42, trend:'flat',   vp:'S. Okafor' },
+  { unit:'ED',          score:38, prior:36, trend:'up',     vp:'J. Reyes'  }
 ];
 
-window.MC_READINESS = [
-  { lbl:'\u00A792.7 Coordinator', val:'Yes', detail:'Named with executive sponsor (CQO)', status:'ok' },
-  { lbl:'\u00A792.8 Lang. Access Plan', val:'Yes', detail:'Annual review on file', status:'ok' },
-  { lbl:'\u00A792.10 Notice posted', val:'Partial', detail:'Top 4 of 6 service-area languages', status:'warn' },
-  { lbl:'\u00A792.11 Taglines', val:'Yes', detail:'15 languages \u00B7 vital documents', status:'ok' },
-  { lbl:'Interpreter audit', val:'58%', detail:'Encounters with documented interpreter use', status:'crit' },
-  { lbl:'Family interpretation flag', val:'7 cases', detail:'Last quarter \u00B7 review by 1557 Coord.', status:'warn' }
+/* ── TIER 3: SURVEILLANCE — radar, trajectory, failures, workforce ──── */
+window.MC_DOMAINS_RADAR = [
+  { name:'Access',         score:17, target:90, prior:14 },
+  { name:'Patient Exp',    score:31, target:85, prior:30 },
+  { name:'Outcomes',       score:67, target:90, prior:62 },
+  { name:'Compliance',     score:48, target:98, prior:42 },
+  { name:'Engagement',     score:42, target:85, prior:40 },
+  { name:'Financial Stwd', score:50, target:75, prior:48 },
+  { name:'Q & Safety',     score:60, target:90, prior:58 },
+  { name:'Workforce',      score:74, target:95, prior:71 },
+  { name:'Workflow',       score:58, target:90, prior:56 },
+  { name:'Technology',     score:43, target:85, prior:40 }
+];
+
+window.MC_TRAJECTORY = [
+  { q:'Q1 2025', composite:41 },
+  { q:'Q2 2025', composite:44 },
+  { q:'Q3 2025', composite:48 },
+  { q:'Q4 2025', composite:51 },
+  { q:'Q1 2026', composite:52 }
 ];
 
 window.MC_FAILURES = [
-  { name:'Interpreter not named in chart at H&amp;P', pct:34 },
-  { name:'Consent form signed without documented discussion', pct:28 },
-  { name:'Discharge without teach-back attestation', pct:22 },
-  { name:'Family-member interpretation at clinical decision', pct:14 },
-  { name:'LANG-PRF field missing or English-defaulted', pct:11 },
-  { name:'Translated written instructions not delivered', pct:9 }
+  { name:'Interpreter not named in chart at H&P',      pct:34, prior:36, change:-2 },
+  { name:'Consent form signed without documented discussion', pct:28, prior:25, change:+3 },
+  { name:'Discharge without teach-back attestation',    pct:22, prior:24, change:-2 },
+  { name:'Family-member interpretation at clinical decision', pct:14, prior:12, change:+2 },
+  { name:'LANG-PRF field missing or English-defaulted', pct:11, prior:14, change:-3 },
+  { name:'Translated written instructions not delivered', pct:9, prior:9, change:0 }
 ];
 
-/* Render the entire Mission Control panel */
+window.MC_WORKFORCE = {
+  certified: 74, inProgress: 18, identified: 8, target: 95
+};
+
+/* ───────────────────────────────────────────────────────────────────
+   SVG RENDERERS — pure SVG, no external libs
+   ─────────────────────────────────────────────────────────────────── */
+
+/* TIER 1 — three sign-off cards */
+function mcRenderDecide() {
+  var grid = document.getElementById('mc-decide-grid');
+  if (!grid) return;
+  grid.innerHTML = window.MC_DECIDE.map(function(d) {
+    return '<div class="mc-decide-card">' +
+      '<div class="mc-decide-hd">' +
+        '<span class="mc-decide-num">DECIDE ' + d.n + '</span>' +
+        '<span class="mc-decide-cat">' + d.cat + '</span>' +
+      '</div>' +
+      '<div class="mc-decide-title">' + d.title + '</div>' +
+      '<div class="mc-decide-row"><span class="mc-decide-lbl">DIAGNOSIS</span><div class="mc-decide-text">' + d.diagnosis + '</div></div>' +
+      '<div class="mc-decide-row"><span class="mc-decide-lbl">IMPACT</span><div class="mc-decide-text">' + d.impact + '</div></div>' +
+      '<div class="mc-decide-row mc-decide-action"><span class="mc-decide-lbl">RECOMMEND</span><div class="mc-decide-text"><strong>' + d.action + '</strong></div></div>' +
+      '<div class="mc-decide-foot">' +
+        '<div class="mc-decide-meta"><span>' + d.cost + '</span><span>' + d.timeline + '</span></div>' +
+        '<button class="mc-decide-btn">' + d.btn + ' \u2192</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+/* TIER 2 — ROI levers as horizontal grouped bars
+   For each lever: gray bar = full exposure, colored fill = captured.
+   Width-relative scaling so the largest exposure fills the full chart width. */
+function mcRenderRoiBars() {
+  var container = document.getElementById('mc-viz-roi');
+  if (!container) return;
+  var data = window.MC_LEVERS;
+  var maxExp = Math.max.apply(null, data.map(function(d){return d.exp;}));
+  
+  var W = 480, rowH = 50, gap = 8, padL = 200, padR = 120;
+  var H = data.length * (rowH + gap) + 30;
+  var chartW = W - padL - padR;
+  
+  var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" class="mc-svg" style="width:100%;height:auto;">';
+  
+  // X-axis ticks at top
+  for (var t = 0; t <= 4; t++) {
+    var x = padL + (chartW * t / 4);
+    var val = Math.round(maxExp * t / 4 / 1000);
+    svg += '<line x1="' + x + '" y1="20" x2="' + x + '" y2="' + (H-10) + '" stroke="#E8EBF0" stroke-width="1" stroke-dasharray="2,3"/>';
+    svg += '<text x="' + x + '" y="14" fill="#888" font-size="9" font-family="monospace" text-anchor="middle">$' + val + 'K</text>';
+  }
+  
+  data.forEach(function(d, i) {
+    var y = 25 + i * (rowH + gap);
+    var color = d.status === 'crit' ? '#DC2626' : (d.status === 'warn' ? '#D97706' : '#16A34A');
+    var lightColor = d.status === 'crit' ? '#FEF2F2' : (d.status === 'warn' ? '#FFFBEB' : '#F0FDF4');
+    var barW = chartW * (d.exp / maxExp);
+    var capW = barW * (d.pct / 100);
+    
+    // Lever number badge
+    svg += '<rect x="0" y="' + (y+8) + '" width="22" height="22" fill="#fff" stroke="#E0E0E0" rx="4"/>';
+    svg += '<text x="11" y="' + (y+22) + '" fill="#888" font-size="10" font-family="monospace" font-weight="800" text-anchor="middle">' + d.n + '</text>';
+    
+    // Lever name
+    svg += '<text x="28" y="' + (y+15) + '" fill="#0D1A33" font-size="12" font-weight="700">' + d.name + '</text>';
+    svg += '<text x="28" y="' + (y+30) + '" fill="#888" font-size="10" font-family="monospace">' + d.source + ' \u00B7 $' + (d.exp/1000).toFixed(0) + 'K exposure</text>';
+    
+    // Exposure bar (gray)
+    svg += '<rect x="' + padL + '" y="' + (y+12) + '" width="' + barW + '" height="22" fill="' + lightColor + '" stroke="' + color + '" stroke-width="1.5" rx="4"/>';
+    
+    // Captured fill (colored)
+    svg += '<rect x="' + padL + '" y="' + (y+12) + '" width="' + capW + '" height="22" fill="' + color + '" rx="4"/>';
+    
+    // Capture % label INSIDE bar if room, else to the right
+    var pctLabel = d.pct + '%';
+    if (capW > 35) {
+      svg += '<text x="' + (padL + capW - 5) + '" y="' + (y+27) + '" fill="#fff" font-size="11" font-weight="700" font-family="monospace" text-anchor="end">' + pctLabel + '</text>';
+    } else {
+      svg += '<text x="' + (padL + capW + 5) + '" y="' + (y+27) + '" fill="' + color + '" font-size="11" font-weight="700" font-family="monospace">' + pctLabel + '</text>';
+    }
+    
+    // Right-side $ summary
+    var rightX = W - padR + 8;
+    svg += '<text x="' + rightX + '" y="' + (y+20) + '" fill="#0D1A33" font-size="13" font-weight="700" font-family="\'Cormorant Garamond\',serif" font-style="italic">$' + (d.cap/1000).toFixed(1) + 'K</text>';
+    svg += '<text x="' + rightX + '" y="' + (y+33) + '" fill="#888" font-size="9.5" font-family="monospace">captured</text>';
+  });
+  
+  svg += '</svg>';
+  container.innerHTML = svg;
+}
+
+/* TIER 2 — service-line variance: horizontal bars with VP attribution + arrows */
+function mcRenderSvcline() {
+  var container = document.getElementById('mc-viz-svcline');
+  if (!container) return;
+  var data = window.MC_SVCLINE;
+  var W = 380, rowH = 50, gap = 6, padL = 140, padR = 70;
+  var H = data.length * (rowH + gap) + 30;
+  var chartW = W - padL - padR;
+  
+  var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" class="mc-svg" style="width:100%;height:auto;">';
+  
+  // Target reference line at 75
+  var targetX = padL + (chartW * 75 / 100);
+  svg += '<line x1="' + targetX + '" y1="20" x2="' + targetX + '" y2="' + (H-5) + '" stroke="#16A34A" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.6"/>';
+  svg += '<text x="' + targetX + '" y="14" fill="#166534" font-size="9" font-family="monospace" font-weight="700" text-anchor="middle">target 75</text>';
+  
+  data.forEach(function(d, i) {
+    var y = 25 + i * (rowH + gap);
+    var color = d.score < 45 ? '#DC2626' : (d.score < 65 ? '#D97706' : '#16A34A');
+    var lightColor = d.score < 45 ? '#FEF2F2' : (d.score < 65 ? '#FFFBEB' : '#F0FDF4');
+    var barW = chartW * (d.score / 100);
+    
+    // Service line label
+    svg += '<text x="0" y="' + (y+18) + '" fill="#0D1A33" font-size="13" font-weight="700">' + d.unit + '</text>';
+    svg += '<text x="0" y="' + (y+33) + '" fill="#888" font-size="10" font-family="monospace">VP: ' + d.vp + '</text>';
+    
+    // Bar bg (track)
+    svg += '<rect x="' + padL + '" y="' + (y+10) + '" width="' + chartW + '" height="22" fill="#F5F7FA" rx="4"/>';
+    
+    // Score bar
+    svg += '<rect x="' + padL + '" y="' + (y+10) + '" width="' + barW + '" height="22" fill="' + color + '" rx="4"/>';
+    
+    // Score label
+    svg += '<text x="' + (padL + barW + 6) + '" y="' + (y+25) + '" fill="' + color + '" font-size="13" font-weight="800" font-family="\'Cormorant Garamond\',serif" font-style="italic">' + d.score + '</text>';
+    
+    // Trend arrow on right
+    var arrow = d.trend === 'up' ? '\u2197' : (d.trend === 'down' ? '\u2198' : '\u2192');
+    var arrowColor = d.trend === 'up' ? '#16A34A' : (d.trend === 'down' ? '#DC2626' : '#888');
+    svg += '<text x="' + (W - 30) + '" y="' + (y+22) + '" fill="' + arrowColor + '" font-size="20" font-weight="700" text-anchor="middle">' + arrow + '</text>';
+    var deltaSign = d.score > d.prior ? '+' : '';
+    svg += '<text x="' + (W - 30) + '" y="' + (y+34) + '" fill="' + arrowColor + '" font-size="9" font-family="monospace" font-weight="700" text-anchor="middle">' + deltaSign + (d.score - d.prior) + '</text>';
+  });
+  
+  svg += '</svg>';
+  container.innerHTML = svg;
+}
+
+/* TIER 3 — Ten-domain LAI radar chart */
+function mcRenderRadar() {
+  var container = document.getElementById('mc-viz-radar');
+  if (!container) return;
+  var data = window.MC_DOMAINS_RADAR;
+  var W = 420, H = 360;
+  var cx = W / 2, cy = H / 2;
+  var rMax = 130;
+  var n = data.length;
+  
+  function pt(angleIdx, radius) {
+    var angle = (angleIdx / n) * 2 * Math.PI - Math.PI / 2;
+    return [cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius];
+  }
+  
+  var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" class="mc-svg" style="width:100%;height:auto;">';
+  
+  // Gridlines (concentric polygons at 25%, 50%, 75%, 100%)
+  [25, 50, 75, 100].forEach(function(pct) {
+    var r = rMax * pct / 100;
+    var pts = [];
+    for (var i = 0; i < n; i++) {
+      pts.push(pt(i, r).join(','));
+    }
+    svg += '<polygon points="' + pts.join(' ') + '" fill="none" stroke="#E0E0E0" stroke-width="0.8" ' + (pct === 100 ? 'stroke="#BDBDBD" stroke-width="1.2"' : '') + '/>';
+  });
+  
+  // Axis lines
+  for (var i = 0; i < n; i++) {
+    var p = pt(i, rMax);
+    svg += '<line x1="' + cx + '" y1="' + cy + '" x2="' + p[0] + '" y2="' + p[1] + '" stroke="#E8EBF0" stroke-width="1"/>';
+  }
+  
+  // Target polygon (light gray fill, dashed border)
+  var targetPts = [];
+  data.forEach(function(d, i) {
+    var p = pt(i, rMax * d.target / 100);
+    targetPts.push(p.join(','));
+  });
+  svg += '<polygon points="' + targetPts.join(' ') + '" fill="#16A34A" fill-opacity="0.06" stroke="#16A34A" stroke-width="1.2" stroke-dasharray="4,3"/>';
+  
+  // Current polygon (filled, strong color)
+  var currentPts = [];
+  data.forEach(function(d, i) {
+    var p = pt(i, rMax * d.score / 100);
+    currentPts.push(p.join(','));
+  });
+  svg += '<polygon points="' + currentPts.join(' ') + '" fill="#1F3864" fill-opacity="0.18" stroke="#1F3864" stroke-width="2"/>';
+  
+  // Score dots + labels
+  data.forEach(function(d, i) {
+    var p = pt(i, rMax * d.score / 100);
+    var color = d.score < 35 ? '#DC2626' : (d.score < 65 ? '#D97706' : '#16A34A');
+    svg += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3.5" fill="' + color + '" stroke="#fff" stroke-width="1.5"/>';
+    
+    // Domain label outside the polygon
+    var labelP = pt(i, rMax + 22);
+    var anchor = 'middle';
+    if (labelP[0] < cx - 30) anchor = 'end';
+    else if (labelP[0] > cx + 30) anchor = 'start';
+    var dy = labelP[1] < cy ? -2 : 10;
+    svg += '<text x="' + labelP[0] + '" y="' + (labelP[1] + dy) + '" fill="#0D1A33" font-size="11" font-weight="700" text-anchor="' + anchor + '">' + d.name + '</text>';
+    svg += '<text x="' + labelP[0] + '" y="' + (labelP[1] + dy + 13) + '" fill="' + color + '" font-size="11" font-weight="700" font-family="\'Cormorant Garamond\',serif" font-style="italic" text-anchor="' + anchor + '">' + d.score + '</text>';
+  });
+  
+  // Center: composite score
+  svg += '<circle cx="' + cx + '" cy="' + cy + '" r="22" fill="#0D1A33"/>';
+  svg += '<text x="' + cx + '" y="' + (cy + 6) + '" fill="#fff" font-size="20" font-weight="700" font-family="\'Cormorant Garamond\',serif" font-style="italic" text-anchor="middle">52</text>';
+  
+  // Legend (top-right)
+  svg += '<g transform="translate(' + (W - 88) + ', 10)">';
+  svg += '<rect width="80" height="42" fill="#fff" stroke="#E0E0E0" rx="4"/>';
+  svg += '<line x1="6" y1="14" x2="20" y2="14" stroke="#1F3864" stroke-width="2"/>';
+  svg += '<text x="24" y="17" fill="#0D1A33" font-size="9" font-weight="600">Current</text>';
+  svg += '<line x1="6" y1="30" x2="20" y2="30" stroke="#16A34A" stroke-width="1.2" stroke-dasharray="3,2"/>';
+  svg += '<text x="24" y="33" fill="#0D1A33" font-size="9" font-weight="600">Target</text>';
+  svg += '</g>';
+  
+  svg += '</svg>';
+  container.innerHTML = svg;
+}
+
+/* TIER 3 — Composite LAI 5-quarter trendline */
+function mcRenderTrend() {
+  var container = document.getElementById('mc-viz-trend');
+  if (!container) return;
+  var data = window.MC_TRAJECTORY;
+  var W = 420, H = 220;
+  var padL = 40, padR = 30, padT = 20, padB = 50;
+  var chartW = W - padL - padR;
+  var chartH = H - padT - padB;
+  
+  var minY = 0, maxY = 80;
+  var n = data.length;
+  
+  function px(i) { return padL + (chartW * i / (n - 1)); }
+  function py(v) { return padT + chartH - (chartH * (v - minY) / (maxY - minY)); }
+  
+  var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" class="mc-svg" style="width:100%;height:auto;">';
+  
+  // Gridlines
+  [0, 20, 40, 60, 80].forEach(function(y) {
+    svg += '<line x1="' + padL + '" y1="' + py(y) + '" x2="' + (W - padR) + '" y2="' + py(y) + '" stroke="#E8EBF0" stroke-width="1" stroke-dasharray="2,3"/>';
+    svg += '<text x="' + (padL - 6) + '" y="' + (py(y) + 3) + '" fill="#888" font-size="9" font-family="monospace" text-anchor="end">' + y + '</text>';
+  });
+  
+  // Target band (gray fill 70-80)
+  svg += '<rect x="' + padL + '" y="' + py(80) + '" width="' + chartW + '" height="' + (py(70) - py(80)) + '" fill="#F0FDF4" opacity="0.5"/>';
+  svg += '<line x1="' + padL + '" y1="' + py(75) + '" x2="' + (W - padR) + '" y2="' + py(75) + '" stroke="#16A34A" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.7"/>';
+  svg += '<text x="' + (W - padR - 4) + '" y="' + (py(75) - 4) + '" fill="#166534" font-size="9.5" font-family="monospace" font-weight="700" text-anchor="end">target 75</text>';
+  
+  // Trend line (path through points)
+  var pathD = data.map(function(d, i) {
+    return (i === 0 ? 'M' : 'L') + px(i) + ' ' + py(d.composite);
+  }).join(' ');
+  
+  // Area below line (light fill)
+  var areaD = pathD + ' L' + px(n-1) + ' ' + py(0) + ' L' + px(0) + ' ' + py(0) + ' Z';
+  svg += '<path d="' + areaD + '" fill="#1F3864" fill-opacity="0.10"/>';
+  
+  // Line itself
+  svg += '<path d="' + pathD + '" fill="none" stroke="#1F3864" stroke-width="2.5" stroke-linecap="round"/>';
+  
+  // Data points
+  data.forEach(function(d, i) {
+    var x = px(i), y = py(d.composite);
+    svg += '<circle cx="' + x + '" cy="' + y + '" r="5" fill="#fff" stroke="#1F3864" stroke-width="2.5"/>';
+    // Value label above point
+    svg += '<text x="' + x + '" y="' + (y - 10) + '" fill="#0D1A33" font-size="11" font-weight="700" font-family="\'Cormorant Garamond\',serif" font-style="italic" text-anchor="middle">' + d.composite + '</text>';
+    // Quarter label below
+    svg += '<text x="' + x + '" y="' + (H - padB + 16) + '" fill="#555" font-size="9.5" font-family="monospace" text-anchor="middle">' + d.q + '</text>';
+  });
+  
+  // Delta annotation (last quarter)
+  var delta = data[n-1].composite - data[0].composite;
+  svg += '<g transform="translate(' + (W - padR - 5) + ', ' + (py(data[n-1].composite) + 18) + ')">';
+  svg += '<text fill="#16A34A" font-size="11" font-weight="800" font-family="monospace" text-anchor="end">+' + delta + ' since baseline</text>';
+  svg += '</g>';
+  
+  svg += '</svg>';
+  container.innerHTML = svg;
+}
+
+/* TIER 3 — Top failure modes with rank-change arrows */
+function mcRenderFailures() {
+  var container = document.getElementById('mc-viz-failures');
+  if (!container) return;
+  var data = window.MC_FAILURES;
+  var W = 420, rowH = 38, gap = 4, padL = 14, padR = 60;
+  var H = data.length * (rowH + gap) + 16;
+  var chartW = W - padL - padR;
+  var maxPct = Math.max.apply(null, data.map(function(d){return d.pct;}));
+  
+  var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" class="mc-svg" style="width:100%;height:auto;">';
+  
+  data.forEach(function(d, i) {
+    var y = 8 + i * (rowH + gap);
+    var barW = chartW * (d.pct / maxPct);
+    
+    // Failure name
+    svg += '<text x="' + padL + '" y="' + (y + 12) + '" fill="#1a1a1a" font-size="11.5" font-weight="600">' + d.name + '</text>';
+    
+    // Bar (horizontal)
+    svg += '<rect x="' + padL + '" y="' + (y + 18) + '" width="' + chartW + '" height="6" fill="#F5F7FA" rx="3"/>';
+    svg += '<rect x="' + padL + '" y="' + (y + 18) + '" width="' + barW + '" height="6" fill="#D97706" rx="3"/>';
+    
+    // Percentage label
+    svg += '<text x="' + (padL + chartW + 6) + '" y="' + (y + 24) + '" fill="#92400E" font-size="11" font-weight="800" font-family="monospace">' + d.pct + '%</text>';
+    
+    // Trend arrow + delta
+    var arrow, color;
+    if (d.change > 0) { arrow = '\u2191'; color = '#DC2626'; }       // worse
+    else if (d.change < 0) { arrow = '\u2193'; color = '#16A34A'; }  // better
+    else { arrow = '\u2192'; color = '#888'; }                        // stable
+    var deltaText = (d.change > 0 ? '+' : '') + d.change + 'pp';
+    svg += '<text x="' + (W - 6) + '" y="' + (y + 24) + '" fill="' + color + '" font-size="10" font-weight="800" font-family="monospace" text-anchor="end">' + arrow + ' ' + deltaText + '</text>';
+  });
+  
+  svg += '</svg>';
+  container.innerHTML = svg;
+}
+
+/* TIER 3 — Workforce QBS pipeline as stacked horizontal bar */
+function mcRenderWorkforce() {
+  var container = document.getElementById('mc-viz-workforce');
+  if (!container) return;
+  var d = window.MC_WORKFORCE;
+  var W = 420, H = 130;
+  var padL = 14, padR = 14, padT = 30;
+  var barH = 38;
+  var chartW = W - padL - padR;
+  
+  var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" class="mc-svg" style="width:100%;height:auto;">';
+  
+  // Stacked bar
+  var x = padL;
+  var certifiedW = chartW * d.certified / 100;
+  var inProgressW = chartW * d.inProgress / 100;
+  var identifiedW = chartW * d.identified / 100;
+  var gapW = chartW * (100 - d.certified - d.inProgress - d.identified) / 100;
+  
+  // Certified (green)
+  svg += '<rect x="' + x + '" y="' + padT + '" width="' + certifiedW + '" height="' + barH + '" fill="#16A34A" rx="0"/>';
+  if (certifiedW > 50) svg += '<text x="' + (x + certifiedW/2) + '" y="' + (padT + barH/2 + 4) + '" fill="#fff" font-size="13" font-weight="800" font-family="\'Cormorant Garamond\',serif" font-style="italic" text-anchor="middle">' + d.certified + '%</text>';
+  x += certifiedW;
+  
+  // In progress (amber)
+  svg += '<rect x="' + x + '" y="' + padT + '" width="' + inProgressW + '" height="' + barH + '" fill="#D97706" rx="0"/>';
+  if (inProgressW > 30) svg += '<text x="' + (x + inProgressW/2) + '" y="' + (padT + barH/2 + 4) + '" fill="#fff" font-size="11" font-weight="800" font-family="\'Cormorant Garamond\',serif" font-style="italic" text-anchor="middle">' + d.inProgress + '%</text>';
+  x += inProgressW;
+  
+  // Identified (lighter)
+  svg += '<rect x="' + x + '" y="' + padT + '" width="' + identifiedW + '" height="' + barH + '" fill="#FCD34D" rx="0"/>';
+  if (identifiedW > 24) svg += '<text x="' + (x + identifiedW/2) + '" y="' + (padT + barH/2 + 4) + '" fill="#92400E" font-size="10" font-weight="800" font-family="monospace" text-anchor="middle">' + d.identified + '%</text>';
+  x += identifiedW;
+  
+  // Gap (gray)
+  svg += '<rect x="' + x + '" y="' + padT + '" width="' + gapW + '" height="' + barH + '" fill="#E8EBF0" rx="0"/>';
+  
+  // Target line
+  var targetX = padL + chartW * d.target / 100;
+  svg += '<line x1="' + targetX + '" y1="' + (padT - 6) + '" x2="' + targetX + '" y2="' + (padT + barH + 6) + '" stroke="#0D1A33" stroke-width="2"/>';
+  svg += '<text x="' + targetX + '" y="' + (padT - 10) + '" fill="#0D1A33" font-size="10" font-weight="700" font-family="monospace" text-anchor="middle">target ' + d.target + '%</text>';
+  
+  // Legend below bar
+  var lx = padL, ly = padT + barH + 22;
+  function legend(x, color, label) {
+    svg += '<rect x="' + x + '" y="' + (ly - 8) + '" width="11" height="11" fill="' + color + '" rx="2"/>';
+    svg += '<text x="' + (x + 16) + '" y="' + (ly + 1) + '" fill="#1a1a1a" font-size="10.5" font-weight="600">' + label + '</text>';
+    return x + 16 + label.length * 6.2 + 16;
+  }
+  lx = legend(lx, '#16A34A', 'Certified ' + d.certified + '%');
+  lx = legend(lx, '#D97706', 'In progress ' + d.inProgress + '%');
+  lx = legend(lx, '#FCD34D', 'Identified ' + d.identified + '%');
+  
+  svg += '</svg>';
+  container.innerHTML = svg;
+}
+
+
+/* ───────────────────────────────────────────────────────────────────
+   ORCHESTRATION — main render + lock/unlock + hooks
+   ─────────────────────────────────────────────────────────────────── */
+
 function mcRender() {
-  /* KPIs */
-  var kg = document.getElementById('mc-kpi-grid');
-  if (kg) {
-    kg.innerHTML = window.MC_KPIS.map(function(k){
-      return '<div class="mc-kpi ' + k.status + '">' +
-        '<div class="mc-kpi-num">' + k.n + '</div>' +
-        '<div class="mc-kpi-body">' +
-          '<div class="mc-kpi-label"><span class="mc-kpi-label-domain">' + k.dom + '</span>' + k.label + '</div>' +
-        '</div>' +
-        '<div class="mc-kpi-val">' + k.val + '<div class="mc-kpi-tgt">tgt ' + k.tgt + '</div></div>' +
-      '</div>';
-    }).join('');
-  }
-  /* Signals */
-  var sg = document.getElementById('mc-signals');
-  if (sg) {
-    sg.innerHTML = window.MC_SIGNALS.map(function(s){
-      return '<div class="mc-signal ' + s.kind + '">' +
-        '<div><div class="mc-signal-time">' + s.t + '</div><div class="mc-signal-cat">' + s.cat + '</div></div>' +
-        '<div><div class="mc-signal-body">' + s.body + '</div><div class="mc-signal-meta">' + s.meta + '</div></div>' +
-      '</div>';
-    }).join('');
-  }
-  /* Timeline */
-  var tg = document.getElementById('mc-tl');
-  if (tg) {
-    tg.innerHTML = window.MC_TIMELINE.map(function(s){
-      var dotcls = s.st === 'done' ? '' : (s.st === 'warn' ? 'warn' : 'pending');
-      return '<div class="mc-tl-step">' +
-        '<div class="mc-tl-time">' + s.t + '</div>' +
-        '<div class="mc-tl-dot ' + dotcls + '"></div>' +
-        '<div><div class="mc-tl-name">' + s.name + '</div><div class="mc-tl-detail">' + s.d + '</div></div>' +
-      '</div>';
-    }).join('');
-  }
-  /* Levers */
-  var lg = document.getElementById('mc-levers');
-  if (lg) {
-    lg.innerHTML = window.MC_LEVERS.map(function(l){
-      return '<div class="mc-lever">' +
-        '<div class="mc-lever-n">' + l.n + '</div>' +
-        '<div><div class="mc-lever-name">' + l.name + '</div><div class="mc-lever-anchor">' + l.anchor + '</div></div>' +
-        '<div class="mc-lever-fig"><div class="mc-lever-exp">' + l.exp + '</div><div class="mc-lever-cap">capt ' + l.cap + ' \u00B7 <span class="pct">' + l.pct + '%</span></div></div>' +
-      '</div>';
-    }).join('');
-  }
-  /* Heatmap */
-  var hg = document.getElementById('mc-heatmap');
-  if (hg) {
-    var html = '<table class="mc-heat"><thead><tr><th class="row-label">Service line</th><th>Access</th><th>Compliance</th><th>Engage.</th><th>Workflow</th><th>Outcomes</th><th>Safety</th></tr></thead><tbody>';
-    window.MC_HEATMAP.forEach(function(r){
-      html += '<tr><td class="row-label">' + r.unit + '</td>';
-      ['access','compliance','engagement','workflow','outcomes','safety'].forEach(function(k){
-        var v = r[k];
-        var cls = v < 30 ? 'mc-heat-c-crit' : (v < 60 ? 'mc-heat-c-warn' : 'mc-heat-c-ok');
-        html += '<td class="' + cls + '">' + v + '%</td>';
-      });
-      html += '</tr>';
-    });
-    html += '</tbody></table>';
-    hg.innerHTML = html;
-  }
-  /* Readiness */
-  var rg = document.getElementById('mc-readiness');
-  if (rg) {
-    rg.innerHTML = window.MC_READINESS.map(function(r){
-      return '<div class="mc-ready-cell ' + r.status + '">' +
-        '<div class="mc-ready-lbl">' + r.lbl + '</div>' +
-        '<div class="mc-ready-val">' + r.val + '</div>' +
-        '<div class="mc-ready-detail">' + r.detail + '</div>' +
-      '</div>';
-    }).join('');
-  }
-  /* Failures */
-  var fg = document.getElementById('mc-failures');
-  if (fg) {
-    var maxPct = Math.max.apply(null, window.MC_FAILURES.map(function(f){return f.pct;}));
-    fg.innerHTML = window.MC_FAILURES.map(function(f){
-      return '<div class="mc-fail">' +
-        '<div class="mc-fail-name">' + f.name + '</div>' +
-        '<div><div class="mc-fail-bar"><div class="mc-fail-bar-fill" style="width:' + (f.pct/maxPct*100) + '%"></div></div><div class="mc-fail-pct">' + f.pct + '%</div></div>' +
-      '</div>';
-    }).join('');
-  }
-  /* LAI score from M6 */
+  /* Tier 1 */
+  mcRenderDecide();
+  /* Tier 2 */
+  mcRenderRoiBars();
+  mcRenderSvcline();
+  /* Tier 3 */
+  mcRenderRadar();
+  mcRenderTrend();
+  mcRenderFailures();
+  mcRenderWorkforce();
+  /* Hero stat pills */
   var laiPill = document.getElementById('mc-stat-lai');
   if (laiPill && typeof laiComputeComposite === 'function') {
     try {
       var comp = laiComputeComposite();
       var fig = laiPill.querySelector('.mc-stat-pill-fig');
       if (fig && comp) {
-        fig.textContent = comp.fullyScored ? comp.total.toFixed(2) : '\u2014';
-        if (comp.total >= 3) laiPill.className = 'mc-stat-pill ok';
-        else if (comp.total >= 2) laiPill.className = 'mc-stat-pill warn';
-        else if (comp.total > 0) laiPill.className = 'mc-stat-pill crit';
+        fig.textContent = comp.fullyScored ? comp.total.toFixed(2) : '52';
       }
     } catch(e){}
   }
@@ -9555,17 +10078,11 @@ function mcRender() {
   }
 }
 
-/* Lock state management */
 function mcCheckUnlock() {
-  /* Determine unlock state from STATE.capRows committed state.
-     Module 6 commit is the trigger. */
   var hasM6 = false;
   try {
-    if (window.STATE && STATE.capRows && STATE.capRows[6] && STATE.capRows[6].committed) {
-      hasM6 = true;
-    }
+    if (window.STATE && STATE.capRows && STATE.capRows[6] && STATE.capRows[6].committed) hasM6 = true;
   } catch(e) {}
-  /* Also: previewUnlock toggles a window flag */
   if (window.MC_PREVIEW_UNLOCKED) hasM6 = true;
   
   var panel = document.getElementById('panel-mission');
@@ -9573,14 +10090,11 @@ function mcCheckUnlock() {
   if (panel) panel.classList.toggle('mc-locked', !hasM6);
   if (overlay) overlay.style.display = hasM6 ? 'none' : 'flex';
   
-  /* Update progress steps in the locked card */
   for (var m = 0; m <= 6; m++) {
     var stepEl = document.querySelector('.mc-locked-step[data-step="m' + m + '"]');
     if (stepEl) {
       var done = false;
-      try {
-        done = !!(window.STATE && STATE.capRows && STATE.capRows[m] && STATE.capRows[m].committed);
-      } catch(e){}
+      try { done = !!(window.STATE && STATE.capRows && STATE.capRows[m] && STATE.capRows[m].committed); } catch(e){}
       stepEl.classList.toggle('done', done);
       var mark = stepEl.querySelector('.mc-locked-step-mark');
       if (mark) mark.textContent = done ? '\u2713' : '\u00B7';
