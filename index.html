@@ -2173,111 +2173,272 @@ body[data-active-mod="3"] #brf-cap-3:not(.done){padding-left:14px;border-left:2p
 .layout.layout--no-brief .brief,
 .layout.layout--drawer-open .brief{display:none;}
 
-/* ── MISSION CONTROL (Turn 2.10 redesign) ────────────────────────────
-   Lean on the original CanopyCommand design language: navy hero band 
-   on a light page background, white panel cards with strong contrast, 
-   5-column KPI grid, larger typography. The all-translucent dark 
-   treatment in the prior version was visually weak; this brings back 
-   the bright/airy executive console feel. */
+/* ── MISSION CONTROL v3 (Turn 2.12) ────────────────────────────────────
+   3-column executive shell: navrail | workspace | signals-rail.
+   Slick visual treatment: bigger fonts, soft cards, layered shadows,
+   gradient accents, generous spacing. Charts get gradient fills.
+   ─────────────────────────────────────────────────────────────────── */
 
-#panel-mission{position:relative;background:#F5F7FA;}
+#panel-mission{position:relative;background:#F5F7FA;min-height:100vh;}
 
-/* The "lock" is now a soft, dismissible teaser that doesn't blur the panel — 
-   per user request, Mission Control is accessible at any point, but 
-   conceptually framed as the post-Module-6 unlock. */
+/* ── LOCKED OVERLAY (from prior turn, lightly refined) ──────────────── */
 .mc-locked-overlay{
   position:absolute;inset:0;z-index:50;
   display:flex;align-items:flex-start;justify-content:center;
   background:linear-gradient(180deg,rgba(245,247,250,0.96) 0%, rgba(245,247,250,0.92) 100%);
-  padding:60px 24px 40px;
-  overflow-y:auto;
+  padding:80px 24px 40px;overflow-y:auto;
 }
 .mc-locked-card{
-  max-width:620px;text-align:center;padding:36px 44px;
-  background:#fff;border:1.5px solid rgba(217,119,6,0.30);
-  border-radius:14px;
-  box-shadow:0 8px 28px rgba(13,26,51,0.10);
+  max-width:640px;text-align:center;padding:42px 50px;
+  background:#fff;border:1.5px solid rgba(217,119,6,0.22);
+  border-radius:20px;
+  box-shadow:0 16px 48px rgba(13,26,51,0.10), 0 4px 12px rgba(13,26,51,0.05);
 }
-.mc-locked-icon{font-family:'Cormorant Garamond',serif;font-size:64px;font-style:italic;color:#D97706;line-height:1;margin-bottom:14px;}
+.mc-locked-icon{font-family:'Cormorant Garamond',serif;font-size:68px;font-style:italic;color:#D97706;line-height:1;margin-bottom:14px;}
 .mc-locked-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#92400E;font-weight:700;margin-bottom:10px;}
-.mc-locked-title{font-family:'Cormorant Garamond',serif;font-size:32px;line-height:1.18;font-weight:600;color:#0D1A33;margin-bottom:14px;letter-spacing:-0.005em;}
+.mc-locked-title{font-family:'Cormorant Garamond',serif;font-size:34px;line-height:1.18;font-weight:600;color:#0D1A33;margin-bottom:14px;letter-spacing:-0.01em;}
 .mc-locked-title em{font-style:italic;color:#D97706;}
-.mc-locked-body{font-family:'EB Garamond',Georgia,serif;font-size:15.5px;line-height:1.55;color:#3a4a5a;margin-bottom:18px;}
+.mc-locked-body{font-family:'EB Garamond',Georgia,serif;font-size:16px;line-height:1.55;color:#3a4a5a;margin-bottom:18px;}
 .mc-locked-body strong{color:#0D1A33;font-weight:700;}
-.mc-locked-body em{font-style:italic;color:#92400E;}
+.mc-locked-body em{font-style:italic;color:#92400E;font-weight:600;}
 .mc-locked-progress{display:flex;flex-direction:column;gap:7px;margin:18px 0 22px;text-align:left;}
-.mc-locked-step{display:flex;align-items:center;gap:11px;padding:9px 13px;border-radius:6px;background:#F5F7FA;font-size:12px;color:#555;font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:.04em;border-left:3px solid #E0E0E0;}
+.mc-locked-step{display:flex;align-items:center;gap:11px;padding:9px 13px;border-radius:7px;background:#F5F7FA;font-size:12px;color:#555;font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:.04em;border-left:3px solid #E0E0E0;}
 .mc-locked-step.done{color:#0D1A33;background:#F0FDF4;border-left-color:#16A34A;}
 .mc-locked-step-mark{width:18px;text-align:center;color:#888;font-weight:700;}
 .mc-locked-step.done .mc-locked-step-mark{color:#16A34A;}
 .mc-locked-preview-btn{
-  display:inline-block;padding:11px 26px;
+  display:inline-block;padding:13px 32px;
   background:#0D1A33;color:#fff;
-  border:none;border-radius:7px;
+  border:none;border-radius:9px;
   font-family:'JetBrains Mono',ui-monospace,monospace;
   font-size:11px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;
   cursor:pointer;transition:all .15s;
-  box-shadow:0 2px 8px rgba(13,26,51,0.20);
+  box-shadow:0 4px 14px rgba(13,26,51,0.20);
 }
 .mc-locked-preview-btn:hover{background:#1F3864;transform:translateY(-1px);}
 
-/* Mission Control proper — light page bg with navy hero band and white panel cards */
+/* ── SHELL: 3-COLUMN GRID ─────────────────────────────────────────── */
 .mc-shell{
+  display:grid;
+  grid-template-columns:240px 1fr 320px;
+  gap:0;
   background:#F5F7FA;
   min-height:100vh;
   color:#1a1a1a;
   font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  padding:18px 28px 60px;
+}
+@media (max-width: 1280px){
+  .mc-shell{grid-template-columns:200px 1fr 300px;}
+}
+@media (max-width: 1100px){
+  .mc-shell{grid-template-columns:1fr;}
+  .mc-navrail, .mc-signals-rail{display:none;}
 }
 
-/* HERO BAND — navy gradient with white text + colored stat pills */
+/* ── NAVRAIL (LEFT) ────────────────────────────────────────────────── */
+.mc-navrail{
+  background:linear-gradient(180deg,#0D1A33 0%, #142547 100%);
+  border-right:1px solid rgba(0,161,157,0.18);
+  padding:24px 14px;
+  overflow-y:auto;
+  max-height:100vh;
+  position:sticky;top:0;
+}
+.mc-navrail::-webkit-scrollbar{width:4px;}
+.mc-navrail::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.10);border-radius:2px;}
+.mc-nav-section{margin-bottom:22px;}
+.mc-nav-section-hd{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:9.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(255,255,255,0.40);
+  padding:0 12px 10px;
+}
+.mc-nav-item{
+  display:grid;grid-template-columns:24px 1fr;gap:11px;align-items:center;
+  padding:9px 12px;border-radius:8px;margin-bottom:3px;
+  cursor:pointer;text-decoration:none;color:rgba(255,255,255,0.78);
+  transition:all .15s;
+}
+.mc-nav-item:hover{background:rgba(255,255,255,0.06);color:#fff;}
+.mc-nav-item.active{
+  background:linear-gradient(135deg,rgba(0,161,157,0.20),rgba(0,109,107,0.10));
+  color:#fff;
+  box-shadow:inset 0 0 0 1px rgba(0,161,157,0.30);
+}
+.mc-nav-icon{
+  font-size:14px;color:rgba(255,255,255,0.72);text-align:center;line-height:1;
+}
+.mc-nav-item.active .mc-nav-icon{color:#00A19D;}
+.mc-nav-name{font-size:13px;font-weight:600;line-height:1.2;display:flex;align-items:center;gap:7px;}
+.mc-nav-sub{font-size:10.5px;color:rgba(255,255,255,0.45);margin-top:2px;font-style:italic;line-height:1.3;}
+.mc-nav-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:20px;height:18px;padding:0 6px;border-radius:9px;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10px;font-weight:800;letter-spacing:0;
+}
+.mc-nav-badge-crit{background:#DC2626;color:#fff;}
+.mc-nav-badge-warn{background:#D97706;color:#fff;}
+.mc-nav-badge-info{background:#2563EB;color:#fff;}
+
+/* ── WORKSPACE (CENTER) ─────────────────────────────────────────────── */
+.mc-workspace{
+  padding:26px 32px 60px;
+  overflow-x:hidden;
+}
+
+/* ── HERO BAND — bigger, slicker ───────────────────────────────────── */
 .mc-hd{
   background:linear-gradient(135deg,#0D1A33 0%, #142547 60%, #2A4A7F 100%);
   color:#fff;
-  border-radius:14px;
-  padding:20px 28px;
-  margin-bottom:18px;
-  display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
-  box-shadow:0 6px 22px rgba(13,26,51,0.18);
+  border-radius:18px;
+  padding:28px 36px;
+  margin-bottom:28px;
+  display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;
+  box-shadow:0 12px 32px rgba(13,26,51,0.18), 0 2px 6px rgba(13,26,51,0.10);
+  position:relative;overflow:hidden;
 }
-.mc-hd-left{flex:1;min-width:280px;}
-.mc-hd-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#FFB84D;font-weight:700;margin-bottom:6px;}
-.mc-hd-title{font-family:'Cormorant Garamond',serif;font-size:32px;line-height:1.1;font-weight:600;color:#fff;letter-spacing:-0.005em;}
+.mc-hd::before{
+  content:'';position:absolute;top:-50%;right:-10%;width:380px;height:380px;
+  background:radial-gradient(circle, rgba(0,161,157,0.18) 0%, transparent 70%);
+  pointer-events:none;
+}
+.mc-hd-left{flex:1;min-width:300px;position:relative;z-index:1;}
+.mc-hd-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.20em;text-transform:uppercase;color:#FFB84D;font-weight:700;margin-bottom:8px;}
+.mc-hd-title{font-family:'Cormorant Garamond',serif;font-size:42px;line-height:1.05;font-weight:600;color:#fff;letter-spacing:-0.015em;}
 .mc-hd-title em{font-style:italic;color:#FFC97A;}
-.mc-hd-sub{margin-top:6px;font-size:13px;color:rgba(255,255,255,0.75);font-style:italic;}
-.mc-hd-right{display:flex;gap:12px;flex-wrap:wrap;}
+.mc-hd-sub{margin-top:10px;font-size:14px;color:rgba(255,255,255,0.78);font-style:italic;}
+.mc-hd-right{display:flex;gap:14px;flex-wrap:wrap;position:relative;z-index:1;}
 .mc-stat-pill{
-  padding:11px 18px;
-  background:rgba(255,255,255,0.12);
-  border:1px solid rgba(255,255,255,0.18);
-  border-radius:8px;
+  padding:16px 22px;
+  background:rgba(255,255,255,0.10);
+  border:1px solid rgba(255,255,255,0.14);
+  border-radius:12px;
   text-align:center;
-  min-width:108px;
+  min-width:130px;
+  backdrop-filter:blur(8px);
+  transition:all .2s;
 }
-.mc-stat-pill-lbl{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.70);font-weight:700;margin-bottom:3px;}
-.mc-stat-pill-fig{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;font-style:italic;color:#fff;line-height:1;}
+.mc-stat-pill:hover{background:rgba(255,255,255,0.14);transform:translateY(-1px);}
+.mc-stat-pill-lbl{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,0.65);font-weight:700;margin-bottom:6px;}
+.mc-stat-pill-fig{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:600;font-style:italic;color:#fff;line-height:1;letter-spacing:-0.01em;}
 .mc-stat-pill.crit .mc-stat-pill-fig{color:#FCA5A5;}
 .mc-stat-pill.warn .mc-stat-pill-fig{color:#FCD34D;}
 .mc-stat-pill.ok .mc-stat-pill-fig{color:#86EFAC;}
 
-/* GRID — wider columns matching original */
-.mc-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px;}
-
-/* PANEL CARDS — white on light, strong contrast */
-.mc-card{
-  background:#FFFFFF;
-  border:1px solid #E0E0E0;
-  border-radius:11px;
-  padding:16px 18px;
+/* ── TIER BANNERS ─────────────────────────────────────────────────── */
+.mc-tier{margin-bottom:26px;}
+.mc-tier-banner{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+  padding:18px 24px;border-radius:14px;margin-bottom:16px;
+  border-left:6px solid;
+  background:#fff;
   box-shadow:0 1px 3px rgba(13,26,51,0.04);
 }
-.mc-card-hd{
-  display:flex;align-items:center;justify-content:space-between;gap:10px;
-  margin-bottom:12px;padding-bottom:10px;
-  border-bottom:1px solid #E8EBF0;
+.mc-tier-banner-l{display:flex;align-items:center;gap:16px;}
+.mc-tier-banner-r{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;color:#555;letter-spacing:.04em;}
+.mc-tier-banner-r strong{color:#0D1A33;font-weight:800;}
+.mc-tier-pill{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10.5px;font-weight:800;letter-spacing:.12em;
+  padding:7px 13px;border-radius:7px;white-space:nowrap;
 }
-.mc-card-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:#0D1A33;font-style:italic;line-height:1.2;}
-.mc-card-meta{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:#888;font-weight:600;}
+.mc-tier-pill-crit{background:#DC2626;color:#fff;box-shadow:0 2px 6px rgba(220,38,38,0.25);}
+.mc-tier-pill-warn{background:#D97706;color:#fff;box-shadow:0 2px 6px rgba(217,119,6,0.25);}
+.mc-tier-pill-info{background:#1F3864;color:#fff;box-shadow:0 2px 6px rgba(31,56,100,0.25);}
+.mc-tier-banner-crit{background:linear-gradient(95deg,#FEF2F2 0%,#FEE2E2 30%,#fff 70%);border-left-color:#DC2626;}
+.mc-tier-banner-warn{background:linear-gradient(95deg,#FFFBEB 0%,#FEF3C7 30%,#fff 70%);border-left-color:#D97706;}
+.mc-tier-banner-info{background:linear-gradient(95deg,#EBF4FF 0%,#DBEAFE 30%,#fff 70%);border-left-color:#1F3864;}
+.mc-tier-banner-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:#0D1A33;font-style:italic;line-height:1.2;letter-spacing:-0.005em;}
+
+/* ── DECIDE TODAY: 3-card grid ──────────────────────────────────── */
+.mc-decide-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+@media (max-width: 1280px){.mc-decide-grid{grid-template-columns:1fr;}}
+
+.mc-decide-card{
+  background:#fff;border:1px solid #F0F2F5;border-radius:16px;
+  border-top:4px solid #DC2626;
+  padding:22px 24px;
+  display:flex;flex-direction:column;
+  box-shadow:0 4px 12px rgba(220,38,38,0.06), 0 1px 3px rgba(13,26,51,0.04);
+  transition:all .2s;
+}
+.mc-decide-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(220,38,38,0.10), 0 2px 6px rgba(13,26,51,0.06);}
+.mc-decide-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.mc-decide-num{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10px;font-weight:800;letter-spacing:.12em;color:#DC2626;
+  background:#FEF2F2;padding:5px 10px;border-radius:6px;
+}
+.mc-decide-cat{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:9.5px;font-weight:700;letter-spacing:.10em;color:#888;text-transform:uppercase;
+}
+.mc-decide-title{
+  font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;
+  color:#0D1A33;line-height:1.25;margin-bottom:14px;letter-spacing:-0.005em;
+}
+.mc-decide-row{margin-bottom:11px;}
+.mc-decide-row.mc-decide-action{
+  margin-top:6px;padding:11px 13px;background:#FEF2F2;border-radius:8px;
+  border-left:3px solid #DC2626;
+}
+.mc-decide-lbl{
+  display:block;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:9px;font-weight:800;letter-spacing:.14em;
+  color:#888;text-transform:uppercase;margin-bottom:4px;
+}
+.mc-decide-action .mc-decide-lbl{color:#991B1B;}
+.mc-decide-text{font-size:13.5px;line-height:1.5;color:#1a1a1a;}
+.mc-decide-text strong{color:#0D1A33;font-weight:700;}
+.mc-decide-foot{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-top:auto;padding-top:14px;border-top:1px dashed #E8EBF0;
+}
+.mc-decide-meta{display:flex;flex-direction:column;gap:3px;}
+.mc-decide-meta span{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10px;color:#555;font-weight:600;letter-spacing:.04em;
+}
+.mc-decide-meta span:first-child{color:#92400E;font-weight:700;}
+.mc-decide-btn{
+  background:#0D1A33;color:#fff;border:none;border-radius:8px;
+  padding:11px 18px;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:11px;font-weight:800;letter-spacing:.10em;
+  cursor:pointer;transition:all .15s;
+  white-space:nowrap;
+  box-shadow:0 2px 8px rgba(13,26,51,0.20);
+}
+.mc-decide-btn:hover{background:#1F3864;transform:translateY(-1px);box-shadow:0 4px 12px rgba(13,26,51,0.25);}
+
+/* ── ESCALATE & SURVEILLANCE GRIDS ─────────────────────────────── */
+.mc-escalate-grid, .mc-surveil-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;}
+@media (max-width: 1280px){
+  .mc-escalate-grid > *, .mc-surveil-grid > *{grid-column:span 12 !important;}
+}
+
+/* ── PANEL CARDS ────────────────────────────────────────────────── */
+.mc-card{
+  background:#FFFFFF;
+  border:1px solid #F0F2F5;
+  border-radius:16px;
+  padding:22px 24px;
+  box-shadow:0 4px 12px rgba(13,26,51,0.05), 0 1px 3px rgba(13,26,51,0.03);
+  transition:all .2s;
+}
+.mc-card:hover{box-shadow:0 8px 20px rgba(13,26,51,0.07), 0 2px 6px rgba(13,26,51,0.04);}
+.mc-card-hd{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  margin-bottom:18px;padding-bottom:14px;
+  border-bottom:1px solid #F0F2F5;
+}
+.mc-card-title{
+  font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;
+  color:#0D1A33;font-style:italic;line-height:1.2;letter-spacing:-0.005em;
+}
+.mc-card-meta{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#888;font-weight:600;text-align:right;line-height:1.4;}
 
 .col-12{grid-column:span 12;}
 .col-8{grid-column:span 8;}
@@ -2285,220 +2446,246 @@ body[data-active-mod="3"] #brf-cap-3:not(.done){padding-left:14px;border-left:2p
 .col-6{grid-column:span 6;}
 .col-5{grid-column:span 5;}
 .col-4{grid-column:span 4;}
-@media (max-width: 1100px){.col-8,.col-7,.col-6,.col-5,.col-4{grid-column:span 12;}}
 
-/* KPI GRID — 5 columns, white tiles with strong color accents */
-.mc-kpi-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
-@media (min-width: 1300px){.mc-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
-.mc-kpi{
-  display:grid;grid-template-columns:30px 1fr auto;gap:11px;align-items:center;
-  padding:11px 13px;
-  background:#FAFBFC;
-  border-radius:8px;
-  border-left:4px solid #BDBDBD;
+/* ── INSIGHT CALLOUT ────────────────────────────────────────────── */
+.mc-insight{
+  margin-top:16px;padding:14px 16px;
+  background:#F5F7FA;border-radius:10px;
+  border-left:3px solid #1F3864;
 }
-.mc-kpi.crit{border-left-color:#DC2626;background:#FEF2F2;}
-.mc-kpi.warn{border-left-color:#D97706;background:#FFFBEB;}
-.mc-kpi.ok{border-left-color:#16A34A;background:#F0FDF4;}
-.mc-kpi-num{
-  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;
-  color:#888;font-weight:800;letter-spacing:.04em;
-  background:#fff;padding:3px 5px;border-radius:4px;border:1px solid #E0E0E0;
-  text-align:center;
+.mc-insight-warn{background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border-left-color:#D97706;}
+.mc-insight-crit{background:linear-gradient(135deg,#FEF2F2,#FEE2E2);border-left-color:#DC2626;}
+.mc-insight-lbl{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:9.5px;font-weight:800;letter-spacing:.14em;
+  color:#1F3864;margin-bottom:6px;
 }
-.mc-kpi-body{min-width:0;}
-.mc-kpi-label{font-size:12px;color:#1a1a1a;line-height:1.35;}
-.mc-kpi-label-domain{
-  display:inline-block;
-  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9px;
-  letter-spacing:.08em;text-transform:uppercase;color:#555;
-  margin-right:7px;font-weight:700;
-}
-.mc-kpi-val{
-  text-align:right;
-  font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;
-  font-style:italic;color:#0D1A33;line-height:1;
-}
-.mc-kpi.crit .mc-kpi-val{color:#991B1B;}
-.mc-kpi.warn .mc-kpi-val{color:#92400E;}
-.mc-kpi.ok .mc-kpi-val{color:#166534;}
-.mc-kpi-tgt{
-  display:block;
-  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9px;
-  color:#888;margin-top:2px;letter-spacing:.04em;font-weight:600;
-}
+.mc-insight-warn .mc-insight-lbl{color:#92400E;}
+.mc-insight-crit .mc-insight-lbl{color:#991B1B;}
+.mc-insight-body{font-size:13px;line-height:1.55;color:#1a1a1a;}
+.mc-insight-body strong{color:#0D1A33;font-weight:700;}
+.mc-insight-body em{font-style:italic;color:#92400E;font-weight:600;}
 
-/* SIGNAL QUEUE — white rows, colored left-border by severity */
-.mc-signals{
-  max-height:420px;overflow-y:auto;
-  display:flex;flex-direction:column;gap:6px;padding-right:4px;
-}
-.mc-signals::-webkit-scrollbar{width:5px;}
-.mc-signals::-webkit-scrollbar-thumb{background:#BDBDBD;border-radius:3px;}
-.mc-signal{
-  display:grid;grid-template-columns:54px 1fr;gap:11px;
-  padding:10px 12px;background:#FAFBFC;border-radius:7px;
-  border-left:4px solid #16A34A;
-}
-.mc-signal.crit{border-left-color:#DC2626;background:#FEF2F2;}
-.mc-signal.warn{border-left-color:#D97706;background:#FFFBEB;}
-.mc-signal-time{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;color:#0D1A33;font-weight:700;}
-.mc-signal-cat{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:8.5px;color:#888;letter-spacing:.06em;text-transform:uppercase;font-weight:700;margin-top:2px;}
-.mc-signal-body{font-size:12.5px;line-height:1.45;color:#1a1a1a;}
-.mc-signal-body strong{color:#0D1A33;font-weight:700;}
-.mc-signal-meta{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;color:#888;margin-top:4px;letter-spacing:.04em;}
+/* ── SVG CHART CONTAINER ────────────────────────────────────────── */
+.mc-svg{display:block;width:100%;height:auto;}
 
-/* TIMELINE — clean vertical list */
-.mc-tl{display:flex;flex-direction:column;gap:6px;}
-.mc-tl-step{
-  display:grid;grid-template-columns:50px 18px 1fr;gap:11px;
-  padding:9px 12px;background:#FAFBFC;border-radius:7px;align-items:flex-start;
-}
-.mc-tl-time{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;color:#0D1A33;font-weight:700;padding-top:1px;}
-.mc-tl-dot{width:14px;height:14px;border-radius:50%;background:#16A34A;margin-top:2px;flex-shrink:0;border:2px solid #fff;box-shadow:0 0 0 1px #BDBDBD;}
-.mc-tl-dot.pending{background:#E0E0E0;box-shadow:0 0 0 1px #BDBDBD;}
-.mc-tl-dot.warn{background:#D97706;}
-.mc-tl-name{font-size:12.5px;color:#0D1A33;font-weight:700;line-height:1.3;}
-.mc-tl-detail{font-size:11.5px;color:#555;margin-top:3px;line-height:1.4;}
-
-/* LEVERS — financial rows */
-.mc-levers{display:flex;flex-direction:column;gap:6px;}
-.mc-lever{
-  display:grid;grid-template-columns:36px 1fr auto;gap:11px;
-  padding:10px 12px;background:#FAFBFC;border-radius:7px;align-items:center;
-}
-.mc-lever-n{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;color:#888;font-weight:800;background:#fff;padding:3px 5px;border-radius:4px;border:1px solid #E0E0E0;text-align:center;}
-.mc-lever-name{font-size:12.5px;color:#0D1A33;font-weight:700;line-height:1.25;}
-.mc-lever-anchor{font-size:11px;color:#888;margin-top:3px;font-style:italic;}
-.mc-lever-fig{text-align:right;}
-.mc-lever-exp{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;font-style:italic;color:#92400E;line-height:1;}
-.mc-lever-cap{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;color:#555;margin-top:3px;}
-.mc-lever-cap .pct{color:#16A34A;font-weight:800;}
-
-/* HEATMAP table — white with strong bordered cells */
-.mc-heat{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;}
-.mc-heat th{padding:8px 10px;text-align:center;color:#555;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:9px;border-bottom:2px solid #E0E0E0;background:#F5F7FA;}
-.mc-heat th.row-label{text-align:left;}
-.mc-heat td{padding:9px 10px;text-align:center;color:#0D1A33;font-weight:800;border-bottom:1px solid #F0F2F5;}
-.mc-heat td.row-label{text-align:left;color:#0D1A33;letter-spacing:.04em;font-weight:700;}
-.mc-heat-c-crit{background:#FEF2F2;color:#991B1B !important;}
-.mc-heat-c-warn{background:#FFFBEB;color:#92400E !important;}
-.mc-heat-c-ok{background:#F0FDF4;color:#166534 !important;}
-
-/* READINESS — 2-col grid of small status cells */
-.mc-readiness{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
-.mc-ready-cell{
-  padding:11px 13px;background:#FAFBFC;border-radius:7px;
-  border-left:4px solid #16A34A;
-}
-.mc-ready-cell.warn{border-left-color:#D97706;background:#FFFBEB;}
-.mc-ready-cell.crit{border-left-color:#DC2626;background:#FEF2F2;}
-.mc-ready-lbl{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9px;color:#555;letter-spacing:.07em;text-transform:uppercase;font-weight:700;margin-bottom:4px;}
-.mc-ready-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;font-style:italic;color:#0D1A33;line-height:1;}
-.mc-ready-cell.warn .mc-ready-val{color:#92400E;}
-.mc-ready-cell.crit .mc-ready-val{color:#991B1B;}
-.mc-ready-detail{font-size:11.5px;color:#555;margin-top:4px;line-height:1.4;}
-
-/* FAILURES — bar chart rows */
-.mc-failures{display:flex;flex-direction:column;gap:6px;}
-.mc-fail{
-  display:grid;grid-template-columns:1fr 70px;gap:12px;
-  padding:9px 12px;background:#FAFBFC;border-radius:7px;align-items:center;
-}
-.mc-fail-name{font-size:12px;color:#1a1a1a;line-height:1.3;}
-.mc-fail-bar{height:7px;background:#E8EBF0;border-radius:4px;overflow:hidden;position:relative;}
-.mc-fail-bar-fill{height:100%;background:#D97706;}
-.mc-fail-pct{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;color:#92400E;text-align:right;font-weight:800;margin-top:3px;}
-
-/* SYNTHESIS quote — soft amber accent */
+/* ── SYNTHESIS QUOTE ────────────────────────────────────────────── */
 .mc-synthesis{
-  padding:18px 22px;
+  padding:22px 28px;
   background:linear-gradient(135deg,#FFFBEB 0%, #FEF3C7 100%);
-  border:1px solid rgba(217,119,6,0.30);
-  border-radius:9px;
+  border:1px solid rgba(217,119,6,0.22);
+  border-radius:14px;
 }
-.mc-synthesis-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#92400E;font-weight:700;margin-bottom:8px;}
-.mc-synthesis-quote{font-family:'Cormorant Garamond',serif;font-size:20px;line-height:1.4;font-weight:500;color:#0D1A33;font-style:italic;margin-bottom:8px;}
+.mc-synthesis-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#92400E;font-weight:700;margin-bottom:10px;}
+.mc-synthesis-quote{font-family:'Cormorant Garamond',serif;font-size:24px;line-height:1.4;font-weight:500;color:#0D1A33;font-style:italic;margin-bottom:10px;letter-spacing:-0.005em;}
 .mc-synthesis-quote em{color:#92400E;}
-.mc-synthesis-attr{font-size:12px;color:#555;font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:.04em;}
+.mc-synthesis-attr{font-size:13px;color:#555;font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:.04em;}
 
-/* ── LEARNER IDENTIFICATION FACTOID EXPANDERS (Turn 2.9a) ─────────────
-   "Did you know?" expanders that surface a research fact + an interviewee
-   insight for each Learner Identification card. Collapsed by default;
-   click toggles open. Click is event-isolated so it doesn't bubble up to
-   the parent card's mark-complete toggle. */
-
-.m3-learner-fact{
-  margin-top:14px;
-  border-top:1px dashed rgba(184,134,11,.30);
-  padding-top:10px;
+/* ── SIGNALS RAIL (RIGHT) ──────────────────────────────────────── */
+.mc-signals-rail{
+  background:#fff;
+  border-left:1px solid #E8EBF0;
+  padding:24px 18px;
+  overflow-y:auto;
+  max-height:100vh;
+  position:sticky;top:0;
 }
-.m3-learner-fact-toggle{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  cursor:pointer;
-  user-select:none;
-  padding:4px 0;
-  font-family:var(--mono);
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  color:#b88a0c;
-  transition:color .15s;
+.mc-signals-rail::-webkit-scrollbar{width:4px;}
+.mc-signals-rail::-webkit-scrollbar-thumb{background:#BDBDBD;border-radius:2px;}
+.mc-signals-hd{margin-bottom:14px;}
+.mc-signals-title{
+  display:flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:11.5px;font-weight:800;letter-spacing:.12em;
+  color:#0D1A33;
 }
-.m3-learner-fact-toggle:hover{color:#8a6708;}
-.m3-learner-fact-icon{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width:16px;height:16px;
-  border-radius:3px;
-  background:rgba(184,134,11,.12);
-  color:#b88a0c;
-  font-weight:700;
-  font-size:13px;
-  line-height:1;
-  flex-shrink:0;
-  transition:transform .2s, background .15s;
+.mc-signals-dot{
+  width:9px;height:9px;border-radius:50%;background:#16A34A;
+  box-shadow:0 0 0 3px rgba(22,163,74,0.20);
+  animation:mc-pulse 2s ease-in-out infinite;
 }
-.m3-learner-fact.open .m3-learner-fact-icon{
-  background:#b88a0c;
+@keyframes mc-pulse{
+  0%,100%{box-shadow:0 0 0 3px rgba(22,163,74,0.20);}
+  50%{box-shadow:0 0 0 6px rgba(22,163,74,0.10);}
+}
+.mc-signals-sub{font-size:11px;color:#888;margin-top:6px;font-style:italic;letter-spacing:.02em;}
+.mc-signals-filters{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.mc-signals-filter{
+  padding:5px 12px;border-radius:14px;
+  border:1px solid #E0E0E0;background:#fff;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10.5px;font-weight:700;color:#555;
+  cursor:pointer;transition:all .15s;
+}
+.mc-signals-filter:hover{background:#F5F7FA;}
+.mc-signals-filter.active{background:#0D1A33;color:#fff;border-color:#0D1A33;}
+.mc-signals-feed{display:flex;flex-direction:column;gap:8px;}
+.mc-signal-card{
+  position:relative;
+  padding:11px 13px;
+  background:#FAFBFC;border-radius:10px;
+  border-left:3px solid #888;
+  font-size:12px;line-height:1.45;
+}
+.mc-signal-card.crit{border-left-color:#DC2626;background:#FEF2F2;}
+.mc-signal-card.warn{border-left-color:#D97706;background:#FFFBEB;}
+.mc-signal-card.info{border-left-color:#2563EB;background:#EBF4FF;}
+.mc-signal-card.ok{border-left-color:#16A34A;background:#F0FDF4;}
+.mc-signal-time{
+  display:inline-block;font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10.5px;font-weight:700;color:#0D1A33;
+  margin-right:8px;
+}
+.mc-signal-tag{
+  position:absolute;top:11px;right:11px;
+  padding:2px 7px;border-radius:5px;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:8.5px;font-weight:800;letter-spacing:.08em;
   color:#fff;
 }
-.m3-learner-fact-label{font-style:italic;font-weight:600;text-transform:none;letter-spacing:.02em;font-size:12px;color:#5a3e08;}
-.m3-learner-fact-body{
-  display:none;
-  margin-top:10px;
-  padding:14px 16px;
-  background:linear-gradient(135deg,rgba(184,134,11,.05) 0%, rgba(184,134,11,.02) 100%);
-  border-left:3px solid rgba(184,134,11,.50);
-  border-radius:0 6px 6px 0;
-  font-size:13px;
-  line-height:1.55;
-  color:var(--ink);
+.mc-signal-tag-crit{background:#DC2626;}
+.mc-signal-tag-warn{background:#D97706;}
+.mc-signal-tag-info{background:#2563EB;}
+.mc-signal-tag-ok{background:#16A34A;}
+.mc-signal-body{margin-top:6px;color:#1a1a1a;padding-right:60px;font-size:12px;line-height:1.45;}
+.mc-signal-body strong{color:#0D1A33;font-weight:700;}
+.mc-signal-meta{margin-top:5px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;color:#666;letter-spacing:.02em;}
+
+/* ── DECISION DETAIL DRAWER ────────────────────────────────────── */
+.mc-drawer-backdrop{
+  position:fixed;inset:0;z-index:200;
+  background:rgba(13,26,51,0.55);
+  backdrop-filter:blur(2px);
+  opacity:0;visibility:hidden;
+  transition:opacity .25s, visibility .25s;
 }
-.m3-learner-fact.open .m3-learner-fact-body{display:block;}
-.m3-learner-fact-body strong{color:#5a3e08;font-weight:700;}
-.m3-learner-fact-body em{color:var(--ink2);font-style:italic;}
-.m3-learner-fact-research,
-.m3-learner-fact-voice{
-  margin-bottom:10px;
+.mc-drawer-backdrop.open{opacity:1;visibility:visible;}
+.mc-drawer{
+  position:fixed;top:0;right:0;bottom:0;z-index:201;
+  width:min(640px, 92vw);
+  background:#fff;
+  box-shadow:-12px 0 40px rgba(13,26,51,0.20);
+  transform:translateX(100%);
+  transition:transform .3s cubic-bezier(0.32,0.72,0,1);
+  overflow-y:auto;
 }
-.m3-learner-fact-voice{margin-bottom:0;}
-.m3-learner-fact-research strong:first-child,
-.m3-learner-fact-voice strong:first-child{
-  display:inline-block;
-  font-family:var(--mono);
-  font-size:9.5px;
-  font-weight:700;
-  letter-spacing:.10em;
-  text-transform:uppercase;
-  color:#b88a0c;
-  margin-bottom:4px;
+.mc-drawer.open{transform:translateX(0);}
+.mc-drawer-inner{padding:32px 36px 60px;}
+
+.mc-drawer-hd{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:18px;
+  margin-bottom:22px;padding-bottom:18px;
+  border-bottom:1px solid #F0F2F5;
+}
+.mc-drawer-hd-l{flex:1;}
+.mc-drawer-cat{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10.5px;font-weight:800;letter-spacing:.16em;
+  color:#DC2626;text-transform:uppercase;margin-bottom:8px;
+}
+.mc-drawer-title{
+  font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;
+  color:#0D1A33;line-height:1.2;letter-spacing:-0.01em;
+}
+.mc-drawer-close{
+  width:36px;height:36px;border:1px solid #E0E0E0;background:#fff;
+  border-radius:9px;font-size:22px;color:#555;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;line-height:1;
+  transition:all .15s;
+}
+.mc-drawer-close:hover{background:#F5F7FA;color:#0D1A33;}
+
+.mc-drawer-summary{
+  padding:16px 18px;background:#FEF2F2;border-radius:10px;
+  border-left:3px solid #DC2626;
+  font-size:13.5px;line-height:1.55;color:#1a1a1a;margin-bottom:24px;
+}
+.mc-drawer-summary strong{color:#991B1B;font-weight:800;}
+
+.mc-drawer-section{margin-bottom:24px;}
+.mc-drawer-section-hd{
+  font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;
+  color:#0D1A33;font-style:italic;margin-bottom:12px;
+  padding-bottom:6px;border-bottom:1px dashed #E8EBF0;
 }
 
+.mc-drawer-list{
+  list-style:none;padding:0;margin:0;
+  display:flex;flex-direction:column;gap:10px;
+}
+.mc-drawer-list li{
+  padding:10px 14px;background:#F5F7FA;border-radius:8px;
+  font-size:13px;line-height:1.55;color:#1a1a1a;
+  border-left:2px solid #BDBDBD;
+}
+
+.mc-drawer-actions{display:flex;flex-direction:column;gap:10px;}
+.mc-drawer-action{
+  display:grid;grid-template-columns:34px 1fr;gap:14px;
+  padding:13px 16px;background:#FFFBEB;border-radius:10px;
+  border-left:3px solid #D97706;
+}
+.mc-drawer-action-n{
+  font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;
+  font-style:italic;color:#92400E;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+}
+.mc-drawer-action-text{font-size:13.5px;font-weight:600;color:#0D1A33;line-height:1.4;}
+.mc-drawer-action-meta{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;color:#92400E;margin-top:5px;letter-spacing:.04em;}
+
+.mc-drawer-escalation{
+  display:flex;flex-direction:column;gap:8px;
+  position:relative;
+}
+.mc-drawer-esc-row{
+  display:grid;grid-template-columns:32px 1fr auto;gap:12px;align-items:center;
+  padding:11px 14px;background:#fff;border:1px solid #E8EBF0;border-radius:9px;
+  position:relative;
+}
+.mc-drawer-esc-tier{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10px;font-weight:800;color:#fff;
+  background:#1F3864;border-radius:50%;
+  width:26px;height:26px;
+  display:flex;align-items:center;justify-content:center;
+}
+.mc-drawer-esc-who{font-size:13px;font-weight:700;color:#0D1A33;}
+.mc-drawer-esc-when{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;color:#666;margin-top:2px;letter-spacing:.02em;}
+.mc-drawer-esc-sla{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10.5px;font-weight:800;color:#0D1A33;
+  background:#F5F7FA;padding:4px 9px;border-radius:5px;
+}
+
+.mc-drawer-authority{display:flex;flex-direction:column;gap:8px;}
+.mc-drawer-auth-row{
+  padding:11px 14px;background:#EBF4FF;border-radius:9px;
+  border-left:3px solid #2563EB;
+}
+.mc-drawer-auth-ref{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10.5px;font-weight:800;color:#1D4ED8;letter-spacing:.04em;margin-bottom:4px;
+}
+.mc-drawer-auth-text{font-size:12.5px;line-height:1.5;color:#1a1a1a;}
+.mc-drawer-auth-text strong{color:#1D4ED8;font-weight:800;}
+
+.mc-drawer-foot{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:18px 20px;background:#0D1A33;color:#fff;border-radius:12px;
+  margin-top:22px;
+}
+.mc-drawer-foot-meta{flex:1;}
+.mc-drawer-foot-cost{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;font-style:italic;color:#FFC97A;}
+.mc-drawer-foot-time{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;color:rgba(255,255,255,0.75);margin-top:4px;letter-spacing:.04em;}
+.mc-drawer-foot-btn{
+  background:#FFB84D;color:#0D1A33;border:none;border-radius:9px;
+  padding:13px 24px;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:12px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;
+  cursor:pointer;transition:all .15s;
+  box-shadow:0 4px 12px rgba(255,184,77,0.30);
+}
+.mc-drawer-foot-btn:hover{background:#FFC97A;transform:translateY(-1px);}
 
 
 /* Drawer toggle restyled now that drawer is visible by default (Turn 2.10) */
@@ -7089,6 +7276,60 @@ body[data-active-mod="3"] #brf-cap-3:not(.done){padding-left:14px;border-left:2p
 
   <!-- Mission Control proper -->
   <div class="mc-shell">
+  <aside class="mc-navrail" aria-label="Mission Control navigation">
+  <div class="mc-nav-section">
+    <div class="mc-nav-section-hd">Today</div>
+    <a class="mc-nav-item active" data-mc-nav="mission-control">
+      <span class="mc-nav-icon">◎</span>
+      <div class="mc-nav-body"><div class="mc-nav-name">Mission Control</div><div class="mc-nav-sub">KPIs · 24h deltas · trend</div></div>
+    </a>
+    <a class="mc-nav-item" data-mc-nav="live-alerts">
+      <span class="mc-nav-icon">⚠</span>
+      <div class="mc-nav-body"><div class="mc-nav-name">Live Alerts <span class="mc-nav-badge mc-nav-badge-crit">14</span></div><div class="mc-nav-sub">Threshold breaches · owner routing</div></div>
+    </a>
+    <a class="mc-nav-item" data-mc-nav="encounter-audit">
+      <span class="mc-nav-icon">⌕</span>
+      <div class="mc-nav-body"><div class="mc-nav-name">Encounter Audit</div><div class="mc-nav-sub">T1–T7 drill-down · forensic view</div></div>
+    </a>
+  </div>
+  <div class="mc-nav-section">
+    <div class="mc-nav-section-hd">Understand</div>
+    <a class="mc-nav-item" data-mc-nav="domain">
+      <span class="mc-nav-icon">▦</span>
+      <div class="mc-nav-body"><div class="mc-nav-name">Domain Deep-Dive</div><div class="mc-nav-sub">10 domains · evidence anchors</div></div>
+    </a>
+  </div>
+  <div class="mc-nav-section">
+    <div class="mc-nav-section-hd">Quantify</div>
+    <a class="mc-nav-item" data-mc-nav="financial">
+      <span class="mc-nav-icon">$</span>
+      <div class="mc-nav-body"><div class="mc-nav-name">Financial Monitor <span class="mc-nav-badge mc-nav-badge-info">6</span></div><div class="mc-nav-sub">6 ROI levers · exposure vs. capture</div></div>
+    </a>
+  </div>
+  <div class="mc-nav-section">
+    <div class="mc-nav-section-hd">Plan</div>
+    <a class="mc-nav-item" data-mc-nav="workforce">
+      <span class="mc-nav-icon">⛂</span>
+      <div class="mc-nav-body"><div class="mc-nav-name">Workforce Intel</div><div class="mc-nav-sub">QBS · training · language match</div></div>
+    </a>
+    <a class="mc-nav-item" data-mc-nav="planner">
+      <span class="mc-nav-icon">☰</span>
+      <div class="mc-nav-body"><div class="mc-nav-name">Intervention Planner</div><div class="mc-nav-sub">Scenario modeling · CAP builder</div></div>
+    </a>
+  </div>
+  <div class="mc-nav-section">
+    <div class="mc-nav-section-hd">Report</div>
+    <a class="mc-nav-item" data-mc-nav="audit-readiness">
+      <span class="mc-nav-icon">✓</span>
+      <div class="mc-nav-body"><div class="mc-nav-name">Audit Readiness <span class="mc-nav-badge mc-nav-badge-warn">!</span></div><div class="mc-nav-sub">1557 evidence · spot-review prep</div></div>
+    </a>
+    <a class="mc-nav-item" data-mc-nav="board">
+      <span class="mc-nav-icon">◬</span>
+      <div class="mc-nav-body"><div class="mc-nav-name">Board Briefing</div><div class="mc-nav-sub">Governance synthesis · export</div></div>
+    </a>
+  </div>
+</aside>
+  <div class="mc-workspace">
     <div class="mc-hd">
       <div class="mc-hd-left">
         <div class="mc-hd-eyebrow">Canopy Command &middot; Language Access Administrator Console</div>
@@ -7231,8 +7472,29 @@ body[data-active-mod="3"] #brf-cap-3:not(.done){padding-left:14px;border-left:2p
   </div>
 
 </div>
+    </div>
+  <aside class="mc-signals-rail" aria-label="Live system signals">
+  <div class="mc-signals-hd">
+    <div class="mc-signals-title"><span class="mc-signals-dot"></span>LIVE SYSTEM SIGNALS</div>
+    <div class="mc-signals-sub">T1–T7 event stream · 24h rolling window</div>
   </div>
+  <div class="mc-signals-filters">
+    <button class="mc-signals-filter active" data-filter="all" onclick="mcFilterSignals('all', this)">All</button>
+    <button class="mc-signals-filter" data-filter="crit" onclick="mcFilterSignals('crit', this)">Alerts</button>
+    <button class="mc-signals-filter" data-filter="warn" onclick="mcFilterSignals('warn', this)">Trigger</button>
+    <button class="mc-signals-filter" data-filter="info" onclick="mcFilterSignals('info', this)">Info</button>
+  </div>
+  <div class="mc-signals-feed" id="mc-signals-feed"></div>
+</aside>
 </div>
+
+<!-- Decision detail drawer -->
+<div class="mc-drawer-backdrop" id="mc-drawer-backdrop" onclick="mcCloseDecide()"></div>
+<aside class="mc-drawer" id="mc-drawer" role="dialog" aria-label="Decision detail">
+  <div class="mc-drawer-inner" id="mc-drawer-inner"></div>
+</aside>
+
+  </div>
 
 
 
@@ -9573,11 +9835,11 @@ if (typeof goModule === 'function') {
 
 
 
-/* ─── MISSION CONTROL (Turn 2.11 redesign) ──────────────────────────
+/* ─── MISSION CONTROL v3 (Turn 2.12) ──────────────────────────────────
    Three-tier executive briefing: Decide today / Escalate / Surveil.
-   Visualizations are pure SVG (radar, trendline, grouped bars, gauges, etc.) — 
-   no Plotly dependency. Each viz pairs with an "executive insight" callout 
-   that names the action implied by the data. */
+   3-column shell: navrail | workspace | signals-rail.
+   Decision detail drawer with full action plans + escalation chains.
+   Pure SVG charts with gradient fills. */
 
 /* ── TIER 1: DECIDE TODAY — three sign-off-required cards ──────────── */
 window.MC_DECIDE = [
@@ -9616,7 +9878,128 @@ window.MC_DECIDE = [
   }
 ];
 
-/* ── TIER 2: ESCALATE — six-lever ROI + service-line variance ───────── */
+/* ── DECISION DETAIL — full content for the drawer ──────────────────── */
+window.MC_DECIDE_DETAIL = {
+  '01': {
+    title: 'ED night-shift interpreter coverage gap',
+    cat: 'Access \u00B7 Decision 01',
+    severity: 'crit',
+    summary: 'Three consecutive nights with Mandarin and Vietnamese interpreter unavailable for >15 minutes at first contact. Pattern matches the Valderrama (2023) length-of-stay disparity profile and is generating same-complaint return visits within 72 hours.',
+    context: [
+      'Last 7 days: 12 LEP encounters affected (Mandarin 7, Vietnamese 5)',
+      'Two same-complaint returns within 72 hours, both to ED',
+      'Current night-shift coverage: in-person Spanish only; VRI Mandarin available business hours; Vietnamese contract-only via 1099 vendor',
+      'Service-area census change: Vietnamese LEP +18% YoY; Mandarin +6% YoY (PRAPARE intake data)'
+    ],
+    action: [
+      { n: 1, text: 'Authorize 24/7 VRI license expansion (Mandarin + Vietnamese)', meta: '$28K/year \u00B7 30-day contract activation' },
+      { n: 2, text: 'OR rebalance one in-person FTE to overnight rotation', meta: 'No new spend \u00B7 60-day staffing transition' },
+      { n: 3, text: 'Brief ED Charge RN leadership on new escalation pathway', meta: 'Pre-deployment \u00B7 1 hour standing meeting' },
+      { n: 4, text: 'Add coverage-gap alert to M5 Canopy Safety Surveillance dashboard', meta: 'Auto-fire if >15 min unanswered, escalate to on-call admin' }
+    ],
+    escalation: [
+      { tier: 1, who: 'ED Charge RN', when: 'Real-time, alerts at >10 min gap', sla: '15 min' },
+      { tier: 2, who: 'On-call Hospital Admin', when: 'After >15 min gap or 3rd occurrence/shift', sla: '30 min' },
+      { tier: 3, who: 'Chief Medical Officer + Director Language Services', when: 'Daily summary if >5 events/day', sla: '24h' },
+      { tier: 4, who: 'CEO + Chief Compliance Officer', when: 'Quarterly trending review', sla: '90d' }
+    ],
+    audit: [
+      'Each gap event logged with: timestamp, language, modality attempted, time-to-resolution, encounter ID',
+      'Documentation field "interpreter unavailable >15 min" added to encounter record',
+      '\u00A71557 Coordinator notified for events crossing 30-min threshold',
+      'Quarterly Risk Committee review with stratified outcomes (LOS, return visits, AE rate)'
+    ],
+    authority: [
+      { ref: '45 CFR \u00A792.201(b)', text: 'Language assistance services must be accurate AND <strong>timely</strong>' },
+      { ref: 'Valderrama 2023', text: '40% reduction in time-to-provider when interpreter contact \u226410 min vs. delayed access (Pediatric Quality &amp; Safety)' },
+      { ref: 'NYCRR \u00A7405.7', text: 'Interpreter availability within 10 minutes for emergency department LEP patients' }
+    ],
+    cost: '$28K/year operating spend',
+    timeline: 'Sign-off by Friday \u00B7 contract activation 30 days',
+    btn: 'Authorize \u2192'
+  },
+  '02': {
+    title: 'Inpatient-3 documentation gap trending',
+    cat: 'Compliance \u00B7 Decision 02',
+    severity: 'crit',
+    summary: 'Section 1557 consent attestation missing on 6 of today\u2019s clinical-engagement encounters in Inpatient-3 \u2014 the 7th occurrence in the last 30 days. Pattern profile matches Berkeley/NHeLP malpractice case-law where chart-level documentation gaps became evidence at trial.',
+    context: [
+      'Today: 6 encounters lacking documented interpreter use at H&amp;P or consent',
+      'Last 30 days: 7 prior occurrences in same unit (Inpatient-3); 0 in any other unit',
+      'Inpatient-3 medical director: rotational coverage; no permanent leader since prior MD departure 9/2025',
+      'Berkeley/NHeLP precedent: $118K average defense cost in similar cases; 91% of organizations incurred defense costs regardless of trial outcome'
+    ],
+    action: [
+      { n: 1, text: 'Open formal case file in incident reporting system', meta: 'EOD today \u00B7 risk management notified' },
+      { n: 2, text: 'Brief Inpatient-3 medical director and floor leadership on pattern', meta: 'In-person, this week \u00B7 distribute pattern dashboard' },
+      { n: 3, text: 'Audit chain: pull all 30-day Inpatient-3 LEP encounters for retrospective interpreter-use review', meta: 'Risk + QI team \u00B7 14-day deliverable' },
+      { n: 4, text: 'Update audit log to Risk Committee with pattern + corrective actions', meta: 'Next standing Risk meeting' },
+      { n: 5, text: 'Reserve adjustment briefing to malpractice carrier if pattern persists 14+ days', meta: 'Contingent \u00B7 ~$95K reserve adjustment estimate' }
+    ],
+    escalation: [
+      { tier: 1, who: 'Inpatient-3 Medical Director (acting)', when: 'Same-day pattern detection', sla: '24h' },
+      { tier: 2, who: 'Risk Management + Compliance Officer', when: 'Case opened; weekly thereafter', sla: '7d' },
+      { tier: 3, who: '\u00A71557 Coordinator + Chief Quality Officer', when: 'Pattern-confirmed (\u22655 occurrences)', sla: 'Next risk meeting' },
+      { tier: 4, who: 'Malpractice carrier liaison', when: 'If pattern persists 14+ days post-corrective', sla: '30d' }
+    ],
+    audit: [
+      'Each missing-attestation event logged with encounter ID, clinician, time, missing field',
+      'Retrospective interpreter-use review: chart audit of all Inpatient-3 LEP encounters past 90 days',
+      'Corrective action plan distributed to all Inpatient-3 staff with attestation requirement',
+      'Pattern dashboard added to monthly Risk Committee read-out until clean for 90 consecutive days'
+    ],
+    authority: [
+      { ref: '45 CFR \u00A792.201(c)(1)', text: 'Covered entity must offer a qualified interpreter at clinical-engagement touchpoints' },
+      { ref: 'Joint Commission PC.02.01.21', text: 'Communication needs and language services documented in patient record (effective 2006)' },
+      { ref: 'Quan &amp; Lynch (2010)', text: '<strong>32 of 35</strong> reviewed cases had documentation gaps detectable at time of encounter that became trial evidence (NHeLP/Berkeley)' }
+    ],
+    cost: 'Reserve adjustment ~$95K if pattern persists',
+    timeline: 'Open case by EOD today',
+    btn: 'Open case \u2192'
+  },
+  '03': {
+    title: '\u00A71557 grievance filed \u00B7 family interpretation at consent',
+    cat: 'Patient Rights \u00B7 Decision 03',
+    severity: 'crit',
+    summary: 'A formal Section 1557 grievance was filed regarding an ED encounter in which a minor child interpreted a parental cancer diagnosis discussion. This creates exposure on a civil-rights track separate from clinical negligence, with statutory response requirements under the May 2024 \u00A71557 Final Rule.',
+    context: [
+      'Grievance filed: 2 days ago \u00B7 \u00A71557 Coordinator received intake',
+      'Encounter: ED, 11/14/2025, parent diagnosis discussion at consent for biopsy procedure',
+      'Family interpretation: 13-year-old child interpreted clinical diagnosis to Vietnamese-speaking parent',
+      '45 CFR \u00A792.201(e) prohibits adult companion (and minor child) interpretation except in narrow emergency circumstances'
+    ],
+    action: [
+      { n: 1, text: 'Brief in-house legal counsel on grievance receipt + 1557 Coordinator response timeline', meta: 'Within 48 hours \u00B7 standing legal review' },
+      { n: 2, text: '\u00A71557 Coordinator issues formal acknowledgment and response within statutory window', meta: 'Within 14 days of receipt' },
+      { n: 3, text: 'Pull encounter chart + interpreter-use record for full review', meta: 'Risk + Legal joint review \u00B7 5 days' },
+      { n: 4, text: 'Issue corrective-action plan to ED leadership + all minor-interpretation case audit', meta: '30-day deliverable' },
+      { n: 5, text: 'Patient-family outreach (with qualified interpreter) for resolution discussion', meta: 'After legal review \u00B7 voluntary' }
+    ],
+    escalation: [
+      { tier: 1, who: '\u00A71557 Coordinator + General Counsel', when: 'Grievance receipt', sla: '48h' },
+      { tier: 2, who: 'Chief Compliance Officer + CMO', when: 'Acknowledgment + response plan', sla: '7d' },
+      { tier: 3, who: 'CEO + Board Compliance Committee', when: 'Statutory response filed', sla: '14d' },
+      { tier: 4, who: 'OCR liaison (if escalated to federal)', when: 'If complainant escalates to OCR', sla: 'Per OCR' }
+    ],
+    audit: [
+      'Grievance log entry with full intake record and Coordinator response',
+      'Encounter chart audit including interpreter-use field, family-member-name field, consent attestation',
+      'All minor-interpretation events past 12 months pulled for retrospective review',
+      'Corrective action plan filed with quarterly compliance report'
+    ],
+    authority: [
+      { ref: '45 CFR \u00A792.201(e)', text: '<strong>Prohibits</strong> reliance on minor children to interpret except in narrow emergencies' },
+      { ref: '45 CFR \u00A792.7', text: 'Section 1557 Coordinator designation and grievance procedure required for entities with 15+ employees' },
+      { ref: 'Title VI of the Civil Rights Act', text: 'Civil-rights track exposure separate from and parallel to clinical negligence claims' },
+      { ref: 'CA Unruh Act (and state analogs)', text: 'State civil-rights statutes can create <strong>uncapped exposure</strong> beyond federal limits' }
+    ],
+    cost: 'Legal hours + corrective-action plan',
+    timeline: 'Statutory response within 14 days',
+    btn: 'Brief counsel \u2192'
+  }
+};
+
+/* ── TIER 2: ESCALATE ─────────────────────────────────────────────── */
 window.MC_LEVERS = [
   { n:'01', name:'ED Admission + Return Avoidance', source:'M1', exp:82400,  cap:5200,  pct:6,  status:'crit' },
   { n:'02', name:'Length-of-Stay Reduction',         source:'M3', exp:148800, cap:11300, pct:8,  status:'crit' },
@@ -9634,7 +10017,7 @@ window.MC_SVCLINE = [
   { unit:'ED',          score:38, prior:36, trend:'up',     vp:'J. Reyes'  }
 ];
 
-/* ── TIER 3: SURVEILLANCE — radar, trajectory, failures, workforce ──── */
+/* ── TIER 3: SURVEILLANCE ─────────────────────────────────────────── */
 window.MC_DOMAINS_RADAR = [
   { name:'Access',         score:17, target:90, prior:14 },
   { name:'Patient Exp',    score:31, target:85, prior:30 },
@@ -9669,16 +10052,30 @@ window.MC_WORKFORCE = {
   certified: 74, inProgress: 18, identified: 8, target: 95
 };
 
+/* ── LIVE SIGNALS — right-rail event stream ──────────────────────── */
+window.MC_SIGNALS = [
+  { time: '14:21', cat: 'ACCESS',     sev: 'crit', body: '<strong>Interpreter timeout</strong> \u00B7 ED-A \u00B7 Bay 7 \u2014 Mandarin VRI unanswered 18 min \u00B7 patient triaged without access', meta: 'Enc #4821 \u00B7 Assigned \u2192 ED Charge RN' },
+  { time: '14:07', cat: 'COMPLIANCE', sev: 'warn', body: '<strong>T3 attestation missing</strong> \u00B7 \u00A71557 consent not documented at H&amp;P \u00B7 6th occurrence today in Inpatient-3', meta: 'Enc #4819 \u00B7 Owner \u2192 Dr. Patel' },
+  { time: '13:58', cat: 'ENGAGEMENT', sev: 'crit', body: '<strong>Discharge w/o teach-back</strong> \u2014 Vietnamese LEP patient \u00B7 CHF index diagnosis \u00B7 readmission risk flagged', meta: 'Enc #4815 \u00B7 Escalated to Discharge Planner' },
+  { time: '13:44', cat: 'WORKFLOW',   sev: 'ok',   body: '<strong>Full T1\u2013T7 encounter complete</strong> \u2014 Russian LEP \u00B7 OB triage to 72h post-discharge \u00B7 billing cascade $486', meta: 'Enc #4812 \u00B7 Exemplar flagged for training' },
+  { time: '13:31', cat: 'FINANCE',    sev: 'info', body: '<strong>96160 captured</strong> \u00B7 SDOH screening billing line posted to Epic \u00B7 $18.40 preventive carve-out', meta: 'Enc #4810 \u00B7 Auto-posted via FHIR' },
+  { time: '13:19', cat: 'ACCESS',     sev: 'warn', body: '<strong>Language mismatch</strong> \u00B7 Assigned provider speaks Spanish; patient prefers Arabic \u00B7 interpreter requested retroactively', meta: 'Enc #4807 \u00B7 11 min T2 delay' },
+  { time: '13:04', cat: 'SAFETY',     sev: 'crit', body: '<strong>Adverse event with LEP flag</strong> \u2014 Medication reconciliation error \u00B7 dose clarification failure at discharge', meta: 'Enc #4803 \u00B7 RCA queued \u00B7 Quality notified' },
+  { time: '12:52', cat: 'WORKFLOW',   sev: 'ok',   body: '<strong>Triage script executed</strong> \u00B7 Cantonese LEP \u00B7 interpreter contact T2-3 min from arrival', meta: 'Enc #4798 \u00B7 Exceeds 10-min target' },
+  { time: '12:38', cat: 'COMPLIANCE', sev: 'warn', body: '<strong>Translated form gap</strong> \u00B7 New consent template not yet available in Burmese \u00B7 vendor ETA 14 days', meta: 'Enc #4794 \u00B7 Counter-signature workflow used' },
+  { time: '12:15', cat: 'FINANCE',    sev: 'info', body: '<strong>99496 TCM captured</strong> \u00B7 7-day post-discharge call in language \u00B7 high-complexity tier', meta: 'Enc #4781 \u00B7 +$237 capture' }
+];
+
 /* ───────────────────────────────────────────────────────────────────
-   SVG RENDERERS — pure SVG, no external libs
+   SVG RENDERERS — pure SVG with gradient defs for slick visual treatment
    ─────────────────────────────────────────────────────────────────── */
 
-/* TIER 1 — three sign-off cards */
+/* TIER 1 — three sign-off cards (now wired to mcOpenDecide) */
 function mcRenderDecide() {
   var grid = document.getElementById('mc-decide-grid');
   if (!grid) return;
   grid.innerHTML = window.MC_DECIDE.map(function(d) {
-    return '<div class="mc-decide-card">' +
+    return '<div class="mc-decide-card" data-decide="' + d.n + '">' +
       '<div class="mc-decide-hd">' +
         '<span class="mc-decide-num">DECIDE ' + d.n + '</span>' +
         '<span class="mc-decide-cat">' + d.cat + '</span>' +
@@ -9689,377 +10086,460 @@ function mcRenderDecide() {
       '<div class="mc-decide-row mc-decide-action"><span class="mc-decide-lbl">RECOMMEND</span><div class="mc-decide-text"><strong>' + d.action + '</strong></div></div>' +
       '<div class="mc-decide-foot">' +
         '<div class="mc-decide-meta"><span>' + d.cost + '</span><span>' + d.timeline + '</span></div>' +
-        '<button class="mc-decide-btn">' + d.btn + ' \u2192</button>' +
+        '<button class="mc-decide-btn" onclick="mcOpenDecide(\'' + d.n + '\')">' + d.btn + ' \u2192</button>' +
       '</div>' +
     '</div>';
   }).join('');
 }
 
-/* TIER 2 — ROI levers as horizontal grouped bars
-   For each lever: gray bar = full exposure, colored fill = captured.
-   Width-relative scaling so the largest exposure fills the full chart width. */
+/* DRAWER — open with full action plan */
+function mcOpenDecide(num) {
+  var d = window.MC_DECIDE_DETAIL[num];
+  if (!d) return;
+  var inner = document.getElementById('mc-drawer-inner');
+  if (!inner) return;
+
+  var html = '';
+  html += '<div class="mc-drawer-hd">';
+  html += '<div class="mc-drawer-hd-l">';
+  html += '<div class="mc-drawer-cat">' + d.cat + '</div>';
+  html += '<div class="mc-drawer-title">' + d.title + '</div>';
+  html += '</div>';
+  html += '<button class="mc-drawer-close" onclick="mcCloseDecide()" aria-label="Close">\u00D7</button>';
+  html += '</div>';
+
+  html += '<div class="mc-drawer-summary"><strong>Summary.</strong> ' + d.summary + '</div>';
+
+  html += '<div class="mc-drawer-section">';
+  html += '<div class="mc-drawer-section-hd">Context</div>';
+  html += '<ul class="mc-drawer-list">';
+  d.context.forEach(function(c) { html += '<li>' + c + '</li>'; });
+  html += '</ul></div>';
+
+  html += '<div class="mc-drawer-section">';
+  html += '<div class="mc-drawer-section-hd">Action plan</div>';
+  html += '<div class="mc-drawer-actions">';
+  d.action.forEach(function(a) {
+    html += '<div class="mc-drawer-action">';
+    html += '<div class="mc-drawer-action-n">' + a.n + '</div>';
+    html += '<div class="mc-drawer-action-body">';
+    html += '<div class="mc-drawer-action-text">' + a.text + '</div>';
+    html += '<div class="mc-drawer-action-meta">' + a.meta + '</div>';
+    html += '</div></div>';
+  });
+  html += '</div></div>';
+
+  html += '<div class="mc-drawer-section">';
+  html += '<div class="mc-drawer-section-hd">Escalation chain</div>';
+  html += '<div class="mc-drawer-escalation">';
+  d.escalation.forEach(function(e) {
+    html += '<div class="mc-drawer-esc-row">';
+    html += '<div class="mc-drawer-esc-tier">T' + e.tier + '</div>';
+    html += '<div><div class="mc-drawer-esc-who">' + e.who + '</div><div class="mc-drawer-esc-when">' + e.when + '</div></div>';
+    html += '<div class="mc-drawer-esc-sla">SLA ' + e.sla + '</div>';
+    html += '</div>';
+  });
+  html += '</div></div>';
+
+  html += '<div class="mc-drawer-section">';
+  html += '<div class="mc-drawer-section-hd">Audit trail</div>';
+  html += '<ul class="mc-drawer-list">';
+  d.audit.forEach(function(a) { html += '<li>' + a + '</li>'; });
+  html += '</ul></div>';
+
+  html += '<div class="mc-drawer-section">';
+  html += '<div class="mc-drawer-section-hd">Regulatory authority</div>';
+  html += '<div class="mc-drawer-authority">';
+  d.authority.forEach(function(a) {
+    html += '<div class="mc-drawer-auth-row">';
+    html += '<div class="mc-drawer-auth-ref">' + a.ref + '</div>';
+    html += '<div class="mc-drawer-auth-text">' + a.text + '</div>';
+    html += '</div>';
+  });
+  html += '</div></div>';
+
+  html += '<div class="mc-drawer-foot">';
+  html += '<div class="mc-drawer-foot-meta">';
+  html += '<div class="mc-drawer-foot-cost">' + d.cost + '</div>';
+  html += '<div class="mc-drawer-foot-time">' + d.timeline + '</div>';
+  html += '</div>';
+  html += '<button class="mc-drawer-foot-btn">' + d.btn + '</button>';
+  html += '</div>';
+
+  inner.innerHTML = html;
+
+  document.getElementById('mc-drawer-backdrop').classList.add('open');
+  document.getElementById('mc-drawer').classList.add('open');
+}
+
+function mcCloseDecide() {
+  document.getElementById('mc-drawer-backdrop').classList.remove('open');
+  document.getElementById('mc-drawer').classList.remove('open');
+}
+
+/* SIGNALS RAIL — render event stream with category tags */
+function mcRenderSignals(filter) {
+  var feed = document.getElementById('mc-signals-feed');
+  if (!feed) return;
+  filter = filter || 'all';
+  var data = window.MC_SIGNALS.filter(function(s) {
+    return filter === 'all' ? true : s.sev === filter;
+  });
+  feed.innerHTML = data.map(function(s) {
+    var tagCls = 'mc-signal-tag-' + s.sev;
+    return '<div class="mc-signal-card ' + s.sev + '">' +
+      '<span class="mc-signal-time">' + s.time + '</span>' +
+      '<span class="mc-signal-tag ' + tagCls + '">' + s.cat + '</span>' +
+      '<div class="mc-signal-body">' + s.body + '</div>' +
+      '<div class="mc-signal-meta">' + s.meta + '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function mcFilterSignals(filter, btn) {
+  document.querySelectorAll('.mc-signals-filter').forEach(function(b) { b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  mcRenderSignals(filter);
+}
+
+/* TIER 2 — ROI levers as horizontal grouped bars with gradients */
 function mcRenderRoiBars() {
   var container = document.getElementById('mc-viz-roi');
   if (!container) return;
   var data = window.MC_LEVERS;
   var maxExp = Math.max.apply(null, data.map(function(d){return d.exp;}));
-  
-  var W = 480, rowH = 50, gap = 8, padL = 200, padR = 120;
-  var H = data.length * (rowH + gap) + 30;
+
+  var W = 480, rowH = 52, gap = 10, padL = 200, padR = 120;
+  var H = data.length * (rowH + gap) + 36;
   var chartW = W - padL - padR;
-  
+
   var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" class="mc-svg" style="width:100%;height:auto;">';
-  
-  // X-axis ticks at top
+  svg += '<defs>';
+  svg += '<linearGradient id="grad-crit" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#DC2626"/><stop offset="100%" stop-color="#EF4444"/></linearGradient>';
+  svg += '<linearGradient id="grad-warn" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#D97706"/><stop offset="100%" stop-color="#F59E0B"/></linearGradient>';
+  svg += '<linearGradient id="grad-ok" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#16A34A"/><stop offset="100%" stop-color="#22C55E"/></linearGradient>';
+  svg += '</defs>';
+
   for (var t = 0; t <= 4; t++) {
     var x = padL + (chartW * t / 4);
     var val = Math.round(maxExp * t / 4 / 1000);
-    svg += '<line x1="' + x + '" y1="20" x2="' + x + '" y2="' + (H-10) + '" stroke="#E8EBF0" stroke-width="1" stroke-dasharray="2,3"/>';
-    svg += '<text x="' + x + '" y="14" fill="#888" font-size="9" font-family="monospace" text-anchor="middle">$' + val + 'K</text>';
+    svg += '<line x1="' + x + '" y1="22" x2="' + x + '" y2="' + (H-10) + '" stroke="#E8EBF0" stroke-width="1" stroke-dasharray="2,3"/>';
+    svg += '<text x="' + x + '" y="14" fill="#888" font-size="10" font-family="monospace" text-anchor="middle">$' + val + 'K</text>';
   }
-  
+
   data.forEach(function(d, i) {
-    var y = 25 + i * (rowH + gap);
+    var y = 28 + i * (rowH + gap);
+    var gradId = d.status === 'crit' ? 'grad-crit' : (d.status === 'warn' ? 'grad-warn' : 'grad-ok');
     var color = d.status === 'crit' ? '#DC2626' : (d.status === 'warn' ? '#D97706' : '#16A34A');
-    var lightColor = d.status === 'crit' ? '#FEF2F2' : (d.status === 'warn' ? '#FFFBEB' : '#F0FDF4');
+    var lightColor = d.status === 'crit' ? '#FEE2E2' : (d.status === 'warn' ? '#FEF3C7' : '#DCFCE7');
     var barW = chartW * (d.exp / maxExp);
     var capW = barW * (d.pct / 100);
-    
-    // Lever number badge
-    svg += '<rect x="0" y="' + (y+8) + '" width="22" height="22" fill="#fff" stroke="#E0E0E0" rx="4"/>';
-    svg += '<text x="11" y="' + (y+22) + '" fill="#888" font-size="10" font-family="monospace" font-weight="800" text-anchor="middle">' + d.n + '</text>';
-    
-    // Lever name
-    svg += '<text x="28" y="' + (y+15) + '" fill="#0D1A33" font-size="12" font-weight="700">' + d.name + '</text>';
-    svg += '<text x="28" y="' + (y+30) + '" fill="#888" font-size="10" font-family="monospace">' + d.source + ' \u00B7 $' + (d.exp/1000).toFixed(0) + 'K exposure</text>';
-    
-    // Exposure bar (gray)
-    svg += '<rect x="' + padL + '" y="' + (y+12) + '" width="' + barW + '" height="22" fill="' + lightColor + '" stroke="' + color + '" stroke-width="1.5" rx="4"/>';
-    
-    // Captured fill (colored)
-    svg += '<rect x="' + padL + '" y="' + (y+12) + '" width="' + capW + '" height="22" fill="' + color + '" rx="4"/>';
-    
-    // Capture % label INSIDE bar if room, else to the right
+
+    svg += '<rect x="0" y="' + (y+8) + '" width="24" height="24" fill="#fff" stroke="#E0E0E0" rx="6"/>';
+    svg += '<text x="12" y="' + (y+24) + '" fill="#888" font-size="11" font-family="monospace" font-weight="800" text-anchor="middle">' + d.n + '</text>';
+
+    svg += '<text x="32" y="' + (y+16) + '" fill="#0D1A33" font-size="13" font-weight="700">' + d.name + '</text>';
+    svg += '<text x="32" y="' + (y+32) + '" fill="#888" font-size="10.5" font-family="monospace">' + d.source + ' \u00B7 $' + (d.exp/1000).toFixed(0) + 'K exposure</text>';
+
+    svg += '<rect x="' + padL + '" y="' + (y+12) + '" width="' + barW + '" height="24" fill="' + lightColor + '" stroke="' + color + '" stroke-width="1.2" rx="6"/>';
+    svg += '<rect x="' + padL + '" y="' + (y+12) + '" width="' + capW + '" height="24" fill="url(#' + gradId + ')" rx="6"/>';
+
     var pctLabel = d.pct + '%';
-    if (capW > 35) {
-      svg += '<text x="' + (padL + capW - 5) + '" y="' + (y+27) + '" fill="#fff" font-size="11" font-weight="700" font-family="monospace" text-anchor="end">' + pctLabel + '</text>';
+    if (capW > 38) {
+      svg += '<text x="' + (padL + capW - 6) + '" y="' + (y+28) + '" fill="#fff" font-size="12" font-weight="800" font-family="monospace" text-anchor="end">' + pctLabel + '</text>';
     } else {
-      svg += '<text x="' + (padL + capW + 5) + '" y="' + (y+27) + '" fill="' + color + '" font-size="11" font-weight="700" font-family="monospace">' + pctLabel + '</text>';
+      svg += '<text x="' + (padL + capW + 6) + '" y="' + (y+28) + '" fill="' + color + '" font-size="12" font-weight="800" font-family="monospace">' + pctLabel + '</text>';
     }
-    
-    // Right-side $ summary
+
     var rightX = W - padR + 8;
-    svg += '<text x="' + rightX + '" y="' + (y+20) + '" fill="#0D1A33" font-size="13" font-weight="700" font-family="\'Cormorant Garamond\',serif" font-style="italic">$' + (d.cap/1000).toFixed(1) + 'K</text>';
-    svg += '<text x="' + rightX + '" y="' + (y+33) + '" fill="#888" font-size="9.5" font-family="monospace">captured</text>';
+    svg += '<text x="' + rightX + '" y="' + (y+22) + '" fill="#0D1A33" font-size="15" font-weight="700" font-family="\'Cormorant Garamond\',serif" font-style="italic">$' + (d.cap/1000).toFixed(1) + 'K</text>';
+    svg += '<text x="' + rightX + '" y="' + (y+36) + '" fill="#888" font-size="10" font-family="monospace">captured</text>';
   });
-  
+
   svg += '</svg>';
   container.innerHTML = svg;
 }
 
-/* TIER 2 — service-line variance: horizontal bars with VP attribution + arrows */
+/* TIER 2 — service-line variance with VP attribution */
 function mcRenderSvcline() {
   var container = document.getElementById('mc-viz-svcline');
   if (!container) return;
   var data = window.MC_SVCLINE;
-  var W = 380, rowH = 50, gap = 6, padL = 140, padR = 70;
+  var W = 380, rowH = 52, gap = 8, padL = 140, padR = 70;
   var H = data.length * (rowH + gap) + 30;
   var chartW = W - padL - padR;
-  
+
   var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" class="mc-svg" style="width:100%;height:auto;">';
-  
-  // Target reference line at 75
+  svg += '<defs>';
+  svg += '<linearGradient id="svc-crit" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#DC2626"/><stop offset="100%" stop-color="#EF4444"/></linearGradient>';
+  svg += '<linearGradient id="svc-warn" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#D97706"/><stop offset="100%" stop-color="#F59E0B"/></linearGradient>';
+  svg += '<linearGradient id="svc-ok" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#16A34A"/><stop offset="100%" stop-color="#22C55E"/></linearGradient>';
+  svg += '</defs>';
+
   var targetX = padL + (chartW * 75 / 100);
-  svg += '<line x1="' + targetX + '" y1="20" x2="' + targetX + '" y2="' + (H-5) + '" stroke="#16A34A" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.6"/>';
-  svg += '<text x="' + targetX + '" y="14" fill="#166534" font-size="9" font-family="monospace" font-weight="700" text-anchor="middle">target 75</text>';
-  
+  svg += '<line x1="' + targetX + '" y1="22" x2="' + targetX + '" y2="' + (H-5) + '" stroke="#16A34A" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.6"/>';
+  svg += '<text x="' + targetX + '" y="14" fill="#166534" font-size="10" font-family="monospace" font-weight="700" text-anchor="middle">target 75</text>';
+
   data.forEach(function(d, i) {
-    var y = 25 + i * (rowH + gap);
+    var y = 28 + i * (rowH + gap);
+    var gradId = d.score < 45 ? 'svc-crit' : (d.score < 65 ? 'svc-warn' : 'svc-ok');
     var color = d.score < 45 ? '#DC2626' : (d.score < 65 ? '#D97706' : '#16A34A');
-    var lightColor = d.score < 45 ? '#FEF2F2' : (d.score < 65 ? '#FFFBEB' : '#F0FDF4');
     var barW = chartW * (d.score / 100);
-    
-    // Service line label
-    svg += '<text x="0" y="' + (y+18) + '" fill="#0D1A33" font-size="13" font-weight="700">' + d.unit + '</text>';
-    svg += '<text x="0" y="' + (y+33) + '" fill="#888" font-size="10" font-family="monospace">VP: ' + d.vp + '</text>';
-    
-    // Bar bg (track)
-    svg += '<rect x="' + padL + '" y="' + (y+10) + '" width="' + chartW + '" height="22" fill="#F5F7FA" rx="4"/>';
-    
-    // Score bar
-    svg += '<rect x="' + padL + '" y="' + (y+10) + '" width="' + barW + '" height="22" fill="' + color + '" rx="4"/>';
-    
-    // Score label
-    svg += '<text x="' + (padL + barW + 6) + '" y="' + (y+25) + '" fill="' + color + '" font-size="13" font-weight="800" font-family="\'Cormorant Garamond\',serif" font-style="italic">' + d.score + '</text>';
-    
-    // Trend arrow on right
+
+    svg += '<text x="0" y="' + (y+18) + '" fill="#0D1A33" font-size="14" font-weight="700">' + d.unit + '</text>';
+    svg += '<text x="0" y="' + (y+34) + '" fill="#888" font-size="10.5" font-family="monospace">VP: ' + d.vp + '</text>';
+
+    svg += '<rect x="' + padL + '" y="' + (y+10) + '" width="' + chartW + '" height="24" fill="#F5F7FA" rx="6"/>';
+    svg += '<rect x="' + padL + '" y="' + (y+10) + '" width="' + barW + '" height="24" fill="url(#' + gradId + ')" rx="6"/>';
+
+    svg += '<text x="' + (padL + barW + 8) + '" y="' + (y+27) + '" fill="' + color + '" font-size="15" font-weight="800" font-family="\'Cormorant Garamond\',serif" font-style="italic">' + d.score + '</text>';
+
     var arrow = d.trend === 'up' ? '\u2197' : (d.trend === 'down' ? '\u2198' : '\u2192');
     var arrowColor = d.trend === 'up' ? '#16A34A' : (d.trend === 'down' ? '#DC2626' : '#888');
-    svg += '<text x="' + (W - 30) + '" y="' + (y+22) + '" fill="' + arrowColor + '" font-size="20" font-weight="700" text-anchor="middle">' + arrow + '</text>';
+    svg += '<text x="' + (W - 30) + '" y="' + (y+24) + '" fill="' + arrowColor + '" font-size="22" font-weight="700" text-anchor="middle">' + arrow + '</text>';
     var deltaSign = d.score > d.prior ? '+' : '';
-    svg += '<text x="' + (W - 30) + '" y="' + (y+34) + '" fill="' + arrowColor + '" font-size="9" font-family="monospace" font-weight="700" text-anchor="middle">' + deltaSign + (d.score - d.prior) + '</text>';
+    svg += '<text x="' + (W - 30) + '" y="' + (y+38) + '" fill="' + arrowColor + '" font-size="10" font-family="monospace" font-weight="700" text-anchor="middle">' + deltaSign + (d.score - d.prior) + '</text>';
   });
-  
+
   svg += '</svg>';
   container.innerHTML = svg;
 }
 
-/* TIER 3 — Ten-domain LAI radar chart */
+/* TIER 3 — Ten-domain LAI radar */
 function mcRenderRadar() {
   var container = document.getElementById('mc-viz-radar');
   if (!container) return;
   var data = window.MC_DOMAINS_RADAR;
-  var W = 420, H = 360;
+  var W = 440, H = 380;
   var cx = W / 2, cy = H / 2;
-  var rMax = 130;
+  var rMax = 135;
   var n = data.length;
-  
+
   function pt(angleIdx, radius) {
     var angle = (angleIdx / n) * 2 * Math.PI - Math.PI / 2;
     return [cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius];
   }
-  
+
   var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" class="mc-svg" style="width:100%;height:auto;">';
-  
-  // Gridlines (concentric polygons at 25%, 50%, 75%, 100%)
+  svg += '<defs>';
+  svg += '<radialGradient id="radar-current" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#1F3864" stop-opacity="0.30"/><stop offset="100%" stop-color="#1F3864" stop-opacity="0.10"/></radialGradient>';
+  svg += '<radialGradient id="radar-target" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#16A34A" stop-opacity="0.10"/><stop offset="100%" stop-color="#16A34A" stop-opacity="0.04"/></radialGradient>';
+  svg += '</defs>';
+
   [25, 50, 75, 100].forEach(function(pct) {
     var r = rMax * pct / 100;
     var pts = [];
-    for (var i = 0; i < n; i++) {
-      pts.push(pt(i, r).join(','));
-    }
-    svg += '<polygon points="' + pts.join(' ') + '" fill="none" stroke="#E0E0E0" stroke-width="0.8" ' + (pct === 100 ? 'stroke="#BDBDBD" stroke-width="1.2"' : '') + '/>';
+    for (var i = 0; i < n; i++) pts.push(pt(i, r).join(','));
+    var strokeColor = pct === 100 ? '#BDBDBD' : '#E8EBF0';
+    var strokeWidth = pct === 100 ? 1.2 : 0.8;
+    svg += '<polygon points="' + pts.join(' ') + '" fill="none" stroke="' + strokeColor + '" stroke-width="' + strokeWidth + '"/>';
   });
-  
-  // Axis lines
+
   for (var i = 0; i < n; i++) {
     var p = pt(i, rMax);
-    svg += '<line x1="' + cx + '" y1="' + cy + '" x2="' + p[0] + '" y2="' + p[1] + '" stroke="#E8EBF0" stroke-width="1"/>';
+    svg += '<line x1="' + cx + '" y1="' + cy + '" x2="' + p[0] + '" y2="' + p[1] + '" stroke="#F0F2F5" stroke-width="1"/>';
   }
-  
-  // Target polygon (light gray fill, dashed border)
+
   var targetPts = [];
-  data.forEach(function(d, i) {
-    var p = pt(i, rMax * d.target / 100);
-    targetPts.push(p.join(','));
-  });
-  svg += '<polygon points="' + targetPts.join(' ') + '" fill="#16A34A" fill-opacity="0.06" stroke="#16A34A" stroke-width="1.2" stroke-dasharray="4,3"/>';
-  
-  // Current polygon (filled, strong color)
+  data.forEach(function(d, i) { targetPts.push(pt(i, rMax * d.target / 100).join(',')); });
+  svg += '<polygon points="' + targetPts.join(' ') + '" fill="url(#radar-target)" stroke="#16A34A" stroke-width="1.2" stroke-dasharray="4,3"/>';
+
   var currentPts = [];
-  data.forEach(function(d, i) {
-    var p = pt(i, rMax * d.score / 100);
-    currentPts.push(p.join(','));
-  });
-  svg += '<polygon points="' + currentPts.join(' ') + '" fill="#1F3864" fill-opacity="0.18" stroke="#1F3864" stroke-width="2"/>';
-  
-  // Score dots + labels
+  data.forEach(function(d, i) { currentPts.push(pt(i, rMax * d.score / 100).join(',')); });
+  svg += '<polygon points="' + currentPts.join(' ') + '" fill="url(#radar-current)" stroke="#1F3864" stroke-width="2.5" stroke-linejoin="round"/>';
+
   data.forEach(function(d, i) {
     var p = pt(i, rMax * d.score / 100);
     var color = d.score < 35 ? '#DC2626' : (d.score < 65 ? '#D97706' : '#16A34A');
-    svg += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3.5" fill="' + color + '" stroke="#fff" stroke-width="1.5"/>';
-    
-    // Domain label outside the polygon
-    var labelP = pt(i, rMax + 22);
+    svg += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="4" fill="' + color + '" stroke="#fff" stroke-width="2"/>';
+
+    var labelP = pt(i, rMax + 24);
     var anchor = 'middle';
     if (labelP[0] < cx - 30) anchor = 'end';
     else if (labelP[0] > cx + 30) anchor = 'start';
-    var dy = labelP[1] < cy ? -2 : 10;
-    svg += '<text x="' + labelP[0] + '" y="' + (labelP[1] + dy) + '" fill="#0D1A33" font-size="11" font-weight="700" text-anchor="' + anchor + '">' + d.name + '</text>';
-    svg += '<text x="' + labelP[0] + '" y="' + (labelP[1] + dy + 13) + '" fill="' + color + '" font-size="11" font-weight="700" font-family="\'Cormorant Garamond\',serif" font-style="italic" text-anchor="' + anchor + '">' + d.score + '</text>';
+    var dy = labelP[1] < cy ? -2 : 11;
+    svg += '<text x="' + labelP[0] + '" y="' + (labelP[1] + dy) + '" fill="#0D1A33" font-size="12" font-weight="700" text-anchor="' + anchor + '">' + d.name + '</text>';
+    svg += '<text x="' + labelP[0] + '" y="' + (labelP[1] + dy + 14) + '" fill="' + color + '" font-size="13" font-weight="700" font-family="\'Cormorant Garamond\',serif" font-style="italic" text-anchor="' + anchor + '">' + d.score + '</text>';
   });
-  
-  // Center: composite score
-  svg += '<circle cx="' + cx + '" cy="' + cy + '" r="22" fill="#0D1A33"/>';
-  svg += '<text x="' + cx + '" y="' + (cy + 6) + '" fill="#fff" font-size="20" font-weight="700" font-family="\'Cormorant Garamond\',serif" font-style="italic" text-anchor="middle">52</text>';
-  
-  // Legend (top-right)
-  svg += '<g transform="translate(' + (W - 88) + ', 10)">';
-  svg += '<rect width="80" height="42" fill="#fff" stroke="#E0E0E0" rx="4"/>';
-  svg += '<line x1="6" y1="14" x2="20" y2="14" stroke="#1F3864" stroke-width="2"/>';
-  svg += '<text x="24" y="17" fill="#0D1A33" font-size="9" font-weight="600">Current</text>';
-  svg += '<line x1="6" y1="30" x2="20" y2="30" stroke="#16A34A" stroke-width="1.2" stroke-dasharray="3,2"/>';
-  svg += '<text x="24" y="33" fill="#0D1A33" font-size="9" font-weight="600">Target</text>';
+
+  svg += '<circle cx="' + cx + '" cy="' + cy + '" r="28" fill="#0D1A33"/>';
+  svg += '<text x="' + cx + '" y="' + (cy + 9) + '" fill="#fff" font-size="26" font-weight="700" font-family="\'Cormorant Garamond\',serif" font-style="italic" text-anchor="middle">52</text>';
+
+  svg += '<g transform="translate(' + (W - 96) + ', 12)">';
+  svg += '<rect width="88" height="46" fill="#fff" stroke="#E0E0E0" rx="6"/>';
+  svg += '<line x1="8" y1="16" x2="22" y2="16" stroke="#1F3864" stroke-width="2.5"/>';
+  svg += '<text x="26" y="19" fill="#0D1A33" font-size="10" font-weight="600">Current</text>';
+  svg += '<line x1="8" y1="33" x2="22" y2="33" stroke="#16A34A" stroke-width="1.2" stroke-dasharray="3,2"/>';
+  svg += '<text x="26" y="36" fill="#0D1A33" font-size="10" font-weight="600">Target</text>';
   svg += '</g>';
-  
+
   svg += '</svg>';
   container.innerHTML = svg;
 }
 
-/* TIER 3 — Composite LAI 5-quarter trendline */
+/* TIER 3 — Composite LAI 5-quarter trendline with gradient area fill */
 function mcRenderTrend() {
   var container = document.getElementById('mc-viz-trend');
   if (!container) return;
   var data = window.MC_TRAJECTORY;
-  var W = 420, H = 220;
-  var padL = 40, padR = 30, padT = 20, padB = 50;
+  var W = 440, H = 240;
+  var padL = 44, padR = 32, padT = 24, padB = 56;
   var chartW = W - padL - padR;
   var chartH = H - padT - padB;
-  
+
   var minY = 0, maxY = 80;
   var n = data.length;
-  
+
   function px(i) { return padL + (chartW * i / (n - 1)); }
   function py(v) { return padT + chartH - (chartH * (v - minY) / (maxY - minY)); }
-  
+
   var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" class="mc-svg" style="width:100%;height:auto;">';
-  
-  // Gridlines
+  svg += '<defs>';
+  svg += '<linearGradient id="trend-area" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#1F3864" stop-opacity="0.25"/><stop offset="100%" stop-color="#1F3864" stop-opacity="0.02"/></linearGradient>';
+  svg += '</defs>';
+
   [0, 20, 40, 60, 80].forEach(function(y) {
-    svg += '<line x1="' + padL + '" y1="' + py(y) + '" x2="' + (W - padR) + '" y2="' + py(y) + '" stroke="#E8EBF0" stroke-width="1" stroke-dasharray="2,3"/>';
-    svg += '<text x="' + (padL - 6) + '" y="' + (py(y) + 3) + '" fill="#888" font-size="9" font-family="monospace" text-anchor="end">' + y + '</text>';
+    svg += '<line x1="' + padL + '" y1="' + py(y) + '" x2="' + (W - padR) + '" y2="' + py(y) + '" stroke="#F0F2F5" stroke-width="1"/>';
+    svg += '<text x="' + (padL - 8) + '" y="' + (py(y) + 4) + '" fill="#888" font-size="10" font-family="monospace" text-anchor="end">' + y + '</text>';
   });
-  
-  // Target band (gray fill 70-80)
+
   svg += '<rect x="' + padL + '" y="' + py(80) + '" width="' + chartW + '" height="' + (py(70) - py(80)) + '" fill="#F0FDF4" opacity="0.5"/>';
   svg += '<line x1="' + padL + '" y1="' + py(75) + '" x2="' + (W - padR) + '" y2="' + py(75) + '" stroke="#16A34A" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.7"/>';
-  svg += '<text x="' + (W - padR - 4) + '" y="' + (py(75) - 4) + '" fill="#166534" font-size="9.5" font-family="monospace" font-weight="700" text-anchor="end">target 75</text>';
-  
-  // Trend line (path through points)
+  svg += '<text x="' + (W - padR - 4) + '" y="' + (py(75) - 5) + '" fill="#166534" font-size="10" font-family="monospace" font-weight="700" text-anchor="end">target 75</text>';
+
   var pathD = data.map(function(d, i) {
     return (i === 0 ? 'M' : 'L') + px(i) + ' ' + py(d.composite);
   }).join(' ');
-  
-  // Area below line (light fill)
+
   var areaD = pathD + ' L' + px(n-1) + ' ' + py(0) + ' L' + px(0) + ' ' + py(0) + ' Z';
-  svg += '<path d="' + areaD + '" fill="#1F3864" fill-opacity="0.10"/>';
-  
-  // Line itself
-  svg += '<path d="' + pathD + '" fill="none" stroke="#1F3864" stroke-width="2.5" stroke-linecap="round"/>';
-  
-  // Data points
+  svg += '<path d="' + areaD + '" fill="url(#trend-area)"/>';
+  svg += '<path d="' + pathD + '" fill="none" stroke="#1F3864" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>';
+
   data.forEach(function(d, i) {
     var x = px(i), y = py(d.composite);
-    svg += '<circle cx="' + x + '" cy="' + y + '" r="5" fill="#fff" stroke="#1F3864" stroke-width="2.5"/>';
-    // Value label above point
-    svg += '<text x="' + x + '" y="' + (y - 10) + '" fill="#0D1A33" font-size="11" font-weight="700" font-family="\'Cormorant Garamond\',serif" font-style="italic" text-anchor="middle">' + d.composite + '</text>';
-    // Quarter label below
-    svg += '<text x="' + x + '" y="' + (H - padB + 16) + '" fill="#555" font-size="9.5" font-family="monospace" text-anchor="middle">' + d.q + '</text>';
+    svg += '<circle cx="' + x + '" cy="' + y + '" r="6" fill="#fff" stroke="#1F3864" stroke-width="3"/>';
+    svg += '<text x="' + x + '" y="' + (y - 12) + '" fill="#0D1A33" font-size="13" font-weight="700" font-family="\'Cormorant Garamond\',serif" font-style="italic" text-anchor="middle">' + d.composite + '</text>';
+    svg += '<text x="' + x + '" y="' + (H - padB + 18) + '" fill="#555" font-size="10.5" font-family="monospace" text-anchor="middle">' + d.q + '</text>';
   });
-  
-  // Delta annotation (last quarter)
+
   var delta = data[n-1].composite - data[0].composite;
-  svg += '<g transform="translate(' + (W - padR - 5) + ', ' + (py(data[n-1].composite) + 18) + ')">';
-  svg += '<text fill="#16A34A" font-size="11" font-weight="800" font-family="monospace" text-anchor="end">+' + delta + ' since baseline</text>';
+  svg += '<g transform="translate(' + (W - padR - 5) + ', ' + (py(data[n-1].composite) + 22) + ')">';
+  svg += '<text fill="#16A34A" font-size="12" font-weight="800" font-family="monospace" text-anchor="end">+' + delta + ' since baseline</text>';
   svg += '</g>';
-  
+
   svg += '</svg>';
   container.innerHTML = svg;
 }
 
-/* TIER 3 — Top failure modes with rank-change arrows */
+/* TIER 3 — Failure modes with rounded gradient bars */
 function mcRenderFailures() {
   var container = document.getElementById('mc-viz-failures');
   if (!container) return;
   var data = window.MC_FAILURES;
-  var W = 420, rowH = 38, gap = 4, padL = 14, padR = 60;
-  var H = data.length * (rowH + gap) + 16;
+  var W = 440, rowH = 42, gap = 6, padL = 16, padR = 64;
+  var H = data.length * (rowH + gap) + 18;
   var chartW = W - padL - padR;
   var maxPct = Math.max.apply(null, data.map(function(d){return d.pct;}));
-  
+
   var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" class="mc-svg" style="width:100%;height:auto;">';
-  
+  svg += '<defs>';
+  svg += '<linearGradient id="fail-grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#D97706"/><stop offset="100%" stop-color="#F59E0B"/></linearGradient>';
+  svg += '</defs>';
+
   data.forEach(function(d, i) {
     var y = 8 + i * (rowH + gap);
     var barW = chartW * (d.pct / maxPct);
-    
-    // Failure name
-    svg += '<text x="' + padL + '" y="' + (y + 12) + '" fill="#1a1a1a" font-size="11.5" font-weight="600">' + d.name + '</text>';
-    
-    // Bar (horizontal)
-    svg += '<rect x="' + padL + '" y="' + (y + 18) + '" width="' + chartW + '" height="6" fill="#F5F7FA" rx="3"/>';
-    svg += '<rect x="' + padL + '" y="' + (y + 18) + '" width="' + barW + '" height="6" fill="#D97706" rx="3"/>';
-    
-    // Percentage label
-    svg += '<text x="' + (padL + chartW + 6) + '" y="' + (y + 24) + '" fill="#92400E" font-size="11" font-weight="800" font-family="monospace">' + d.pct + '%</text>';
-    
-    // Trend arrow + delta
+
+    svg += '<text x="' + padL + '" y="' + (y + 13) + '" fill="#1a1a1a" font-size="12.5" font-weight="600">' + d.name + '</text>';
+
+    svg += '<rect x="' + padL + '" y="' + (y + 22) + '" width="' + chartW + '" height="8" fill="#F5F7FA" rx="4"/>';
+    svg += '<rect x="' + padL + '" y="' + (y + 22) + '" width="' + barW + '" height="8" fill="url(#fail-grad)" rx="4"/>';
+
+    svg += '<text x="' + (padL + chartW + 8) + '" y="' + (y + 29) + '" fill="#92400E" font-size="12" font-weight="800" font-family="monospace">' + d.pct + '%</text>';
+
     var arrow, color;
-    if (d.change > 0) { arrow = '\u2191'; color = '#DC2626'; }       // worse
-    else if (d.change < 0) { arrow = '\u2193'; color = '#16A34A'; }  // better
-    else { arrow = '\u2192'; color = '#888'; }                        // stable
+    if (d.change > 0) { arrow = '\u2191'; color = '#DC2626'; }
+    else if (d.change < 0) { arrow = '\u2193'; color = '#16A34A'; }
+    else { arrow = '\u2192'; color = '#888'; }
     var deltaText = (d.change > 0 ? '+' : '') + d.change + 'pp';
-    svg += '<text x="' + (W - 6) + '" y="' + (y + 24) + '" fill="' + color + '" font-size="10" font-weight="800" font-family="monospace" text-anchor="end">' + arrow + ' ' + deltaText + '</text>';
+    svg += '<text x="' + (W - 6) + '" y="' + (y + 29) + '" fill="' + color + '" font-size="11" font-weight="800" font-family="monospace" text-anchor="end">' + arrow + ' ' + deltaText + '</text>';
   });
-  
+
   svg += '</svg>';
   container.innerHTML = svg;
 }
 
-/* TIER 3 — Workforce QBS pipeline as stacked horizontal bar */
+/* TIER 3 — Workforce QBS pipeline as stacked rounded bar with gradient */
 function mcRenderWorkforce() {
   var container = document.getElementById('mc-viz-workforce');
   if (!container) return;
   var d = window.MC_WORKFORCE;
-  var W = 420, H = 130;
-  var padL = 14, padR = 14, padT = 30;
-  var barH = 38;
+  var W = 440, H = 140;
+  var padL = 16, padR = 16, padT = 32;
+  var barH = 40;
   var chartW = W - padL - padR;
-  
+
   var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" class="mc-svg" style="width:100%;height:auto;">';
-  
-  // Stacked bar
+  svg += '<defs>';
+  svg += '<linearGradient id="wf-cert" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#16A34A"/><stop offset="100%" stop-color="#22C55E"/></linearGradient>';
+  svg += '<linearGradient id="wf-prog" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#D97706"/><stop offset="100%" stop-color="#F59E0B"/></linearGradient>';
+  svg += '<linearGradient id="wf-id"   x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FCD34D"/><stop offset="100%" stop-color="#FDE68A"/></linearGradient>';
+  svg += '<clipPath id="wf-clip"><rect x="' + padL + '" y="' + padT + '" width="' + chartW + '" height="' + barH + '" rx="8"/></clipPath>';
+  svg += '</defs>';
+
+  // Track (gray rounded bar)
+  svg += '<rect x="' + padL + '" y="' + padT + '" width="' + chartW + '" height="' + barH + '" fill="#E8EBF0" rx="8"/>';
+
+  // Stacked segments inside clip path
+  svg += '<g clip-path="url(#wf-clip)">';
   var x = padL;
   var certifiedW = chartW * d.certified / 100;
   var inProgressW = chartW * d.inProgress / 100;
   var identifiedW = chartW * d.identified / 100;
-  var gapW = chartW * (100 - d.certified - d.inProgress - d.identified) / 100;
-  
-  // Certified (green)
-  svg += '<rect x="' + x + '" y="' + padT + '" width="' + certifiedW + '" height="' + barH + '" fill="#16A34A" rx="0"/>';
-  if (certifiedW > 50) svg += '<text x="' + (x + certifiedW/2) + '" y="' + (padT + barH/2 + 4) + '" fill="#fff" font-size="13" font-weight="800" font-family="\'Cormorant Garamond\',serif" font-style="italic" text-anchor="middle">' + d.certified + '%</text>';
+
+  svg += '<rect x="' + x + '" y="' + padT + '" width="' + certifiedW + '" height="' + barH + '" fill="url(#wf-cert)"/>';
+  if (certifiedW > 60) svg += '<text x="' + (x + certifiedW/2) + '" y="' + (padT + barH/2 + 5) + '" fill="#fff" font-size="15" font-weight="800" font-family="\'Cormorant Garamond\',serif" font-style="italic" text-anchor="middle">' + d.certified + '%</text>';
   x += certifiedW;
-  
-  // In progress (amber)
-  svg += '<rect x="' + x + '" y="' + padT + '" width="' + inProgressW + '" height="' + barH + '" fill="#D97706" rx="0"/>';
-  if (inProgressW > 30) svg += '<text x="' + (x + inProgressW/2) + '" y="' + (padT + barH/2 + 4) + '" fill="#fff" font-size="11" font-weight="800" font-family="\'Cormorant Garamond\',serif" font-style="italic" text-anchor="middle">' + d.inProgress + '%</text>';
+
+  svg += '<rect x="' + x + '" y="' + padT + '" width="' + inProgressW + '" height="' + barH + '" fill="url(#wf-prog)"/>';
+  if (inProgressW > 36) svg += '<text x="' + (x + inProgressW/2) + '" y="' + (padT + barH/2 + 5) + '" fill="#fff" font-size="13" font-weight="800" font-family="\'Cormorant Garamond\',serif" font-style="italic" text-anchor="middle">' + d.inProgress + '%</text>';
   x += inProgressW;
-  
-  // Identified (lighter)
-  svg += '<rect x="' + x + '" y="' + padT + '" width="' + identifiedW + '" height="' + barH + '" fill="#FCD34D" rx="0"/>';
-  if (identifiedW > 24) svg += '<text x="' + (x + identifiedW/2) + '" y="' + (padT + barH/2 + 4) + '" fill="#92400E" font-size="10" font-weight="800" font-family="monospace" text-anchor="middle">' + d.identified + '%</text>';
-  x += identifiedW;
-  
-  // Gap (gray)
-  svg += '<rect x="' + x + '" y="' + padT + '" width="' + gapW + '" height="' + barH + '" fill="#E8EBF0" rx="0"/>';
-  
-  // Target line
+
+  svg += '<rect x="' + x + '" y="' + padT + '" width="' + identifiedW + '" height="' + barH + '" fill="url(#wf-id)"/>';
+  if (identifiedW > 28) svg += '<text x="' + (x + identifiedW/2) + '" y="' + (padT + barH/2 + 5) + '" fill="#92400E" font-size="11" font-weight="800" font-family="monospace" text-anchor="middle">' + d.identified + '%</text>';
+  svg += '</g>';
+
+  // Target marker
   var targetX = padL + chartW * d.target / 100;
-  svg += '<line x1="' + targetX + '" y1="' + (padT - 6) + '" x2="' + targetX + '" y2="' + (padT + barH + 6) + '" stroke="#0D1A33" stroke-width="2"/>';
-  svg += '<text x="' + targetX + '" y="' + (padT - 10) + '" fill="#0D1A33" font-size="10" font-weight="700" font-family="monospace" text-anchor="middle">target ' + d.target + '%</text>';
-  
-  // Legend below bar
-  var lx = padL, ly = padT + barH + 22;
-  function legend(x, color, label) {
-    svg += '<rect x="' + x + '" y="' + (ly - 8) + '" width="11" height="11" fill="' + color + '" rx="2"/>';
-    svg += '<text x="' + (x + 16) + '" y="' + (ly + 1) + '" fill="#1a1a1a" font-size="10.5" font-weight="600">' + label + '</text>';
-    return x + 16 + label.length * 6.2 + 16;
+  svg += '<line x1="' + targetX + '" y1="' + (padT - 8) + '" x2="' + targetX + '" y2="' + (padT + barH + 8) + '" stroke="#0D1A33" stroke-width="2.5"/>';
+  svg += '<text x="' + targetX + '" y="' + (padT - 12) + '" fill="#0D1A33" font-size="11" font-weight="700" font-family="monospace" text-anchor="middle">target ' + d.target + '%</text>';
+
+  // Legend
+  var lx = padL, ly = padT + barH + 24;
+  function legend(x, fillRef, label) {
+    svg += '<rect x="' + x + '" y="' + (ly - 9) + '" width="13" height="13" fill="' + fillRef + '" rx="3"/>';
+    svg += '<text x="' + (x + 18) + '" y="' + (ly + 2) + '" fill="#1a1a1a" font-size="11.5" font-weight="600">' + label + '</text>';
+    return x + 18 + label.length * 6.6 + 18;
   }
-  lx = legend(lx, '#16A34A', 'Certified ' + d.certified + '%');
-  lx = legend(lx, '#D97706', 'In progress ' + d.inProgress + '%');
-  lx = legend(lx, '#FCD34D', 'Identified ' + d.identified + '%');
-  
+  lx = legend(lx, 'url(#wf-cert)', 'Certified ' + d.certified + '%');
+  lx = legend(lx, 'url(#wf-prog)', 'In progress ' + d.inProgress + '%');
+  lx = legend(lx, 'url(#wf-id)', 'Identified ' + d.identified + '%');
+
   svg += '</svg>';
   container.innerHTML = svg;
 }
 
-
-/* ───────────────────────────────────────────────────────────────────
-   ORCHESTRATION — main render + lock/unlock + hooks
-   ─────────────────────────────────────────────────────────────────── */
-
+/* ── ORCHESTRATION ─────────────────────────────────────────────── */
 function mcRender() {
-  /* Tier 1 */
   mcRenderDecide();
-  /* Tier 2 */
   mcRenderRoiBars();
   mcRenderSvcline();
-  /* Tier 3 */
   mcRenderRadar();
   mcRenderTrend();
   mcRenderFailures();
   mcRenderWorkforce();
-  /* Hero stat pills */
+  mcRenderSignals('all');
+
   var laiPill = document.getElementById('mc-stat-lai');
   if (laiPill && typeof laiComputeComposite === 'function') {
     try {
@@ -10070,11 +10550,10 @@ function mcRender() {
       }
     } catch(e){}
   }
-  /* Org name */
   var orgEl = document.getElementById('mc-hd-org');
-  if (orgEl && window.STATE && STATE.capRows && STATE.capRows[0]) {
-    var org = (document.getElementById('org_name') || {}).value;
-    if (org) orgEl.textContent = org;
+  if (orgEl) {
+    var orgInput = document.getElementById('org_name');
+    if (orgInput && orgInput.value) orgEl.textContent = orgInput.value;
   }
 }
 
@@ -10084,12 +10563,12 @@ function mcCheckUnlock() {
     if (window.STATE && STATE.capRows && STATE.capRows[6] && STATE.capRows[6].committed) hasM6 = true;
   } catch(e) {}
   if (window.MC_PREVIEW_UNLOCKED) hasM6 = true;
-  
+
   var panel = document.getElementById('panel-mission');
   var overlay = document.getElementById('mc-locked-overlay');
   if (panel) panel.classList.toggle('mc-locked', !hasM6);
   if (overlay) overlay.style.display = hasM6 ? 'none' : 'flex';
-  
+
   for (var m = 0; m <= 6; m++) {
     var stepEl = document.querySelector('.mc-locked-step[data-step="m' + m + '"]');
     if (stepEl) {
