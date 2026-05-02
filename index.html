@@ -2173,53 +2173,111 @@ body[data-active-mod="3"] #brf-cap-3:not(.done){padding-left:14px;border-left:2p
 .layout.layout--no-brief .brief,
 .layout.layout--drawer-open .brief{display:none;}
 
-/* ── MISSION CONTROL (Turn 2.8b) ──────────────────────────────────────
-   The capstone teaser. A single-screen executive console that unlocks 
-   after Module 6 commitment. Visual language pulls from CanopyCommand 
-   reference: dark navy chrome, gold accents, traffic-light KPI states. */
+/* ── MISSION CONTROL (Turn 2.10 redesign) ────────────────────────────
+   Lean on the original CanopyCommand design language: navy hero band 
+   on a light page background, white panel cards with strong contrast, 
+   5-column KPI grid, larger typography. The all-translucent dark 
+   treatment in the prior version was visually weak; this brings back 
+   the bright/airy executive console feel. */
 
-#panel-mission{position:relative;}
+#panel-mission{position:relative;background:#F5F7FA;}
 
-.mc-locked-overlay{position:absolute;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(10,22,40,.86) 0%,rgba(10,22,40,.92) 100%);backdrop-filter:blur(6px);padding:48px 24px;}
-.mc-locked-card{max-width:580px;text-align:center;padding:36px 40px;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02));border:1.5px solid rgba(212,200,153,0.30);border-radius:14px;}
-.mc-locked-icon{font-family:'Cormorant Garamond',serif;font-size:60px;font-style:italic;color:#d4c899;line-height:1;margin-bottom:14px;}
-.mc-locked-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#d4c899;font-weight:700;margin-bottom:10px;}
-.mc-locked-title{font-family:'Cormorant Garamond',serif;font-size:30px;line-height:1.18;font-weight:600;color:#fff;margin-bottom:14px;letter-spacing:-0.005em;}
-.mc-locked-title em{font-style:italic;color:#d4c899;}
-.mc-locked-body{font-family:'EB Garamond',Georgia,serif;font-size:15px;line-height:1.55;color:rgba(207,216,227,0.82);margin-bottom:18px;}
-.mc-locked-body strong{color:#fff;font-weight:600;}
+/* The "lock" is now a soft, dismissible teaser that doesn't blur the panel — 
+   per user request, Mission Control is accessible at any point, but 
+   conceptually framed as the post-Module-6 unlock. */
+.mc-locked-overlay{
+  position:absolute;inset:0;z-index:50;
+  display:flex;align-items:flex-start;justify-content:center;
+  background:linear-gradient(180deg,rgba(245,247,250,0.96) 0%, rgba(245,247,250,0.92) 100%);
+  padding:60px 24px 40px;
+  overflow-y:auto;
+}
+.mc-locked-card{
+  max-width:620px;text-align:center;padding:36px 44px;
+  background:#fff;border:1.5px solid rgba(217,119,6,0.30);
+  border-radius:14px;
+  box-shadow:0 8px 28px rgba(13,26,51,0.10);
+}
+.mc-locked-icon{font-family:'Cormorant Garamond',serif;font-size:64px;font-style:italic;color:#D97706;line-height:1;margin-bottom:14px;}
+.mc-locked-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#92400E;font-weight:700;margin-bottom:10px;}
+.mc-locked-title{font-family:'Cormorant Garamond',serif;font-size:32px;line-height:1.18;font-weight:600;color:#0D1A33;margin-bottom:14px;letter-spacing:-0.005em;}
+.mc-locked-title em{font-style:italic;color:#D97706;}
+.mc-locked-body{font-family:'EB Garamond',Georgia,serif;font-size:15.5px;line-height:1.55;color:#3a4a5a;margin-bottom:18px;}
+.mc-locked-body strong{color:#0D1A33;font-weight:700;}
+.mc-locked-body em{font-style:italic;color:#92400E;}
 .mc-locked-progress{display:flex;flex-direction:column;gap:7px;margin:18px 0 22px;text-align:left;}
-.mc-locked-step{display:flex;align-items:center;gap:11px;padding:8px 12px;border-radius:6px;background:rgba(255,255,255,0.04);font-size:12px;color:rgba(207,216,227,0.7);font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:.04em;}
-.mc-locked-step.done{color:#82d2c5;background:rgba(46,168,155,0.10);}
-.mc-locked-step-mark{width:18px;text-align:center;color:rgba(255,255,255,0.3);font-weight:700;}
-.mc-locked-step.done .mc-locked-step-mark{color:#82d2c5;}
-.mc-locked-preview-btn{display:inline-block;padding:10px 22px;background:rgba(212,200,153,0.16);color:#d4c899;border:1px solid rgba(212,200,153,0.45);border-radius:5px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;cursor:pointer;transition:all .15s;}
-.mc-locked-preview-btn:hover{background:rgba(212,200,153,0.28);color:#fff;}
+.mc-locked-step{display:flex;align-items:center;gap:11px;padding:9px 13px;border-radius:6px;background:#F5F7FA;font-size:12px;color:#555;font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:.04em;border-left:3px solid #E0E0E0;}
+.mc-locked-step.done{color:#0D1A33;background:#F0FDF4;border-left-color:#16A34A;}
+.mc-locked-step-mark{width:18px;text-align:center;color:#888;font-weight:700;}
+.mc-locked-step.done .mc-locked-step-mark{color:#16A34A;}
+.mc-locked-preview-btn{
+  display:inline-block;padding:11px 26px;
+  background:#0D1A33;color:#fff;
+  border:none;border-radius:7px;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:11px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;
+  cursor:pointer;transition:all .15s;
+  box-shadow:0 2px 8px rgba(13,26,51,0.20);
+}
+.mc-locked-preview-btn:hover{background:#1F3864;transform:translateY(-1px);}
 
-/* Mission Control proper (visible underneath the overlay; partial blur when locked) */
-.mc-shell{background:linear-gradient(180deg,#0E1A30 0%,#091122 100%);min-height:100vh;color:#cfd8e3;font-family:'EB Garamond',Georgia,serif;padding:22px 28px 60px;}
-.mc-locked .mc-shell{filter:blur(2.5px);pointer-events:none;}
+/* Mission Control proper — light page bg with navy hero band and white panel cards */
+.mc-shell{
+  background:#F5F7FA;
+  min-height:100vh;
+  color:#1a1a1a;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  padding:18px 28px 60px;
+}
 
-.mc-hd{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid rgba(212,200,153,0.22);flex-wrap:wrap;}
+/* HERO BAND — navy gradient with white text + colored stat pills */
+.mc-hd{
+  background:linear-gradient(135deg,#0D1A33 0%, #142547 60%, #2A4A7F 100%);
+  color:#fff;
+  border-radius:14px;
+  padding:20px 28px;
+  margin-bottom:18px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+  box-shadow:0 6px 22px rgba(13,26,51,0.18);
+}
 .mc-hd-left{flex:1;min-width:280px;}
-.mc-hd-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#d4c899;font-weight:700;margin-bottom:6px;}
-.mc-hd-title{font-family:'Cormorant Garamond',serif;font-size:34px;line-height:1.1;font-weight:600;color:#fff;letter-spacing:-0.005em;}
-.mc-hd-title em{font-style:italic;color:#d4c899;}
-.mc-hd-sub{margin-top:6px;font-size:13px;color:rgba(207,216,227,0.7);font-style:italic;}
+.mc-hd-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#FFB84D;font-weight:700;margin-bottom:6px;}
+.mc-hd-title{font-family:'Cormorant Garamond',serif;font-size:32px;line-height:1.1;font-weight:600;color:#fff;letter-spacing:-0.005em;}
+.mc-hd-title em{font-style:italic;color:#FFC97A;}
+.mc-hd-sub{margin-top:6px;font-size:13px;color:rgba(255,255,255,0.75);font-style:italic;}
 .mc-hd-right{display:flex;gap:12px;flex-wrap:wrap;}
-.mc-stat-pill{padding:10px 16px;background:rgba(255,255,255,0.04);border:1px solid rgba(212,200,153,0.22);border-radius:7px;text-align:center;min-width:100px;}
-.mc-stat-pill-lbl{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:8.5px;letter-spacing:.10em;text-transform:uppercase;color:#d4c899;font-weight:700;margin-bottom:3px;}
-.mc-stat-pill-fig{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;font-style:italic;color:#fff;line-height:1;}
-.mc-stat-pill.crit .mc-stat-pill-fig{color:#f08080;}
-.mc-stat-pill.warn .mc-stat-pill-fig{color:#f0b76b;}
-.mc-stat-pill.ok .mc-stat-pill-fig{color:#82d2c5;}
+.mc-stat-pill{
+  padding:11px 18px;
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.18);
+  border-radius:8px;
+  text-align:center;
+  min-width:108px;
+}
+.mc-stat-pill-lbl{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.70);font-weight:700;margin-bottom:3px;}
+.mc-stat-pill-fig{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;font-style:italic;color:#fff;line-height:1;}
+.mc-stat-pill.crit .mc-stat-pill-fig{color:#FCA5A5;}
+.mc-stat-pill.warn .mc-stat-pill-fig{color:#FCD34D;}
+.mc-stat-pill.ok .mc-stat-pill-fig{color:#86EFAC;}
 
-/* Grid layout */
-.mc-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;}
-.mc-card{background:rgba(255,255,255,0.03);border:1px solid rgba(212,200,153,0.18);border-radius:9px;padding:14px 16px;}
-.mc-card-hd{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px dashed rgba(207,216,227,0.18);}
-.mc-card-title{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:#fff;font-style:italic;line-height:1.2;}
-.mc-card-meta{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:rgba(212,200,153,0.7);font-weight:600;}
+/* GRID — wider columns matching original */
+.mc-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px;}
+
+/* PANEL CARDS — white on light, strong contrast */
+.mc-card{
+  background:#FFFFFF;
+  border:1px solid #E0E0E0;
+  border-radius:11px;
+  padding:16px 18px;
+  box-shadow:0 1px 3px rgba(13,26,51,0.04);
+}
+.mc-card-hd{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  margin-bottom:12px;padding-bottom:10px;
+  border-bottom:1px solid #E8EBF0;
+}
+.mc-card-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:#0D1A33;font-style:italic;line-height:1.2;}
+.mc-card-meta{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:#888;font-weight:600;}
 
 .col-12{grid-column:span 12;}
 .col-8{grid-column:span 8;}
@@ -2227,99 +2285,143 @@ body[data-active-mod="3"] #brf-cap-3:not(.done){padding-left:14px;border-left:2p
 .col-6{grid-column:span 6;}
 .col-5{grid-column:span 5;}
 .col-4{grid-column:span 4;}
+@media (max-width: 1100px){.col-8,.col-7,.col-6,.col-5,.col-4{grid-column:span 12;}}
 
-@media (max-width: 1100px){
-  .col-8,.col-7,.col-6,.col-5,.col-4{grid-column:span 12;}
+/* KPI GRID — 5 columns, white tiles with strong color accents */
+.mc-kpi-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+@media (min-width: 1300px){.mc-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.mc-kpi{
+  display:grid;grid-template-columns:30px 1fr auto;gap:11px;align-items:center;
+  padding:11px 13px;
+  background:#FAFBFC;
+  border-radius:8px;
+  border-left:4px solid #BDBDBD;
+}
+.mc-kpi.crit{border-left-color:#DC2626;background:#FEF2F2;}
+.mc-kpi.warn{border-left-color:#D97706;background:#FFFBEB;}
+.mc-kpi.ok{border-left-color:#16A34A;background:#F0FDF4;}
+.mc-kpi-num{
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;
+  color:#888;font-weight:800;letter-spacing:.04em;
+  background:#fff;padding:3px 5px;border-radius:4px;border:1px solid #E0E0E0;
+  text-align:center;
+}
+.mc-kpi-body{min-width:0;}
+.mc-kpi-label{font-size:12px;color:#1a1a1a;line-height:1.35;}
+.mc-kpi-label-domain{
+  display:inline-block;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9px;
+  letter-spacing:.08em;text-transform:uppercase;color:#555;
+  margin-right:7px;font-weight:700;
+}
+.mc-kpi-val{
+  text-align:right;
+  font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;
+  font-style:italic;color:#0D1A33;line-height:1;
+}
+.mc-kpi.crit .mc-kpi-val{color:#991B1B;}
+.mc-kpi.warn .mc-kpi-val{color:#92400E;}
+.mc-kpi.ok .mc-kpi-val{color:#166534;}
+.mc-kpi-tgt{
+  display:block;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9px;
+  color:#888;margin-top:2px;letter-spacing:.04em;font-weight:600;
 }
 
-/* KPI panel (10 KPIs, 2 cols) */
-.mc-kpi-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
-.mc-kpi{display:grid;grid-template-columns:32px 1fr auto;gap:10px;align-items:center;padding:8px 10px;background:rgba(0,0,0,0.20);border-radius:6px;border-left:3px solid rgba(212,200,153,0.30);}
-.mc-kpi.crit{border-left-color:#f08080;}
-.mc-kpi.warn{border-left-color:#f0b76b;}
-.mc-kpi.ok{border-left-color:#82d2c5;}
-.mc-kpi-num{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9px;color:rgba(212,200,153,0.7);font-weight:700;letter-spacing:.04em;}
-.mc-kpi-body{min-width:0;}
-.mc-kpi-label{font-size:11px;color:#cfd8e3;line-height:1.3;}
-.mc-kpi-label-domain{display:inline-block;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;color:#d4c899;margin-right:6px;font-weight:700;}
-.mc-kpi-val{text-align:right;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;font-style:italic;color:#fff;line-height:1;}
-.mc-kpi.crit .mc-kpi-val{color:#f08080;}
-.mc-kpi.warn .mc-kpi-val{color:#f0b76b;}
-.mc-kpi.ok .mc-kpi-val{color:#82d2c5;}
-.mc-kpi-tgt{display:block;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:8px;color:rgba(207,216,227,0.5);margin-top:1px;letter-spacing:.04em;font-weight:600;}
+/* SIGNAL QUEUE — white rows, colored left-border by severity */
+.mc-signals{
+  max-height:420px;overflow-y:auto;
+  display:flex;flex-direction:column;gap:6px;padding-right:4px;
+}
+.mc-signals::-webkit-scrollbar{width:5px;}
+.mc-signals::-webkit-scrollbar-thumb{background:#BDBDBD;border-radius:3px;}
+.mc-signal{
+  display:grid;grid-template-columns:54px 1fr;gap:11px;
+  padding:10px 12px;background:#FAFBFC;border-radius:7px;
+  border-left:4px solid #16A34A;
+}
+.mc-signal.crit{border-left-color:#DC2626;background:#FEF2F2;}
+.mc-signal.warn{border-left-color:#D97706;background:#FFFBEB;}
+.mc-signal-time{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;color:#0D1A33;font-weight:700;}
+.mc-signal-cat{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:8.5px;color:#888;letter-spacing:.06em;text-transform:uppercase;font-weight:700;margin-top:2px;}
+.mc-signal-body{font-size:12.5px;line-height:1.45;color:#1a1a1a;}
+.mc-signal-body strong{color:#0D1A33;font-weight:700;}
+.mc-signal-meta{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;color:#888;margin-top:4px;letter-spacing:.04em;}
 
-/* Signal queue */
-.mc-signals{max-height:380px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;padding-right:4px;}
-.mc-signals::-webkit-scrollbar{width:4px;}
-.mc-signals::-webkit-scrollbar-thumb{background:rgba(212,200,153,0.20);border-radius:2px;}
-.mc-signal{display:grid;grid-template-columns:46px 1fr;gap:9px;padding:8px 10px;background:rgba(0,0,0,0.20);border-radius:6px;border-left:3px solid #82d2c5;}
-.mc-signal.crit{border-left-color:#f08080;}
-.mc-signal.warn{border-left-color:#f0b76b;}
-.mc-signal-time{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;color:#d4c899;font-weight:700;}
-.mc-signal-cat{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:8px;color:rgba(212,200,153,0.7);letter-spacing:.06em;text-transform:uppercase;font-weight:600;margin-top:2px;}
-.mc-signal-body{font-size:11.5px;line-height:1.4;color:#cfd8e3;}
-.mc-signal-body strong{color:#fff;font-weight:600;}
-.mc-signal-meta{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9px;color:rgba(207,216,227,0.5);margin-top:3px;letter-spacing:.04em;}
+/* TIMELINE — clean vertical list */
+.mc-tl{display:flex;flex-direction:column;gap:6px;}
+.mc-tl-step{
+  display:grid;grid-template-columns:50px 18px 1fr;gap:11px;
+  padding:9px 12px;background:#FAFBFC;border-radius:7px;align-items:flex-start;
+}
+.mc-tl-time{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;color:#0D1A33;font-weight:700;padding-top:1px;}
+.mc-tl-dot{width:14px;height:14px;border-radius:50%;background:#16A34A;margin-top:2px;flex-shrink:0;border:2px solid #fff;box-shadow:0 0 0 1px #BDBDBD;}
+.mc-tl-dot.pending{background:#E0E0E0;box-shadow:0 0 0 1px #BDBDBD;}
+.mc-tl-dot.warn{background:#D97706;}
+.mc-tl-name{font-size:12.5px;color:#0D1A33;font-weight:700;line-height:1.3;}
+.mc-tl-detail{font-size:11.5px;color:#555;margin-top:3px;line-height:1.4;}
 
-/* Encounter timeline */
-.mc-tl{display:flex;flex-direction:column;gap:5px;}
-.mc-tl-step{display:grid;grid-template-columns:44px 18px 1fr;gap:9px;padding:7px 10px;background:rgba(0,0,0,0.18);border-radius:6px;align-items:flex-start;}
-.mc-tl-time{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;color:#d4c899;font-weight:700;padding-top:1px;}
-.mc-tl-dot{width:14px;height:14px;border-radius:50%;background:#82d2c5;margin-top:1px;flex-shrink:0;border:2px solid rgba(0,0,0,0.3);}
-.mc-tl-dot.pending{background:rgba(255,255,255,0.16);}
-.mc-tl-dot.warn{background:#f0b76b;}
-.mc-tl-name{font-size:11.5px;color:#fff;font-weight:600;line-height:1.3;}
-.mc-tl-detail{font-size:11px;color:rgba(207,216,227,0.7);margin-top:3px;line-height:1.4;}
-
-/* Levers */
+/* LEVERS — financial rows */
 .mc-levers{display:flex;flex-direction:column;gap:6px;}
-.mc-lever{display:grid;grid-template-columns:36px 1fr auto;gap:10px;padding:8px 10px;background:rgba(0,0,0,0.20);border-radius:6px;align-items:center;}
-.mc-lever-n{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9px;color:rgba(212,200,153,0.7);font-weight:700;}
-.mc-lever-name{font-size:11.5px;color:#fff;font-weight:600;line-height:1.25;}
-.mc-lever-anchor{font-size:10px;color:rgba(207,216,227,0.55);margin-top:2px;font-style:italic;}
+.mc-lever{
+  display:grid;grid-template-columns:36px 1fr auto;gap:11px;
+  padding:10px 12px;background:#FAFBFC;border-radius:7px;align-items:center;
+}
+.mc-lever-n{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;color:#888;font-weight:800;background:#fff;padding:3px 5px;border-radius:4px;border:1px solid #E0E0E0;text-align:center;}
+.mc-lever-name{font-size:12.5px;color:#0D1A33;font-weight:700;line-height:1.25;}
+.mc-lever-anchor{font-size:11px;color:#888;margin-top:3px;font-style:italic;}
 .mc-lever-fig{text-align:right;}
-.mc-lever-exp{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;font-style:italic;color:#f0b76b;line-height:1;}
-.mc-lever-cap{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9px;color:rgba(207,216,227,0.5);margin-top:2px;}
-.mc-lever-cap .pct{color:#82d2c5;font-weight:700;}
+.mc-lever-exp{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;font-style:italic;color:#92400E;line-height:1;}
+.mc-lever-cap{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;color:#555;margin-top:3px;}
+.mc-lever-cap .pct{color:#16A34A;font-weight:800;}
 
-/* Heatmap */
-.mc-heat{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;}
-.mc-heat th{padding:6px 8px;text-align:center;color:#d4c899;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:8.5px;border-bottom:1px solid rgba(212,200,153,0.25);}
+/* HEATMAP table — white with strong bordered cells */
+.mc-heat{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;}
+.mc-heat th{padding:8px 10px;text-align:center;color:#555;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:9px;border-bottom:2px solid #E0E0E0;background:#F5F7FA;}
 .mc-heat th.row-label{text-align:left;}
-.mc-heat td{padding:7px 8px;text-align:center;color:#cfd8e3;font-weight:700;}
-.mc-heat td.row-label{text-align:left;color:#fff;letter-spacing:.04em;}
-.mc-heat-c-crit{background:rgba(240,128,128,0.30);color:#fff !important;}
-.mc-heat-c-warn{background:rgba(240,183,107,0.28);color:#fff !important;}
-.mc-heat-c-ok{background:rgba(130,210,197,0.22);color:#fff !important;}
+.mc-heat td{padding:9px 10px;text-align:center;color:#0D1A33;font-weight:800;border-bottom:1px solid #F0F2F5;}
+.mc-heat td.row-label{text-align:left;color:#0D1A33;letter-spacing:.04em;font-weight:700;}
+.mc-heat-c-crit{background:#FEF2F2;color:#991B1B !important;}
+.mc-heat-c-warn{background:#FFFBEB;color:#92400E !important;}
+.mc-heat-c-ok{background:#F0FDF4;color:#166534 !important;}
 
-/* Readiness + failures */
-.mc-readiness{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.mc-ready-cell{padding:9px 11px;background:rgba(0,0,0,0.22);border-radius:5px;border-left:3px solid #82d2c5;}
-.mc-ready-cell.warn{border-left-color:#f0b76b;}
-.mc-ready-cell.crit{border-left-color:#f08080;}
-.mc-ready-lbl{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:8.5px;color:#d4c899;letter-spacing:.06em;text-transform:uppercase;font-weight:700;margin-bottom:4px;}
-.mc-ready-val{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;font-style:italic;color:#fff;line-height:1;}
-.mc-ready-cell.warn .mc-ready-val{color:#f0b76b;}
-.mc-ready-cell.crit .mc-ready-val{color:#f08080;}
-.mc-ready-detail{font-size:10.5px;color:rgba(207,216,227,0.65);margin-top:4px;line-height:1.4;}
+/* READINESS — 2-col grid of small status cells */
+.mc-readiness{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.mc-ready-cell{
+  padding:11px 13px;background:#FAFBFC;border-radius:7px;
+  border-left:4px solid #16A34A;
+}
+.mc-ready-cell.warn{border-left-color:#D97706;background:#FFFBEB;}
+.mc-ready-cell.crit{border-left-color:#DC2626;background:#FEF2F2;}
+.mc-ready-lbl{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9px;color:#555;letter-spacing:.07em;text-transform:uppercase;font-weight:700;margin-bottom:4px;}
+.mc-ready-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;font-style:italic;color:#0D1A33;line-height:1;}
+.mc-ready-cell.warn .mc-ready-val{color:#92400E;}
+.mc-ready-cell.crit .mc-ready-val{color:#991B1B;}
+.mc-ready-detail{font-size:11.5px;color:#555;margin-top:4px;line-height:1.4;}
 
-.mc-failures{display:flex;flex-direction:column;gap:5px;}
-.mc-fail{display:grid;grid-template-columns:1fr 60px;gap:10px;padding:7px 10px;background:rgba(0,0,0,0.20);border-radius:5px;align-items:center;}
-.mc-fail-name{font-size:11px;color:#cfd8e3;line-height:1.3;}
-.mc-fail-bar{height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;position:relative;}
-.mc-fail-bar-fill{height:100%;background:#f0b76b;}
-.mc-fail-pct{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;color:#f0b76b;text-align:right;font-weight:700;margin-top:3px;}
+/* FAILURES — bar chart rows */
+.mc-failures{display:flex;flex-direction:column;gap:6px;}
+.mc-fail{
+  display:grid;grid-template-columns:1fr 70px;gap:12px;
+  padding:9px 12px;background:#FAFBFC;border-radius:7px;align-items:center;
+}
+.mc-fail-name{font-size:12px;color:#1a1a1a;line-height:1.3;}
+.mc-fail-bar{height:7px;background:#E8EBF0;border-radius:4px;overflow:hidden;position:relative;}
+.mc-fail-bar-fill{height:100%;background:#D97706;}
+.mc-fail-pct{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;color:#92400E;text-align:right;font-weight:800;margin-top:3px;}
 
-/* Synthesis quote */
-.mc-synthesis{padding:18px 22px;background:linear-gradient(135deg,rgba(212,200,153,0.10),rgba(212,200,153,0.04));border:1px solid rgba(212,200,153,0.30);border-radius:9px;}
-.mc-synthesis-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#d4c899;font-weight:700;margin-bottom:8px;}
-.mc-synthesis-quote{font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.4;font-weight:500;color:#fff;font-style:italic;margin-bottom:8px;}
-.mc-synthesis-attr{font-size:11.5px;color:rgba(207,216,227,0.65);font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:.04em;}
+/* SYNTHESIS quote — soft amber accent */
+.mc-synthesis{
+  padding:18px 22px;
+  background:linear-gradient(135deg,#FFFBEB 0%, #FEF3C7 100%);
+  border:1px solid rgba(217,119,6,0.30);
+  border-radius:9px;
+}
+.mc-synthesis-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#92400E;font-weight:700;margin-bottom:8px;}
+.mc-synthesis-quote{font-family:'Cormorant Garamond',serif;font-size:20px;line-height:1.4;font-weight:500;color:#0D1A33;font-style:italic;margin-bottom:8px;}
+.mc-synthesis-quote em{color:#92400E;}
+.mc-synthesis-attr{font-size:12px;color:#555;font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:.04em;}
 
-
-/* ── LEARNER IDENTIFICATION FACTOIDS (Turn 2.9a) ──────────────────────
-   Per-card "Did you know?" expander. Reveals 1-2 factoids drawn from 
-   peer-reviewed research and the 10 NIH-LEAP stakeholder interviews. */@keyframes factFade{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}/* Reflection prompt (optional second element under factoids) */
 /* ── LEARNER IDENTIFICATION FACTOID EXPANDERS (Turn 2.9a) ─────────────
    "Did you know?" expanders that surface a research fact + an interviewee
    insight for each Learner Identification card. Collapsed by default;
@@ -2397,6 +2499,23 @@ body[data-active-mod="3"] #brf-cap-3:not(.done){padding-left:14px;border-left:2p
   margin-bottom:4px;
 }
 
+
+
+/* Drawer toggle restyled now that drawer is visible by default (Turn 2.10) */
+.cnv-evdrawer-toggle{
+  font-size:10.5px !important;
+  padding:5px 10px 5px 8px !important;
+  opacity:0.85;
+}
+.cnv-evdrawer-toggle:hover{opacity:1;}
+.cnv-evdrawer-label{font-weight:600;}
+/* ── BRIEF SIDEBAR REMOVED (Turn 2.10) ────────────────────────────────
+   The Living Brief column was an always-on right rail showing LAI 
+   composite + domain bars + module-progress dots. Per learner feedback 
+   it was duplicating content already in module flow without informing 
+   any of it. Recovering the 360px column for content. */
+.layout{grid-template-columns:1fr !important;}
+.brief{display:none !important;}
 </style>
 </head>
 <body>
@@ -8426,6 +8545,15 @@ function cnvSetLang(lang, ledgerId) {
 
 /* Render the device + ledger + advance row into the moment slot */
 function cnvRenderInto(ledgerId) {
+  /* Default-open: ensure .drawer-open class is on the parent .tlg from first render */
+  setTimeout(function() {
+    if (window.CNV_DRAWER_OPEN && window.CNV_DRAWER_OPEN[ledgerId]) {
+      var tlgX = document.querySelector('[data-ledger-id="' + ledgerId + '"]');
+      if (tlgX) tlgX.classList.add('drawer-open');
+      var drawer = document.getElementById('cnv-evdrawer-' + ledgerId);
+      if (drawer) drawer.classList.add('open');
+    }
+  }, 30);
   // Generalized locator: find the TLG container by data-ledger-id, then its .tlg-moment.
   // Falls back to legacy m3-tlg-* selector pattern if data attr not found.
   var container = document.querySelector('[data-ledger-id="' + ledgerId + '"]');
@@ -8621,7 +8749,7 @@ window.CNV_EVCHAIN = {
    open state is per-stage so it persists across stage advances within
    the same phase. */
 
-window.CNV_DRAWER_OPEN = { 'm1-tlg': false, 'm3-pA': false, 'm3-pB': false };
+window.CNV_DRAWER_OPEN = { 'm1-tlg': true, 'm2-tlg': true, 'm3-pA': true, 'm3-pB': true, 'm4-tlg': true, 'm5-tlg': true };
 
 function cnvRenderDrawerToggle(ledgerId) {
   var stages = window.CNV_STAGES[ledgerId];
@@ -8629,9 +8757,9 @@ function cnvRenderDrawerToggle(ledgerId) {
   var chain = (window.CNV_EVCHAIN[ledgerId] || {})[stageNum];
   if (!chain) return '';
   var rowCount = chain.sections.reduce(function(acc, s){ return acc + s.rows.length; }, 0);
-  return '<button class="cnv-evdrawer-toggle" onclick="cnvDrawerToggle(\'' + ledgerId + '\')" aria-expanded="false">' +
-    '<span class="cnv-evdrawer-ico">⧉</span>' +
-    '<span>System events</span>' +
+  return '<button class="cnv-evdrawer-toggle" onclick="cnvDrawerToggle(\'' + ledgerId + '\')" aria-expanded="true" title="Hide / show system events panel">' +
+    '<span class="cnv-evdrawer-ico">—</span>' +
+    '<span class="cnv-evdrawer-label">Hide events</span>' +
     '<span class="cnv-evdrawer-count">' + rowCount + '</span>' +
   '</button>';
 }
@@ -8670,6 +8798,22 @@ function cnvDrawerToggle(ledgerId) {
   window.CNV_DRAWER_OPEN[ledgerId] = !window.CNV_DRAWER_OPEN[ledgerId];
   var el = document.getElementById('cnv-evdrawer-' + ledgerId);
   if (el) el.classList.toggle('open', window.CNV_DRAWER_OPEN[ledgerId]);
+  /* Update toggle label to reflect new state */
+  var tlg2 = document.querySelector('[data-ledger-id="' + ledgerId + '"]');
+  if (tlg2) {
+    var btn = tlg2.querySelector('.cnv-evdrawer-toggle');
+    if (btn) {
+      var lbl = btn.querySelector('.cnv-evdrawer-label');
+      var ico = btn.querySelector('.cnv-evdrawer-ico');
+      if (window.CNV_DRAWER_OPEN[ledgerId]) {
+        if (lbl) lbl.textContent = 'Hide events';
+        if (ico) ico.textContent = '—';
+      } else {
+        if (lbl) lbl.textContent = 'Show events';
+        if (ico) ico.textContent = '⧉';
+      }
+    }
+  }
   // Toggle .drawer-open on parent .tlg so layout CSS expands stage 
   // and lays out device + drawer side-by-side rather than overlapping.
   var tlg = document.querySelector('[data-ledger-id="' + ledgerId + '"]');
@@ -9755,7 +9899,7 @@ if (window.CNV_STATE && window.CNV_STATE.currentStage) {
   window.CNV_STATE.currentStage['m5-tlg'] = 1;
 }
 if (window.CNV_DRAWER_OPEN) {
-  window.CNV_DRAWER_OPEN['m5-tlg'] = false;
+  window.CNV_DRAWER_OPEN['m5-tlg'] = true;
 }
 if (window.CNV_PHONE_SPECIALTY) {
   /* Dashboard doesn't use phone specialty but keeping the map populated avoids
@@ -10002,7 +10146,7 @@ if (window.CNV_STATE && window.CNV_STATE.currentStage) {
   window.CNV_STATE.currentStage['m4-tlg'] = 1;
 }
 if (window.CNV_DRAWER_OPEN) {
-  window.CNV_DRAWER_OPEN['m4-tlg'] = false;
+  window.CNV_DRAWER_OPEN['m4-tlg'] = true;
 }
 if (window.CNV_PHONE_SPECIALTY) {
   window.CNV_PHONE_SPECIALTY['m4-tlg'] = 'Teach-back';
@@ -10237,7 +10381,7 @@ if (window.CNV_STATE && window.CNV_STATE.currentStage) {
   window.CNV_STATE.currentStage['m2-tlg'] = 1;
 }
 if (window.CNV_DRAWER_OPEN) {
-  window.CNV_DRAWER_OPEN['m2-tlg'] = false;
+  window.CNV_DRAWER_OPEN['m2-tlg'] = true;
 }
 if (window.CNV_PHONE_SPECIALTY) {
   window.CNV_PHONE_SPECIALTY['m2-tlg'] = 'Symptoms';
