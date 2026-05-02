@@ -2113,6 +2113,65 @@ body[data-active-mod="3"] #brf-cap-3:not(.done){padding-left:14px;border-left:2p
 .lai-band-pill.band-exemplary{background:linear-gradient(135deg,#dfedeb,#fbf5e3);border-color:#86c4ba;}
 .lai-assessment-foot-note{font-family:'EB Garamond',Georgia,serif;font-size:11.5px;line-height:1.5;color:var(--ink-3);font-style:italic;}
 
+
+/* ── DRAWER + BRIEF LAYOUT (Turn 2.7a) ─────────────────────────────────
+   Two coupled UX fixes:
+   
+   1. DRAWER OVERLAP — System Events drawer was positioned absolutely inside
+      .cnv-stage (~487px wide), causing it to overlap the device when open.
+      Fix: when drawer is open, expand the TLG container and lay out 
+      device + drawer side-by-side.
+   
+   2. CONTEXT-DEPENDENT BRIEF — The executive brief column (LAI Composite 
+      Score, Domain Distribution, etc.) is useful as a passive heads-up 
+      display on most modules, but redundant when (a) the user is actively 
+      engaged with the system events drawer (it shows similar audit-trail 
+      detail) or (b) the user is on M6 where the LAI Maturity Assessment IS 
+      the engagement. In both cases, hide the brief to free horizontal room.
+*/
+
+/* Hide drawer when closed (the original off-canvas slide leaks past 
+   .cnv-stage on viewports where overflow:visible cascades) */
+.cnv-evdrawer:not(.open){visibility:hidden;opacity:0;pointer-events:none;}
+.cnv-evdrawer.open{visibility:visible;opacity:1;pointer-events:auto;transition:opacity .15s, right .28s ease;}
+
+/* Container expansion when drawer is open */
+.tlg.tlg-stage-mode{transition:max-width .25s ease;}
+.tlg.drawer-open{max-width:none;}
+.tlg.drawer-open .tlg-moment-anchor{justify-content:center;gap:18px;align-items:flex-start;flex-wrap:nowrap;}
+.tlg.drawer-open .tlg-device-wrapper{width:auto;flex:0 0 auto;}
+.tlg.drawer-open{margin-left:auto;margin-right:auto;width:auto;}
+/* When drawer is open + brief hidden, expand the article container so the 
+   TLG can use the freed horizontal space (defaults to .page max-width:880px) */
+.layout.layout--drawer-open .page{max-width:1280px !important;}
+/* When drawer is open AND brief is hidden, expand TLG to fill available width */
+.layout.layout--drawer-open .tlg.drawer-open{max-width:1280px;width:auto;}
+.tlg.drawer-open .cnv-stage{padding-right:380px;position:relative;overflow:visible;}
+.tlg.drawer-open .cnv-evdrawer.open{
+  position:absolute;
+  top:0;
+  right:0;
+  width:360px;
+  height:100%;
+  max-height:none;
+}
+/* Toggle button: when drawer is open, anchor it to device area not expanded stage */
+.tlg.drawer-open .cnv-evdrawer-toggle{right:auto;left:50%;transform:translateX(-50%) translateX(-190px);}
+
+/* Mobile: collapse to full-screen modal on narrow viewports */
+@media (max-width: 980px){
+  .tlg.drawer-open .cnv-stage{padding-right:18px;}
+  .tlg.drawer-open .cnv-evdrawer.open{position:fixed;inset:5vh 4vw;width:auto;height:auto;}
+  .tlg.drawer-open .cnv-evdrawer-toggle{left:auto;right:14px;transform:none;}
+}
+
+/* Brief column visibility: hidden on M6 (LAI is engagement) AND when any 
+   System Events drawer is open (drawer + brief show overlapping detail; 
+   the drawer is more focused). */
+.layout.layout--no-brief,
+.layout.layout--drawer-open{grid-template-columns:1fr;}
+.layout.layout--no-brief .brief,
+.layout.layout--drawer-open .brief{display:none;}
 </style>
 </head>
 <body>
@@ -7940,6 +7999,15 @@ function cnvDrawerToggle(ledgerId) {
   window.CNV_DRAWER_OPEN[ledgerId] = !window.CNV_DRAWER_OPEN[ledgerId];
   var el = document.getElementById('cnv-evdrawer-' + ledgerId);
   if (el) el.classList.toggle('open', window.CNV_DRAWER_OPEN[ledgerId]);
+  // Toggle .drawer-open on parent .tlg so layout CSS expands stage 
+  // and lays out device + drawer side-by-side rather than overlapping.
+  var tlg = document.querySelector('[data-ledger-id="' + ledgerId + '"]');
+  if (tlg) tlg.classList.toggle('drawer-open', window.CNV_DRAWER_OPEN[ledgerId]);
+  // When ANY drawer is open, hide the brief column to give device+drawer 
+  // unconstrained horizontal space. Tracks open drawers across the page.
+  var anyOpen = !!document.querySelector('.cnv-evdrawer.open');
+  var layout = document.querySelector('.layout');
+  if (layout) layout.classList.toggle('layout--drawer-open', anyOpen);
   // Also flip aria-expanded on toggle btn for accessibility
   var stage = document.querySelector('#m3-tlg-' + ledgerId.split('-')[1] + ' .cnv-stage');
   if (stage) {
@@ -8451,6 +8519,23 @@ function laiFocusDomain(key) {
   });
 }
 
+
+/* ── BRIEF VISIBILITY HOOK (Turn 2.7a) ──────────────────────────────
+   Hide the executive brief sidebar on Module 6 (LAI Maturity 
+   Assessment IS the LAI engagement). Show it on M0-M5 where it 
+   functions as a passive heads-up display of overall progress. */
+if (typeof goModule === 'function') {
+  var _origGoModuleForBrief = goModule;
+  goModule = function(n) {
+    _origGoModuleForBrief(n);
+    setTimeout(function() {
+      var layout = document.querySelector('.layout');
+      if (layout) {
+        layout.classList.toggle('layout--no-brief', n === 6);
+      }
+    }, 50);
+  };
+}
 /* Hook into goModule(6) to render the LAI assessment */
 if (typeof goModule === 'function') {
   var _origGoModuleForM6 = goModule;
